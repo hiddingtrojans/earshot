@@ -36,6 +36,10 @@
                  background: var(--paper); padding: 3px; }
   .mode button, .mode summary { border: 0; background: none; padding: 6px 14px; border-radius: 999px; }
   .mode button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .mode select { border: 0; background: var(--paper); color: var(--ink); padding: 6px; font: inherit; }
+  .translation-note { position: absolute; top: 64px; right: 28px; z-index: 4; max-width: 300px; color: #9B2C2C; font-size: 13px; }
+  .bubble .original { display: none; margin-top: 6px; padding-top: 5px; border-top: 1px solid var(--rule); font-size: .78em; color: var(--ink-soft); }
+  .bubble.has-original:hover .original, .bubble.has-original:focus .original { display: block; }
   .download { position: relative; }
   .download summary { cursor: pointer; list-style: none; display: block; }
   .download div { position: absolute; right: 0; top: 34px; z-index: 5; display: grid; min-width: 150px; background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 6px; }
@@ -122,6 +126,8 @@
     <div class="mode" role="group" aria-label="Caption and export controls">
       <button id="mode-earshot" aria-pressed="true">Earshot captions</button>
       <button id="mode-single" aria-pressed="false">Single-stream captions</button>
+      <select id="language" aria-label="Caption language" hidden><option value="">Original</option></select>
+      <span id="translation-note" class="translation-note" aria-live="polite"></span>
       <details class="download"><summary>Download subtitles</summary><div>
         <a href="/api/subtitles.vtt" download="earshot.vtt">WebVTT (colour and position)</a>
         <a href="/api/subtitles.srt" download="earshot.srt">SRT (speaker labels)</a>
@@ -154,15 +160,37 @@
 <script>
 const $ = (s, el = document) => el.querySelector(s);
 const video = $("#video"), overlay = $("#overlay"), links = $("#links"), solo = $("#solo");
-let doc, mode = "earshot", soloPerson = null;
+let doc, mode = "earshot", soloPerson = null, language = "";
 
 const fmt = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
 const words = s => s.split(/\s+/).filter(Boolean);
 
+function buildLanguage() {
+  const picker = $("#language");
+  const languages = Object.keys(doc.translations || {});
+  picker.hidden = languages.length === 0;
+  languages.forEach(lang => {
+    const option = document.createElement("option");
+    option.value = lang;
+    option.textContent = (lang === "es" ? "Español" : lang) +
+      (doc.translation_status?.[lang] === "untranslated" ? " (untranslated)" : "");
+    picker.appendChild(option);
+  });
+  picker.onchange = () => {
+    language = picker.value;
+    $("#translation-note").textContent = language && doc.translation_status?.[language] === "untranslated"
+      ? "Translation unavailable; showing the original text." : "";
+    render(video.currentTime);
+  };
+}
+function captionText(c) {
+  return language && doc.translations?.[language]?.[c.id] ? doc.translations[language][c.id] : c.text;
+}
+
 async function load() {
   doc = await (await fetch("earshot.json")).json();
   video.src = doc.video;
-  buildControls(); buildLanes(); buildThreads(); loadCalls();
+  buildLanguage(); buildControls(); buildLanes(); buildThreads(); loadCalls();
   requestAnimationFrame(tick);
 }
 
@@ -186,7 +214,7 @@ function activeCaptions(t) {
 }
 
 function revealed(c, t) {
-  const w = words(c.text);
+  const w = words(captionText(c));
   const k = Math.max(1, Math.min(w.length, Math.ceil(w.length * (t - c.start) / Math.max(0.3, c.end - c.start))));
   return w.slice(Math.max(0, k - 16), k).join(" ");
 }
@@ -212,8 +240,14 @@ function render(t) {
     const el = document.createElement("div");
     el.className = "bubble" + (t > c.end ? " fading" : "");
     const person = doc.people[p];
-    el.innerHTML = `<span class="who" style="color:${person.color}">${person.name}</span><span class="txt"></span><span class="tail"></span>`;
+    el.innerHTML = `<span class="who" style="color:${person.color}">${person.name}</span><span class="txt"></span><span class="original"></span><span class="tail"></span>`;
     el.querySelector(".txt").textContent = revealed(c, t);
+    if (language && captionText(c) !== c.text) {
+      el.classList.add("has-original");
+      el.tabIndex = 0;
+      el.title = `Original: ${c.text}`;
+      el.querySelector(".original").textContent = `Original: ${c.text}`;
+    }
     el.style.borderTop = `4px solid ${person.color}`;
     overlay.appendChild(el);
     const bw = el.offsetWidth, bh = el.offsetHeight;

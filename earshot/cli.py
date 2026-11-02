@@ -25,6 +25,7 @@ def main() -> None:
                    help="let SAM Audio run its own T5 text encoder (only if organizers allow it)")
     a.add_argument("--no-spark", action="store_true")
     a.add_argument("--catchup-every", type=float, default=10.0)
+    a.add_argument("--translate", action="append", help="precompute a caption language with one cached Spark call (repeatable)")
     a.add_argument("--replay", action="store_true", help="use cached model responses only (no API key)")
 
     s = sub.add_parser("serve", help="open the viewer for a run folder")
@@ -56,7 +57,8 @@ def main() -> None:
 
         doc = analyze(args.video, [Tap.parse(t) for t in args.tap], args.out, Options(
             separator=args.separator, replay=args.replay, text_features=args.text_features,
-            allow_t5=args.allow_t5, prompt=args.prompt, spark=not args.no_spark, catchup_every=args.catchup_every))
+            allow_t5=args.allow_t5, prompt=args.prompt, spark=not args.no_spark, catchup_every=args.catchup_every,
+            translate=args.translate))
         print(f"wrote {doc}\nview it: python -m earshot serve {args.out}")
     elif args.cmd == "serve":
         from .server import serve

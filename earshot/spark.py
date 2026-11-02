@@ -152,3 +152,33 @@ def verify_catchup(sentences: list[dict], window: list[Caption], names: list[str
     if not checked:  # nothing usable: show the last captions verbatim
         checked = [{"text": f"{c.name}: “{c.text}”", "cite": [c.id], "status": "verbatim"} for c in window[-3:]]
     return checked
+
+
+def translate_captions(captions: list[Caption], target_lang: str, calls: CallLog) -> tuple[dict[str, str], str]:
+    original = {caption.id: caption.text for caption in captions}
+    if not original:
+        return {}, "translated"
+    schema = {
+        "type": "object",
+        "properties": {"items": {"type": "array", "items": {
+            "type": "object",
+            "properties": {"id": {"type": "string"}, "text": {"type": "string"}},
+            "required": ["id", "text"], "additionalProperties": False}}},
+        "required": ["items"], "additionalProperties": False,
+    }
+    instructions = (
+        f"Translate every caption's text into {target_lang}. Return every caption ID exactly once and no other IDs. "
+        "Preserve meaning, names, numbers, and caption IDs. Return only the translation items."
+    )
+    try:
+        out = _respond(calls, f"translate captions to {target_lang}", instructions,
+                       _caption_lines(captions), schema, "translation")
+        items = out["items"]
+        ids = [item["id"] for item in items]
+        if len(ids) != len(original) or set(ids) != set(original) or len(set(ids)) != len(ids):
+            raise ValueError("translation caption IDs do not match the originals")
+        if any(not isinstance(item["text"], str) or not item["text"].strip() for item in items):
+            raise ValueError("translation contains empty text")
+        return {item["id"]: item["text"].strip() for item in items}, "translated"
+    except (RuntimeError, ValueError, TypeError, KeyError):
+        return original, "untranslated"

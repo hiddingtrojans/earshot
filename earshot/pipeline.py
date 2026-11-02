@@ -30,6 +30,7 @@ class Options:
     catchup_every: float = 10.0      # precompute catch-ups so replay mode has them
     catchup_seconds: float = 30.0
     max_edge: int = 960
+    translate: list[str] | None = None
     progress: Callable[[str], None] | None = None
 
 
@@ -121,6 +122,13 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
                 catchups.append({"t": round(t, 2), "person": person, **res})
             t += opt.catchup_every
 
+    from .spark import translate_captions
+
+    translations, translation_status = {}, {}
+    for language in opt.translate or []:
+        report(f"Translating captions to {language} with Muse Spark")
+        translations[language], translation_status[language] = translate_captions(captions, language, calls)
+
     doc = {
         "video": "analysis.mp4",
         "info": {"width": info.width, "height": info.height, "fps": info.fps, "duration": info.duration},
@@ -134,6 +142,8 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
         "overlaps": overlap_windows(activity),
         "threads": threads,
         "catchups": catchups,
+        "translations": translations,
+        "translation_status": translation_status,
     }
     (out / "earshot.json").write_text(json.dumps(doc, indent=1, ensure_ascii=False))
     _install_viewer(out)
