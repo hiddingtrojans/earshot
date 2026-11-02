@@ -81,6 +81,18 @@ hf auth login                  # access to facebook/sam-audio-small-tv is gated 
 
 The baseline is the same table as one diarized stream (what single-stream captions give you). Each anonymous speaker is mapped to the person it matches best, so the baseline is shown at its best. See `earshot/bench.py` for the truth file format. Composed clips (each person recorded separately, then mixed with `spike/earshot_spike.py compose`) give exact references.
 
+## Results
+
+Real AMI ES2008a far-field clip, mean [min, max] over 3 Voice transcription repeats. The single-stream baseline is oracle-mapped and therefore generous; it is not a runtime face-to-voice matcher.
+
+| Mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | SI-SDR gain (dB) ↑ |
+|---|---:|---:|---:|---:|
+| Single-stream captions (oracle-mapped) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
+| Earshot-Lite (optimal mouth-motion attribution) | 0.702 [0.691, 0.714] | 0.540 [0.537, 0.545] | 0.387 [0.369, 0.415] | — |
+| Earshot (SAM Audio) | blocked by gated-weight approval | blocked | blocked | blocked |
+
+Lite does not separate audio and underperforms the generous baseline on this clip. SAM Audio has not been run, so no separation claim or metric is inferred. See `bench/RESULTS.md` for the method, exact commands, model IDs, hardware, and negative control.
+
 ## How it's built
 
 ```
