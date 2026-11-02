@@ -232,6 +232,8 @@ def _upload(video: Path) -> str:
 
 def track_people(video: Path, taps: list[Tap], info, calls: CallLog) -> Tracks:
     """Track each tapped person through `video` (the prepared analysis video)."""
+    if any(tap.frame < 0 or tap.frame >= info.frames for tap in taps):
+        raise ValueError(f"tap frames must be between 0 and {info.frames - 1}")
     digest = hashlib.sha256(video.read_bytes()).hexdigest()
     text = object_prompt_text(taps, info.width, info.height)
 

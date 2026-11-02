@@ -95,7 +95,7 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
                 return self._file(WEB / "index.html")
             if url.path == "/api/setup/info" and setup_video:
                 info = probe(setup_video)
-                return self._json({"width": info.width, "height": info.height, "fps": info.fps,
+                return self._json({"width": info.width, "height": info.height, "fps": info.fps, "frames": info.frames,
                                    "duration": info.duration, "replay": replay, "separator": separator})
             if url.path == "/api/setup/video" and setup_video:
                 return self._file(setup_video)

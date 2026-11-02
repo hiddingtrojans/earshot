@@ -69,8 +69,29 @@ const $ = selector => document.querySelector(selector);
 const video = $("#source"), crosshair = $("#crosshair"), analyzeButton = $("#analyze");
 let taps = [], cross = {x:0.5, y:0.5}, info = null, busy = false;
 
+function contentBox() {
+  const rect = video.getBoundingClientRect();
+  if (!video.videoWidth || !video.videoHeight) return rect;
+  const videoAspect = video.videoWidth / video.videoHeight;
+  const elementAspect = rect.width / rect.height;
+  let width = rect.width, height = rect.height, offsetX = 0, offsetY = 0;
+  if (elementAspect > videoAspect) {
+    width = rect.height * videoAspect;
+    offsetX = (rect.width - width) / 2;
+  } else if (elementAspect < videoAspect) {
+    height = rect.width / videoAspect;
+    offsetY = (rect.height - height) / 2;
+  }
+  return {left:rect.left + offsetX, top:rect.top + offsetY, width, height};
+}
+function positionLayer() {
+  const box = contentBox(), stage = $("#stage").getBoundingClientRect();
+  Object.assign($("#layer").style, {left:`${box.left - stage.left}px`, top:`${box.top - stage.top}px`,
+                                    width:`${box.width}px`, height:`${box.height}px`});
+}
 function defaultName() { return `Speaker ${String.fromCharCode(65 + taps.length)}`; }
 function draw() {
+  positionLayer();
   document.querySelectorAll(".marker").forEach(marker => marker.remove());
   taps.forEach((tap, index) => {
     const marker = document.createElement("button");
@@ -114,9 +135,12 @@ function drawMarkersOnly() {
     marker.setAttribute("aria-label", `Delete ${taps[index].name}`);
   });
 }
+function currentFrame() {
+  return Math.max(0, Math.min((info?.frames || 1) - 1, Math.floor(video.currentTime * (info?.fps || 25))));
+}
 function addTap(x, y) {
   if (busy || taps.length >= 8) return;
-  taps.push({name:defaultName(), x, y, frame:Math.round(video.currentTime * (info?.fps || 25))});
+  taps.push({name:defaultName(), x, y, frame:currentFrame()});
   draw();
 }
 function removeTap(index) {
@@ -124,15 +148,21 @@ function removeTap(index) {
   taps.splice(index, 1);
   draw();
 }
+video.addEventListener("loadedmetadata", positionLayer);
+window.addEventListener("resize", positionLayer);
 video.addEventListener("click", event => {
+  event.preventDefault();
+  event.stopPropagation();
   if (busy) return;
-  const rect = video.getBoundingClientRect();
-  cross = {x:Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)),
-           y:Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height))};
+  const rect = contentBox();
+  const x = (event.clientX - rect.left) / rect.width;
+  const y = (event.clientY - rect.top) / rect.height;
+  if (x < 0 || x > 1 || y < 0 || y > 1) return;
+  cross = {x, y};
   addTap(cross.x, cross.y);
 });
 video.addEventListener("timeupdate", () => {
-  $("#frame").textContent = `Frame ${Math.round(video.currentTime * (info?.fps || 25))} at ${video.currentTime.toFixed(2)} s`;
+  $("#frame").textContent = `Frame ${currentFrame()} at ${video.currentTime.toFixed(2)} s`;
 });
 crosshair.addEventListener("click", () => addTap(cross.x, cross.y));
 crosshair.addEventListener("keydown", event => {
