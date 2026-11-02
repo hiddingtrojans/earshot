@@ -1,0 +1,552 @@
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 3950.18it/s]
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+[visual] {'description': '', 'box': [0.0, 0.0, 0.5, 0.5], 'seconds': 18.11, 'device': 'mps', 'rtf': 1.81, 'target_rms_db': -48.1, 'residual_rms_db': -55.1, 'si_sdr_db': -32.15}
+[text_only] {'description': 'speech', 'box': None, 'seconds': 3.07, 'device': 'mps', 'rtf': 0.31, 'target_rms_db': -48.1, 'residual_rms_db': -54.5, 'si_sdr_db': -34.29}
+
+{
+  "clip": "spike/out/ab_A_keep/clip.mov",
+  "clip_seconds": 10.0,
+  "box": [
+    0.0,
+    0.0,
+    0.5,
+    0.5
+  ],
+  "control_box": null,
+  "model": "facebook/sam-audio-small-tv",
+  "seed": 0,
+  "mask_mode": "keep",
+  "python": "3.12.13",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "runs": {
+    "visual": {
+      "description": "",
+      "box": [
+        0.0,
+        0.0,
+        0.5,
+        0.5
+      ],
+      "seconds": 18.11,
+      "device": "mps",
+      "rtf": 1.81,
+      "target_rms_db": -48.1,
+      "residual_rms_db": -55.1,
+      "si_sdr_db": -32.15
+    },
+    "text_only": {
+      "description": "speech",
+      "box": null,
+      "seconds": 3.07,
+      "device": "mps",
+      "rtf": 0.31,
+      "target_rms_db": -48.1,
+      "residual_rms_db": -54.5,
+      "si_sdr_db": -34.29
+    }
+  },
+  "text_conditioning": "precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "torch": "2.15.0",
+  "device_requested": "mps",
+  "load_seconds": 7.2,
+  "frames": [
+    250,
+    524,
+    640
+  ],
+  "device_used": "mps",
+  "mixture_rms_db": -47.3,
+  "baseline_mixture_si_sdr_db": -32.91,
+  "si_sdr_improvement_db": 0.76,
+  "forbidden_modules_imported": [],
+  "rule_status": "Organizers' ruling (2 Nov 06:06 Madrid): SAM Audio and its frozen T5-base are allowed with disclosure; T5 may run locally, while precomputed text conditioning remains the default. This run: precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "verdict_hint": "speed OK, now listen"
+}
+
+Listen: spike/out/ab_A_keep/mixture.wav  vs  spike/out/ab_A_keep/target_visual.wav
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 3984.71it/s]
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+[visual] {'description': '', 'box': [0.5, 0.0, 1.0, 0.5], 'seconds': 17.56, 'device': 'mps', 'rtf': 1.76, 'target_rms_db': -48.2, 'residual_rms_db': -55.1, 'si_sdr_db': -27.64}
+[text_only] {'description': 'speech', 'box': None, 'seconds': 3.18, 'device': 'mps', 'rtf': 0.32, 'target_rms_db': -48.1, 'residual_rms_db': -54.5, 'si_sdr_db': -28.22}
+
+{
+  "clip": "spike/out/ab_B_keep/clip.mov",
+  "clip_seconds": 10.0,
+  "box": [
+    0.5,
+    0.0,
+    1.0,
+    0.5
+  ],
+  "control_box": null,
+  "model": "facebook/sam-audio-small-tv",
+  "seed": 0,
+  "mask_mode": "keep",
+  "python": "3.12.13",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "runs": {
+    "visual": {
+      "description": "",
+      "box": [
+        0.5,
+        0.0,
+        1.0,
+        0.5
+      ],
+      "seconds": 17.56,
+      "device": "mps",
+      "rtf": 1.76,
+      "target_rms_db": -48.2,
+      "residual_rms_db": -55.1,
+      "si_sdr_db": -27.64
+    },
+    "text_only": {
+      "description": "speech",
+      "box": null,
+      "seconds": 3.18,
+      "device": "mps",
+      "rtf": 0.32,
+      "target_rms_db": -48.1,
+      "residual_rms_db": -54.5,
+      "si_sdr_db": -28.22
+    }
+  },
+  "text_conditioning": "precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "torch": "2.15.0",
+  "device_requested": "mps",
+  "load_seconds": 4.0,
+  "frames": [
+    250,
+    524,
+    640
+  ],
+  "device_used": "mps",
+  "mixture_rms_db": -47.3,
+  "baseline_mixture_si_sdr_db": -28.49,
+  "si_sdr_improvement_db": 0.85,
+  "forbidden_modules_imported": [],
+  "rule_status": "Organizers' ruling (2 Nov 06:06 Madrid): SAM Audio and its frozen T5-base are allowed with disclosure; T5 may run locally, while precomputed text conditioning remains the default. This run: precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "verdict_hint": "speed OK, now listen"
+}
+
+Listen: spike/out/ab_B_keep/mixture.wav  vs  spike/out/ab_B_keep/target_visual.wav
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 4062.67it/s]
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+[visual] {'description': '', 'box': [0.0, 0.5, 0.5, 1.0], 'seconds': 18.36, 'device': 'mps', 'rtf': 1.84, 'target_rms_db': -48.1, 'residual_rms_db': -55.1, 'si_sdr_db': -34.77}
+[text_only] {'description': 'speech', 'box': None, 'seconds': 3.52, 'device': 'mps', 'rtf': 0.35, 'target_rms_db': -48.1, 'residual_rms_db': -54.5, 'si_sdr_db': -41.79}
+
+{
+  "clip": "spike/out/ab_C_keep/clip.mov",
+  "clip_seconds": 10.0,
+  "box": [
+    0.0,
+    0.5,
+    0.5,
+    1.0
+  ],
+  "control_box": null,
+  "model": "facebook/sam-audio-small-tv",
+  "seed": 0,
+  "mask_mode": "keep",
+  "python": "3.12.13",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "runs": {
+    "visual": {
+      "description": "",
+      "box": [
+        0.0,
+        0.5,
+        0.5,
+        1.0
+      ],
+      "seconds": 18.36,
+      "device": "mps",
+      "rtf": 1.84,
+      "target_rms_db": -48.1,
+      "residual_rms_db": -55.1,
+      "si_sdr_db": -34.77
+    },
+    "text_only": {
+      "description": "speech",
+      "box": null,
+      "seconds": 3.52,
+      "device": "mps",
+      "rtf": 0.35,
+      "target_rms_db": -48.1,
+      "residual_rms_db": -54.5,
+      "si_sdr_db": -41.79
+    }
+  },
+  "text_conditioning": "precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "torch": "2.15.0",
+  "device_requested": "mps",
+  "load_seconds": 4.1,
+  "frames": [
+    250,
+    524,
+    640
+  ],
+  "device_used": "mps",
+  "mixture_rms_db": -47.3,
+  "baseline_mixture_si_sdr_db": -42.69,
+  "si_sdr_improvement_db": 7.92,
+  "forbidden_modules_imported": [],
+  "rule_status": "Organizers' ruling (2 Nov 06:06 Madrid): SAM Audio and its frozen T5-base are allowed with disclosure; T5 may run locally, while precomputed text conditioning remains the default. This run: precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "verdict_hint": "speed OK, now listen"
+}
+
+Listen: spike/out/ab_C_keep/mixture.wav  vs  spike/out/ab_C_keep/target_visual.wav
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 2327.84it/s]
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+[visual] {'description': '', 'box': [0.5, 0.5, 1.0, 1.0], 'seconds': 21.49, 'device': 'mps', 'rtf': 2.15, 'target_rms_db': -48.2, 'residual_rms_db': -55.1, 'si_sdr_db': -12.67}
+[text_only] {'description': 'speech', 'box': None, 'seconds': 4.09, 'device': 'mps', 'rtf': 0.41, 'target_rms_db': -48.1, 'residual_rms_db': -54.5, 'si_sdr_db': -12.84}
+
+{
+  "clip": "spike/out/ab_D_keep/clip.mov",
+  "clip_seconds": 10.0,
+  "box": [
+    0.5,
+    0.5,
+    1.0,
+    1.0
+  ],
+  "control_box": null,
+  "model": "facebook/sam-audio-small-tv",
+  "seed": 0,
+  "mask_mode": "keep",
+  "python": "3.12.13",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "runs": {
+    "visual": {
+      "description": "",
+      "box": [
+        0.5,
+        0.5,
+        1.0,
+        1.0
+      ],
+      "seconds": 21.49,
+      "device": "mps",
+      "rtf": 2.15,
+      "target_rms_db": -48.2,
+      "residual_rms_db": -55.1,
+      "si_sdr_db": -12.67
+    },
+    "text_only": {
+      "description": "speech",
+      "box": null,
+      "seconds": 4.09,
+      "device": "mps",
+      "rtf": 0.41,
+      "target_rms_db": -48.1,
+      "residual_rms_db": -54.5,
+      "si_sdr_db": -12.84
+    }
+  },
+  "text_conditioning": "precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "torch": "2.15.0",
+  "device_requested": "mps",
+  "load_seconds": 3.9,
+  "frames": [
+    250,
+    524,
+    640
+  ],
+  "device_used": "mps",
+  "mixture_rms_db": -47.3,
+  "baseline_mixture_si_sdr_db": -13.45,
+  "si_sdr_improvement_db": 0.78,
+  "forbidden_modules_imported": [],
+  "rule_status": "Organizers' ruling (2 Nov 06:06 Madrid): SAM Audio and its frozen T5-base are allowed with disclosure; T5 may run locally, while precomputed text conditioning remains the default. This run: precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "verdict_hint": "speed OK, now listen"
+}
+
+Listen: spike/out/ab_D_keep/mixture.wav  vs  spike/out/ab_D_keep/target_visual.wav
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 4009.85it/s]
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+[visual] {'description': '', 'box': [0.0, 0.0, 0.5, 0.5], 'seconds': 24.04, 'device': 'mps', 'rtf': 2.4, 'target_rms_db': -48.2, 'residual_rms_db': -55.1, 'si_sdr_db': -32.13}
+[text_only] {'description': 'speech', 'box': None, 'seconds': 4.37, 'device': 'mps', 'rtf': 0.44, 'target_rms_db': -48.1, 'residual_rms_db': -54.5, 'si_sdr_db': -34.29}
+
+{
+  "clip": "spike/out/ab_A_remove/clip.mov",
+  "clip_seconds": 10.0,
+  "box": [
+    0.0,
+    0.0,
+    0.5,
+    0.5
+  ],
+  "control_box": null,
+  "model": "facebook/sam-audio-small-tv",
+  "seed": 0,
+  "mask_mode": "remove",
+  "python": "3.12.13",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "runs": {
+    "visual": {
+      "description": "",
+      "box": [
+        0.0,
+        0.0,
+        0.5,
+        0.5
+      ],
+      "seconds": 24.04,
+      "device": "mps",
+      "rtf": 2.4,
+      "target_rms_db": -48.2,
+      "residual_rms_db": -55.1,
+      "si_sdr_db": -32.13
+    },
+    "text_only": {
+      "description": "speech",
+      "box": null,
+      "seconds": 4.37,
+      "device": "mps",
+      "rtf": 0.44,
+      "target_rms_db": -48.1,
+      "residual_rms_db": -54.5,
+      "si_sdr_db": -34.29
+    }
+  },
+  "text_conditioning": "precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "torch": "2.15.0",
+  "device_requested": "mps",
+  "load_seconds": 3.7,
+  "frames": [
+    250,
+    524,
+    640
+  ],
+  "device_used": "mps",
+  "mixture_rms_db": -47.3,
+  "baseline_mixture_si_sdr_db": -32.91,
+  "si_sdr_improvement_db": 0.78,
+  "forbidden_modules_imported": [],
+  "rule_status": "Organizers' ruling (2 Nov 06:06 Madrid): SAM Audio and its frozen T5-base are allowed with disclosure; T5 may run locally, while precomputed text conditioning remains the default. This run: precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "verdict_hint": "speed OK, now listen"
+}
+
+Listen: spike/out/ab_A_remove/mixture.wav  vs  spike/out/ab_A_remove/target_visual.wav
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 2488.91it/s]
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+[visual] {'description': '', 'box': [0.5, 0.0, 1.0, 0.5], 'seconds': 24.27, 'device': 'mps', 'rtf': 2.43, 'target_rms_db': -48.2, 'residual_rms_db': -55.1, 'si_sdr_db': -27.63}
+[text_only] {'description': 'speech', 'box': None, 'seconds': 4.14, 'device': 'mps', 'rtf': 0.41, 'target_rms_db': -48.1, 'residual_rms_db': -54.5, 'si_sdr_db': -28.22}
+
+{
+  "clip": "spike/out/ab_B_remove/clip.mov",
+  "clip_seconds": 10.0,
+  "box": [
+    0.5,
+    0.0,
+    1.0,
+    0.5
+  ],
+  "control_box": null,
+  "model": "facebook/sam-audio-small-tv",
+  "seed": 0,
+  "mask_mode": "remove",
+  "python": "3.12.13",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "runs": {
+    "visual": {
+      "description": "",
+      "box": [
+        0.5,
+        0.0,
+        1.0,
+        0.5
+      ],
+      "seconds": 24.27,
+      "device": "mps",
+      "rtf": 2.43,
+      "target_rms_db": -48.2,
+      "residual_rms_db": -55.1,
+      "si_sdr_db": -27.63
+    },
+    "text_only": {
+      "description": "speech",
+      "box": null,
+      "seconds": 4.14,
+      "device": "mps",
+      "rtf": 0.41,
+      "target_rms_db": -48.1,
+      "residual_rms_db": -54.5,
+      "si_sdr_db": -28.22
+    }
+  },
+  "text_conditioning": "precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "torch": "2.15.0",
+  "device_requested": "mps",
+  "load_seconds": 3.7,
+  "frames": [
+    250,
+    524,
+    640
+  ],
+  "device_used": "mps",
+  "mixture_rms_db": -47.3,
+  "baseline_mixture_si_sdr_db": -28.49,
+  "si_sdr_improvement_db": 0.86,
+  "forbidden_modules_imported": [],
+  "rule_status": "Organizers' ruling (2 Nov 06:06 Madrid): SAM Audio and its frozen T5-base are allowed with disclosure; T5 may run locally, while precomputed text conditioning remains the default. This run: precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "verdict_hint": "speed OK, now listen"
+}
+
+Listen: spike/out/ab_B_remove/mixture.wav  vs  spike/out/ab_B_remove/target_visual.wav
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 2729.25it/s]
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+[visual] {'description': '', 'box': [0.0, 0.5, 0.5, 1.0], 'seconds': 24.24, 'device': 'mps', 'rtf': 2.42, 'target_rms_db': -48.2, 'residual_rms_db': -55.1, 'si_sdr_db': -34.69}
+[text_only] {'description': 'speech', 'box': None, 'seconds': 3.88, 'device': 'mps', 'rtf': 0.39, 'target_rms_db': -48.1, 'residual_rms_db': -54.5, 'si_sdr_db': -41.79}
+
+{
+  "clip": "spike/out/ab_C_remove/clip.mov",
+  "clip_seconds": 10.0,
+  "box": [
+    0.0,
+    0.5,
+    0.5,
+    1.0
+  ],
+  "control_box": null,
+  "model": "facebook/sam-audio-small-tv",
+  "seed": 0,
+  "mask_mode": "remove",
+  "python": "3.12.13",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "runs": {
+    "visual": {
+      "description": "",
+      "box": [
+        0.0,
+        0.5,
+        0.5,
+        1.0
+      ],
+      "seconds": 24.24,
+      "device": "mps",
+      "rtf": 2.42,
+      "target_rms_db": -48.2,
+      "residual_rms_db": -55.1,
+      "si_sdr_db": -34.69
+    },
+    "text_only": {
+      "description": "speech",
+      "box": null,
+      "seconds": 3.88,
+      "device": "mps",
+      "rtf": 0.39,
+      "target_rms_db": -48.1,
+      "residual_rms_db": -54.5,
+      "si_sdr_db": -41.79
+    }
+  },
+  "text_conditioning": "precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "torch": "2.15.0",
+  "device_requested": "mps",
+  "load_seconds": 4.3,
+  "frames": [
+    250,
+    524,
+    640
+  ],
+  "device_used": "mps",
+  "mixture_rms_db": -47.3,
+  "baseline_mixture_si_sdr_db": -42.69,
+  "si_sdr_improvement_db": 8.0,
+  "forbidden_modules_imported": [],
+  "rule_status": "Organizers' ruling (2 Nov 06:06 Madrid): SAM Audio and its frozen T5-base are allowed with disclosure; T5 may run locally, while precomputed text conditioning remains the default. This run: precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "verdict_hint": "speed OK, now listen"
+}
+
+Listen: spike/out/ab_C_remove/mixture.wav  vs  spike/out/ab_C_remove/target_visual.wav
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 2225.09it/s]
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+[visual] {'description': '', 'box': [0.5, 0.5, 1.0, 1.0], 'seconds': 20.83, 'device': 'mps', 'rtf': 2.08, 'target_rms_db': -48.2, 'residual_rms_db': -55.1, 'si_sdr_db': -12.69}
+[text_only] {'description': 'speech', 'box': None, 'seconds': 3.63, 'device': 'mps', 'rtf': 0.36, 'target_rms_db': -48.1, 'residual_rms_db': -54.5, 'si_sdr_db': -12.84}
+
+{
+  "clip": "spike/out/ab_D_remove/clip.mov",
+  "clip_seconds": 10.0,
+  "box": [
+    0.5,
+    0.5,
+    1.0,
+    1.0
+  ],
+  "control_box": null,
+  "model": "facebook/sam-audio-small-tv",
+  "seed": 0,
+  "mask_mode": "remove",
+  "python": "3.12.13",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "runs": {
+    "visual": {
+      "description": "",
+      "box": [
+        0.5,
+        0.5,
+        1.0,
+        1.0
+      ],
+      "seconds": 20.83,
+      "device": "mps",
+      "rtf": 2.08,
+      "target_rms_db": -48.2,
+      "residual_rms_db": -55.1,
+      "si_sdr_db": -12.69
+    },
+    "text_only": {
+      "description": "speech",
+      "box": null,
+      "seconds": 3.63,
+      "device": "mps",
+      "rtf": 0.36,
+      "target_rms_db": -48.1,
+      "residual_rms_db": -54.5,
+      "si_sdr_db": -12.84
+    }
+  },
+  "text_conditioning": "precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "torch": "2.15.0",
+  "device_requested": "mps",
+  "load_seconds": 3.8,
+  "frames": [
+    250,
+    524,
+    640
+  ],
+  "device_used": "mps",
+  "mixture_rms_db": -47.3,
+  "baseline_mixture_si_sdr_db": -13.45,
+  "si_sdr_improvement_db": 0.76,
+  "forbidden_modules_imported": [],
+  "rule_status": "Organizers' ruling (2 Nov 06:06 Madrid): SAM Audio and its frozen T5-base are allowed with disclosure; T5 may run locally, while precomputed text conditioning remains the default. This run: precomputed (/Users/raulacedo/src/earshot/earshot-app/assets/text_features.npz); T5 not loaded",
+  "verdict_hint": "speed OK, now listen"
+}
+
+Listen: spike/out/ab_D_remove/mixture.wav  vs  spike/out/ab_D_remove/target_visual.wav

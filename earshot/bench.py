@@ -177,7 +177,32 @@ def score_document(doc: dict, run: Path, truth: dict, truth_dir: Path) -> dict:
             entry["si_sdr_db"] = {"isolated": round(si_sdr(read_audio(run / person["stem"], SEPARATION_SR), ref), 2),
                                   "mixture": round(si_sdr(read_audio(run / doc["video"], SEPARATION_SR), ref), 2)}
         result["people"][n] = entry
+    reference_tracks = truth.get("reference_tracks") or {}
+    if reference_tracks:
+        from .envelope import correct_voice_rate, envelope_correlation
+        from .media import SEPARATION_SR, read_audio
+
+        references = {name: read_audio(truth_dir / path, SEPARATION_SR)
+                      for name, path in reference_tracks.items()}
+        mixture_audio = read_audio(run / doc["video"], SEPARATION_SR)
+        baseline_envelope = [round(envelope_correlation(mixture_audio, references[name]), 4) for name in references]
+        result["envelope"] = {
+            "people": {}, "mixture": baseline_envelope,
+            "mixture_correct_voice_rate": correct_voice_rate([baseline_envelope] * len(references)),
+            "si_sdr_note": "Far-field mixture is -32.91 dB against headsets; SI-SDR is not meaningful here.",
+        }
+        for name, person in ((name, next((p for p in doc["people"] if p["name"] == name), None))
+                             for name in references):
+            if person and person.get("stem"):
+                estimate = read_audio(run / person["stem"], SEPARATION_SR)
+                result["envelope"]["people"][name] = [
+                    round(envelope_correlation(estimate, reference), 4) for reference in references.values()
+                ]
+        result["envelope"]["correct_voice_rate"] = correct_voice_rate(list(result["envelope"]["people"].values()))
     result["summary"] = _summary(result["people"])
+    if "envelope" in result:
+        result["summary"]["correct_voice_rate"] = result["envelope"]["correct_voice_rate"]
+        result["summary"]["mixture_correct_voice_rate"] = result["envelope"]["mixture_correct_voice_rate"]
     return result
 
 
@@ -300,6 +325,11 @@ def _repeat_summary(repeats: list[dict]) -> dict:
              if "si_sdr_gain_db" in repeat["summary"]]
     if gains:
         summary["si_sdr_gain_db"] = _spread(gains)
+    if "correct_voice_rate" in repeats[0]["summary"]:
+        summary["correct_voice_rate"] = _spread([repeat["summary"]["correct_voice_rate"] for repeat in repeats])
+        summary["mixture_correct_voice_rate"] = _spread([
+            repeat["summary"]["mixture_correct_voice_rate"] for repeat in repeats
+        ])
     return summary
 
 
