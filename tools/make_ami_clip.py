@@ -40,16 +40,28 @@ Edited: four close-up cameras arranged in a 2×2 grid, cut to 12:25–13:40, aud
 
 
 def download(url: str, destination: Path) -> None:
+    import time
+    import urllib.error
+
     if destination.exists() and destination.stat().st_size:
         print(f"Cached {destination.name}", flush=True)
         return
     destination.parent.mkdir(parents=True, exist_ok=True)
     partial = destination.with_suffix(destination.suffix + ".part")
     request = urllib.request.Request(url, headers={"User-Agent": "Earshot-AMI-builder/1.0"})
-    print(f"Downloading {url}", flush=True)
-    with urllib.request.urlopen(request, timeout=120) as response, partial.open("wb") as output:
-        shutil.copyfileobj(response, output, length=1024 * 1024)
-    partial.replace(destination)
+    for attempt in range(5):
+        try:
+            print(f"Downloading {url}", flush=True)
+            with urllib.request.urlopen(request, timeout=120) as response, partial.open("wb") as output:
+                shutil.copyfileobj(response, output, length=1024 * 1024)
+            partial.replace(destination)
+            return
+        except (urllib.error.URLError, TimeoutError) as error:
+            if attempt == 4:
+                raise
+            delay = 2 ** attempt
+            print(f"Download failed ({error}); retrying in {delay}s", flush=True)
+            time.sleep(delay)
 
 
 def truth_from_annotations(archive: Path) -> dict:
