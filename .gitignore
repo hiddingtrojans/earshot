@@ -8,3 +8,10 @@ runs/
 *.mov
 spike/out/
 *.egg-info/
+.hf-cache/
+.hf-home/
+bench/.ami_cache/
+bench/ami_ES2008a/*
+!bench/ami_ES2008a/truth.json
+!bench/ami_ES2008a/taps.txt
+!bench/ami_ES2008a/ATTRIBUTION.md
