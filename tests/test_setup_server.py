@@ -98,3 +98,23 @@ def test_replay_post_returns_cached_run_without_calling_pipeline(tmp_path, monke
             post(base, {"taps": [{"name": "custom", "x": 0.5, "y": 0.5, "frame": 0},
                                        {"name": "other", "x": 0.79, "y": 0.37, "frame": 0}]})
         assert error.value.code == 400
+
+
+def test_subtitle_endpoints_work_offline(tmp_path):
+    run = tmp_path / "run"
+    run.mkdir()
+    doc = {
+        "people": [{"name": "Speaker A", "color": "#E4572E", "anchors": [[0, 0.25, 0.3]]}],
+        "captions": [{"person": 0, "start": 0.0, "end": 1.0, "text": "cached words"}],
+        "catchups": [],
+    }
+    (run / "earshot.json").write_text(json.dumps(doc))
+    with running_server(make_handler(run, True)) as base:
+        with urllib.request.urlopen(base + "/api/subtitles.vtt", timeout=2) as response:
+            assert response.headers["Content-Type"] == "text/vtt; charset=utf-8"
+            vtt = response.read().decode()
+        with urllib.request.urlopen(base + "/api/subtitles.srt", timeout=2) as response:
+            srt = response.read().decode()
+    assert "::cue(.spk0) { color: #E4572E; }" in vtt
+    assert "cached words" in vtt
+    assert "[Speaker A] cached words" in srt

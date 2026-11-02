@@ -87,12 +87,27 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
             self.end_headers()
             self.wfile.write(body)
 
+        def _text(self, text: str, content_type: str):
+            body = text.encode()
+            self.send_response(HTTPStatus.OK)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
         def do_GET(self):  # noqa: N802
             url = urlparse(self.path)
             if url.path in ("/", "/index.html"):
                 return self._file(WEB / ("setup.html" if setup_video else "index.html"))
             if url.path == "/viewer":
                 return self._file(WEB / "index.html")
+            if url.path in ("/api/subtitles.vtt", "/api/subtitles.srt"):
+                from .export import srt, vtt
+
+                current = json.loads(doc_path.read_text())
+                if url.path.endswith(".vtt"):
+                    return self._text(vtt(current), "text/vtt; charset=utf-8")
+                return self._text(srt(current), "application/x-subrip; charset=utf-8")
             if url.path == "/api/setup/info" and setup_video:
                 info = probe(setup_video)
                 return self._json({"width": info.width, "height": info.height, "fps": info.fps, "frames": info.frames,

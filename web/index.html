@@ -34,8 +34,15 @@
   header .tagline { color: var(--ink-soft); }
   header .mode { margin-left: auto; display: inline-flex; border: 1px solid var(--rule); border-radius: 999px;
                  background: var(--paper); padding: 3px; }
-  .mode button { border: 0; background: none; padding: 6px 14px; border-radius: 999px; }
+  .mode button, .mode summary { border: 0; background: none; padding: 6px 14px; border-radius: 999px; }
   .mode button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .download { position: relative; }
+  .download summary { cursor: pointer; list-style: none; display: block; }
+  .download div { position: absolute; right: 0; top: 34px; z-index: 5; display: grid; min-width: 150px; background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 6px; }
+  .download a, .person .audio-download { color: var(--ink); text-decoration: none; padding: 5px 9px; }
+  .download a:hover, .person .audio-download:hover { background: var(--porcelain); }
+  .person .audio-download { border: 1px solid var(--rule); border-radius: 7px; font-size: 14px; }
+  .audio-unavailable { color: var(--ink-soft); font-size: 13px; padding: 5px 0; }
 
   main { min-width: 0; }
   .stage { position: relative; background: var(--stage); border-radius: 6px; overflow: hidden; line-height: 0; }
@@ -112,9 +119,13 @@
   <header>
     <h1>Earshot</h1>
     <span class="tagline">Every voice at the table, captioned, even when people talk at once.</span>
-    <div class="mode" role="group" aria-label="Caption style">
+    <div class="mode" role="group" aria-label="Caption and export controls">
       <button id="mode-earshot" aria-pressed="true">Earshot captions</button>
       <button id="mode-single" aria-pressed="false">Single-stream captions</button>
+      <details class="download"><summary>Download subtitles</summary><div>
+        <a href="/api/subtitles.vtt" download="earshot.vtt">WebVTT (colour and position)</a>
+        <a href="/api/subtitles.srt" download="earshot.srt">SRT (speaker labels)</a>
+      </div></details>
     </div>
   </header>
 
@@ -252,8 +263,22 @@ function buildControls() {
       ${p.stem ? `<button data-solo="${i}" aria-pressed="false">Hear only ${p.name}</button>` : ""}
       <button data-miss="${i}">What did ${p.name} say?</button>`;
     el.querySelector(".name").textContent = p.name;
+    if (p.stem) {
+      const link = document.createElement("a");
+      link.className = "audio-download";
+      link.href = p.stem;
+      link.download = `${p.name.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}_voice.${p.stem.split(".").pop()}`;
+      link.textContent = `Download ${p.name}'s voice`;
+      el.appendChild(link);
+    }
     box.appendChild(el);
   });
+  if (doc.separator.includes("Earshot-Lite")) {
+    const note = document.createElement("span");
+    note.className = "audio-unavailable";
+    note.textContent = "Isolated audio unavailable in Lite (no separation).";
+    box.appendChild(note);
+  }
   const all = document.createElement("button");
   all.className = "table-btn"; all.dataset.miss = "all"; all.textContent = "What did the table say?";
   box.appendChild(all);

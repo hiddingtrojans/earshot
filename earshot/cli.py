@@ -41,6 +41,11 @@ def main() -> None:
     b.add_argument("--repeat", type=int,
                    help="re-run Voice transcription N times with repeat-specific cache keys")
 
+    e = sub.add_parser("export", help="export per-person subtitles")
+    e.add_argument("run", type=Path)
+    e.add_argument("--vtt", type=Path)
+    e.add_argument("--srt", type=Path)
+
     args = p.parse_args()
     if getattr(args, "replay", False):
         os.environ["EARSHOT_REPLAY"] = "1"
@@ -67,6 +72,12 @@ def main() -> None:
         from .bench import run_bench
 
         run_bench(args.run, args.truth, args.out, repeat=args.repeat)
+    elif args.cmd == "export":
+        from .export import export
+
+        if not args.vtt and not args.srt:
+            e.error("provide --vtt and/or --srt")
+        export(args.run, args.vtt, args.srt)
 
 
 if __name__ == "__main__":
