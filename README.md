@@ -24,6 +24,7 @@ Earshot takes a recorded video of the table and:
 | SAM Audio (`facebook/sam-audio-small-tv`) | This computer | Optional visual-prompted voice separation; implemented, but **blocked by weight approval and not used in this demo** | `earshot/separation.py` |
 | `muse-voice-transcribe-1.0` | Meta Model API | Diarizes the raw mix as the baseline and transcribes isolated voices when available | `earshot/transcribe.py` |
 | `muse-spark-1.3` | Meta Model API | Groups threads, writes cited catch-ups, and translates caption text | `earshot/spark.py` |
+| `muse-glimmer` | This computer (Ollama) | Optional local cited catch-ups, verified separately on the 10 s AMI run | `earshot/spark.py` |
 
 Everything else is deterministic code: voice activity (frame energy with hysteresis), the caption timeline and bleed filter, Lite assignment, citation checks, metrics, subtitle export, and FFmpeg for media. No other model runs at runtime.
 
@@ -90,6 +91,19 @@ hf auth login                  # access to facebook/sam-audio-small-tv is gated 
 
 `spike/earshot_spike.py` checks that SAM Audio runs on your machine, times it, and scores the separation on a clip with known ground truth.
 
+### Optional local Muse Glimmer
+
+Glimmer can replace Spark for cited catch-ups while keeping conversation text on this computer. It uses Ollama's OpenAI-compatible endpoint (`EARSHOT_LOCAL_BASE_URL`, default `http://localhost:11434/v1`), JSON schema when supported with JSON-mode fallback, and the same deterministic citation/name/number verifier as Spark. Local calls have no Meta API charge and are cached like hosted calls.
+
+```bash
+ollama pull muse-glimmer   # about 18 GB installed
+python -m earshot analyze table.mp4 \
+  --tap "Speaker A@0.31,0.40" --tap "Speaker B@0.68,0.38" \
+  --out runs/table-glimmer --separator lite --catchup-model glimmer
+```
+
+The included 75 s demo uses Spark. Glimmer was verified separately on the real 10 s AMI run with three local calls; their replays were cache hits and the viewer labels them “On this computer.” If showing Glimmer in the submission video, explain that it handles catch-ups locally and why that keeps the transcript on-device.
+
 ## Dinner Table Bench
 
 `python -m earshot bench RUN --truth truth.json` scores a run against what each person actually said:
@@ -140,6 +154,7 @@ tests/            deterministic unit tests and synthetic runs with explicitly fa
 - Lite does not isolate voices. Its measured right-person and overlap metrics underperform the generous baseline, and the included Lite demo does **not** demonstrate recovery of simultaneous per-person captions or isolated listening.
 - Long WebVTT cues can lay out differently across players. Native browser `<track>` rendering and colours were checked; VLC was not installed, so VLC playback is unverified.
 - Translation failures retain original text and are labelled visibly. Per-person audio buttons appear only for real isolated stems.
+- Glimmer can return empty answers or citations outside the available captions. The verifier rejects those cases and falls back to verbatim captions; local inference is slower than the hosted Spark calls on this machine.
 
 ## Use it responsibly
 
