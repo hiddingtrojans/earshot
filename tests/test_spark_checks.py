@@ -23,6 +23,11 @@ def test_wrong_number_is_replaced_by_verbatim_caption():
     assert out[0]["text"] == "Raúl: “I booked it for 8 at Casa Lola”"
 
 
+def test_caption_id_in_sentence_is_not_an_unsupported_number():
+    out = verify_catchup([{"text": "Raúl booked Casa Lola for 8. c002", "cite": ["c002"]}], caps(), NAMES)
+    assert out == [{"text": "Raúl booked Casa Lola for 8. c002", "cite": ["c002"], "status": "verified"}]
+
+
 def test_name_not_in_cited_captions_is_rejected():
     out = verify_catchup([{"text": "Marta booked the table.", "cite": ["c002"]}], caps(), NAMES)
     assert out[0]["status"] == "replaced"

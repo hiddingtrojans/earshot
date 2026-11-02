@@ -178,7 +178,8 @@ def verify_catchup(sentences: list[dict], window: list[Caption], names: list[str
             if re.search(rf"\b{re.escape(n.lower())}\b", text.lower()) and n.lower() not in speakers \
                     and n.lower() not in cited_text:
                 problems.append(f"names {n}, who isn't in the cited captions")
-        for num in re.findall(r"\d+(?:[.,:]\d+)?", text):
+        number_text = re.sub(r"\bc\d+\b", "", text)
+        for num in re.findall(r"\d+(?:[.,:]\d+)?", number_text):
             if num not in cited_text:
                 problems.append(f"number {num} not in the cited captions")
         if len(text.split()) > MAX_SENTENCE_WORDS:
