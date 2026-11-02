@@ -66,3 +66,6 @@ def test_same_run_reuses_saved_tracks(tmp_path, fakes, monkeypatch):
     monkeypatch.setattr(pipeline, "track_people", unexpected_tracking)
     doc = pipeline.analyze(video, taps, out, options)
     assert json.loads(doc.read_text())["captions"]
+    doc.unlink()
+    doc = pipeline.analyze(video, taps, out, options)
+    assert json.loads(doc.read_text())["captions"]

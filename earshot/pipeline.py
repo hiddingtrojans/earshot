@@ -51,21 +51,29 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
     names = [t.name for t in taps]
 
     tracks_path = out / "tracks.json"
+    tracks_request = out / "tracks_request.json"
     tracks = None
     previous = out / "earshot.json"
-    if tracks_path.exists() and previous.exists():
+    expected_taps = [[tap.x, tap.y, tap.frame] for tap in taps]
+    cached_taps = None
+    if previous.exists():
         prior = json.loads(previous.read_text())
-        prior_taps = [person.get("tap") for person in prior.get("people", [])]
-        expected_taps = [[tap.x, tap.y, tap.frame] for tap in taps]
-        if prior_taps == expected_taps and prior.get("people", []) and names == [p["name"] for p in prior["people"]]:
-            cached = Tracks.load(tracks_path)
-            if (cached.width, cached.height, cached.frames) == (info.width, info.height, info.frames) \
-                    and cached.fps == info.fps:
-                tracks = cached
+        if names == [p["name"] for p in prior.get("people", [])]:
+            cached_taps = [person.get("tap") for person in prior.get("people", [])]
+    elif tracks_request.exists():
+        request = json.loads(tracks_request.read_text())
+        if request.get("names") == names:
+            cached_taps = request.get("taps")
+    if tracks_path.exists() and cached_taps == expected_taps:
+        cached = Tracks.load(tracks_path)
+        if (cached.width, cached.height, cached.frames) == (info.width, info.height, info.frames) \
+                and cached.fps == info.fps:
+            tracks = cached
     if tracks is None:
         report("Tracking people with SAM 3.1")
         tracks = track_people(analysis, taps, info, calls)
         tracks.save(tracks_path)
+        tracks_request.write_text(json.dumps({"names": names, "taps": expected_taps}) + "\n")
     else:
         report("Loading cached person tracks")
 
