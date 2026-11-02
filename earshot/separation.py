@@ -28,6 +28,7 @@ from .media import SEPARATION_SR
 from .tracking import Tracks
 
 DEFAULT_MODEL = os.environ.get("EARSHOT_SAM_AUDIO", "facebook/sam-audio-small-tv")
+DEFAULT_TEXT_FEATURES = Path(__file__).resolve().parent.parent / "assets" / "text_features.npz"
 
 
 def crossfade_windows(total: int, window: int, overlap: int) -> list[tuple[int, int]]:
@@ -75,13 +76,18 @@ class SamAudioSeparator:
     window_s: float = 10.0
     overlap_s: float = 1.0
     work_width: int = 640
-    text_features: Path | None = None
+    text_features: Path | None = DEFAULT_TEXT_FEATURES
+    allow_t5: bool = False         # never run T5 unless explicitly allowed (fail closed)
     seed: int = 0
 
     name = "SAM Audio (local)"
 
     def __post_init__(self) -> None:
         self._model = self._processor = None
+        if self.text_features is None and not self.allow_t5:
+            raise ValueError(
+                "SAM Audio would run Google's T5 encoder at runtime. Pass text_features "
+                "(precomputed, see tools/precompute_text_features.py) or allow_t5=True.")
 
     # ---------- model ----------
     def _load(self):
@@ -164,17 +170,24 @@ class SamAudioSeparator:
 # --------------------------------------------------------------------------- #
 def _install_cached_text_encoder(path: Path) -> None:
     """Replace SAM Audio's T5 text encoder with a lookup of precomputed outputs."""
-    import torch
-
     import sam_audio.model.model as sam_model
+
+    sam_model.T5TextEncoder = cached_text_encoder_class(path)
+
+
+def cached_text_encoder_class(path: Path):
+    import torch
 
     data = np.load(path, allow_pickle=False)
     table = {str(k): data[k] for k in data.files}
 
     class CachedTextEncoder(torch.nn.Module):
-        def __init__(self, cfg):
+        def __init__(self, cfg=None):
             super().__init__()
             self.register_buffer("_device_probe", torch.zeros(1), persistent=False)
+
+        def _load_from_state_dict(self, state_dict, prefix, *args, **kwargs):
+            return  # no T5 weights here; ignore any stored under this prefix
 
         def forward(self, texts: list[str]):
             missing = [t for t in texts if f"feat::{t}" not in table]
@@ -191,4 +204,4 @@ def _install_cached_text_encoder(path: Path) -> None:
             dev = self._device_probe.device
             return out.to(dev), mask.to(dev)
 
-    sam_model.T5TextEncoder = CachedTextEncoder
+    return CachedTextEncoder

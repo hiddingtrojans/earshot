@@ -27,7 +27,7 @@ Everything else is deterministic code: voice activity (frame energy with hystere
 ### Rules notes (Meta-only runtime models)
 
 - SAM Audio's released config builds optional **re-rankers**, including **CLAP**, which isn't a Meta model. Earshot turns them off with config overrides (`text_ranker=None, visual_ranker=None, span_predictor=None`) and installs SAM Audio without them (`--no-deps`).
-- SAM Audio conditions on text through a frozen **T5-base** encoder (Google) inside the model, on every call. We've asked the organizers whether that's acceptable inside a Meta open model. For a fixed prompt that encoder's output is a constant, so `--text-features text_features.npz` (made once with `tools/precompute_text_features.py`) replaces it with a lookup. In that mode T5 is never loaded or run at runtime. We use it only as the organizers advise.
+- SAM Audio conditions on text through a frozen **T5-base** encoder (Google) inside the model, on every call. The organizers' bot said that running T5 at runtime would not meet the rule. So Earshot **never loads T5**: for its two fixed prompts the encoder's output is a constant, precomputed once offline (`assets/text_features.npz`, made with `tools/precompute_text_features.py`) and looked up at runtime. We've asked the organizers to confirm the constants are acceptable. Without them, Earshot refuses to run SAM Audio unless you pass `--allow-t5` explicitly.
 - **Earshot-Lite** (`--separator lite`) needs no SAM Audio at all. It gives each diarized speaker to the face whose head moves while they talk (measured inside the SAM 3.1 masks). It keeps face-anchored captions without manual matching, but can't recover overlapping words.
 
 ## Run it

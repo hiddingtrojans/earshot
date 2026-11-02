@@ -22,7 +22,8 @@ COLORS = ["#E4572E", "#2E86AB", "#7BAE37", "#9B5DE5", "#F2A541", "#17BEBB"]
 class Options:
     separator: str = "samaudio"      # "samaudio" | "lite"
     replay: bool = False
-    text_features: Path | None = None
+    text_features: Path | None = None   # None = repo default (assets/text_features.npz)
+    allow_t5: bool = False
     prompt: str = ""
     spark: bool = True
     catchup_every: float = 10.0      # precompute catch-ups so replay mode has them
@@ -54,7 +55,11 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
     if opt.separator == "samaudio":
         from .separation import SamAudioSeparator
 
-        sep = SamAudioSeparator(description=opt.prompt, text_features=opt.text_features)
+        from .separation import DEFAULT_TEXT_FEATURES
+
+        # Default: precomputed text conditioning, so T5 never runs. --allow-t5 alone runs SAM Audio as released.
+        features = None if (opt.allow_t5 and not opt.text_features) else (opt.text_features or DEFAULT_TEXT_FEATURES)
+        sep = SamAudioSeparator(description=opt.prompt, text_features=features, allow_t5=opt.allow_t5)
         turns, activity = [], []
         for p, name in enumerate(names):
             iso = sep.separate(analysis, mixture, tracks, p, calls)

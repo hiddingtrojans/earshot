@@ -19,7 +19,10 @@ def main() -> None:
     a.add_argument("--out", type=Path, required=True)
     a.add_argument("--separator", choices=["samaudio", "lite"], default="samaudio")
     a.add_argument("--prompt", default="", help='SAM Audio text prompt alongside the visual one, e.g. "speech"')
-    a.add_argument("--text-features", type=Path, help="precomputed SAM Audio text features (no T5 at runtime)")
+    a.add_argument("--text-features", type=Path,
+                   help="precomputed SAM Audio text features (default: assets/text_features.npz; no T5 at runtime)")
+    a.add_argument("--allow-t5", action="store_true",
+                   help="let SAM Audio run its own T5 text encoder (only if organizers allow it)")
     a.add_argument("--no-spark", action="store_true")
     a.add_argument("--catchup-every", type=float, default=10.0)
     a.add_argument("--replay", action="store_true", help="use cached model responses only (no API key)")
@@ -44,7 +47,7 @@ def main() -> None:
 
         doc = analyze(args.video, [Tap.parse(t) for t in args.tap], args.out, Options(
             separator=args.separator, replay=args.replay, text_features=args.text_features,
-            prompt=args.prompt, spark=not args.no_spark, catchup_every=args.catchup_every))
+            allow_t5=args.allow_t5, prompt=args.prompt, spark=not args.no_spark, catchup_every=args.catchup_every))
         print(f"wrote {doc}\nview it: python -m earshot serve {args.out}")
     elif args.cmd == "serve":
         from .server import serve

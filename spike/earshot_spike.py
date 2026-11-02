@@ -47,6 +47,7 @@ Setup (macOS, Apple Silicon)
   # --no-deps: perception_models' requirements pull decord and xformers, which
   # have no macOS arm64 wheels and aren't needed for SAM Audio inference.
   uv pip install --no-deps "git+https://github.com/facebookresearch/perception_models@unpin-deps"
+  # (run from the repo root so the default assets/text_features.npz is found)
   # --no-deps: skips laion-clap (a non-Meta model, only used by an optional
   # re-ranker) and imagebind. This script disables the re-rankers and checks
   # that neither was imported.
@@ -58,8 +59,9 @@ Compliance notes (hackathon rule: every runtime model must be a Meta model)
 * Re-rankers (CLAP + judge for text, ImageBind for visual) and the span
   predictor are switched off via config overrides, so they are never built.
 * SAM Audio's own text conditioning runs Google's T5-base encoder on every
-  call (sam_audio/model/text_encoder.py), even for visual prompts. That is an
-  open question for the organizers; the report flags it.
+  call (sam_audio/model/text_encoder.py). The organizers' bot said that would
+  not meet the rule, so by default this script swaps in precomputed outputs
+  (assets/text_features.npz) and T5 is never loaded. --allow-t5 turns that off.
 """
 
 from __future__ import annotations
@@ -252,6 +254,37 @@ def as_numpy(t) -> np.ndarray:
     return np.asarray(t, dtype=np.float32).reshape(-1)
 
 
+def install_cached_text_encoder(path: Path) -> None:
+    """Swap SAM Audio's T5 text encoder for precomputed outputs (no T5 at runtime)."""
+    import torch
+
+    import sam_audio.model.model as sam_model
+
+    if not path.exists():
+        sys.exit(f"{path} not found: use the repo's assets/text_features.npz, or pass --allow-t5")
+    data = np.load(path)
+    table = {k: data[k] for k in data.files}
+
+    class CachedTextEncoder(torch.nn.Module):
+        def __init__(self, cfg=None):
+            super().__init__()
+            self.register_buffer("_probe", torch.zeros(1), persistent=False)
+
+        def _load_from_state_dict(self, *args, **kwargs):
+            return
+
+        def forward(self, texts):
+            feats = [torch.from_numpy(table[f"feat::{t}"]) for t in texts]
+            n = max(f.shape[0] for f in feats)
+            out = torch.zeros(len(texts), n, feats[0].shape[1])
+            mask = torch.zeros(len(texts), n, dtype=torch.bool)
+            for i, f in enumerate(feats):
+                out[i, : f.shape[0]], mask[i, : f.shape[0]] = f, True
+            return out.to(self._probe.device), mask.to(self._probe.device)
+
+    sam_model.T5TextEncoder = CachedTextEncoder
+
+
 def cmd_run(a: argparse.Namespace) -> None:
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -292,6 +325,11 @@ def cmd_run(a: argparse.Namespace) -> None:
     import torch
     from torchcodec.decoders import VideoDecoder
 
+    if not a.allow_t5:
+        install_cached_text_encoder(Path(a.text_features))
+        report["text_conditioning"] = f"precomputed ({a.text_features}); T5 not loaded"
+    else:
+        report["text_conditioning"] = "SAM Audio's own T5 encoder (--allow-t5)"
     from sam_audio import SAMAudio, SAMAudioProcessor
 
     device = pick_device(a.device)
@@ -376,10 +414,10 @@ def finish(out: Path, report: dict, ref, mixture: np.ndarray) -> None:
     report["forbidden_modules_imported"] = sorted(
         m for m in sys.modules if m.split(".")[0] in forbidden
     )
-    report["open_rule_question"] = (
-        "SAM Audio runs Google's T5-base text encoder internally on every call "
-        "(sam_audio/model/text_encoder.py). Ask organizers whether that is acceptable "
-        "inside a Meta open model."
+    report["rule_status"] = (
+        "Organizers' bot (2 Nov): T5 running inside SAM Audio at runtime would not meet the rule; "
+        "whether precomputed constants are OK is with the organizers. This run: "
+        + report.get("text_conditioning", "dry run")
     )
     vis = report["runs"].get("visual", {})
     rtf = vis.get("rtf")
@@ -423,6 +461,9 @@ def main() -> None:
     r.add_argument("--device", default="auto", choices=["auto", "mps", "cpu", "cuda"])
     r.add_argument("--out", default="spike/run")
     r.add_argument("--dry-run", action="store_true", help="test the plumbing without loading the model")
+    r.add_argument("--text-features", default=str(Path(__file__).resolve().parent.parent / "assets" / "text_features.npz"),
+                   help="precomputed text conditioning (default: the repo's assets/text_features.npz)")
+    r.add_argument("--allow-t5", action="store_true", help="run SAM Audio's own T5 encoder instead")
     r.set_defaults(func=cmd_run)
 
     a = p.parse_args()
