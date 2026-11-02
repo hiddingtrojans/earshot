@@ -216,6 +216,7 @@ def _score_repeats(run: Path, truth: dict, truth_dir: Path, count: int) -> list[
     mixture = read_audio(run / doc["video"], SEPARATION_SR)
     mix24 = resample(mixture, SEPARATION_SR, TRANSCRIBE_SR)
     lite = "Earshot-Lite" in doc["separator"]
+    spark_av = "Spark AV" in doc["separator"]
     if lite:
         from .lite import attribute_turns, gray_frames, head_motion
         from .tracking import Tracks
@@ -223,6 +224,8 @@ def _score_repeats(run: Path, truth: dict, truth_dir: Path, count: int) -> list[
         tracks = Tracks.load(run / "tracks.json")
         frames = gray_frames(run / doc["video"])
         motion = [head_motion(frames, tracks, person) for person in range(len(names))]
+        isolated = []
+    elif spark_av:
         isolated = []
     else:
         if not all(person.get("stem") for person in doc["people"]):
@@ -238,6 +241,13 @@ def _score_repeats(run: Path, truth: dict, truth_dir: Path, count: int) -> list[
             turns = [[Turn(str(person), turn.start, turn.end, turn.text) for turn in baseline
                       if mapping.get(turn.speaker) == person] for person in range(len(names))]
             activity = [[(turn.start, turn.end) for turn in person_turns] for person_turns in turns]
+        elif spark_av:
+            from .sparkav import transcribe_windows
+            from .tracking import Tap
+
+            taps = [Tap(person["name"], *person["tap"]) for person in doc["people"]]
+            turns, activity = transcribe_windows(run / doc["video"], taps, baseline, doc["info"]["duration"],
+                                                calls, repeat=index)
         else:
             turns = [transcribe(resample(audio, SEPARATION_SR, TRANSCRIBE_SR), calls,
                                 purpose=f"bench repeat {index}: transcribe {name}'s isolated voice", repeat=index)

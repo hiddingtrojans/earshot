@@ -17,7 +17,7 @@ def main() -> None:
                    help='person to follow: "Name@x,y" (fractions of width/height on frame 0), '
                         'or "Name@x,y#frame"; repeat per person')
     a.add_argument("--out", type=Path, required=True)
-    a.add_argument("--separator", choices=["samaudio", "lite"], default="samaudio")
+    a.add_argument("--separator", choices=["samaudio", "lite", "spark-av"], default="samaudio")
     a.add_argument("--prompt", default="", help='SAM Audio text prompt alongside the visual one, e.g. "speech"')
     a.add_argument("--text-features", type=Path,
                    help="precomputed SAM Audio text features (default: assets/text_features.npz; no T5 at runtime)")

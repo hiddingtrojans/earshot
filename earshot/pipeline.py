@@ -105,6 +105,12 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
                  for p in range(len(names))]
         activity = [[(t.start, t.end) for t in person_turns] for person_turns in turns]
         separator_name = "none (Earshot-Lite: mouth-motion attribution)"
+    elif opt.separator == "spark-av":
+        from .sparkav import transcribe_windows
+
+        report("Transcribing overlapping speech with unverified Muse Spark AV")
+        turns, activity = transcribe_windows(analysis, taps, baseline, info.duration, calls)
+        separator_name = "Muse Spark AV (unverified audiovisual transcription)"
     else:
         raise ValueError(f"unknown separator {opt.separator!r}")
 
