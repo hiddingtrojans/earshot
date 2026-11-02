@@ -188,6 +188,7 @@ class SamAudioSeparator:
                      for person in people]
             masks = [F.interpolate(mask, size=(h, self.work_width), mode="nearest").bool() for mask in masks]
             audio = torch.from_numpy(mixture[s0:s1]).unsqueeze(0)
+            window_started = time.perf_counter()
             try:
                 batch = self._processor(
                     audios=[audio] * len(people), descriptions=[self.description] * len(people),
@@ -224,6 +225,8 @@ class SamAudioSeparator:
             gc.collect()
             if self.device == "mps":
                 torch.mps.empty_cache()
+            print(f"SAM Audio device={self.device} people={people} window {s0/sr:.0f}-{s1/sr:.0f}s "
+                  f"total={time.perf_counter() - window_started:.1f}s", flush=True)
         audio = {person: overlap_add(chunks[person], mixture.size, int(self.overlap_s * sr))
                  for person in people}
         timings = {person: round(milliseconds * 1000) for person, milliseconds in timings.items()}
