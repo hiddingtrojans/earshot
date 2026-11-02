@@ -301,7 +301,7 @@ def cmd_run(a: argparse.Namespace) -> None:
 
     report: dict = {
         "clip": str(clip), "clip_seconds": round(clip_s, 2), "box": a.box,
-        "control_box": a.control_box, "model": a.model,
+        "control_box": a.control_box, "model": a.model, "seed": a.seed,
         "python": sys.version.split()[0], "platform": platform.platform(),
         "runs": {},
     }
@@ -324,6 +324,8 @@ def cmd_run(a: argparse.Namespace) -> None:
     os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
     import torch
     from torchcodec.decoders import VideoDecoder
+
+    torch.manual_seed(a.seed)
 
     if not a.allow_t5:
         install_cached_text_encoder(Path(a.text_features))
@@ -459,6 +461,7 @@ def main() -> None:
     r.add_argument("--text", default="", help='optional text prompt alongside the box, e.g. "male speech"')
     r.add_argument("--model", default="facebook/sam-audio-small-tv")
     r.add_argument("--device", default="auto", choices=["auto", "mps", "cpu", "cuda"])
+    r.add_argument("--seed", type=int, default=0)
     r.add_argument("--out", default="spike/run")
     r.add_argument("--dry-run", action="store_true", help="test the plumbing without loading the model")
     r.add_argument("--text-features", default=str(Path(__file__).resolve().parent.parent / "assets" / "text_features.npz"),
