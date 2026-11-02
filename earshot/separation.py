@@ -118,25 +118,40 @@ class SamAudioSeparator:
 
     # ---------- separation ----------
     def separate(self, video: Path, mixture: np.ndarray, tracks: Tracks, person: int, calls: CallLog) -> np.ndarray:
-        mask_digest = hashlib.sha256(
-            b"".join(tracks.regions[person][f][4] for f in sorted(tracks.regions[person]))
-        ).hexdigest()
+        return self.separate_people(video, mixture, tracks, calls, [person])[person]
+
+    def separate_people(self, video: Path, mixture: np.ndarray, tracks: Tracks, calls: CallLog,
+                        people: list[int] | None = None) -> dict[int, np.ndarray]:
+        people = list(range(len(tracks.names))) if people is None else people
+        mask_digest = hashlib.sha256(b"".join(
+            tracks.regions[person][f][4] for person in people for f in sorted(tracks.regions[person])
+        )).hexdigest()
         key = (content_key(mixture.tobytes()), mask_digest, self.description, self.window_s,
-               self.overlap_s, self.work_width, self.seed, self.mask_mode, bool(self.text_features))
-        out_holder: dict = {}
+               self.overlap_s, self.work_width, self.seed, self.mask_mode, bool(self.text_features),
+               tuple(people))
+        out_holder: dict[int, np.ndarray] = {}
 
         def run():
-            audio = self._separate_uncached(video, mixture, tracks, person)
-            name = f"sep_{content_key(*key)}.npy"
-            np.save(calls.calls_dir / name, audio)
-            out_holder["audio"] = audio
-            return {"npy": name, "device": self.device}, {"device": self.device, "person": tracks.names[person]}
+            audio, timings, batching, errors = self._separate_uncached(video, mixture, tracks, people)
+            stems = {}
+            for person, samples in audio.items():
+                name = f"sep_{content_key(*key, person)}.npy"
+                np.save(calls.calls_dir / name, samples)
+                stems[str(person)] = name
+            out_holder.update(audio)
+            return {"stems": stems, "timings_ms": timings, "batching": batching, "errors": errors}, {
+                "device": self.device, "timings_ms": timings, "batching": batching,
+            }
 
-        res = calls.cached(model=self.model_id, purpose=f"isolate {tracks.names[person]}'s voice",
-                           where="local", key_parts=key, fn=run)
-        return out_holder.get("audio", np.load(calls.calls_dir / res["npy"]))
+        result = calls.cached(model=self.model_id, purpose="isolate tapped voices", where="local",
+                              key_parts=key, fn=run)
+        return {person: out_holder.get(person, np.load(calls.calls_dir / result["stems"][str(person)]))
+                for person in people}
 
-    def _separate_uncached(self, video: Path, mixture: np.ndarray, tracks: Tracks, person: int) -> np.ndarray:
+    def _separate_uncached(self, video: Path, mixture: np.ndarray, tracks: Tracks, people: list[int]):
+        import gc
+        import time
+
         import torch
         import torch.nn.functional as F
         from torchcodec.decoders import VideoDecoder
@@ -147,32 +162,60 @@ class SamAudioSeparator:
         decoder = VideoDecoder(str(video), dimension_order="NCHW")
         n_frames = min(len(decoder), tracks.frames or len(decoder))
         windows = crossfade_windows(mixture.size, int(self.window_s * sr), int(self.overlap_s * sr))
-        chunks = []
+        chunks = {person: [] for person in people}
+        timings = {str(person): 0.0 for person in people}
+        batching, errors = "batched", []
         for s0, s1 in windows:
             f0 = int(s0 / sr * fps)
             f1 = max(f0 + 1, min(n_frames, int(np.ceil(s1 / sr * fps))))
-            masks = tracks.masks(person, f0, f1)
-            if not masks.any():  # person not visible: nothing to isolate here
-                chunks.append((s0, np.zeros(s1 - s0, dtype=np.float32)))
-                continue
-            frames = decoder.get_frames_in_range(f0, f1).data  # (n, 3, H, W) uint8
+            frames = decoder.get_frames_in_range(f0, f1).data
             h = int(round(frames.shape[2] * self.work_width / frames.shape[3] / 2) * 2)
             frames = F.interpolate(frames.float(), size=(h, self.work_width), mode="bilinear",
                                    antialias=True).round().clamp(0, 255).to(torch.uint8)
-            m = torch.from_numpy(masks[:, None].astype(np.float32))
-            m = F.interpolate(m, size=(h, self.work_width), mode="nearest").bool()
+            masks = [torch.from_numpy(tracks.masks(person, f0, f1)[:, None].astype(np.float32))
+                     for person in people]
+            masks = [F.interpolate(mask, size=(h, self.work_width), mode="nearest").bool() for mask in masks]
             audio = torch.from_numpy(mixture[s0:s1]).unsqueeze(0)
-            batch = self._processor(
-                audios=[audio], descriptions=[self.description],
-                masked_videos=apply_mask_mode(self._processor, [frames], [m], self.mask_mode),
-            ).to(self.device)
-            with torch.inference_mode():
-                result = self._model.separate(batch, predict_spans=False, reranking_candidates=1)
-            target = result.target[0].detach().float().cpu().numpy().reshape(-1)[: s1 - s0]
-            if target.size < s1 - s0:
-                target = np.pad(target, (0, s1 - s0 - target.size))
-            chunks.append((s0, target))
-        return overlap_add(chunks, mixture.size, int(self.overlap_s * sr))
+            try:
+                batch = self._processor(
+                    audios=[audio] * len(people), descriptions=[self.description] * len(people),
+                    masked_videos=apply_mask_mode(self._processor, [frames] * len(people), masks, self.mask_mode),
+                ).to(self.device)
+                started = time.perf_counter()
+                with torch.inference_mode():
+                    result = self._model.separate(batch, predict_spans=False, reranking_candidates=1)
+                elapsed = time.perf_counter() - started
+                for index, person in enumerate(people):
+                    timings[str(person)] += elapsed / len(people)
+                    target = result.target[index].detach().float().cpu().numpy().reshape(-1)[: s1 - s0]
+                    if target.size < s1 - s0:
+                        target = np.pad(target, (0, s1 - s0 - target.size))
+                    chunks[person].append((s0, target))
+            except Exception as error:
+                if len(people) == 1:
+                    raise
+                batching = "fallback"
+                errors.append(f"{type(error).__name__}: {error}"[:300])
+                for index, person in enumerate(people):
+                    batch = self._processor(
+                        audios=[audio], descriptions=[self.description],
+                        masked_videos=apply_mask_mode(self._processor, [frames], [masks[index]], self.mask_mode),
+                    ).to(self.device)
+                    started = time.perf_counter()
+                    with torch.inference_mode():
+                        result = self._model.separate(batch, predict_spans=False, reranking_candidates=1)
+                    timings[str(person)] += time.perf_counter() - started
+                    target = result.target[0].detach().float().cpu().numpy().reshape(-1)[: s1 - s0]
+                    if target.size < s1 - s0:
+                        target = np.pad(target, (0, s1 - s0 - target.size))
+                    chunks[person].append((s0, target))
+            gc.collect()
+            if self.device == "mps":
+                torch.mps.empty_cache()
+        audio = {person: overlap_add(chunks[person], mixture.size, int(self.overlap_s * sr))
+                 for person in people}
+        timings = {person: round(milliseconds * 1000) for person, milliseconds in timings.items()}
+        return audio, timings, batching, errors
 
 
 # --------------------------------------------------------------------------- #
