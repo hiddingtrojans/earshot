@@ -36,8 +36,8 @@ def matrix(stems: list[np.ndarray], references: list[np.ndarray], mixture: np.nd
     rows = [[round(envelope_correlation(stem, reference, mixture), 4) for reference in references]
             for stem in stems]
     baseline = [round(envelope_correlation(mixture, reference, mixture), 4) for reference in references]
-    diagonal = round(sum(row[index][index] for index, row in enumerate(rows)) / len(rows), 4)
-    off_diagonal = round(sum(row[i][j] for i, row in enumerate(rows) for j in range(len(row)) if i != j)
+    diagonal = round(sum(row[index] for index, row in enumerate(rows)) / len(rows), 4)
+    off_diagonal = round(sum(row[j] for i, row in enumerate(rows) for j in range(len(row)) if i != j)
                          / (len(rows) * (len(rows) - 1)), 4)
     return {
         "matrix": rows, "mixture_baseline": baseline,
