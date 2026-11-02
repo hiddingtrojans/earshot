@@ -51,7 +51,8 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
     doc = json.loads(doc_path.read_text()) if doc_path.exists() else {}
     corrections_path = run / "corrections.json"
     if corrections_path.exists():
-        doc["corrections"] = json.loads(corrections_path.read_text())
+        saved_corrections = json.loads(corrections_path.read_text())
+        doc["corrections"] = saved_corrections
         apply_saved_corrections(doc)
     calls = CallLog(run, replay=replay)
     jobs = {}

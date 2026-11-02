@@ -21,8 +21,10 @@ def test_correction_moves_captions_and_is_replayable():
     assert document["activity"] == [[], [(1.0, 2.0), (0.0, 1.0)]]
     assert document["attribution"]["confidence"]["A"] == 1.0
     apply_saved_corrections(document)
-    assert document["corrections"] == []
+    apply_saved_corrections(document)
+    assert document["corrections"] == [correction]
     assert document["captions"][0]["person"] == 1
+    assert document["activity"] == [[], [(1.0, 2.0), (0.0, 1.0)]]
 
 
 def test_taps_to_oracle_counts_mismatches_and_low_confidence():

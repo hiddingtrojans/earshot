@@ -140,3 +140,13 @@ def test_correction_endpoint_applies_and_replays(tmp_path):
         with urllib.request.urlopen(base + "/earshot.json", timeout=2) as response:
             replayed = json.loads(response.read())
     assert replayed["captions"][0]["person"] == 1
+    with running_server(make_handler(run, True)) as base:
+        request = urllib.request.Request(base + "/api/correct", data=json.dumps({
+            "person": 1, "x": 0.26, "y": 0.28, "frame": 0,
+        }).encode(), headers={"Content-Type": "application/json"}, method="POST")
+        with urllib.request.urlopen(request, timeout=2) as response:
+            corrected_again = json.loads(response.read())
+    assert corrected_again["doc"]["captions"][0]["person"] == 0
+    assert len(corrected_again["doc"]["corrections"]) == 2
+    assert corrected_again["doc"]["corrections"][0]["to"] == 1
+    assert corrected_again["doc"]["corrections"][1]["to"] == 0

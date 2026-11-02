@@ -17,7 +17,8 @@ def nearest_person(doc: dict, x: float, y: float, exclude: int) -> tuple[int, fl
     return min(candidates)
 
 
-def apply_correction(doc: dict, from_person: int, to_person: int, x: float, y: float, frame: int) -> dict:
+def apply_correction(doc: dict, from_person: int, to_person: int, x: float, y: float, frame: int,
+                     record: bool = True) -> dict:
     correction = {"from": from_person, "to": to_person, "tap": [x, y, frame]}
     target_name = doc["people"][to_person]["name"]
     for caption in doc["captions"]:
@@ -33,7 +34,8 @@ def apply_correction(doc: dict, from_person: int, to_person: int, x: float, y: f
             attribution["mapping"][label] = to_person
     for label in list((attribution.get("confidence") or {}).keys()):
         attribution["confidence"][label] = 1.0
-    doc.setdefault("corrections", []).append(correction)
+    if record:
+        doc.setdefault("corrections", []).append(correction)
     return correction
 
 
@@ -50,5 +52,5 @@ def taps_to_oracle(mapping: dict[str, int], confidence: dict[str, float],
 def apply_saved_corrections(doc: dict) -> None:
     for correction in list(doc.get("corrections", [])):
         x, y, frame = correction["tap"]
-        apply_correction(doc, correction["from"], correction["to"], x, y, frame)
-    doc["corrections"] = []
+        apply_correction(doc, correction["from"], correction["to"], x, y, frame,
+                         record=False)
