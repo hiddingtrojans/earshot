@@ -1,15 +1,15 @@
 # Earshot running summary
 
-Updated after GATE_T3 on 2026-11-02. T1 evidence is in `GATE_T1.md`; the SAM Audio access decision and organizer ruling are in `GATE_T3.md`.
+Updated after GATE_T4 on 2026-11-02. Evidence: `GATE_T1.md`, `GATE_T3.md`, and `GATE_T4.md`.
 
 ## Done
 
 - **T0:** bundle unpacked at `~/src/earshot`; original history confirmed at 8 commits; baseline `pytest -q` reached 26 passed after installing the existing optional `torch` extra in the venv.
 - **T2:** deterministic AMI builder implemented and committed. Real ES2008a 75 s grid, both audio mixtures, four references, taps, attribution, frame, and sync log generated. Re-run truth bytes are identical. Official annotations produce 234 words under the specified filter, 53 overlapping; all four taps were visually checked on `frame0.png`.
 - **T1:** real SAM 3.1, Voice Transcribe, and Spark smoke passed. All four people have masks on 252/252 frames, Voice returned two turns, Spark returned valid threads and two verified catch-up sentences. Replay returned 4/4 cache hits with no network fallback.
-- Current deterministic suite: **29 passed**. No remote push has been performed.
+- **T4:** three real Voice repeats scored against exact word-level truth; README and `bench/RESULTS.md` contain matching measured values. Exact assignment and a compression-noise floor fixed the Lite implementation. Final negative control: 0 captions for the empty tap. Current suite: **37 passed**. No remote push has been performed.
 
-See `GATE_T1.md`, `live_smoke_run1.log`, and `live_smoke_run2.log` for evidence.
+See `ami_lite_bench_repeat3_optimized.log` for the final scorer output and `SPEND.md` for actual call usage.
 
 ## Blocked
 
@@ -24,20 +24,20 @@ See `GATE_T1.md`, `live_smoke_run1.log`, and `live_smoke_run2.log` for evidence.
 
 ## Current benchmark
 
-T4 has not run; there are no benchmark metrics yet.
+Mean [min, max] over 3 real Voice repeats; exact values are in `bench/RESULTS.md` and README.
 
 | Mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | SI-SDR gain ↑ |
 |---|---:|---:|---:|---:|
-| Single-stream captions (oracle-mapped) | pending | pending | pending | — |
-| Earshot-Lite | pending | pending | pending | — |
-| Earshot (SAM Audio) | blocked by model approval | blocked by model approval | blocked by model approval | blocked by model approval |
+| Single-stream captions (oracle-mapped) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
+| Earshot-Lite | 0.702 [0.691, 0.714] | 0.540 [0.537, 0.545] | 0.387 [0.369, 0.415] | — |
+| Earshot (SAM Audio) | blocked by model approval | blocked | blocked | blocked |
 
-T2 sync heuristic warning: C +0.480 s and D +0.560 s, with weak correlations 0.167 and 0.163. No timeline correction was made because the estimator is inconclusive and AMI signals share one timeline.
+Lite underperforms the generous oracle-mapped baseline and must not be presented as a measured separation success. Negative control: **0 empty-tap captions**. T2 sync heuristic remains inconclusive for C/D due weak correlations; no timeline correction was made.
 
 ## Estimated spend
 
-**$0.055881 of $20.00.** See `SPEND.md` for per-call usage and arithmetic. Replay added $0.
+**$0.906028 of $20.00.** See `SPEND.md` for per-call usage and arithmetic. Replay checks added $0.
 
 ## Next
 
-T3's blocked gate is committed (`25472c9`). Implement word-level truth and repeat support, then run the three-repeat single-stream/Lite benchmark on the real AMI clip. Keep SAM Audio rows blocked unless model approval arrives.
+T4 gate is committed (`a190c18`). Build T5 tap-to-start with live background analysis and documented instant cached replay; then produce the T6 demo folder. Keep SAM Audio rows blocked unless model approval arrives.
