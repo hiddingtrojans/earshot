@@ -1,0 +1,50 @@
+import json
+import wave
+
+import numpy as np
+
+from tools.make_demo import build_demo
+
+
+def test_demo_copies_json_cache_and_converts_stems(tmp_path):
+    source = tmp_path / "source"
+    (source / "calls").mkdir(parents=True)
+    (source / "stems").mkdir()
+    (source / "analysis.mp4").write_bytes(b"public test video")
+    (source / "tracks.json").write_text("{}")
+    (source / "calls.jsonl").write_text("{}\n")
+    (source / "calls" / "response.json").write_text("{}")
+    (source / "calls" / "sep_private.npy").write_bytes(b"not copied")
+    attribution = tmp_path / "ATTRIBUTION.md"
+    attribution.write_text("AMI test attribution")
+    pcm = (np.sin(np.arange(4800) * 0.1) * 1000).astype("<i2")
+    with wave.open(str(source / "stems" / "voice.wav"), "wb") as output:
+        output.setnchannels(1)
+        output.setsampwidth(2)
+        output.setframerate(48000)
+        output.writeframes(pcm.tobytes())
+    doc = {"video": "analysis.mp4", "people": [{"name": "Speaker A", "stem": "stems/voice.wav"}]}
+    (source / "earshot.json").write_text(json.dumps(doc))
+
+    destination = tmp_path / "demo"
+    build_demo(source, destination, attribution)
+    assert (destination / "stems" / "voice.m4a").stat().st_size > 0
+    assert not (destination / "stems" / "voice.wav").exists()
+    assert not (destination / "calls" / "sep_private.npy").exists()
+    assert json.loads((destination / "earshot.json").read_text())["people"][0]["stem"] == "stems/voice.m4a"
+    assert (destination / "ATTRIBUTION.md").read_text() == "AMI test attribution"
+
+
+def test_demo_lite_has_no_invented_stems(tmp_path):
+    source = tmp_path / "source"
+    (source / "calls").mkdir(parents=True)
+    (source / "analysis.mp4").write_bytes(b"public test video")
+    (source / "tracks.json").write_text("{}")
+    (source / "calls.jsonl").write_text("")
+    (source / "earshot.json").write_text(json.dumps({"people": [{"name": "Speaker A", "stem": None}]}))
+    attribution = tmp_path / "ATTRIBUTION.md"
+    attribution.write_text("AMI")
+    destination = tmp_path / "demo"
+    build_demo(source, destination, attribution)
+    assert json.loads((destination / "earshot.json").read_text())["people"][0]["stem"] is None
+    assert not (destination / "stems").exists()
