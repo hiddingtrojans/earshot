@@ -38,7 +38,7 @@ def content_key(*parts: Any) -> str:
 
 def response_metadata(response: dict, headers: Any = None) -> dict:
     meta = {}
-    request_id = response.get("id") or response.get("request_id")
+    request_id = response.get("id") or response.get("request_id") or response.get("sessionId")
     if headers is not None:
         normalized = {str(key).lower(): value for key, value in headers.items()}
         request_id = request_id or normalized.get("x-request-id") or normalized.get("request-id")
