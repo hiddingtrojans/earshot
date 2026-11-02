@@ -24,6 +24,7 @@ def main() -> None:
     a.add_argument("--allow-t5", action="store_true",
                    help="run SAM Audio's frozen T5-base locally (allowed by organizers; default uses precomputed output)")
     a.add_argument("--mask-mode", choices=["keep", "remove"], default="keep")
+    a.add_argument("--device", choices=["auto", "mps", "cpu"], default="auto")
     a.add_argument("--no-spark", action="store_true")
     a.add_argument("--catchup-every", type=float, default=10.0)
     a.add_argument("--catchup-model", choices=["spark", "glimmer"], default="spark")
@@ -59,7 +60,7 @@ def main() -> None:
 
         doc = analyze(args.video, [Tap.parse(t) for t in args.tap], args.out, Options(
             separator=args.separator, replay=args.replay, text_features=args.text_features,
-            allow_t5=args.allow_t5, mask_mode=args.mask_mode, prompt=args.prompt, spark=not args.no_spark, catchup_every=args.catchup_every,
+            allow_t5=args.allow_t5, mask_mode=args.mask_mode, device=args.device, prompt=args.prompt, spark=not args.no_spark, catchup_every=args.catchup_every,
             catchup_model=args.catchup_model, translate=args.translate))
         print(f"wrote {doc}\nview it: python -m earshot serve {args.out}")
     elif args.cmd == "serve":

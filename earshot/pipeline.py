@@ -25,6 +25,7 @@ class Options:
     replay: bool = False
     text_features: Path | None = None   # None = repo default (assets/text_features.npz)
     mask_mode: str = "keep"
+    device: str = "auto"
     allow_t5: bool = False
     prompt: str = ""
     spark: bool = True
@@ -83,7 +84,7 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
         # Default: precomputed text conditioning, so T5 never runs. --allow-t5 alone runs SAM Audio as released.
         features = None if (opt.allow_t5 and not opt.text_features) else (opt.text_features or DEFAULT_TEXT_FEATURES)
         sep = SamAudioSeparator(description=opt.prompt, text_features=features, allow_t5=opt.allow_t5,
-                                mask_mode=opt.mask_mode)
+                                mask_mode=opt.mask_mode, device=opt.device)
         if hasattr(sep, "separate_people"):
             separated = sep.separate_people(analysis, mixture, tracks, calls)
         else:
