@@ -11,14 +11,34 @@ Values are **mean [min, max] over 3 real Voice transcription repeats**. Repeats 
 | Mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | SI-SDR gain (dB) ↑ |
 |---|---:|---:|---:|---:|
 | Single-stream captions (oracle-mapped) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
-| Earshot-Lite (optimal mouth-motion attribution) | 0.702 [0.691, 0.714] | 0.540 [0.537, 0.545] | 0.387 [0.369, 0.415] | — |
+| Earshot-Lite (mouth-band activity correlation) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
 | Earshot (SAM Audio) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | -2.415 [-2.415, -2.415] |
+| Spark AV experiment (unverified) | 0.852 [0.776, 0.897] | 0.496 [0.455, 0.529] | 0.254 [0.244, 0.262] | — |
 
 The single-stream baseline is **oracle-mapped**: each anonymous Voice speaker is assigned to the real person whose truth it matches best. This is generous to the baseline and is not available to Earshot-Lite at runtime. The baseline and Lite use identical Voice responses within each repeat.
 
-Lite does not separate audio and cannot recover words that the single-stream Voice response omits. Its measured right-person attribution and overlap recall are worse than the oracle-mapped baseline on this clip. The initial greedy assignment implementation also had a deterministic assignment bug; commit `82c0eee` replaced it with exact small-group assignment, and `607bfdd` added a compression-noise floor for static regions. The table uses the corrected code and was regenerated with `EARSHOT_REPLAY=1` from the same three cached Voice responses, adding no API spend.
+Lite does not separate audio and cannot recover words that the single-stream Voice response omits. The reviewed implementation measures a central 60% width, 30–60% mask-height mouth band, smooths activity and motion over 0.5 s, z-scores both, and maximizes total Pearson correlation with `scipy.optimize.linear_sum_assignment`. On 745 s it matches the generous oracle baseline on all three repeats.
 
 **SAM Audio is a measured no-go on this clip.** All four real stems were produced on MPS, but separation took 2,495.8 seconds (41.6 minutes), exceeding the 15-minute limit. Right-person 0.464 is below 0.8, overlap recall 0.117 does not beat the baseline by 10 points, and SI-SDR gain is -2.415 dB. Lite therefore remains the main mode and demo. The failed run is evidence, not demo media. Per-person SI-SDR in the first repeat was A +1.28 dB, B -7.35 dB, C -3.15 dB, D -0.44 dB (isolated minus mixture); their macro mean is -2.415 dB.
+
+## Review round 1: Spark AV negative result
+
+The bounded experiment sent each 10-second AMI window as `input_video` with audio, the corresponding Voice DIARIZATION turns, and normalized name/grid positions. Strict JSON returned rough per-person segments. All calls used `muse-spark-1.3` through `CallLog.cached`; outputs are **unverified** and are not presented as ground truth or a verified summary.
+
+Three repeats measured WER **0.852 [0.776, 0.897]**, right-person **0.496 [0.455, 0.529]**, and overlap recall **0.254 [0.244, 0.262]**. These fail every adoption threshold: overlap recall below baseline +10 points, WER worse than baseline, and right-person below 0.8. The model did return spoken words with plausible timing, so an audio-only fallback was not needed. **Spark AV is not enabled in the viewer or demo; it is a documented negative result.**
+
+Experiment usage: 33 uncached AV calls, estimated **$0.330758**, within the 2-hour/$3 experiment cap. Scorer output is in `review/spark_ami_bench.log`; machine-readable values are in `runs/spark_ami/bench_review1.json`.
+
+## Review round 1: Lite before/after
+
+The 635 s window was used for development sweeps; 745 s was evaluated separately. Before is the original top-of-mask/total-motion implementation. After is the reviewed mouth-band correlation implementation.
+
+| Window | Lite before WER / right / overlap | Lite after WER / right / overlap | Oracle baseline after WER / right / overlap |
+|---|---|---|---|
+| 635 s development | 0.396 / 0.686 / 0.424 | 2.571 [0.395, 3.719] / 0.547 [0.473, 0.693] / 0.553 [0.424, 0.624] | 0.384 / 0.693 / 0.486 |
+| 745 s primary | 0.702 / 0.540 / 0.387 | 0.231 [0.221, 0.237] / 0.919 [0.918, 0.921] / 0.495 [0.444, 0.540] | 0.231 / 0.919 / 0.495 |
+
+A development-only 60–90% lower-mask band matched the 635 s baseline (0.384 / 0.693 / 0.486) but failed on 745 s (right-person 0.537). It is **not used**. The actual 30–60% mouth band is retained on the primary benchmark and was not selected from its test-window results. Mappings are recorded beside oracle mappings in each repeat's bench JSON.
 
 ## Commands
 

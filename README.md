@@ -125,10 +125,11 @@ Real AMI ES2008a far-field clip, mean [min, max] over 3 Voice transcription repe
 | Mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | SI-SDR gain (dB) ↑ |
 |---|---:|---:|---:|---:|
 | Single-stream captions (oracle-mapped) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
-| Earshot-Lite (optimal mouth-motion attribution) | 0.702 [0.691, 0.714] | 0.540 [0.537, 0.545] | 0.387 [0.369, 0.415] | — |
+| Earshot-Lite (mouth-band activity correlation) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
 | Earshot (SAM Audio) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | -2.415 [-2.415, -2.415] |
+| Spark AV experiment (unverified) | 0.852 [0.776, 0.897] | 0.496 [0.455, 0.529] | 0.254 [0.244, 0.262] | — |
 
-Lite does not separate audio and underperforms the generous baseline on this clip. SAM Audio also failed its go/no-go: 41.6 minutes for separation, right-person below 0.8, overlap recall below baseline +10 points, and negative SI-SDR gain. Lite therefore remains the main mode and demo. See `bench/RESULTS.md` for the method, exact commands, model IDs, hardware, and negative control.
+Lite does not separate audio, but the reviewed mouth-band activity correlation matches the generous oracle baseline on all three 745 s repeats. SAM Audio failed its go/no-go: 41.6 minutes for separation, right-person below 0.8, overlap recall below baseline +10 points, and negative SI-SDR gain. Spark AV also failed every adoption gate and remains an unverified negative experiment, not a viewer mode. See `bench/RESULTS.md` for both development/test windows, exact commands, model IDs, hardware, and negative control.
 
 ## How it's built
 
@@ -139,7 +140,7 @@ earshot/
   transcribe.py   Muse Voice Transcribe file endpoint and repeat-specific cache keys
   activity.py     deterministic voice activity and overlap windows
   timeline.py     per-person captions, bleed filter, overlap flags
-  lite.py         exact mouth-motion attribution with a static-noise floor (no separation)
+  lite.py         mouth-band activity correlation and Hungarian voice-to-face assignment (no separation)
   spark.py        threads + verified catch-up + strictly validated translation
   calls.py        model-call cache, replay mode and provenance log (shown in the viewer)
   bench.py        word-level truth, repeat aggregation, Dinner Table Bench metrics
@@ -154,7 +155,8 @@ tests/            deterministic unit tests and synthetic runs with explicitly fa
 
 - Earshot analyzes recorded clips; it is not live or real-time. Fresh full-clip SAM mask decoding is slow pure-Python work, although identical runs reuse saved tracks.
 - SAM Audio was evaluated and failed the go/no-go on this far-field clip: 41.6 minutes for four-person separation, right-person 0.464, overlap recall 0.117, and SI-SDR gain -2.415 dB. It is not used in the demo.
-- Lite does not isolate voices. Its measured right-person and overlap metrics underperform the generous baseline, and the included Lite demo does **not** demonstrate recovery of simultaneous per-person captions or isolated listening.
+- Spark AV returned spoken text but failed all adoption gates (WER 0.852, right-person 0.496, overlap recall 0.254). It is an unverified negative experiment, not a viewer mode.
+- Lite does not isolate voices or prove recovery of words omitted by single-stream transcription. Its 745 s correlation mapping matches the oracle baseline, but the included demo does **not** demonstrate simultaneous per-person caption recovery or isolated listening.
 - Long WebVTT cues can lay out differently across players. Native browser `<track>` rendering and colours were checked; VLC was not installed, so VLC playback is unverified.
 - Translation failures retain original text and are labelled visibly. Per-person audio buttons appear only for real isolated stems.
 - Glimmer can return empty answers or citations outside the available captions. The verifier rejects those cases and falls back to verbatim captions; local inference is slower than the hosted Spark calls on this machine.
