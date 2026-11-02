@@ -116,3 +116,9 @@ The implementation-specific T12 checks are complete. The ✗ items are explicit 
 5. Submit by the organizer deadline: check video logged out, read back every form field, and link the exact X post.
 
 Final estimated Meta API spend: **$0.977157 of $20.00**. Replay and local Glimmer added no hosted spend after the accepted Spanish call.
+
+## Addendum — SAM Audio evaluation completed: NO-GO
+
+The access blocker was an agent-created `HF_HOME` credential-store mistake, not an approval problem. The model and all four stems were subsequently produced on MPS. Both conditioning modes ran with seed 0 and had `forbidden_modules_imported: []`; their cross-output SI-SDR was 80.776 dB, so precomputed remains the default.
+
+Full separation took 41.6 minutes. Three Voice repeats measured right-person 0.464, overlap recall 0.117, WER 0.916, and SI-SDR gain -2.415 dB. These fail every go/no-go threshold, so Lite remains the main mode and demo. `bench/RESULTS.md`, README, `GATE_T3.md`, and `GATE_T4.md` now contain the real values. Listening remains unverified and is not claimed. Hosted spend including this evaluation is **$1.561797 of $20.00**.

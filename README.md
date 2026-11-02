@@ -7,7 +7,7 @@ Deaf and hard-of-hearing people have a name for being left out of group conversa
 Earshot takes a recorded video of the table and:
 
 1. **tracks each person you tap** with SAM 3.1;
-2. can **pull each person's voice out of the mix** with SAM Audio, using that person's masks as the visual prompt. This integration is implemented but **has not run in the included demo** because the gated weights await approval;
+2. can **pull each person's voice out of the mix** with SAM Audio, using that person's masks as the visual prompt. It was evaluated on the full AMI clip but **failed the go/no-go on speed and quality**, so it is not in the included demo;
 3. **captions each voice separately** with Muse Voice Transcribe, or assigns diarized turns to faces with the deterministic Earshot-Lite fallback, and shows face-anchored bubbles;
 4. **splits side conversations into threads** and answers **"What did I miss?"** with Muse Spark. Every summary sentence must cite captions and pass deterministic checks, or it's replaced by the captions themselves;
 5. offers **cached Spanish bubbles**, positioned/coloured WebVTT, labelled SRT, and per-person audio downloads when isolated stems exist.
@@ -21,7 +21,7 @@ Earshot takes a recorded video of the table and:
 | Model | Where it runs | What it does in Earshot | Code |
 |---|---|---|---|
 | `sam-3.1` | Meta Model API | Tracks each tapped person through the video (point prompts → per-frame masks) | `earshot/tracking.py` |
-| SAM Audio (`facebook/sam-audio-small-tv`) | This computer | Optional visual-prompted voice separation; implemented, but **blocked by weight approval and not used in this demo** | `earshot/separation.py` |
+| SAM Audio (`facebook/sam-audio-small-tv`) | This computer | Visual-prompted voice separation, evaluated on the full AMI clip; **no-go on speed and quality, so Lite remains the demo** | `earshot/separation.py` |
 | T5-base text encoder (Google, open source, Apache-2.0) | This computer, as part of SAM Audio | Part of SAM Audio's text conditioning. Earshot ships its output for the two fixed prompts as constants (`assets/text_features.npz`), or runs it locally with `--allow-t5`. | `earshot/separation.py` |
 | `muse-voice-transcribe-1.0` | Meta Model API | Diarizes the raw mix as the baseline and transcribes isolated voices when available | `earshot/transcribe.py` |
 | `muse-spark-1.3` | Meta Model API | Groups threads, writes cited catch-ups, and translates caption text | `earshot/spark.py` |
@@ -36,7 +36,7 @@ Everything else is deterministic code: voice activity (frame energy with hystere
 
   > “SAM Audio is an open-source Meta model, so it counts as a Meta model however you run it, and the frozen T5-base encoder inside it is fine with no workaround or precomputation needed. Organizers have ruled that open-source non-Meta models can run alongside Meta's models as long as Meta's models do real work; disclose the T5 encoder in your README and demo. Closed third-party AI models are still not allowed.”
 
-  The default remains precomputed outputs in `assets/text_features.npz`; **`--allow-t5` is allowed** and runs T5-base locally. Re-rankers and the span predictor stay off for speed and because CLAP is not Meta. The demo does not run SAM Audio because Hugging Face returned `Access denied ... requires approval`.
+  The default remains precomputed outputs in `assets/text_features.npz`; **`--allow-t5` is allowed** and runs T5-base locally. Re-rankers and the span predictor stay off for speed and because CLAP is not Meta. The full SAM Audio run failed its speed and quality go/no-go, so the demo uses Lite.
 - **Earshot-Lite** (`--separator lite`) is not a T5 fallback. It is used only if SAM Audio fails the T3 go/no-go. It maps each diarized speaker to a face using motion inside SAM 3.1 masks, exact small-group assignment, and a compression-noise floor. It does **not** separate audio and cannot recover words omitted by the single-stream transcription.
 
 ## Run it
@@ -126,9 +126,9 @@ Real AMI ES2008a far-field clip, mean [min, max] over 3 Voice transcription repe
 |---|---:|---:|---:|---:|
 | Single-stream captions (oracle-mapped) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
 | Earshot-Lite (optimal mouth-motion attribution) | 0.702 [0.691, 0.714] | 0.540 [0.537, 0.545] | 0.387 [0.369, 0.415] | — |
-| Earshot (SAM Audio) | blocked by gated-weight approval | blocked | blocked | blocked |
+| Earshot (SAM Audio) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | -2.415 [-2.415, -2.415] |
 
-Lite does not separate audio and underperforms the generous baseline on this clip. SAM Audio has not been run, so no separation claim or metric is inferred. See `bench/RESULTS.md` for the method, exact commands, model IDs, hardware, and negative control.
+Lite does not separate audio and underperforms the generous baseline on this clip. SAM Audio also failed its go/no-go: 41.6 minutes for separation, right-person below 0.8, overlap recall below baseline +10 points, and negative SI-SDR gain. Lite therefore remains the main mode and demo. See `bench/RESULTS.md` for the method, exact commands, model IDs, hardware, and negative control.
 
 ## How it's built
 
@@ -153,7 +153,7 @@ tests/            deterministic unit tests and synthetic runs with explicitly fa
 ## Limitations
 
 - Earshot analyzes recorded clips; it is not live or real-time. Fresh full-clip SAM mask decoding is slow pure-Python work, although identical runs reuse saved tracks.
-- SAM Audio is unverified here because its gated weights are unavailable. Potential separation quality on far-field audio is unknown, not a claimed result.
+- SAM Audio was evaluated and failed the go/no-go on this far-field clip: 41.6 minutes for four-person separation, right-person 0.464, overlap recall 0.117, and SI-SDR gain -2.415 dB. It is not used in the demo.
 - Lite does not isolate voices. Its measured right-person and overlap metrics underperform the generous baseline, and the included Lite demo does **not** demonstrate recovery of simultaneous per-person captions or isolated listening.
 - Long WebVTT cues can lay out differently across players. Native browser `<track>` rendering and colours were checked; VLC was not installed, so VLC playback is unverified.
 - Translation failures retain original text and are labelled visibly. Per-person audio buttons appear only for real isolated stems.

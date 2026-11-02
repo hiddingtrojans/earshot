@@ -97,3 +97,13 @@ This is a final pass: **0 negative-control captions out of 11 total**. See `benc
 4. T2 sync heuristic remains inconclusive for C/D due weak correlations; no timeline shift was invented.
 
 Spend across T1 smoke, full Lite, optimized Spark regeneration, three repeats, and negative control: **$0.906028 of $20.00**, generated from real call logs in `SPEND.md`. Replay checks added $0.
+
+## Addendum — SAM Audio rows measured after approval
+
+All four real SAM Audio stems were produced and scored with three Voice repeats. `bench/RESULTS.md` and README now include this real row:
+
+| Mode | WER ↓ | Right person ↑ | Overlap recall ↑ | SI-SDR gain (dB) ↑ |
+|---|---:|---:|---:|---:|
+| Earshot (SAM Audio) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | -2.415 [-2.415, -2.415] |
+
+The go/no-go failed on every threshold: 41.6 minutes of separation, right-person below 0.8, overlap recall below baseline +10 points, and negative SI-SDR gain. Per-person first-repeat gains were A +1.28 dB, B -7.35 dB, C -3.15 dB, D -0.44 dB. Lite remains the main mode and demo. See `ami_samaudio_bench_repeat3.log` for real scorer output and `GATE_T3.md` for the complete audit. Hosted spend including this evaluation is **$1.561797**.

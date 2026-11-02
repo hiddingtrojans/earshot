@@ -1,0 +1,6 @@
+                               Earshot         Single stream
+Word error rate      0.916 [0.896, 0.935]       0.231 [0.221, 0.237]
+Right person         0.464 [0.385, 0.555]       0.919 [0.918, 0.921]
+Overlap words        0.117 [0.097, 0.146]       0.495 [0.444, 0.540]
+SI-SDR gain dB -2.415 [-2.415, -2.415]
+wrote runs/ami_samaudio/bench_repeat3.json

@@ -1,4 +1,6 @@
-# GATE T3 — SAM Audio blocked by gated-weight approval
+# GATE T3 — SAM Audio evaluated: NO-GO
+
+Final outcome: full T3/T4 evaluation completed and failed both speed and quality thresholds. The earlier sections preserve the initial access blocker and its correction.
 
 Date: 2026-11-02. No SAM Audio model call or local weight execution occurred. No task code commit was needed.
 
@@ -66,3 +68,56 @@ Error: Access denied. Model 'facebook/sam-audio-small-tv' requires approval.
 ```
 
 The new check—two runs of the same 10 s with one seed, precomputed default versus `--allow-t5`, then SI-SDR between their outputs—**could not be run**. No comparison SI-SDR is reported and the default remains unchanged. It must run after weight approval; select `--allow-t5` as the default only if the measured value is below 30 dB.
+
+## Final T3/T4 result — measured NO-GO
+
+The earlier access failure was caused by overriding `HF_HOME`, not by the owner's approval. The correct check without that override succeeded:
+
+```bash
+hf auth whoami
+# ✓ Logged in
+#   user: hiddingpickles
+hf download facebook/sam-audio-small-tv config.json --cache-dir "$PWD/.hf-cache"
+# ✓ Downloaded
+```
+
+SAM Audio and the prescribed dependencies were installed. Compatibility fixes are in `5433653`, `4774a34`, and `2519186`; the reproducible spike seed is in `7d6f077`. Transformers is pinned to 4.56.2 and huggingface_hub to 0.36.2. Native SDPA works without xformers; FMHA is not used. The spike reports show `forbidden_modules_imported: []` for both conditioning modes.
+
+### Conditioning comparison
+
+The same 10 s, box, reference, device (MPS), and seed 0 were used for precomputed and `--allow-t5` runs. Their direct output SI-SDR was **80.775909 dB** (80.775926 dB in reverse), above the 30 dB threshold, so **precomputed remains the default**. Samples are not bit-identical (max difference 0.000030517578125), and this is not presented as byte equality. See `CONDITIONING.md`.
+
+### Full run and quality
+
+All four real stems exist under `runs/ami_samaudio/stems/`. Separation device was MPS for all four; no CPU fallback occurred. A first invocation forgot the interactive-shell key and stopped after Speaker A's separation. Resuming with `zsh -ic` reused that stem and completed without repeating its work.
+
+| Person | Separation seconds (MPS) |
+|---|---:|---:|
+| Speaker A | 573.198 |
+| Speaker B | 569.936 |
+| Speaker C | 780.500 |
+| Speaker D | 1029.191 |
+| **Total** | **2495.825 (41.6 min)** |
+
+Three real Voice repeats on those stems produced:
+
+```text
+                               Earshot         Single stream
+Word error rate      0.916 [0.896, 0.935]       0.231 [0.221, 0.237]
+Right person         0.464 [0.385, 0.555]       0.919 [0.918, 0.921]
+Overlap words        0.117 [0.097, 0.146]       0.495 [0.444, 0.540]
+SI-SDR gain dB -2.415 [-2.415, -2.415]
+```
+
+Per-person SI-SDR gain in the first repeat: A +1.28 dB, B -7.35 dB, C -3.15 dB, D -0.44 dB; macro mean -2.415 dB. Full logs are in `ami_samaudio_analyze_resume.log` and `ami_samaudio_bench_repeat3.log`.
+
+### Go/no-go audit
+
+- ✗ Full 75 s separation must take ≤15 min: **41.6 min**.
+- ✗ Overlap recall must beat single-stream by ≥10 points: **0.117 vs 0.495**.
+- ✗ Right-person must be ≥0.8: **0.464**.
+- ✗ SI-SDR must improve: macro **-2.415 dB**.
+- ✓ `runs/ami_samaudio/earshot.json` and all four stems exist; re-rankers/span predictor stayed off and forbidden imports were empty.
+- ✗ Listening spot-check: not performed by this interface. The owner should audition the four stems; numerical quality failure is already sufficient for no-go, so no listening success is claimed.
+
+**Decision: ship Lite as the main mode and keep the existing Lite demo. Do not use the failed SAM Audio run as the demo.** The failed run remains useful real evidence of the far-field limitation. Current hosted API spend including this evaluation is **$1.561797 of $20.00**.

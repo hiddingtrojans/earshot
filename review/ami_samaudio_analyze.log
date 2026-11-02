@@ -1,0 +1,31 @@
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 2935.54it/s]
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/raulacedo/src/earshot/earshot-app/earshot/__main__.py", line 3, in <module>
+    main()
+  File "/Users/raulacedo/src/earshot/earshot-app/earshot/cli.py", line 59, in main
+    doc = analyze(args.video, [Tap.parse(t) for t in args.tap], args.out, Options(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/earshot/pipeline.py", line 94, in analyze
+    turns.append(transcribe(resample(iso, SEPARATION_SR, TRANSCRIBE_SR), calls,
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/earshot/transcribe.py", line 72, in transcribe
+    result = calls.cached(model=VOICE_MODEL, purpose=purpose, where="hosted", key_parts=key_parts, fn=call)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/earshot/calls.py", line 74, in cached
+    result, meta = fn()
+                   ^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/earshot/transcribe.py", line 68, in call
+    result, response_meta = _post_transcribe(wav, mode)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/earshot/transcribe.py", line 47, in _post_transcribe
+    headers={"Authorization": f"Bearer {api_key()}",
+                                        ^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/earshot/calls.py", line 91, in api_key
+    raise RuntimeError("Set MODEL_API_KEY (or run with --replay to use cached model responses).")
+RuntimeError: Set MODEL_API_KEY (or run with --replay to use cached model responses).
