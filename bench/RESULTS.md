@@ -152,6 +152,52 @@ Only C's row selected its own headset in each variant. **Neither variant reached
 
 Per-person model inference seconds: text A 7.208, B 5.800, C 5.811, D 5.806; video A 52.724, B 46.263, C 51.450, D 57.157. Video window wall times were 54.1, 47.0, 52.2 and 57.9 s. All eight WAVs are in `review/ab_listen_spans/`; exact matrices, anchors, cache digests and timings are in `review/span_ab_results.json`. Per-variant anchor plans are `runs/span_ab/spans-text/span_plans.json` and `runs/span_ab/spans-video/span_plans.json`; raw output is `review/span_ab.log`. See `review/GATE_REVIEW3.md` for the protocol.
 
+## Review round 4: clean mixed-down mic (AMI Mix-Headset) negative result
+
+The final integration sanity test used a clean reference plus 0 dB white noise. SAM Audio improved SI-SDR by **16.8751 dB** (mixture -0.0214 dB, target 16.8538 dB), with target RMS 0.00701538 and residual RMS 0.00665512. Input, batch and processor rates were all 48,000 Hz; input and output both contained 480,000 samples. A harness-only device-placement error was fixed; production already moved batches to the selected device. **No production integration bug was found.**
+
+The clean-mic A/B used T2's `clip_cleanmic.mp4`, first 10 s, four headset references and the same envelope protocol. Runtime Voice diarization returned 13 turns; Lite mapped `{A:3, B:1, C:0, D:2}` without corrections or an oracle. Every number below is **clean mixed-down mic (AMI Mix-Headset)**.
+
+**Visual-only `keep` — clean mixed-down mic (AMI Mix-Headset):**
+
+| Stem \ headset | A | B | C | D |
+|---|---:|---:|---:|---:|
+| A | 0.2804 | 0.0397 | 0.7946 | 0.1514 |
+| B | 0.2606 | 0.0561 | 0.7646 | 0.1713 |
+| C | 0.2802 | 0.0415 | 0.7937 | 0.1523 |
+| D | 0.2702 | 0.0505 | 0.7832 | 0.1627 |
+| Mixture | 0.2400 | 0.1557 | 0.4442 | 0.4520 |
+
+**Text-only spans — clean mixed-down mic (AMI Mix-Headset):**
+
+| Stem \ headset | A | B | C | D |
+|---|---:|---:|---:|---:|
+| A | 0.2896 | -0.0248 | 0.8225 | 0.1532 |
+| B | 0.2800 | -0.0180 | 0.8203 | 0.1487 |
+| C | 0.2981 | -0.0260 | 0.8234 | 0.1488 |
+| D | 0.2983 | -0.0260 | 0.8219 | 0.1506 |
+| Mixture | 0.2400 | 0.1557 | 0.4442 | 0.4520 |
+
+**Video plus spans — clean mixed-down mic (AMI Mix-Headset):**
+
+| Stem \ headset | A | B | C | D |
+|---|---:|---:|---:|---:|
+| A | 0.2885 | -0.0221 | 0.8228 | 0.1519 |
+| B | 0.2868 | -0.0209 | 0.8243 | 0.1526 |
+| C | 0.3008 | -0.0239 | 0.8236 | 0.1456 |
+| D | 0.2988 | -0.0247 | 0.8221 | 0.1498 |
+| Mixture | 0.2400 | 0.1557 | 0.4442 | 0.4520 |
+
+| Variant — clean mixed-down mic (AMI Mix-Headset) | Correct-voice rate | Diagonal mean | Off-diagonal mean | Model time total (s) | Separation call wall (s) |
+|---|---:|---:|---:|---:|---:|
+| Visual-only `keep` | 0.25 | 0.3232 | 0.3133 | 71.433 | 83.535 |
+| Text-only spans | 0.25 | 0.3114 | 0.3096 | 22.639 | 31.539 |
+| Video plus spans | 0.25 | 0.3102 | 0.3113 | 351.812 | 370.815 |
+
+Only C's own row was correct in each variant. **No variant reached 3/4 correct rows. No full 745 s/635 s run, three-repeat clean-mic bench, or `demo/ami_meeting_cleanmic` was created.** No full-run WER, right-person or overlap-recall result is claimed. Existing demo, tagline and production separator behavior are unchanged, and separation work ends here.
+
+All 12 stems and the mixture are in `review/ab_listen_cleanmic/`; measurements are in `review/cleanmic_ab_results.json` and `review/cleanmic_ab.log`. The clean-mic baseline transcription added **$0.003752**; A/B inference itself used no hosted calls. See `review/GATE_REVIEW4.md` for the full protocol and per-person timings.
+
 ## Review round 1: Spark AV negative result
 
 The bounded experiment sent each 10-second AMI window as `input_video` with audio, the corresponding Voice DIARIZATION turns, and normalized name/grid positions. Strict JSON returned rough per-person segments. All calls used `muse-spark-1.3` through `CallLog.cached`; outputs are **unverified** and are not presented as ground truth or a verified summary.

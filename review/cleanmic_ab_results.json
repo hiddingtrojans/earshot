@@ -1,0 +1,195 @@
+{
+  "audio_source": "clean mixed-down mic (AMI Mix-Headset)",
+  "window_seconds": 10.0,
+  "gate": "50 ms frames, 25 ms hop, 200 ms smoothing; mixture above its 20th-percentile log-energy floor",
+  "variants": {
+    "keep": {
+      "matrix": [
+        [
+          0.2804,
+          0.0397,
+          0.7946,
+          0.1514
+        ],
+        [
+          0.2606,
+          0.0561,
+          0.7646,
+          0.1713
+        ],
+        [
+          0.2802,
+          0.0415,
+          0.7937,
+          0.1523
+        ],
+        [
+          0.2702,
+          0.0505,
+          0.7832,
+          0.1627
+        ]
+      ],
+      "mixture_baseline": [
+        0.24,
+        0.1557,
+        0.4442,
+        0.452
+      ],
+      "correct_voice_rate": 0.25,
+      "mixture_correct_voice_rate": 0.25,
+      "diagonal_mean": 0.3232,
+      "off_diagonal_mean": 0.3133,
+      "timing": {
+        "cache": "miss",
+        "latency_ms": 83535,
+        "device": "mps",
+        "batching": "per-person (MPS batch stall avoided)",
+        "timings_ms": {
+          "0": 18192,
+          "1": 16929,
+          "2": 17831,
+          "3": 18481
+        },
+        "span_mode": null,
+        "mapping_source": null,
+        "anchor_digest": null,
+        "key": "7069dc76d385a49191b05287"
+      },
+      "mapping": null,
+      "confidence": null
+    },
+    "spans-text": {
+      "matrix": [
+        [
+          0.2896,
+          -0.0248,
+          0.8225,
+          0.1532
+        ],
+        [
+          0.28,
+          -0.018,
+          0.8203,
+          0.1487
+        ],
+        [
+          0.2981,
+          -0.026,
+          0.8234,
+          0.1488
+        ],
+        [
+          0.2983,
+          -0.026,
+          0.8219,
+          0.1506
+        ]
+      ],
+      "mixture_baseline": [
+        0.24,
+        0.1557,
+        0.4442,
+        0.452
+      ],
+      "correct_voice_rate": 0.25,
+      "mixture_correct_voice_rate": 0.25,
+      "diagonal_mean": 0.3114,
+      "off_diagonal_mean": 0.3096,
+      "timing": {
+        "cache": "miss",
+        "latency_ms": 31539,
+        "device": "mps",
+        "batching": "per-person (MPS batch stall avoided)",
+        "timings_ms": {
+          "0": 5757,
+          "1": 5463,
+          "2": 5429,
+          "3": 5990
+        },
+        "span_mode": "spans-text",
+        "mapping_source": "runtime-lite",
+        "anchor_digest": "27518e5730737a68e5c0988a",
+        "key": "0be7becf1f4eb53dea64f466"
+      },
+      "mapping": {
+        "A": 3,
+        "B": 1,
+        "C": 0,
+        "D": 2
+      },
+      "confidence": {
+        "A": 0.31829849146498834,
+        "B": 0.11528412514267933,
+        "C": 0.4537049576252337,
+        "D": 0.025425077247119954
+      }
+    },
+    "spans-video": {
+      "matrix": [
+        [
+          0.2885,
+          -0.0221,
+          0.8228,
+          0.1519
+        ],
+        [
+          0.2868,
+          -0.0209,
+          0.8243,
+          0.1526
+        ],
+        [
+          0.3008,
+          -0.0239,
+          0.8236,
+          0.1456
+        ],
+        [
+          0.2988,
+          -0.0247,
+          0.8221,
+          0.1498
+        ]
+      ],
+      "mixture_baseline": [
+        0.24,
+        0.1557,
+        0.4442,
+        0.452
+      ],
+      "correct_voice_rate": 0.25,
+      "mixture_correct_voice_rate": 0.25,
+      "diagonal_mean": 0.3102,
+      "off_diagonal_mean": 0.3113,
+      "timing": {
+        "cache": "miss",
+        "latency_ms": 370815,
+        "device": "mps",
+        "batching": "per-person (MPS batch stall avoided)",
+        "timings_ms": {
+          "0": 83100,
+          "1": 101242,
+          "2": 87842,
+          "3": 79628
+        },
+        "span_mode": "spans-video",
+        "mapping_source": "runtime-lite",
+        "anchor_digest": "b7e1b3597154aa436ceb8fe9",
+        "key": "b311fd928c82fa9181752daf"
+      },
+      "mapping": {
+        "A": 3,
+        "B": 1,
+        "C": 0,
+        "D": 2
+      },
+      "confidence": {
+        "A": 0.31829849146498834,
+        "B": 0.11528412514267933,
+        "C": 0.4537049576252337,
+        "D": 0.025425077247119954
+      }
+    }
+  }
+}
