@@ -1,6 +1,6 @@
 # Estimated Meta API spend
 
-Run cap: **$20.00**. **Running total: $3.286617.**
+Run cap: **$20.00**. **Running total: $3.290369.**
 
 Generated from `cache=miss` rows in the supplied run folders. Cache hits and local models add $0. Prices: SAM $0.20/1,000 processed video frames; Voice $0.18/audio hour; Spark $1.25/1M uncached input, $0.15/1M cached input, and $4.25/1M output tokens. Unknown hosted models are an error, not a zero.
 
@@ -267,5 +267,6 @@ Generated from `cache=miss` rows in the supplied run folders. Cache hits and loc
 | runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
 | runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
 | runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_cleanmic | `muse-voice-transcribe-1.0` | diarize the raw mix (today's captions) | 75.040 audio seconds | $0.003752 |
 
-Total before rounding: $3.286616600000. Stop new live calls before the cap is reached.
+Total before rounding: $3.290368600000. Stop new live calls before the cap is reached.

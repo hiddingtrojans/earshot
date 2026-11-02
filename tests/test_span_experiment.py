@@ -12,3 +12,13 @@ def test_matrix_computes_diagonal_and_correct_voice_rate():
     assert result["diagonal_mean"] == 1.0
     assert abs(result["off_diagonal_mean"]) < 0.2
     assert len(result["matrix"]) == len(result["mixture_baseline"]) == 2
+
+
+def test_clean_mic_ab_cli_starts():
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    script = Path(__file__).parent.parent / "tools" / "clean_mic_ab.py"
+    result = subprocess.run([sys.executable, str(script), "--help"], check=True, capture_output=True, text=True)
+    assert "clean mixed-down mic" in result.stdout

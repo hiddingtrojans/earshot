@@ -1,0 +1,2 @@
+wrote runs/ami_cleanmic/earshot.json
+view it: python -m earshot serve runs/ami_cleanmic
