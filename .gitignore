@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+# Run outputs: large media and per-run caches. Ship demo runs explicitly under demo/.
+runs/
+*.mov
+spike/out/
