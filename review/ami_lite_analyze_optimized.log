@@ -1,0 +1,2 @@
+wrote runs/ami_lite/earshot.json
+view it: python -m earshot serve runs/ami_lite
