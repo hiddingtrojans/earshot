@@ -81,10 +81,11 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
 
         from .separation import DEFAULT_TEXT_FEATURES
 
-        # Default: precomputed text conditioning, so T5 never runs. --allow-t5 alone runs SAM Audio as released.
+        # Precomputed text conditioning is the default; --allow-t5 runs the permitted local T5 encoder.
         features = None if (opt.allow_t5 and not opt.text_features) else (opt.text_features or DEFAULT_TEXT_FEATURES)
         sep = SamAudioSeparator(description=opt.prompt, text_features=features, allow_t5=opt.allow_t5,
                                 mask_mode=opt.mask_mode, device=opt.device)
+        report("Separating the tapped voices with SAM Audio")
         if hasattr(sep, "separate_people"):
             separated = sep.separate_people(analysis, mixture, tracks, calls)
         else:
@@ -93,8 +94,6 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
         turns, activity = [], []
         for p, name in enumerate(names):
             iso = separated[p]
-            report(f"Separating {name}'s voice with SAM Audio")
-            iso = sep.separate(analysis, mixture, tracks, p, calls)
             stem = f"stems/{p}_{_slug(name)}.wav"
             write_wav(out / stem, iso, SEPARATION_SR)
             stems[p] = stem

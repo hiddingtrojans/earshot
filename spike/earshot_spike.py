@@ -471,7 +471,8 @@ def main() -> None:
     r.add_argument("--text-features", default=str(Path(__file__).resolve().parent.parent / "assets" / "text_features.npz"),
                    help="precomputed text conditioning (default: the repo's assets/text_features.npz)")
     r.add_argument("--allow-t5", action="store_true", help="run SAM Audio's own T5 encoder instead")
-    r.add_argument("--mask-mode", choices=["keep", "remove"], default="remove")
+    r.add_argument("--mask-mode", choices=["keep", "remove"], default="keep",
+                   help="keep: only the target visible; remove: target blacked out. A/B was inconclusive; keep follows Meta's eval semantics")
     r.set_defaults(func=cmd_run)
 
     a = p.parse_args()

@@ -83,7 +83,7 @@ class SamAudioSeparator:
     window_s: float = 10.0
     overlap_s: float = 1.0
     work_width: int = 640
-    mask_mode: str = "remove"
+    mask_mode: str = "keep"
     text_features: Path | None = DEFAULT_TEXT_FEATURES
     allow_t5: bool = False         # precomputed output by default; true runs T5-base locally
     seed: int = 0

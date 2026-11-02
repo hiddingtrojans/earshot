@@ -31,6 +31,12 @@ def test_keep_leaves_only_target_visible():
         apply_mask_mode(Processor(), frames, [target], "invalid")
 
 
+def test_library_defaults_to_target_visible():
+    from earshot.separation import SamAudioSeparator
+
+    assert SamAudioSeparator().mask_mode == "keep"
+
+
 def test_batched_people_cache_includes_mask_mode(tmp_path):
     from earshot.calls import CallLog
     from earshot.separation import SamAudioSeparator
