@@ -27,10 +27,10 @@ See `ami_lite_bench_repeat3_optimized.log`, `glimmer_analyze.log`, and `SPEND.md
 
 ## Exact owner actions needed, in order
 
-1. If separation is still wanted before feature freeze, obtain `facebook/sam-audio-small-tv` approval and rerun T3/T4 with precomputed text features. Otherwise keep the honest Lite demo.
+1. If separation is still wanted before feature freeze, obtain `facebook/sam-audio-small-tv` approval and rerun T3/T4. Compare the same 10 s spike with the precomputed default and `--allow-t5` using one seed, and switch the default to `--allow-t5` only if their output SI-SDR is below 30 dB. Otherwise keep the honest Lite demo.
 2. Review and push all local history and the demo to a new public GitHub repository.
 3. Check VTT in VLC, including a long cue; adjust player-specific layout if needed.
-4. Record the real ≤2:59 video with the opening new-work disclosure and AMI credit. Do not claim live processing, SAM Audio separation, or simultaneous-caption recovery from this Lite demo. Explain local Glimmer if using it for the open-weight bonus. Preserve the organizer's T5 ruling quoted in README: https://discord.com/channels/1557169028080869426/1564043204725182484/threads/1566631376868876419
+4. Record the real ≤2:59 video with the opening new-work disclosure and AMI credit. Do not claim live processing, SAM Audio separation, or simultaneous-caption recovery from this Lite demo. Explain local Glimmer if using it for the open-weight bonus. Preserve the organizer's T5 ruling quoted in README: https://discord.com/channels/1557169028080869426/1564043204725182484/threads/1566631376868876419 — and if SAM Audio appears, include the on-screen line "SAM Audio includes a frozen Google T5-base text encoder (open source). Allowed by the organizers; disclosed in the README."
 5. Check the video logged out, read back every submission field, and link the exact X post.
 
 ## Current benchmark

@@ -22,6 +22,7 @@ Earshot takes a recorded video of the table and:
 |---|---|---|---|
 | `sam-3.1` | Meta Model API | Tracks each tapped person through the video (point prompts → per-frame masks) | `earshot/tracking.py` |
 | SAM Audio (`facebook/sam-audio-small-tv`) | This computer | Optional visual-prompted voice separation; implemented, but **blocked by weight approval and not used in this demo** | `earshot/separation.py` |
+| T5-base text encoder (Google, open source, Apache-2.0) | This computer, as part of SAM Audio | Part of SAM Audio's text conditioning. Earshot ships its output for the two fixed prompts as constants (`assets/text_features.npz`), or runs it locally with `--allow-t5`. | `earshot/separation.py` |
 | `muse-voice-transcribe-1.0` | Meta Model API | Diarizes the raw mix as the baseline and transcribes isolated voices when available | `earshot/transcribe.py` |
 | `muse-spark-1.3` | Meta Model API | Groups threads, writes cited catch-ups, and translates caption text | `earshot/spark.py` |
 | `muse-glimmer` | This computer (Ollama) | Optional local cited catch-ups, verified separately on the 10 s AMI run | `earshot/spark.py` |
@@ -31,12 +32,12 @@ Everything else is deterministic code: voice activity (frame energy with hystere
 ### Rules notes (Meta-only runtime models)
 
 - SAM Audio's released config builds optional **re-rankers**, including **CLAP**, which isn't a Meta model. Earshot turns them off with config overrides (`text_ranker=None, visual_ranker=None, span_predictor=None`) and installs SAM Audio without them (`--no-deps`).
-- The organizers resolved the T5 question on 2 Nov at 06:06 in [this Discord thread](https://discord.com/channels/1557169028080869426/1564043204725182484/threads/1566631376868876419):
+- The organizers resolved the T5 question on **2 Nov 2026 at 06:06 Madrid** in [this Discord thread](https://discord.com/channels/1557169028080869426/1564043204725182484/threads/1566631376868876419):
 
-  > “Yes — SAM Audio is an open-source Meta model, so it counts as a Meta model however you run it, and the frozen T5-base encoder inside it is fine with no workaround or precomputation needed. Organizers have ruled that open-source non-Meta models can run alongside Meta's models as long as Meta's models do real work; disclose the T5 encoder in your README and demo. Closed third-party AI models are still not allowed.”
+  > “SAM Audio is an open-source Meta model, so it counts as a Meta model however you run it, and the frozen T5-base encoder inside it is fine with no workaround or precomputation needed. Organizers have ruled that open-source non-Meta models can run alongside Meta's models as long as Meta's models do real work; disclose the T5 encoder in your README and demo. Closed third-party AI models are still not allowed.”
 
-  This run nevertheless kept the stricter path: **T5 is not loaded**. The two fixed prompts use precomputed outputs in `assets/text_features.npz`; re-rankers stay disabled. The demo does not run SAM Audio at all because Hugging Face returned `Access denied ... requires approval`.
-- **Earshot-Lite** (`--separator lite`) needs no SAM Audio. It maps each diarized speaker to a face using motion inside SAM 3.1 masks, exact small-group assignment, and a compression-noise floor. It does **not** separate audio and cannot recover words omitted by the single-stream transcription.
+  The default remains precomputed outputs in `assets/text_features.npz`; **`--allow-t5` is allowed** and runs T5-base locally. Re-rankers and the span predictor stay off for speed and because CLAP is not Meta. The demo does not run SAM Audio because Hugging Face returned `Access denied ... requires approval`.
+- **Earshot-Lite** (`--separator lite`) is not a T5 fallback. It is used only if SAM Audio fails the T3 go/no-go. It maps each diarized speaker to a face using motion inside SAM 3.1 masks, exact small-group assignment, and a compression-noise floor. It does **not** separate audio and cannot recover words omitted by the single-stream transcription.
 
 ## Run it
 

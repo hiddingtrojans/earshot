@@ -5,10 +5,9 @@ as its visual prompt. Compliance choices, from reading SAM Audio's source:
 
 * re-rankers (CLAP + judge, ImageBind) and the span predictor are switched off
   through config overrides, so they are never built (CLAP is not a Meta model);
-* SAM Audio conditions on text through a frozen Google T5-base encoder on every
-  call. With `text_features=...` we load precomputed encoder outputs for our
-  fixed prompts instead, so T5 is not loaded or run at runtime. Use that mode
-  only if organizers confirm it (see README, "Rules").
+* SAM Audio conditions on text through a frozen Google T5-base encoder. The
+  default uses precomputed encoder outputs for our fixed prompts instead of
+  loading T5. The organizers allow `--allow-t5`, which runs T5-base locally.
 
 `MixtureSeparator` is Earshot-Lite: no separation; attribution happens in
 `lite.py` from mouth movement instead.
@@ -77,7 +76,7 @@ class SamAudioSeparator:
     overlap_s: float = 1.0
     work_width: int = 640
     text_features: Path | None = DEFAULT_TEXT_FEATURES
-    allow_t5: bool = False         # never run T5 unless explicitly allowed (fail closed)
+    allow_t5: bool = False         # precomputed output by default; true runs T5-base locally
     seed: int = 0
 
     name = "SAM Audio (local)"
@@ -86,8 +85,8 @@ class SamAudioSeparator:
         self._model = self._processor = None
         if self.text_features is None and not self.allow_t5:
             raise ValueError(
-                "SAM Audio would run Google's T5 encoder at runtime. Pass text_features "
-                "(precomputed, see tools/precompute_text_features.py) or allow_t5=True.")
+                "Choose SAM Audio text conditioning: pass precomputed text_features "
+                "(the default), or set allow_t5=True to run frozen T5-base locally (allowed by organizers).")
 
     # ---------- model ----------
     def _load(self):

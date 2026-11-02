@@ -415,8 +415,8 @@ def finish(out: Path, report: dict, ref, mixture: np.ndarray) -> None:
         m for m in sys.modules if m.split(".")[0] in forbidden
     )
     report["rule_status"] = (
-        "Organizers' bot (2 Nov): T5 running inside SAM Audio at runtime would not meet the rule; "
-        "whether precomputed constants are OK is with the organizers. This run: "
+        "Organizers' ruling (2 Nov 06:06 Madrid): SAM Audio and its frozen T5-base are allowed with disclosure; "
+        "T5 may run locally, while precomputed text conditioning remains the default. This run: "
         + report.get("text_conditioning", "dry run")
     )
     vis = report["runs"].get("visual", {})

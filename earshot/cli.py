@@ -22,7 +22,7 @@ def main() -> None:
     a.add_argument("--text-features", type=Path,
                    help="precomputed SAM Audio text features (default: assets/text_features.npz; no T5 at runtime)")
     a.add_argument("--allow-t5", action="store_true",
-                   help="let SAM Audio run its own T5 text encoder (only if organizers allow it)")
+                   help="run SAM Audio's frozen T5-base locally (allowed by organizers; default uses precomputed output)")
     a.add_argument("--no-spark", action="store_true")
     a.add_argument("--catchup-every", type=float, default=10.0)
     a.add_argument("--catchup-model", choices=["spark", "glimmer"], default="spark")
