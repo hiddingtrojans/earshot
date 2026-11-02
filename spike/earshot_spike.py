@@ -332,6 +332,8 @@ def cmd_run(a: argparse.Namespace) -> None:
         report["text_conditioning"] = f"precomputed ({a.text_features}); T5 not loaded"
     else:
         report["text_conditioning"] = "SAM Audio's own T5 encoder (--allow-t5)"
+    from earshot.compat import enable_native_attention
+    enable_native_attention()
     from sam_audio import SAMAudio, SAMAudioProcessor
 
     device = pick_device(a.device)

@@ -90,7 +90,9 @@ pip install --no-deps "git+https://github.com/facebookresearch/sam-audio.git"
 hf auth login                  # access to facebook/sam-audio-small-tv is gated on Hugging Face
 ```
 
-`spike/earshot_spike.py` checks that SAM Audio runs on your machine, times it, and scores the separation on a clip with known ground truth.
+`earshot.compat` handles the missing macOS xformers wheel for SAM Audio's default SDPA attention path; the optional FMHA path still requires xformers and is not used. This keeps the documented `--no-deps` install without silently changing the model's attention implementation.
+
+`spike/earshot_spike.py` checks that SAM Audio runs on your machine, times it, and scores the separation on a clip with known ground truth. Use `--seed` to make conditioning comparisons repeatable.
 
 ### Optional local Muse Glimmer
 

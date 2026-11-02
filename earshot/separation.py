@@ -97,6 +97,8 @@ class SamAudioSeparator:
 
         if self.text_features is not None:
             _install_cached_text_encoder(Path(self.text_features))
+        from .compat import enable_native_attention
+        enable_native_attention()
         from sam_audio import SAMAudio, SAMAudioProcessor
 
         if self.device == "auto":
