@@ -95,10 +95,10 @@ class SamAudioSeparator:
         os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
         import torch
 
-        if self.text_features is not None:
-            _install_cached_text_encoder(Path(self.text_features))
         from .compat import enable_native_attention
         enable_native_attention()
+        if self.text_features is not None:
+            _install_cached_text_encoder(Path(self.text_features))
         from sam_audio import SAMAudio, SAMAudioProcessor
 
         if self.device == "auto":
@@ -171,8 +171,9 @@ class SamAudioSeparator:
 # --------------------------------------------------------------------------- #
 def _install_cached_text_encoder(path: Path) -> None:
     """Replace SAM Audio's T5 text encoder with a lookup of precomputed outputs."""
-    import sam_audio.model.model as sam_model
+    import importlib
 
+    sam_model = importlib.import_module("sam_audio.model.model")
     sam_model.T5TextEncoder = cached_text_encoder_class(path)
 
 

@@ -258,7 +258,9 @@ def install_cached_text_encoder(path: Path) -> None:
     """Swap SAM Audio's T5 text encoder for precomputed outputs (no T5 at runtime)."""
     import torch
 
-    import sam_audio.model.model as sam_model
+    import importlib
+
+    sam_model = importlib.import_module("sam_audio.model.model")
 
     if not path.exists():
         sys.exit(f"{path} not found: use the repo's assets/text_features.npz, or pass --allow-t5")
@@ -327,13 +329,13 @@ def cmd_run(a: argparse.Namespace) -> None:
 
     torch.manual_seed(a.seed)
 
+    from earshot.compat import enable_native_attention
+    enable_native_attention()
     if not a.allow_t5:
         install_cached_text_encoder(Path(a.text_features))
         report["text_conditioning"] = f"precomputed ({a.text_features}); T5 not loaded"
     else:
         report["text_conditioning"] = "SAM Audio's own T5 encoder (--allow-t5)"
-    from earshot.compat import enable_native_attention
-    enable_native_attention()
     from sam_audio import SAMAudio, SAMAudioProcessor
 
     device = pick_device(a.device)
