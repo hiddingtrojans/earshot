@@ -207,6 +207,37 @@ def check_sync(cache: Path, output: Path) -> None:
     (output / "sync.json").write_text(json.dumps(rows, indent=2) + "\n")
 
 
+def make_array(output: Path, cache: Path) -> None:
+    import wave
+
+    destination = output / "array.wav"
+    if destination.exists() and destination.stat().st_size:
+        print(f"Cached {destination}", flush=True)
+        return
+    channels = []
+    for channel in range(1, 9):
+        path = cache / "audio" / f"ES2008a.Array1-{channel:02d}.wav"
+        download(f"{MIRROR}/audio/ES2008a.Array1-{channel:02d}.wav", path)
+        with wave.open(str(path), "rb") as source:
+            if source.getnchannels() != 1 or source.getsampwidth() != 2 or source.getframerate() != 16_000:
+                raise ValueError(f"Expected 16 kHz mono PCM16: {path}")
+            channels.append(np.frombuffer(source.readframes(source.getnframes()), dtype="<i2"))
+    first = int(round(START * 16_000))
+    count = int(round(DURATION * 16_000))
+    if min(channel.size for channel in channels) < first + count:
+        raise ValueError("Array source is shorter than the requested window")
+    frames = np.stack([channel[first:first + count] for channel in channels], axis=1)
+    output.mkdir(parents=True, exist_ok=True)
+    partial = destination.with_suffix(".part")
+    with wave.open(str(partial), "wb") as target:
+        target.setnchannels(8)
+        target.setsampwidth(2)
+        target.setframerate(16_000)
+        target.writeframes(frames.astype("<i2").tobytes())
+    partial.replace(destination)
+    print(f"Wrote {frames.shape[0]} frames x 8 channels at 16 kHz to {destination}", flush=True)
+
+
 def build(output: Path, cache: Path) -> None:
     output.mkdir(parents=True, exist_ok=True)
     archive = cache / "ami_public_manual_1.6.2.zip"
@@ -237,9 +268,13 @@ def main() -> None:
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--cache", type=Path, default=Path("bench/.ami_cache/ES2008a"))
     parser.add_argument("--start", type=float, default=START, help="window start in seconds (default: 745)")
+    parser.add_argument("--array", action="store_true", help="download all eight microphones and write array.wav")
     args = parser.parse_args()
     START = args.start
-    build(args.out, args.cache)
+    if args.array:
+        make_array(args.out, args.cache)
+    else:
+        build(args.out, args.cache)
 
 
 if __name__ == "__main__":
