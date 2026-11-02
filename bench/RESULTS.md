@@ -118,6 +118,40 @@ The eight real MPS runs used the 0–10 s window (14 overlapping truth words, th
 
 **Neither mode is diagonal-dominant.** Keep/remove waveform-pair Pearson correlations are 0.999955–0.999986. `keep` is therefore the default because it follows Meta's target-visible evaluation semantics, **not because it won the A/B**. Exact values and the mixture gating rule are in `review/envelope_ab.json`; raw model output is in `review/ab_spikes.log`.
 
+## Review round 3: span prompting negative result
+
+A bounded local experiment tested explicit SAM Audio anchors on the same 0–10 s window. Runtime Lite mapped cached Voice labels with `{A:3, B:1, C:0, D:2}`; there was no correction file. Solo spans were other-label-subtracted and at least 0.5 s. Enrollment was up to 4 s target speech + 0.25 s silence + up to 4 s evenly budgeted other speech + 0.25 s silence + the window. `spans-text` used anchors and `speech` text only; `spans-video` added target-visible `keep` video at matching enrollment times. Output was trimmed to the window. Mode, source spans and complete anchor plans were in the cache key.
+
+**Spans-text:**
+
+| Stem \ headset | A | B | C | D |
+|---|---:|---:|---:|---:|
+| A | 0.3370 | -0.1127 | 0.8771 | 0.5496 |
+| B | 0.3392 | -0.1071 | 0.8788 | 0.5428 |
+| C | 0.3350 | -0.1212 | 0.8746 | 0.5522 |
+| D | 0.3368 | -0.1164 | 0.8769 | 0.5519 |
+| Mixture | 0.3929 | -0.1761 | 0.8536 | 0.4089 |
+
+**Spans-video:**
+
+| Stem \ headset | A | B | C | D |
+|---|---:|---:|---:|---:|
+| A | 0.3920 | -0.1728 | 0.8589 | 0.4125 |
+| B | 0.3931 | -0.1673 | 0.8604 | 0.4094 |
+| C | 0.3904 | -0.1731 | 0.8599 | 0.4140 |
+| D | 0.3911 | -0.1786 | 0.8573 | 0.4181 |
+| Mixture | 0.3929 | -0.1761 | 0.8536 | 0.4089 |
+
+| Variant | Correct-voice rate | Diagonal mean | Off-diagonal mean | Model time total (s) | Separation call wall (s) |
+|---|---:|---:|---:|---:|---:|
+| Spans-text | 0.25 | 0.4141 | 0.4115 | 24.625 | 36.290 |
+| Spans-video | 0.25 | 0.3757 | 0.3719 | 207.594 | 225.084 |
+| Round-2 visual-only `keep` | 0.25 | 0.4147 | 0.4152 | — | — |
+
+Only C's row selected its own headset in each variant. **Neither variant reached the required 3/4 correct rows, so no full 745 s/635 s runs, automatic/oracle three-repeat benches, or hosted transcription calls were made.** No WER/right-person/overlap-recall result is claimed. Demo, tagline, and production separator behavior are unchanged. This was a local-only experiment with **$0 new API spend**.
+
+Per-person model inference seconds: text A 7.208, B 5.800, C 5.811, D 5.806; video A 52.724, B 46.263, C 51.450, D 57.157. Video window wall times were 54.1, 47.0, 52.2 and 57.9 s. All eight WAVs are in `review/ab_listen_spans/`; exact matrices, anchors, cache digests and timings are in `review/span_ab_results.json`. Per-variant anchor plans are `runs/span_ab/spans-text/span_plans.json` and `runs/span_ab/spans-video/span_plans.json`; raw output is `review/span_ab.log`. See `review/GATE_REVIEW3.md` for the protocol.
+
 ## Review round 1: Spark AV negative result
 
 The bounded experiment sent each 10-second AMI window as `input_video` with audio, the corresponding Voice DIARIZATION turns, and normalized name/grid positions. Strict JSON returned rough per-person segments. All calls used `muse-spark-1.3` through `CallLog.cached`; outputs are **unverified** and are not presented as ground truth or a verified summary.

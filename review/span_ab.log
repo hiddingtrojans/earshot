@@ -1,0 +1,220 @@
+spans-text: runtime Lite mapping {'A': 3, 'B': 1, 'C': 0, 'D': 2}
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+spans-text device=mps people=[0] window 0-10s total=7.4s
+spans-text device=mps people=[1] window 0-10s total=5.9s
+spans-text device=mps people=[2] window 0-10s total=5.9s
+spans-text device=mps people=[3] window 0-10s total=5.9s
+Traceback (most recent call last):
+  File "/Users/raulacedo/src/earshot/earshot-app/tools/span_prompt_experiment.py", line 197, in <module>
+    main()
+  File "/Users/raulacedo/src/earshot/earshot-app/tools/span_prompt_experiment.py", line 193, in main
+    args.func(args)
+  File "/Users/raulacedo/src/earshot/earshot-app/tools/span_prompt_experiment.py", line 89, in ab
+    scores = matrix(audio, references, mixture_window)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/tools/span_prompt_experiment.py", line 39, in matrix
+    diagonal = round(sum(row[index][index] for index, row in enumerate(rows)) / len(rows), 4)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/tools/span_prompt_experiment.py", line 39, in <genexpr>
+    diagonal = round(sum(row[index][index] for index, row in enumerate(rows)) / len(rows), 4)
+                         ~~~~~~~~~~^^^^^^^
+TypeError: 'float' object is not subscriptable
+spans-text: runtime Lite mapping {'A': 3, 'B': 1, 'C': 0, 'D': 2}
+spans-text {
+  "correct_voice_rate": 0.25,
+  "matrix": [
+    [
+      0.337,
+      -0.1127,
+      0.8771,
+      0.5496
+    ],
+    [
+      0.3392,
+      -0.1071,
+      0.8788,
+      0.5428
+    ],
+    [
+      0.335,
+      -0.1212,
+      0.8746,
+      0.5522
+    ],
+    [
+      0.3368,
+      -0.1164,
+      0.8769,
+      0.5519
+    ]
+  ],
+  "timing": {
+    "cache": "hit",
+    "latency_ms": 36290,
+    "device": "mps",
+    "batching": "per-person (MPS batch stall avoided)",
+    "timings_ms": {
+      "0": 7208,
+      "1": 5800,
+      "2": 5811,
+      "3": 5806
+    },
+    "span_mode": "spans-text",
+    "mapping_source": "runtime-lite",
+    "anchor_digest": "194ed521aae26b00b38f4753",
+    "key": "02f6bfeb63f33b1176850f9b",
+    "total_seconds_including_mapping": 0.019
+  }
+}
+spans-video: runtime Lite mapping {'A': 3, 'B': 1, 'C': 0, 'D': 2}
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+spans-video device=mps people=[0] window 0-10s total=54.1s
+spans-video device=mps people=[1] window 0-10s total=47.0s
+spans-video device=mps people=[2] window 0-10s total=52.2s
+spans-video device=mps people=[3] window 0-10s total=57.9s
+spans-video {
+  "correct_voice_rate": 0.25,
+  "matrix": [
+    [
+      0.392,
+      -0.1728,
+      0.8589,
+      0.4125
+    ],
+    [
+      0.3931,
+      -0.1673,
+      0.8604,
+      0.4094
+    ],
+    [
+      0.3904,
+      -0.1731,
+      0.8599,
+      0.414
+    ],
+    [
+      0.3911,
+      -0.1786,
+      0.8573,
+      0.4181
+    ]
+  ],
+  "timing": {
+    "cache": "miss",
+    "latency_ms": 225084,
+    "device": "mps",
+    "batching": "per-person (MPS batch stall avoided)",
+    "timings_ms": {
+      "0": 52724,
+      "1": 46263,
+      "2": 51450,
+      "3": 57157
+    },
+    "span_mode": "spans-video",
+    "mapping_source": "runtime-lite",
+    "anchor_digest": "9286c401db9d9bc894c9c6dd",
+    "key": "4f115bfc754564f5bba4573c",
+    "total_seconds_including_mapping": 225.13
+  }
+}
+spans-text: runtime Lite mapping {'A': 3, 'B': 1, 'C': 0, 'D': 2}
+spans-text {
+  "correct_voice_rate": 0.25,
+  "matrix": [
+    [
+      0.337,
+      -0.1127,
+      0.8771,
+      0.5496
+    ],
+    [
+      0.3392,
+      -0.1071,
+      0.8788,
+      0.5428
+    ],
+    [
+      0.335,
+      -0.1212,
+      0.8746,
+      0.5522
+    ],
+    [
+      0.3368,
+      -0.1164,
+      0.8769,
+      0.5519
+    ]
+  ],
+  "timing": {
+    "cache": "hit",
+    "latency_ms": 36290,
+    "device": "mps",
+    "batching": "per-person (MPS batch stall avoided)",
+    "timings_ms": {
+      "0": 7208,
+      "1": 5800,
+      "2": 5811,
+      "3": 5806
+    },
+    "span_mode": "spans-text",
+    "mapping_source": "runtime-lite",
+    "anchor_digest": "194ed521aae26b00b38f4753",
+    "key": "02f6bfeb63f33b1176850f9b",
+    "seconds_after_mapping": 0.021
+  }
+}
+spans-video: runtime Lite mapping {'A': 3, 'B': 1, 'C': 0, 'D': 2}
+spans-video {
+  "correct_voice_rate": 0.25,
+  "matrix": [
+    [
+      0.392,
+      -0.1728,
+      0.8589,
+      0.4125
+    ],
+    [
+      0.3931,
+      -0.1673,
+      0.8604,
+      0.4094
+    ],
+    [
+      0.3904,
+      -0.1731,
+      0.8599,
+      0.414
+    ],
+    [
+      0.3911,
+      -0.1786,
+      0.8573,
+      0.4181
+    ]
+  ],
+  "timing": {
+    "cache": "hit",
+    "latency_ms": 225084,
+    "device": "mps",
+    "batching": "per-person (MPS batch stall avoided)",
+    "timings_ms": {
+      "0": 52724,
+      "1": 46263,
+      "2": 51450,
+      "3": 57157
+    },
+    "span_mode": "spans-video",
+    "mapping_source": "runtime-lite",
+    "anchor_digest": "9286c401db9d9bc894c9c6dd",
+    "key": "4f115bfc754564f5bba4573c",
+    "seconds_after_mapping": 0.019
+  }
+}

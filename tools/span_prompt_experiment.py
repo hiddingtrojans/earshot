@@ -91,7 +91,7 @@ def ab(args) -> dict:
         scores.update({
             "mapping": mapping, "confidence": confidence,
             "first_window_plans": {str(person): separator._plans[person][0] for person in range(4)},
-            "timing": {**local_timing(run), "total_seconds_including_mapping": round(elapsed, 3)},
+            "timing": {**local_timing(run), "seconds_after_mapping": round(elapsed, 3)},
             "wav_dir": str(args.wav_dir),
         })
         result["variants"][variant] = scores
