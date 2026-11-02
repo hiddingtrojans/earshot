@@ -1,0 +1,106 @@
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+Traceback (most recent call last):
+  File "/Users/raulacedo/src/earshot/earshot-app/tools/sam_audio_sanity.py", line 99, in <module>
+    main()
+  File "/Users/raulacedo/src/earshot/earshot-app/tools/sam_audio_sanity.py", line 95, in main
+    run(args.reference, args.out, args.report, args.device, args.seconds, args.seed)
+  File "/Users/raulacedo/src/earshot/earshot-app/tools/sam_audio_sanity.py", line 51, in run
+    result = separator._model.separate(batch, predict_spans=False, reranking_candidates=1)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 158, in inference_mode
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/sam_audio/model/model.py", line 257, in separate
+    forward_args = self._get_forward_args(batch, candidates=reranking_candidates)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/sam_audio/model/model.py", line 209, in _get_forward_args
+    audio_features = self._get_audio_features(batch.audios)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/sam_audio/model/model.py", line 183, in _get_audio_features
+    audio_features = self.audio_codec(audios).transpose(1, 2)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1798, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/sam_audio/model/codec.py", line 67, in forward
+    z = self.encoder(self._pad(waveform))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1798, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/dacvae/model/dacvae.py", line 149, in forward
+    return self.block(x)
+           ^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1798, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1893, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1841, in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/dacvae/nn/layers.py", line 115, in forward
+    return super().forward(x)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/modules/conv.py", line 385, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/modules/conv.py", line 380, in _conv_forward
+    return F.conv1d(
+           ^^^^^^^^^
+RuntimeError: slow_conv2d_forward_mps: input(device='cpu') and weight(device=mps:0')  must be on the same device
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+{
+  "reference": "bench/ami_ES2008a/ref_A.wav",
+  "seconds": 10.0,
+  "seed": 0,
+  "snr_db": 5.583651585538973e-07,
+  "input_sample_rate": 48000,
+  "processor_audio_sampling_rate": 48000,
+  "batch_audio_sampling_rate": 48000,
+  "sample_rate_matches": true,
+  "input_samples": 480000,
+  "output_samples": 480000,
+  "output_length_matches": true,
+  "anchors": null,
+  "masked_video": null,
+  "mixture_si_sdr_db": -0.0214,
+  "target_si_sdr_db": 16.8538,
+  "improvement_db": 16.8751,
+  "expected_improvement_db": 10.0,
+  "passes_10db": true,
+  "target_rms": 0.007015381474047899,
+  "target_rms_dbfs": -43.07897416892183,
+  "residual_rms": 0.0066551221534609795,
+  "residual_rms_dbfs": -43.536879374523366,
+  "residual_si_sdr_db": -38.1742,
+  "input_rms": 0.01023168582469225,
+  "reference_rms": 0.007243794854730368,
+  "noise_rms": 0.00724379438906908,
+  "load_seconds": 7.81,
+  "processor_seconds": 0.002,
+  "separation_seconds": 3.522,
+  "output": "runs/sanity_sam"
+}
