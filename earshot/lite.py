@@ -66,7 +66,16 @@ def attribute_turns(turns: list[Turn], motion: list[np.ndarray], fps: float) -> 
         per_person = np.array([np.nanmean(n[f0:f1]) if np.isfinite(n[f0:f1]).any() else 0.0 for n in norm])
         score.setdefault(t.speaker, np.zeros(people))
         score[t.speaker] += np.nan_to_num(per_person) * (t.end - t.start)
-    # Greedy one-to-one while possible (strongest evidence first), then best match.
+    if not score:
+        return {}
+    speakers = sorted(score)
+    if len(speakers) <= people and len(speakers) <= 8:
+        from itertools import permutations
+
+        best = max(permutations(range(people), len(speakers)),
+                   key=lambda assignment: sum(score[speaker][person]
+                                              for speaker, person in zip(speakers, assignment)))
+        return dict(zip(speakers, best))
     mapping: dict[str, int] = {}
     pairs = sorted(((s[p], spk, p) for spk, s in score.items() for p in range(people)), reverse=True)
     used_people: set[int] = set()

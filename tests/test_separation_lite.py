@@ -32,3 +32,10 @@ def test_lite_attribution_by_head_motion():
     mapping = attribute_turns(turns, [m0, m1], fps)
     assert mapping == {"A": 0, "B": 1}
     assert n == m0.size
+
+
+def test_lite_attribution_uses_optimal_not_greedy_assignment():
+    turns = [Turn("A", 0.0, 1.0, "first"), Turn("B", 1.0, 2.0, "second")]
+    person0 = np.array([5.0, 4.0, 1.0, 1.0, 1.0])
+    person1 = np.array([4.0, 1.0, 1.0, 1.0, 1.0])
+    assert attribute_turns(turns, [person0, person1], 1.0) == {"A": 1, "B": 0}
