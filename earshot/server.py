@@ -132,8 +132,9 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
                     current = json.loads(doc_path.read_text())
                     names = [p["name"] for p in current["people"]]
                     captions = [Caption(**c) for c in current["captions"]]
-                    res = catch_up(captions, names, t, seconds, calls, person=person)
-                    return self._json({"t": t, "person": person, "source": "spark", **res})
+                    res = catch_up(captions, names, t, seconds, calls, person=person,
+                                   model=current.get("catchup_model", "spark"))
+                    return self._json({"t": t, "person": person, "source": current.get("catchup_model", "spark"), **res})
                 except (ReplayMiss, RuntimeError, FileNotFoundError) as exc:
                     current = json.loads(doc_path.read_text()) if doc_path.exists() else {}
                     pre = [c for c in current.get("catchups", []) if c["person"] == person and c["t"] <= t + 0.01]

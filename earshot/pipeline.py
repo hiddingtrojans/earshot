@@ -29,6 +29,7 @@ class Options:
     spark: bool = True
     catchup_every: float = 10.0      # precompute catch-ups so replay mode has them
     catchup_seconds: float = 30.0
+    catchup_model: str = "spark"
     max_edge: int = 960
     translate: list[str] | None = None
     progress: Callable[[str], None] | None = None
@@ -114,11 +115,12 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
     threads = assign_threads(captions, calls) if opt.spark and captions else []
     catchups = []
     if opt.spark and captions and opt.catchup_every > 0:
-        report("Preparing cited catch-ups with Muse Spark")
+        report(f"Preparing cited catch-ups with {'Muse Glimmer' if opt.catchup_model == 'glimmer' else 'Muse Spark'}")
         t = opt.catchup_every
         while t <= info.duration + 1e-6:
             for person in [None, *range(len(names))]:
-                res = catch_up(captions, names, t, opt.catchup_seconds, calls, person=person)
+                res = catch_up(captions, names, t, opt.catchup_seconds, calls, person=person,
+                               model=opt.catchup_model)
                 catchups.append({"t": round(t, 2), "person": person, **res})
             t += opt.catchup_every
 
@@ -142,6 +144,7 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
         "overlaps": overlap_windows(activity),
         "threads": threads,
         "catchups": catchups,
+        "catchup_model": opt.catchup_model,
         "translations": translations,
         "translation_status": translation_status,
     }

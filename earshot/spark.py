@@ -67,6 +67,40 @@ def _respond(calls: CallLog, purpose: str, instructions: str, user: str, schema:
                         key_parts=(instructions, user, schema), fn=call)
 
 
+def _glimmer_respond(calls: CallLog, purpose: str, instructions: str, user: str, schema: dict, name: str) -> dict:
+    def call():
+        import os
+
+        from openai import OpenAI
+
+        base_url = os.environ.get("EARSHOT_LOCAL_BASE_URL", "http://localhost:11434/v1")
+        request = {
+            "model": "muse-glimmer",
+            "messages": [{"role": "system", "content": instructions}, {"role": "user", "content": user}],
+            "max_tokens": 8000,
+        }
+        with OpenAI(base_url=base_url, api_key=os.environ.get("EARSHOT_LOCAL_API_KEY", "ollama")) as api:
+            try:
+                resp = api.chat.completions.create(**request, response_format={
+                    "type": "json_schema", "json_schema": {"name": name, "schema": schema, "strict": True},
+                })
+            except Exception as error:
+                if getattr(error, "status_code", None) not in (400, 422):
+                    raise
+                resp = api.chat.completions.create(**request, response_format={"type": "json_object"})
+        content = resp.choices[0].message.content
+        if not content:
+            raise RuntimeError("Muse Glimmer returned no final JSON text")
+        usage = getattr(resp, "usage", None)
+        return json.loads(content), {
+            "request_id": resp.id,
+            "usage": usage.model_dump() if hasattr(usage, "model_dump") else None,
+        }
+
+    return calls.cached(model="muse-glimmer", purpose=purpose, where="local",
+                        key_parts=(instructions, user, schema), fn=call)
+
+
 def _caption_lines(captions: list[Caption]) -> str:
     return "\n".join(f"[{c.id}] {c.start:6.1f}s {c.name}: {c.text}" for c in captions)
 
@@ -106,7 +140,7 @@ def apply_threads(captions: list[Caption], out: dict) -> list[dict]:
 # What did I miss?
 # --------------------------------------------------------------------------- #
 def catch_up(captions: list[Caption], names: list[str], t_now: float, seconds: float,
-             calls: CallLog, person: int | None = None) -> dict:
+             calls: CallLog, person: int | None = None, model: str = "spark") -> dict:
     t0 = max(0.0, t_now - seconds)
     window = [c for c in captions_in_window(captions, t0, t_now) if person is None or c.person == person]
     who = "the table" if person is None else names[person]
@@ -117,8 +151,14 @@ def catch_up(captions: list[Caption], names: list[str], t_now: float, seconds: f
         f"sentences catching them up on what {who} said. Use only the captions given. Name people as in "
         "the captions. Every sentence must cite the caption IDs it is based on, like c004."
     )
-    out = _respond(calls, f"what did I miss: {who}", instructions, _caption_lines(window),
-                   CATCHUP_SCHEMA, "catchup")
+    if model == "glimmer":
+        out = _glimmer_respond(calls, f"what did I miss: {who}", instructions, _caption_lines(window),
+                               CATCHUP_SCHEMA, "catchup")
+    elif model == "spark":
+        out = _respond(calls, f"what did I miss: {who}", instructions, _caption_lines(window),
+                       CATCHUP_SCHEMA, "catchup")
+    else:
+        raise ValueError(f"unknown catch-up model {model!r}")
     return {"window": [round(t0, 2), round(t_now, 2)], "who": who,
             "sentences": verify_catchup(out.get("sentences", []), window, names)}
 
