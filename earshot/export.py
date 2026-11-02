@@ -52,7 +52,7 @@ def vtt(doc: dict) -> str:
         line = round(min(95.0, max(5.0, y * 100)))
         start, end = caption["start"], max(caption["end"], caption["start"] + 0.001)
         lines += [
-            f"{timestamp(start)} --> {timestamp(end)} line:{line}% position:{position}% align:middle",
+            f"{timestamp(start)} --> {timestamp(end)} line:{line}% position:{position}% align:middle size:45%",
             f"<c.spk{person_index}><v {clean_text(person['name'])}>{clean_text(caption['text'])}</v></c>",
             "",
         ]

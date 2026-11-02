@@ -19,7 +19,7 @@ def test_vtt_positions_colours_overlap_and_escaping():
     assert output.startswith("WEBVTT\n\nSTYLE\n::cue(.spk0) { color: #E4572E; }")
     assert "::cue(.spk1) { color: #2E86AB; }" in output
     assert output.count("00:00:00.500 -->") == 2
-    assert "00:00:00.500 --> 00:00:02.000 line:40% position:30% align:middle" in output
+    assert "00:00:00.500 --> 00:00:02.000 line:40% position:30% align:middle size:45%" in output
     assert "<c.spk0><v Speaker A>one &amp; &lt;two&gt;</v></c>" in output
     assert "<c.spk1><v Speaker B>simultaneous</v></c>" in output
 
