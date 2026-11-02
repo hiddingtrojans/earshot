@@ -2,24 +2,86 @@
 
 Date: 2026-11-02. Hardware: Apple M5 Max, arm64. Source: public AMI Meeting Corpus ES2008a, 745.0–820.0 s, far-field `Array1-01`, four speakers, 234 manually timed words (53 overlapping). All numbers below come from `python -m earshot bench` on real cached runs.
 
-Models: `sam-3.1` for person masks; `muse-voice-transcribe-1.0` for single-stream DIARIZATION and repeat transcription; `muse-spark-1.3` for the viewer's threads/catch-ups. Lite attribution is deterministic mouth motion, not another model.
+Models: `sam-3.1` for person masks; `muse-voice-transcribe-1.0` for single-stream DIARIZATION and repeat transcription; `muse-spark-1.3` for threads, optional hosted catch-ups and translation; `muse-glimmer` for cached local catch-ups in the demo. Lite attribution is deterministic mouth motion, not another model.
 
 ## Results
 
-Values are **mean [min, max] over 3 real Voice transcription repeats**. Repeats reuse the same SAM masks and vary only Voice with repeat-specific cache keys. WER and right-person are macro means over the four people; overlap recall is the macro mean of per-person recall against exact word-level overlap intervals.
+Values are **mean [min, max] over 3 real Voice transcription repeats**. Repeats reuse the same SAM masks and separated audio, and vary Voice with repeat-specific cache keys. WER and right-person are macro means over four people; overlap recall is the macro mean of per-person recall against exact word-level overlap intervals. Correct-voice rate is the fraction of envelope-correlation rows whose best headset match is the intended person.
 
-| Mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | SI-SDR gain (dB) ↑ |
+| Mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | Correct voice ↑ |
 |---|---:|---:|---:|---:|
-| Single-stream captions (oracle-mapped) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
-| Earshot-Lite (mouth-band activity correlation) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
-| Earshot (SAM Audio) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | -2.415 [-2.415, -2.415] |
+| Single stream (oracle; primary SAM repeats) | 0.239 [0.231, 0.246] | 0.913 [0.906, 0.918] | 0.480 [0.463, 0.513] | — |
+| Earshot-Lite (745 s mouth-band correlation) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
+| SAM Audio `keep` (745 s) | 0.967 [0.749, 1.227] | 0.386 [0.301, 0.546] | 0.098 [0.037, 0.141] | 0.500 |
+| SAM Audio legacy `remove` (745 s) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | 0.250 |
 | Spark AV experiment (unverified) | 0.852 [0.776, 0.897] | 0.496 [0.455, 0.529] | 0.254 [0.244, 0.262] | — |
 
-The single-stream baseline is **oracle-mapped**: each anonymous Voice speaker is assigned to the real person whose truth it matches best. This is generous to the baseline and is not available to Earshot-Lite at runtime. The baseline and Lite use identical Voice responses within each repeat.
+The single-stream baseline is **oracle-mapped**: each anonymous Voice speaker is assigned to the real person whose truth it matches best. This is generous to the baseline and unavailable to Lite at runtime. The primary SAM comparison uses its own three Voice repeats. Lite and Spark AV use their own previously reported cached repeats, so their baselines are not silently substituted for the primary run's baseline.
 
-Lite does not separate audio and cannot recover words that the single-stream Voice response omits. The reviewed implementation measures a central 60% width, 30–60% mask-height mouth band, smooths activity and motion over 0.5 s, z-scores both, and maximizes total Pearson correlation with `scipy.optimize.linear_sum_assignment`. On 745 s it matches the generous oracle baseline on all three repeats.
+Lite does not separate audio and cannot recover words omitted by single-stream Voice. Its central 60% width, 30–60% mask-height mouth band, 0.5 s smoothing, z-scoring, Pearson correlation and `scipy.optimize.linear_sum_assignment` match the oracle baseline on its three 745 s repeats.
 
-**SAM Audio is a measured no-go on this clip.** All four real stems were produced on MPS, but separation took 2,495.8 seconds (41.6 minutes), exceeding the 15-minute limit. Right-person 0.464 is below 0.8, overlap recall 0.117 does not beat the baseline by 10 points, and SI-SDR gain is -2.415 dB. Lite therefore remains the main mode and demo. The failed run is evidence, not demo media. Per-person SI-SDR in the first repeat was A +1.28 dB, B -7.35 dB, C -3.15 dB, D -0.44 dB (isolated minus mixture); their macro mean is -2.415 dB.
+## Review round 2: full `keep` decision and timing
+
+**SAM Audio `keep` is a measured NO-GO on quality, not speed.** Right-person 0.386 is below 0.80 in every repeat. Overlap recall 0.098 must be at least the same-run baseline mean +0.10 = **0.580**, so it falls short by 0.382; every repeat also fails its paired comparison. WER is 0.967 and is reported rather than used as a gate. Lite remains the demo; the failed run is evidence, not demo media.
+
+The real per-person MPS run used the semantic `keep` mask, precomputed text conditioning, no re-rankers/span predictor, and no Spark. Total separation call wall time was **773.889 s (12 min 53.9 s)**, including loading. No speed-only failure was applied. Per-person timings:
+
+| Person | Model inference (s) | Window wall time including processing/cleanup (s) |
+|---|---:|---:|
+| A | 161.775 | 165.1 |
+| B | 179.909 | 183.2 |
+| C | 200.073 | 203.5 |
+| D | 193.504 | 196.1 |
+| **Total** | **735.261** | **747.9** |
+
+Four-person batching and per-person exception fallback are implemented. Actual four-person MPS batching stalled for over 25 minutes, and a CPU batch did not complete a window after over 20 minutes; neither is a quality benchmark. The completed evaluation therefore uses one person at a time on MPS, freezes the loaded static object graph, and runs `gc.collect()` plus `torch.mps.empty_cache()` after every window. Real per-window timings are in `review/ami_samaudio_keep_mps_analyze.log`.
+
+### Full-run envelope matrix
+
+Protocol: 50 ms frames, 25 ms hop, log energy, 200 ms smoothing, Pearson correlation on frames above the mixture's 20th-percentile log-energy noise floor. Rows are intended people; columns are headset references A/B/C/D. Bold cells are each row's maximum.
+
+| Stem \ headset | A | B | C | D |
+|---|---:|---:|---:|---:|
+| Speaker A | **0.2121** | 0.0995 | 0.0464 | 0.1532 |
+| Speaker B | 0.1808 | **0.1884** | 0.0167 | 0.1316 |
+| Speaker C | 0.2109 | 0.0998 | 0.0427 | **0.1573** |
+| Speaker D | 0.1402 | **0.2091** | 0.0480 | 0.1349 |
+| Mixture | **0.3887** | 0.0834 | 0.0950 | 0.2559 |
+
+Stems: **0.500 correct-voice rate**. Mixture: **0.250**. A and C select their own headsets; B and D do not. SI-SDR remains in the JSON rather than the headline because the far-field mixture/close-talk-headset comparison is not meaningful here (mixture/Speaker A = -32.91 dB). `keep` SI-SDR gain is -0.008 dB; legacy `remove` gain is -2.415 dB.
+
+## Review round 2: visual-mask A/B
+
+`processor.mask_videos` computes `v * m.eq(0)`. `keep` inverts the target mask first and leaves the target visible; `remove` passes the target mask and blacks it out. Both modes are cached separately. The unit test uses frames of ones and proves nonzero pixels remain only inside the `keep` mask.
+
+The eight real MPS runs used the 0–10 s window (14 overlapping truth words, the most of the separation windows), four grid cells, both modes, and seed 0. WAVs are committed in `review/ab_listen/` for the owner to compare with `mixture.wav`. **No agent listening check is claimed.**
+
+**Keep:**
+
+| Stem \ headset | A | B | C | D |
+|---|---:|---:|---:|---:|
+| A | 0.3512 | -0.1337 | 0.9071 | 0.5337 |
+| B | 0.3526 | -0.1328 | 0.9071 | 0.5341 |
+| C | 0.3515 | -0.1322 | 0.9071 | 0.5343 |
+| D | 0.3538 | -0.1328 | 0.9067 | 0.5334 |
+| Mixture | 0.3927 | -0.1761 | 0.8535 | 0.4093 |
+
+**Remove:**
+
+| Stem \ headset | A | B | C | D |
+|---|---:|---:|---:|---:|
+| A | 0.3528 | -0.1325 | 0.9069 | 0.5334 |
+| B | 0.3520 | -0.1323 | 0.9070 | 0.5333 |
+| C | 0.3525 | -0.1325 | 0.9070 | 0.5334 |
+| D | 0.3512 | -0.1329 | 0.9070 | 0.5334 |
+| Mixture | 0.3927 | -0.1761 | 0.8535 | 0.4093 |
+
+| Mode | Correct-voice rate | Diagonal mean | Off-diagonal mean |
+|---|---:|---:|---:|
+| Keep | 0.25 | 0.4147 | 0.4152 |
+| Remove | 0.25 | 0.4152 | 0.4149 |
+
+**Neither mode is diagonal-dominant.** Keep/remove waveform-pair Pearson correlations are 0.999955–0.999986. `keep` is therefore the default because it follows Meta's target-visible evaluation semantics, **not because it won the A/B**. Exact values and the mixture gating rule are in `review/envelope_ab.json`; raw model output is in `review/ab_spikes.log`.
 
 ## Review round 1: Spark AV negative result
 
@@ -59,20 +121,22 @@ EARSHOT_REPLAY=1 python -m earshot bench runs/ami_lite \
   --out runs/ami_lite/bench_repeat3.json
 ```
 
-SAM Audio analysis and its three-repeat scorer used:
+Primary SAM Audio `keep` analysis and its three-repeat scorer used (the interactive shell supplies the hosted credential without printing it):
 
 ```bash
-python -m earshot analyze bench/ami_ES2008a/clip.mp4 \
+zsh -ic 'env HF_HUB_CACHE="$PWD/.hf-cache/hub" caffeinate -i \
+  .venv/bin/python -u -m earshot analyze bench/ami_ES2008a/clip.mp4 \
   --tap "Speaker A@0.25,0.29" --tap "Speaker B@0.80,0.36" \
   --tap "Speaker C@0.31,0.78" --tap "Speaker D@0.71,0.78" \
-  --out runs/ami_samaudio --separator samaudio --translate es
+  --out runs/ami_samaudio_keep --separator samaudio \
+  --device mps --mask-mode keep --no-spark'
 
-python -m earshot bench runs/ami_samaudio \
+zsh -ic 'caffeinate -i .venv/bin/python -m earshot bench runs/ami_samaudio_keep \
   --truth bench/ami_ES2008a/truth.json --repeat 3 \
-  --out runs/ami_samaudio/bench_repeat3.json
+  --out runs/ami_samaudio_keep/bench_review2.json'
 ```
 
-Full scorer output and machine-readable per-person/per-repeat values are in `review/ami_lite_bench_repeat3_optimized.log` and `runs/ami_lite/bench_repeat3.json` in the working run folder. SAM Audio's output is in `review/ami_samaudio_bench_repeat3.log` and `runs/ami_samaudio/bench_repeat3.json`.
+Full scorer output and machine-readable per-person/per-repeat values are in `review/ami_lite_bench_repeat3_optimized.log` and `runs/ami_lite/bench_repeat3.json`. Primary SAM Audio output is in `review/ami_samaudio_keep_mps_analyze.log`, `review/ami_samaudio_keep_bench_review2.log`, and `runs/ami_samaudio_keep/bench_review2.json`. Legacy `remove` values remain in `runs/ami_samaudio/bench_repeat3.json`; its envelope matrix is `runs/ami_samaudio/bench_envelope.json`.
 
 ## Negative control
 

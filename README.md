@@ -1,13 +1,13 @@
 # Earshot
 
-**Every voice at the table, captioned, even when people talk at once.**
+**Every voice at the table, captioned under the right face.**
 
 Deaf and hard-of-hearing people have a name for being left out of group conversations: *dinner table syndrome*. One of its main causes is people talking over each other. Single-stream captions turn a table into one stream of text: overlapping speech merges or disappears, and you can't tell who said what.
 
 Earshot takes a recorded video of the table and:
 
 1. **tracks each person you tap** with SAM 3.1;
-2. can **pull each person's voice out of the mix** with SAM Audio, using that person's masks as the visual prompt. It was evaluated on the full AMI clip but **failed the go/no-go on speed and quality**, so it is not in the included demo;
+2. can **pull each person's voice out of the mix** with SAM Audio, using that person's masks as the visual prompt. It was evaluated on the full AMI clip but **failed the go/no-go on quality**, so it is not in the included demo;
 3. **captions each voice separately** with Muse Voice Transcribe, or assigns diarized turns to faces with the deterministic Earshot-Lite fallback, and shows face-anchored bubbles;
 4. **splits side conversations into threads** and answers **"What did I miss?"** with Muse Spark. Every summary sentence must cite captions and pass deterministic checks, or it's replaced by the captions themselves;
 5. offers **cached Spanish bubbles**, positioned/coloured WebVTT, labelled SRT, and per-person audio downloads when isolated stems exist.
@@ -21,7 +21,7 @@ Earshot takes a recorded video of the table and:
 | Model | Where it runs | What it does in Earshot | Code |
 |---|---|---|---|
 | `sam-3.1` | Meta Model API | Tracks each tapped person through the video (point prompts → per-frame masks) | `earshot/tracking.py` |
-| SAM Audio (`facebook/sam-audio-small-tv`) | This computer | Visual-prompted voice separation, evaluated on the full AMI clip; **no-go on speed and quality, so Lite remains the demo** | `earshot/separation.py` |
+| SAM Audio (`facebook/sam-audio-small-tv`) | This computer | Visual-prompted voice separation, evaluated on the full AMI clip; **no-go on quality, so Lite remains the demo** | `earshot/separation.py` |
 | T5-base text encoder (Google, open source, Apache-2.0) | This computer, as part of SAM Audio | Part of SAM Audio's text conditioning. Earshot ships its output for the two fixed prompts as constants (`assets/text_features.npz`), or runs it locally with `--allow-t5`. | `earshot/separation.py` |
 | `muse-voice-transcribe-1.0` | Meta Model API | Diarizes the raw mix as the baseline and transcribes isolated voices when available | `earshot/transcribe.py` |
 | `muse-spark-1.3` | Meta Model API | Groups threads, optional hosted cited catch-ups, and translates caption text | `earshot/spark.py` |
@@ -36,7 +36,7 @@ Everything else is deterministic code: voice activity (frame energy with hystere
 
   > “SAM Audio is an open-source Meta model, so it counts as a Meta model however you run it, and the frozen T5-base encoder inside it is fine with no workaround or precomputation needed. Organizers have ruled that open-source non-Meta models can run alongside Meta's models as long as Meta's models do real work; disclose the T5 encoder in your README and demo. Closed third-party AI models are still not allowed.”
 
-  The default remains precomputed outputs in `assets/text_features.npz`; **`--allow-t5` is allowed** and runs T5-base locally. Re-rankers and the span predictor stay off for speed and because CLAP is not Meta. The full SAM Audio run failed its speed and quality go/no-go, so the demo uses Lite.
+  The default remains precomputed outputs in `assets/text_features.npz`; **`--allow-t5` is allowed** and runs T5-base locally. Re-rankers and the span predictor stay off for speed and because CLAP is not Meta. The full SAM Audio run failed its quality go/no-go, so the demo uses Lite.
 - **Earshot-Lite** (`--separator lite`) is not a T5 fallback. It is used only if SAM Audio fails the T3 go/no-go. It maps each diarized speaker to a face using motion inside SAM 3.1 masks, exact small-group assignment, and a compression-noise floor. It does **not** separate audio and cannot recover words omitted by the single-stream transcription.
 
 ## Run it
@@ -114,23 +114,29 @@ The included 75 s demo uses local Muse Glimmer for its 35 cached catch-ups. The 
 - **word error rate** per person;
 - **right person**: the share of caption words that belong to that person;
 - **overlap words**: the share of words spoken while someone else was talking that make it into that person's captions;
-- **SI-SDR** of each isolated voice, when clean reference tracks exist.
+- **correct-voice rate** from log-energy envelope correlation against reference tracks, for isolated stems and the mixture;
+- **SI-SDR** retained in the JSON when references exist, but not used as the headline for far-field mixture/headset comparisons.
 
 The baseline is the same table as one diarized stream (what single-stream captions give you). Each anonymous speaker is mapped to the person it matches best, so the baseline is shown at its best. See `earshot/bench.py` for the truth file format. Composed clips (each person recorded separately, then mixed with `spike/earshot_spike.py compose`) give exact references.
 
 ## Results
 
-Real AMI ES2008a far-field clip, mean [min, max] over 3 Voice transcription repeats. The single-stream baseline is oracle-mapped and therefore generous; it is not a runtime face-to-voice matcher.
+Real AMI ES2008a far-field clip, mean [min, max] over 3 Voice transcription repeats. The single-stream baseline is oracle-mapped and therefore generous; it is not a runtime face-to-voice matcher. The primary SAM Audio comparison uses its own three repeats; Lite and Spark AV use their previously reported cached repeats.
 
-| Mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | SI-SDR gain (dB) ↑ |
+| Mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | Correct voice ↑ |
 |---|---:|---:|---:|---:|
-| Single-stream captions (oracle-mapped) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
-| Earshot-Lite (mouth-band activity correlation) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
+| Single stream (oracle; primary SAM repeats) | 0.239 [0.231, 0.246] | 0.913 [0.906, 0.918] | 0.480 [0.463, 0.513] | — |
+| Earshot-Lite (745 s mouth-band correlation) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
 | Lite development check (635 s) | 2.571 [0.395, 3.719] | 0.547 [0.473, 0.693] | 0.553 [0.424, 0.624] | — |
-| Earshot (SAM Audio) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | -2.415 [-2.415, -2.415] |
+| SAM Audio `keep` (745 s) | 0.967 [0.749, 1.227] | 0.386 [0.301, 0.546] | 0.098 [0.037, 0.141] | 0.500 |
+| SAM Audio legacy `remove` (745 s) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | 0.250 |
 | Spark AV experiment (unverified) | 0.852 [0.776, 0.897] | 0.496 [0.455, 0.529] | 0.254 [0.244, 0.262] | — |
 
-Lite does not separate audio, but the reviewed mouth-band activity correlation matches the generous oracle baseline on all three 745 s repeats. The 60–90% lower-mask band won on 635 s and scored 0.537 on 745 s; the reviewer-fixed 30–60% mouth band scores 0.919 on 745 s and 0.547 on 635 s. With the correction threshold fixed at 0.15, reaching the oracle mapping needed **0 / 0 / 0 taps on 745 s** and **1 / 1 / 0 taps on 635 s**. SAM Audio failed its go/no-go: 41.6 minutes for separation, right-person below 0.8, overlap recall below baseline +10 points, and negative SI-SDR gain. Spark AV also failed every adoption gate and remains an unverified negative experiment, not a viewer mode. See `bench/RESULTS.md` for both development/test windows, exact commands, model IDs, hardware, and negative control.
+The mixture's correct-voice rate is **0.250** on the primary 745 s window. The full `keep` envelope matrix and the 0–10 s mask A/B matrices are in `bench/RESULTS.md`; neither mask mode was diagonal-dominant, so `keep` is the semantic default rather than an A/B winner. SI-SDR remains in the bench JSON with the far-field caveat; `keep` gain is -0.008 dB and legacy `remove` gain is -2.415 dB.
+
+Lite does not separate audio, but its reviewed mouth-band activity correlation matches the generous oracle baseline on its three 745 s repeats. The 60–90% lower-mask band won on 635 s and scored 0.537 on 745 s; the reviewer-fixed 30–60% mouth band scores 0.919 on 745 s and 0.547 on 635 s. With the correction threshold fixed at 0.15, reaching the oracle mapping needed **0 / 0 / 0 taps on 745 s** and **1 / 1 / 0 taps on 635 s**.
+
+**SAM Audio `keep` is a quality no-go:** right-person 0.386 is below 0.80 and overlap recall 0.098 does not reach the same-run baseline +0.10 threshold (0.580). Separation took 773.889 seconds including loading, but speed is not a rejection criterion. Lite therefore remains the demo, without an overlap-recovery tagline. Spark AV also failed every adoption gate and remains an unverified negative experiment, not a viewer mode. See `bench/RESULTS.md` for both windows, exact commands, model IDs, hardware, timings, and negative control.
 
 ## How it's built
 
@@ -155,7 +161,7 @@ tests/            deterministic unit tests and synthetic runs with explicitly fa
 ## Limitations
 
 - Earshot analyzes recorded clips; it is not live or real-time. Fresh full-clip SAM mask decoding is slow pure-Python work, although identical runs reuse saved tracks.
-- SAM Audio was evaluated and failed the go/no-go on this far-field clip: 41.6 minutes for four-person separation, right-person 0.464, overlap recall 0.117, and SI-SDR gain -2.415 dB. It is not used in the demo.
+- SAM Audio `keep` failed the quality go/no-go on the primary far-field clip: right-person 0.386 and overlap recall 0.098, versus the same-run single-stream 0.913 and 0.480. Correct-voice rate was 0.500 versus 0.250 for the mixture; SI-SDR gain was -0.008 dB and is not the headline metric. Separation took 773.889 seconds, but speed alone is not the rejection reason. It is not used in the demo.
 - Spark AV returned spoken text but failed all adoption gates (WER 0.852, right-person 0.496, overlap recall 0.254). It is an unverified negative experiment, not a viewer mode.
 - Lite does not isolate voices or prove recovery of words omitted by single-stream transcription. Its 745 s correlation mapping matches the oracle baseline, but the included demo does **not** demonstrate simultaneous per-person caption recovery or isolated listening.
 - Long WebVTT cues can lay out differently across players. Native browser `<track>` rendering and colours were checked; VLC was not installed, so VLC playback is unverified.

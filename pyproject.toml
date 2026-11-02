@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "earshot"
 version = "0.1.0"
-description = "Every voice at the table, captioned — even when people talk at once."
+description = "Every voice at the table, captioned under the right face."
 requires-python = ">=3.11"
 license = { text = "MIT" }
 dependencies = [
