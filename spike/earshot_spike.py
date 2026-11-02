@@ -40,8 +40,8 @@ Setup (macOS, Apple Silicon)
   brew install ffmpeg      # torchcodec needs FFmpeg's shared libraries
                            # (if torchcodec can't load it: brew install ffmpeg@7)
   uv venv -p 3.11 .venv && source .venv/bin/activate
-  uv pip install torch torchaudio torchvision torchcodec "transformers>=4.54" \
-      einops torchdiffeq numpy huggingface_hub safetensors timm ftfy regex \
+  uv pip install torch torchaudio torchvision torchcodec "transformers==4.56.2" \
+      einops torchdiffeq numpy "huggingface_hub==0.36.2" safetensors timm ftfy regex \
       sentencepiece pydub
   uv pip install "git+https://github.com/facebookresearch/dacvae.git"
   # --no-deps: perception_models' requirements pull decord and xformers, which
@@ -58,10 +58,9 @@ Compliance notes (hackathon rule: every runtime model must be a Meta model)
 ---------------------------------------------------------------------------
 * Re-rankers (CLAP + judge for text, ImageBind for visual) and the span
   predictor are switched off via config overrides, so they are never built.
-* SAM Audio's own text conditioning runs Google's T5-base encoder on every
-  call (sam_audio/model/text_encoder.py). The organizers' bot said that would
-  not meet the rule, so by default this script swaps in precomputed outputs
-  (assets/text_features.npz) and T5 is never loaded. --allow-t5 turns that off.
+* SAM Audio's own text conditioning runs Google's T5-base encoder. The default
+  uses precomputed outputs (assets/text_features.npz); the organizers allow
+  --allow-t5, which runs T5-base locally. See docs/10_T5_RULING.md.
 """
 
 from __future__ import annotations
