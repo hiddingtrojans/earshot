@@ -39,10 +39,10 @@ brew install ffmpeg            # or your platform's ffmpeg
 export MODEL_API_KEY=...       # Meta Model API key
 ```
 
-**Replay the included demo without any keys** (all model responses are cached in the run folder):
+**Replay the included demo without any keys** (all model responses are cached in the run folder; the demo uses a public AMI Meeting Corpus clip, CC BY 4.0):
 
 ```bash
-python -m earshot serve demo/dinner --replay
+python -m earshot serve demo/ami_meeting --replay
 # open http://127.0.0.1:8765/
 ```
 
