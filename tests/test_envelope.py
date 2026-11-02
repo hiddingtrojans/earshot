@@ -50,5 +50,7 @@ def test_bench_reports_envelope_matrix_and_correct_voice_headline(tmp_path, caps
     output = capsys.readouterr().out
     assert result["summary"]["correct_voice_rate"] == 1.0
     assert len(result["envelope"]["people"]) == 2
+    assert result["envelope"]["si_sdr_note"].startswith("Mixture–A headset SI-SDR is ")
+    assert "for this run" in result["envelope"]["si_sdr_note"]
     assert "Correct voice" in output and "Mixture correct voice" in output
     assert "SI-SDR gain" not in output

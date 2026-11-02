@@ -187,11 +187,17 @@ def score_document(doc: dict, run: Path, truth: dict, truth_dir: Path) -> dict:
         mixture_audio = read_audio(run / doc["video"], SEPARATION_SR)
         baseline_envelope = [round(envelope_correlation(mixture_audio, references[name], mixture_audio), 4)
                              for name in references]
+        example_name = next(iter(references))
+        example = result["people"].get(example_name, {}).get("si_sdr_db", {}).get("mixture")
+        si_sdr_note = "Far-field mixture/headset SI-SDR is not meaningful here."
+        if example is not None:
+            si_sdr_note = (f"Mixture–{example_name} headset SI-SDR is {example:.2f} dB for this run; "
+                           "far-field mixture SI-SDR is not meaningful here.")
         result["envelope"] = {
             "people": {}, "mixture": baseline_envelope,
             "mixture_correct_voice_rate": correct_voice_rate([baseline_envelope] * len(references)),
             "gate": "Frames with mixture log energy above its 20th percentile",
-            "si_sdr_note": "Mixture–Speaker A headset SI-SDR is -32.91 dB; far-field mixture SI-SDR is not meaningful here.",
+            "si_sdr_note": si_sdr_note,
         }
         for name, person in ((name, next((p for p in doc["people"] if p["name"] == name), None))
                              for name in references):
