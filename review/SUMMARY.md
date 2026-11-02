@@ -1,13 +1,15 @@
 # Earshot running summary
 
-Updated after GATE_T4 on 2026-11-02. Evidence: `GATE_T1.md`, `GATE_T3.md`, and `GATE_T4.md`.
+Updated after GATE_T6 on 2026-11-02. Evidence: `GATE_T1.md`, `GATE_T3.md`, `GATE_T4.md`, and `GATE_T6.md`.
 
 ## Done
 
 - **T0:** bundle unpacked at `~/src/earshot`; original history confirmed at 8 commits; baseline `pytest -q` reached 26 passed after installing the existing optional `torch` extra in the venv.
 - **T2:** deterministic AMI builder implemented and committed. Real ES2008a 75 s grid, both audio mixtures, four references, taps, attribution, frame, and sync log generated. Re-run truth bytes are identical. Official annotations produce 234 words under the specified filter, 53 overlapping; all four taps were visually checked on `frame0.png`.
 - **T1:** real SAM 3.1, Voice Transcribe, and Spark smoke passed. All four people have masks on 252/252 frames, Voice returned two turns, Spark returned valid threads and two verified catch-up sentences. Replay returned 4/4 cache hits with no network fallback.
-- **T4:** three real Voice repeats scored against exact word-level truth; README and `bench/RESULTS.md` contain matching measured values. Exact assignment and a compression-noise floor fixed the Lite implementation. Final negative control: 0 captions for the empty tap. Current suite: **37 passed**. No remote push has been performed.
+- **T4:** three real Voice repeats scored against exact word-level truth; README and `bench/RESULTS.md` contain matching measured values. Exact assignment and a compression-noise floor fixed the Lite implementation. Final negative control: 0 captions for the empty tap.
+- **T5:** pointer and keyboard tap-to-start, real background analysis with plain progress, and bounded replay snapping all passed in the browser, including a real 10 s live run.
+- **T6:** 42.62 MB real AMI demo committed. A fresh clone rendered it with no API key and an unreachable Meta URL; HTTP viewer/range/catch-up checks passed. Current suite: **43 passed**. No remote push has been performed.
 
 See `ami_lite_bench_repeat3_optimized.log` for the final scorer output and `SPEND.md` for actual call usage.
 
@@ -36,8 +38,8 @@ Lite underperforms the generous oracle-mapped baseline and must not be presented
 
 ## Estimated spend
 
-**$0.906028 of $20.00.** See `SPEND.md` for per-call usage and arithmetic. Replay checks added $0.
+**$0.967408 of $20.00.** See `SPEND.md` for per-call usage and arithmetic. Demo packaging and clean-clone replay added $0.
 
 ## Next
 
-T4 gate is committed (`a190c18`). Build T5 tap-to-start with live background analysis and documented instant cached replay; then produce the T6 demo folder. Keep SAM Audio rows blocked unless model approval arrives.
+T6 gate is committed (`84d7f41`). Implement T8 subtitle export and T9 audio-download behavior (explicitly unavailable for this no-stem Lite demo), then T7 cached Spanish bubbles. Regenerate and revalidate the demo afterward.
