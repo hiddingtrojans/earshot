@@ -24,8 +24,8 @@ Earshot takes a recorded video of the table and:
 | SAM Audio (`facebook/sam-audio-small-tv`) | This computer | Visual-prompted voice separation, evaluated on the full AMI clip; **no-go on speed and quality, so Lite remains the demo** | `earshot/separation.py` |
 | T5-base text encoder (Google, open source, Apache-2.0) | This computer, as part of SAM Audio | Part of SAM Audio's text conditioning. Earshot ships its output for the two fixed prompts as constants (`assets/text_features.npz`), or runs it locally with `--allow-t5`. | `earshot/separation.py` |
 | `muse-voice-transcribe-1.0` | Meta Model API | Diarizes the raw mix as the baseline and transcribes isolated voices when available | `earshot/transcribe.py` |
-| `muse-spark-1.3` | Meta Model API | Groups threads, writes cited catch-ups, and translates caption text | `earshot/spark.py` |
-| `muse-glimmer` | This computer (Ollama) | Optional local cited catch-ups, verified separately on the 10 s AMI run | `earshot/spark.py` |
+| `muse-spark-1.3` | Meta Model API | Groups threads, optional hosted cited catch-ups, and translates caption text | `earshot/spark.py` |
+| `muse-glimmer` | This computer (Ollama) | Cached local cited catch-ups in the included 75 s demo | `earshot/spark.py` |
 
 Everything else is deterministic code: voice activity (frame energy with hysteresis), the caption timeline and bleed filter, Lite assignment, citation checks, metrics, subtitle export, and FFmpeg for media. No other model runs at runtime.
 
@@ -51,7 +51,7 @@ python -m earshot serve demo/ami_meeting --replay
 # open http://127.0.0.1:8765/
 ```
 
-**Replay needs no API key and normally takes under five minutes from clone to viewer.** The included 42.65 MB demo uses a public AMI Meeting Corpus clip (CC BY 4.0) and real cached model responses. Replay makes no Meta calls. Use the language picker for Spanish, Download subtitles for VTT/SRT, and the catch-up/thread panels.
+**Replay needs no API key and normally takes under five minutes from clone to viewer.** The included 42.67 MB demo uses a public AMI Meeting Corpus clip (CC BY 4.0) and real cached model responses. Replay makes no Meta calls. Use the language picker for Spanish, Download subtitles for VTT/SRT, and the catch-up/thread panels.
 
 **Tap to start a new analysis** (recorded clips, not real-time processing):
 
@@ -105,7 +105,7 @@ python -m earshot analyze table.mp4 \
   --out runs/table-glimmer --separator lite --catchup-model glimmer
 ```
 
-The included 75 s demo uses Spark. Glimmer was verified separately on the real 10 s AMI run with three local calls; their replays were cache hits and the viewer labels them “On this computer.” If showing Glimmer in the submission video, explain that it handles catch-ups locally and why that keeps the transcript on-device.
+The included 75 s demo uses local Muse Glimmer for its 35 cached catch-ups. The committed call log contains 15 local inference calls and additional replay hits; the viewer labels them “On this computer.” Hosted Spark still assigns conversation threads and translates captions. Invalid Glimmer summaries fall back to verbatim captions. If showing Glimmer in the submission video, explain that it handles catch-ups locally and why that keeps the transcript on-device.
 
 ## Dinner Table Bench
 
