@@ -24,6 +24,7 @@ class Options:
     separator: str = "samaudio"      # "samaudio" | "lite"
     replay: bool = False
     text_features: Path | None = None   # None = repo default (assets/text_features.npz)
+    mask_mode: str = "keep"
     allow_t5: bool = False
     prompt: str = ""
     spark: bool = True
@@ -81,9 +82,16 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
 
         # Default: precomputed text conditioning, so T5 never runs. --allow-t5 alone runs SAM Audio as released.
         features = None if (opt.allow_t5 and not opt.text_features) else (opt.text_features or DEFAULT_TEXT_FEATURES)
-        sep = SamAudioSeparator(description=opt.prompt, text_features=features, allow_t5=opt.allow_t5)
+        sep = SamAudioSeparator(description=opt.prompt, text_features=features, allow_t5=opt.allow_t5,
+                                mask_mode=opt.mask_mode)
+        if hasattr(sep, "separate_people"):
+            separated = sep.separate_people(analysis, mixture, tracks, calls)
+        else:
+            separated = {person: sep.separate(analysis, mixture, tracks, person, calls)
+                         for person in range(len(names))}
         turns, activity = [], []
         for p, name in enumerate(names):
+            iso = separated[p]
             report(f"Separating {name}'s voice with SAM Audio")
             iso = sep.separate(analysis, mixture, tracks, p, calls)
             stem = f"stems/{p}_{_slug(name)}.wav"
@@ -95,12 +103,12 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
                                     purpose=f"transcribe {name}'s isolated voice"))
         separator_name = sep.name
     elif opt.separator == "lite":
-        from .lite import attribute_turns, gray_frames, head_motion
+        from .lite import attribute_with_confidence, gray_frames, head_motion
 
         report("Matching voices to faces with Earshot-Lite")
         frames = gray_frames(analysis)
         motion = [head_motion(frames, tracks, p) for p in range(len(names))]
-        mapping = attribute_turns(baseline, motion, info.fps)
+        mapping, confidence = attribute_with_confidence(baseline, motion, info.fps)
         turns = [[Turn(str(p), t.start, t.end, t.text) for t in baseline if mapping.get(t.speaker) == p]
                  for p in range(len(names))]
         activity = [[(t.start, t.end) for t in person_turns] for person_turns in turns]
@@ -148,7 +156,8 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
         "baseline": [{"speaker": t.speaker, "start": t.start, "end": t.end, "text": t.text} for t in baseline],
         "activity": activity,
         "overlaps": overlap_windows(activity),
-        "attribution": {"mapping": mapping if opt.separator == "lite" else {}},
+        "attribution": {"mapping": mapping if opt.separator == "lite" else {},
+                        "confidence": confidence if opt.separator == "lite" else {}},
         "threads": threads,
         "catchups": catchups,
         "catchup_model": opt.catchup_model,

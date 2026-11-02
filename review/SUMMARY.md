@@ -42,10 +42,11 @@ Mean [min, max] over 3 real Voice repeats; exact values are in `bench/RESULTS.md
 |---|---:|---:|---:|---:|
 | Single-stream captions (oracle-mapped) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
 | Earshot-Lite (mouth-band activity correlation) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
+| Lite development check (635 s) | 2.571 [0.395, 3.719] | 0.547 [0.473, 0.693] | 0.553 [0.424, 0.624] | — |
 | Earshot (SAM Audio) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | -2.415 [-2.415, -2.415] |
 | Spark AV experiment (unverified) | 0.852 [0.776, 0.897] | 0.496 [0.455, 0.529] | 0.254 [0.244, 0.262] | — |
 
-Lite now matches the oracle baseline on 745 s but does not isolate audio. SAM Audio is a measured no-go. Spark AV failed all adoption gates and is not enabled in the viewer or demo. Negative control: **0 empty-tap captions**. T2 sync heuristic remains inconclusive for C/D due weak correlations; no timeline correction was made.
+Lite matches the oracle baseline on 745 s but does not isolate audio. The 60–90% band won on 635 s and scored 0.537 on 745 s; the reviewer-fixed 30–60% band scores 0.919 on 745 s and 0.547 on 635 s. SAM Audio is a measured no-go. Spark AV failed all adoption gates and is not enabled in the viewer or demo. Negative control: **0 empty-tap captions**. T2 sync heuristic remains inconclusive for C/D due weak correlations; no timeline correction was made.
 
 ## Estimated spend
 

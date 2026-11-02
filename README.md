@@ -126,10 +126,11 @@ Real AMI ES2008a far-field clip, mean [min, max] over 3 Voice transcription repe
 |---|---:|---:|---:|---:|
 | Single-stream captions (oracle-mapped) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
 | Earshot-Lite (mouth-band activity correlation) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
+| Lite development check (635 s) | 2.571 [0.395, 3.719] | 0.547 [0.473, 0.693] | 0.553 [0.424, 0.624] | — |
 | Earshot (SAM Audio) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | -2.415 [-2.415, -2.415] |
 | Spark AV experiment (unverified) | 0.852 [0.776, 0.897] | 0.496 [0.455, 0.529] | 0.254 [0.244, 0.262] | — |
 
-Lite does not separate audio, but the reviewed mouth-band activity correlation matches the generous oracle baseline on all three 745 s repeats. SAM Audio failed its go/no-go: 41.6 minutes for separation, right-person below 0.8, overlap recall below baseline +10 points, and negative SI-SDR gain. Spark AV also failed every adoption gate and remains an unverified negative experiment, not a viewer mode. See `bench/RESULTS.md` for both development/test windows, exact commands, model IDs, hardware, and negative control.
+Lite does not separate audio, but the reviewed mouth-band activity correlation matches the generous oracle baseline on all three 745 s repeats. The 60–90% lower-mask band won on 635 s and scored 0.537 on 745 s; the reviewer-fixed 30–60% mouth band scores 0.919 on 745 s and 0.547 on 635 s. SAM Audio failed its go/no-go: 41.6 minutes for separation, right-person below 0.8, overlap recall below baseline +10 points, and negative SI-SDR gain. Spark AV also failed every adoption gate and remains an unverified negative experiment, not a viewer mode. See `bench/RESULTS.md` for both development/test windows, exact commands, model IDs, hardware, and negative control.
 
 ## How it's built
 

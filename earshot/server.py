@@ -45,8 +45,14 @@ def snap_taps(taps: list[Tap], doc: dict) -> list[Tap]:
 
 
 def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separator: str = "lite"):
+    from .corrections import apply_saved_corrections
+
     doc_path = run / "earshot.json"
     doc = json.loads(doc_path.read_text()) if doc_path.exists() else {}
+    corrections_path = run / "corrections.json"
+    if corrections_path.exists():
+        doc["corrections"] = json.loads(corrections_path.read_text())
+        apply_saved_corrections(doc)
     calls = CallLog(run, replay=replay)
     jobs = {}
     jobs_lock = threading.Lock()
@@ -151,6 +157,28 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
 
         def do_POST(self):  # noqa: N802
             url = urlparse(self.path)
+            if url.path == "/api/correct":
+                from .corrections import apply_correction, nearest_person
+
+                try:
+                    length = int(self.headers.get("Content-Length", "0"))
+                    payload = json.loads(self.rfile.read(length))
+                    from_person = int(payload["person"])
+                    x, y, frame = float(payload["x"]), float(payload["y"]), int(payload["frame"])
+                    if not 0 <= from_person < len(doc["people"]) or not 0 <= x <= 1 or not 0 <= y <= 1:
+                        raise ValueError("Invalid correction")
+                    distance, to_person = nearest_person(doc, x, y, exclude=from_person)
+                    if distance > 0.05:
+                        raise ValueError("Tap is more than 5% away from every other cached person")
+                    current = json.loads(doc_path.read_text())
+                    current["corrections"] = doc.get("corrections", [])
+                    correction = apply_correction(current, from_person, to_person, x, y, frame)
+                except (ValueError, TypeError, KeyError, json.JSONDecodeError) as error:
+                    return self._json({"error": str(error)[:300]}, HTTPStatus.BAD_REQUEST)
+                doc.update(current)
+                doc_path.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
+                corrections_path.write_text(json.dumps(doc["corrections"], ensure_ascii=False, indent=2) + "\n")
+                return self._json({"correction": correction, "doc": doc})
             if url.path != "/api/analyze" or not setup_video:
                 return self._json({"error": "Not found"}, HTTPStatus.NOT_FOUND)
             try:

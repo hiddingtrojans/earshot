@@ -160,15 +160,21 @@
 <script>
 const $ = (s, el = document) => el.querySelector(s);
 const video = $("#video"), overlay = $("#overlay"), links = $("#links"), solo = $("#solo");
-let doc, mode = "earshot", soloPerson = null, language = "";
+let doc, mode = "earshot", soloPerson = null, language = "", correcting = null;
 
 const fmt = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
 const words = s => s.split(/\s+/).filter(Boolean);
 
 function buildLanguage() {
   const picker = $("#language");
+  picker.replaceChildren();
+  const original = document.createElement("option");
+  original.value = "";
+  original.textContent = "Original";
+  picker.appendChild(original);
   const languages = Object.keys(doc.translations || {});
   picker.hidden = languages.length === 0;
+  picker.value = language;
   languages.forEach(lang => {
     const option = document.createElement("option");
     option.value = lang;
@@ -193,6 +199,42 @@ async function load() {
   buildLanguage(); buildControls(); buildLanes(); buildThreads(); loadCalls();
   requestAnimationFrame(tick);
 }
+
+function contentBox() {
+  const rect = video.getBoundingClientRect();
+  if (!video.videoWidth || !video.videoHeight) return rect;
+  const videoAspect = video.videoWidth / video.videoHeight, elementAspect = rect.width / rect.height;
+  let width = rect.width, height = rect.height, offsetX = 0, offsetY = 0;
+  if (elementAspect > videoAspect) {
+    width = rect.height * videoAspect;
+    offsetX = (rect.width - width) / 2;
+  } else if (elementAspect < videoAspect) {
+    height = rect.width / videoAspect;
+    offsetY = (rect.height - height) / 2;
+  }
+  return {left:rect.left + offsetX, top:rect.top + offsetY, width, height};
+}
+video.addEventListener("click", async event => {
+  if (correcting === null) return;
+  event.preventDefault();
+  const rect = contentBox();
+  const x = (event.clientX - rect.left) / rect.width;
+  const y = (event.clientY - rect.top) / rect.height;
+  if (x < 0 || x > 1 || y < 0 || y > 1) return;
+  const response = await fetch("/api/correct", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({person: correcting, x, y, frame: Math.floor(video.currentTime * doc.info.fps})
+  });
+  const result = await response.json();
+  if (!response.ok) {
+    $("#translation-note").textContent = result.error || "Could not apply correction";
+    return;
+  }
+  doc = result.doc;
+  correcting = null;
+  $("#translation-note").textContent = "Correction applied.";
+  buildLanguage(); buildControls(); buildLanes(); buildThreads(); loadCalls(); render(video.currentTime);
+});
 
 /* ---------- head anchors (interpolated) ---------- */
 function anchorAt(p, t) {
@@ -300,6 +342,7 @@ function render(t) {
 /* ---------- controls ---------- */
 function buildControls() {
   const box = $("#controls");
+  box.replaceChildren();
   doc.people.forEach((p, i) => {
     const el = document.createElement("div");
     el.className = "person";
@@ -307,6 +350,13 @@ function buildControls() {
       ${p.stem ? `<button data-solo="${i}" aria-pressed="false">Hear only ${p.name}</button>` : ""}
       <button data-miss="${i}">What did ${p.name} say?</button>`;
     el.querySelector(".name").textContent = p.name;
+    if ((doc.attribution?.confidence?.[p.name] ?? 1) < 0.15) {
+      const correct = document.createElement("button");
+      correct.dataset.correct = i;
+      correct.textContent = `Not ${p.name}?`;
+      correct.title = "Tap the right face to move this person's captions";
+      el.appendChild(correct);
+    }
     if (p.stem) {
       const link = document.createElement("a");
       link.className = "audio-download";
@@ -328,6 +378,11 @@ function buildControls() {
   box.appendChild(all);
   box.addEventListener("click", e => {
     const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.correct !== undefined) {
+      correcting = +b.dataset.correct;
+      $("#translation-note").textContent = `Tap the correct face for ${doc.people[correcting].name} on the video.`;
+      video.focus();
+    }
     if (b.dataset.solo !== undefined) toggleSolo(+b.dataset.solo, b);
     if (b.dataset.miss !== undefined) catchUp(b.dataset.miss);
   });
@@ -355,6 +410,7 @@ video.addEventListener("seeked", () => { if (soloPerson !== null) solo.currentTi
 /* ---------- timeline lanes ---------- */
 function buildLanes() {
   const box = $("#lanes"), D = doc.info.duration;
+  box.replaceChildren();
   const pct = t => `${(100 * t / D).toFixed(3)}%`;
   doc.people.forEach((p, i) => {
     const lane = document.createElement("div");

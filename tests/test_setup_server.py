@@ -118,3 +118,25 @@ def test_subtitle_endpoints_work_offline(tmp_path):
     assert "::cue(.spk0) { color: #E4572E; }" in vtt
     assert "cached words" in vtt
     assert "[Speaker A] cached words" in srt
+
+
+def test_correction_endpoint_applies_and_replays(tmp_path):
+    run = tmp_path / "run"
+    run.mkdir()
+    document = cached_doc()
+    document["captions"] = [{"person": 0, "name": "Speaker A", "start": 0, "end": 1, "text": "hello"}]
+    document["activity"] = [[(0.0, 1.0)], []]
+    document["attribution"] = {"mapping": {"A": 0}, "confidence": {"A": 0.1}}
+    (run / "earshot.json").write_text(json.dumps(document))
+    with running_server(make_handler(run, True)) as base:
+        request = urllib.request.Request(base + "/api/correct", data=json.dumps({
+            "person": 0, "x": 0.79, "y": 0.37, "frame": 0,
+        }).encode(), headers={"Content-Type": "application/json"}, method="POST")
+        with urllib.request.urlopen(request, timeout=2) as response:
+            corrected = json.loads(response.read())
+    assert corrected["doc"]["captions"][0]["person"] == 1
+    assert json.loads((run / "corrections.json").read_text())[0]["to"] == 1
+    with running_server(make_handler(run, True)) as base:
+        with urllib.request.urlopen(base + "/earshot.json", timeout=2) as response:
+            replayed = json.loads(response.read())
+    assert replayed["captions"][0]["person"] == 1

@@ -245,7 +245,10 @@ def _score_repeats(run: Path, truth: dict, truth_dir: Path, count: int) -> list[
     for index in range(count):
         baseline = transcribe(mix24, calls, purpose=f"bench repeat {index}: diarize the raw mix", repeat=index)
         if lite:
-            mapping = attribute_turns(baseline, motion, doc["info"]["fps"])
+            from .corrections import taps_to_oracle
+            from .lite import attribute_with_confidence
+
+            mapping, confidence = attribute_with_confidence(baseline, motion, doc["info"]["fps"])
             turns = [[Turn(str(person), turn.start, turn.end, turn.text) for turn in baseline
                       if mapping.get(turn.speaker) == person] for person in range(len(names))]
             activity = [[(turn.start, turn.end) for turn in person_turns] for person_turns in turns]
@@ -272,6 +275,8 @@ def _score_repeats(run: Path, truth: dict, truth_dir: Path, count: int) -> list[
         scored = score_document(repeated, run, truth, truth_dir)
         if lite:
             scored["lite_mapping"] = mapping
+            scored["confidence"] = confidence
+            scored["taps_to_oracle"] = taps_to_oracle(mapping, confidence, scored["oracle_mapping"], names)
         results.append(scored)
     return results
 

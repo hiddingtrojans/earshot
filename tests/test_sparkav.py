@@ -5,6 +5,7 @@ from earshot.calls import CallLog
 from earshot.sparkav import transcribe_window, transcribe_windows
 from earshot.tracking import Tap
 from earshot.transcribe import Turn
+from tools import synthetic
 
 
 def test_spark_av_parses_json_and_reuses_cache(monkeypatch, tmp_path):
@@ -35,7 +36,8 @@ def test_spark_av_parses_json_and_reuses_cache(monkeypatch, tmp_path):
     calls = CallLog(tmp_path)
     taps = [Tap("Speaker A", 0.25, 0.29), Tap("Speaker B", 0.8, 0.36)]
     baseline = [Turn("A", 0.0, 0.2, "hint")]
-    video = __import__("pathlib").Path("bench/ami_ES2008a/clip.mp4")
+    video = tmp_path / "synthetic.mp4"
+    synthetic.make_video(video)
     turns = transcribe_window(video, taps, baseline, 0.0, 0.2, calls)
     assert len(turns) == 2 and turns[1][0].text == "overlapping words"
     assert turns[1][0].start == 0.05 and turns[1][0].end == 0.15

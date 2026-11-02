@@ -85,9 +85,17 @@ def _correlation(left: np.ndarray, right: np.ndarray) -> float:
     return float(np.dot(left, right) / denominator) if denominator else 0.0
 
 
+CONFIDENCE_THRESHOLD = 0.15
+
+
 def attribute_turns(turns: list[Turn], motion: list[np.ndarray], fps: float,
                     smooth_seconds: float = 0.5) -> dict[str, int]:
-    """Map diarized labels to people by smoothed activity/mouth-motion correlation."""
+    return attribute_with_confidence(turns, motion, fps, smooth_seconds)[0]
+
+
+def attribute_with_confidence(turns: list[Turn], motion: list[np.ndarray], fps: float,
+                              smooth_seconds: float = 0.5) -> tuple[dict[str, int], dict[str, float]]:
+    """Map labels and return best-minus-second-best correlation confidence."""
     from scipy.optimize import linear_sum_assignment
 
     people = len(motion)
@@ -109,16 +117,19 @@ def attribute_turns(turns: list[Turn], motion: list[np.ndarray], fps: float,
             activity = _zscore(activity)
             score = np.array([_correlation(activity, values) for values in smoothed])
         if score.size and float(score.max()) != 0:
-            candidates.append((speaker, score))
+            ordered = np.sort(score)
+            candidates.append((speaker, score, float(ordered[-1] - ordered[-2]) if len(ordered) > 1 else float(ordered[-1])))
     mapping: dict[str, int] = {}
     if not candidates:
-        return {speaker: index % people for index, speaker in enumerate(speakers)} if people else mapping
-    labels = [speaker for speaker, _ in candidates]
-    matrix = np.stack([score for _, score in candidates])
+        return ({speaker: index % people for index, speaker in enumerate(speakers)} if people else mapping,
+                {speaker: 0.0 for speaker in speakers})
+    labels = [speaker for speaker, _, _ in candidates]
+    confidence = {speaker: margin for speaker, _, margin in candidates}
+    matrix = np.stack([score for _, score, _ in candidates])
     rows, columns = linear_sum_assignment(-matrix)
     for row, column in zip(rows, columns):
         mapping[labels[row]] = int(column)
     for row, label in enumerate(labels):
         if label not in mapping:
             mapping[label] = int(np.argmax(matrix[row]))
-    return mapping
+    return mapping, confidence
