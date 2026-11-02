@@ -1,6 +1,6 @@
 # Earshot running summary
 
-Final update after the full SAM Audio go/no-go on 2026-11-02. Evidence: `GATE_T1.md`, `GATE_T3.md`, `GATE_T4.md`, `GATE_T6.md`, `GATE_T12.md`, and `CONDITIONING.md`. **Engineering implementation and freeze verification are complete. No remote push has been performed.**
+Final update after Claude review round 1 on 2026-11-02. Evidence: `GATE_T1.md`, `GATE_T3.md`, `GATE_T4.md`, `GATE_T6.md`, `GATE_T12.md`, `CONDITIONING.md`, and `GATE_REVIEW1.md`. **Engineering implementation and review fixes are complete. No remote push has been performed.**
 
 ## Done
 
@@ -8,16 +8,16 @@ Final update after the full SAM Audio go/no-go on 2026-11-02. Evidence: `GATE_T1
 - **T2:** deterministic AMI builder implemented and committed. Real ES2008a 75 s grid, both audio mixtures, four references, taps, attribution, frame, and sync log generated. Re-run truth bytes are identical. Official annotations produce 234 words under the specified filter, 53 overlapping; all four taps were visually checked on `frame0.png`.
 - **T1:** real SAM 3.1, Voice Transcribe, and Spark smoke passed. All four people have masks on 252/252 frames, Voice returned two turns, Spark returned valid threads and two verified catch-up sentences. Replay returned 4/4 cache hits with no network fallback.
 - **T3:** real precomputed and local-T5 spikes matched at 80.776 dB, so precomputed remains the default. All four stems were produced on MPS, but SAM Audio failed speed and quality: 41.6 minutes, right-person 0.464, overlap recall 0.117, SI-SDR gain -2.415 dB. **NO-GO; Lite remains the demo.**
-- **T4:** three real Voice repeats scored against exact word-level truth; README and `bench/RESULTS.md` contain matching measured values for Lite, single-stream, and SAM Audio. Exact assignment and a compression-noise floor fixed the Lite implementation. Final negative control: 0 captions for the empty tap.
+- **T4:** mouth-band activity correlation now matches the oracle baseline on all three 745 s repeats (WER 0.231, right-person 0.919, overlap recall 0.495). The 635 s development result and rejected lower band are recorded honestly. Spark AV failed every adoption gate and is not in the viewer. Final negative control: 0 empty-tap captions.
 - **T5:** pointer and keyboard tap-to-start, real background analysis with plain progress, and bounded replay snapping all passed in the browser, including a real 10 s live run.
 - **T6:** real AMI demo committed. A fresh clone rendered it with no API key and an unreachable Meta URL; HTTP viewer/range/catch-up checks passed.
 - **T7:** real cached Spanish for all 10 captions, strict ID/label validation, visible untranslated fallback, and original-on-hover/focus all passed in the browser.
 - **T8/T9:** offline VTT/SRT export and downloads implemented. Native browser `<track>` showed a coloured, positioned short cue; stem download was fixture-verified. Lite correctly reports no isolated audio.
 - **T10:** real local Muse Glimmer ran three cited catch-ups with local provenance and viewer label “On this computer.” Verifier fixed caption-ID numeric handling; replay was all cache hits.
 - **T11:** README includes a real demo screenshot, exact results, models/locations, organizer ruling, Lite limitations, replay/setup/export commands, responsible use, and attribution.
-- **T12:** **55 tests passed after SAM Audio compatibility work**; base editable install succeeded in a clean venv; final clean-clone replay, exports, banned-runtime scan, and history secret scan passed. Final demo size is **42.65 MB**.
+- **T12:** **59 tests passed after review fixes**; base editable install succeeded in a clean venv; final clean-clone replay, exports, banned-runtime scan, and history secret scan passed. Final demo size is **42.65 MB**.
 
-See `ami_lite_bench_repeat3_optimized.log`, `ami_samaudio_bench_repeat3.log`, `glimmer_analyze.log`, and `SPEND.md` for real outputs and usage.
+See `ami_lite_745_review1.log`, `ami_lite_635_review1.log`, `spark_ami_bench.log`, and `SPEND.md` for real outputs and usage.
 
 ## Blocked / not submission-ready
 
@@ -41,15 +41,16 @@ Mean [min, max] over 3 real Voice repeats; exact values are in `bench/RESULTS.md
 | Mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | SI-SDR gain ↑ |
 |---|---:|---:|---:|---:|
 | Single-stream captions (oracle-mapped) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
-| Earshot-Lite | 0.702 [0.691, 0.714] | 0.540 [0.537, 0.545] | 0.387 [0.369, 0.415] | — |
+| Earshot-Lite (mouth-band activity correlation) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
 | Earshot (SAM Audio) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | -2.415 [-2.415, -2.415] |
+| Spark AV experiment (unverified) | 0.852 [0.776, 0.897] | 0.496 [0.455, 0.529] | 0.254 [0.244, 0.262] | — |
 
-Lite underperforms the generous oracle-mapped baseline and must not be presented as a measured separation success. SAM Audio is worse on speed and quality and is also a no-go. Negative control: **0 empty-tap captions**. T2 sync heuristic remains inconclusive for C/D due weak correlations; no timeline correction was made.
+Lite now matches the oracle baseline on 745 s but does not isolate audio. SAM Audio is a measured no-go. Spark AV failed all adoption gates and is not enabled in the viewer or demo. Negative control: **0 empty-tap captions**. T2 sync heuristic remains inconclusive for C/D due weak correlations; no timeline correction was made.
 
 ## Estimated spend
 
-**$1.561797 of $20.00.** See `SPEND.md` for per-call usage and arithmetic. Replay and local Glimmer added no hosted spend after the accepted Spanish call.
+**$2.377451 of $20.00** (conservative total including copied run histories). Spark AV used 33 uncached calls and **$0.330758**, within its 2-hour/$3 experiment cap. See `SPEND.md` for per-call usage and arithmetic.
 
 ## Next
 
-T12 and the SAM Audio go/no-go are complete. Only the owner/external actions above remain. Resume implementation only for requested optimization or review changes.
+Claude review round 1 is complete, including both Lite windows and the Spark AV negative result. Only owner/external publication steps and any subsequent review changes remain.

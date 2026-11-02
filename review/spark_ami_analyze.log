@@ -1,0 +1,2 @@
+wrote runs/spark_ami/earshot.json
+view it: python -m earshot serve runs/spark_ami

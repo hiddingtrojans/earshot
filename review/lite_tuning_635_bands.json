@@ -1,0 +1,98 @@
+[
+  {
+    "band": [
+      0.0,
+      0.35
+    ],
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    },
+    "mapping": {
+      "A": 1,
+      "B": 3,
+      "C": 0
+    }
+  },
+  {
+    "band": [
+      0.1,
+      0.45
+    ],
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    },
+    "mapping": {
+      "A": 1,
+      "B": 3,
+      "C": 0
+    }
+  },
+  {
+    "band": [
+      0.3,
+      0.6
+    ],
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    },
+    "mapping": {
+      "A": 1,
+      "B": 3,
+      "C": 0
+    }
+  },
+  {
+    "band": [
+      0.4,
+      0.6
+    ],
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    },
+    "mapping": {
+      "A": 1,
+      "B": 3,
+      "C": 0
+    }
+  },
+  {
+    "band": [
+      0.5,
+      0.8
+    ],
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    },
+    "mapping": {
+      "A": 1,
+      "B": 3,
+      "C": 0
+    }
+  },
+  {
+    "band": [
+      0.6,
+      0.9
+    ],
+    "metrics": {
+      "wer": 0.384,
+      "attribution": 0.693,
+      "overlap_recall": 0.486
+    },
+    "mapping": {
+      "A": 1,
+      "B": 3,
+      "C": 0
+    }
+  }
+]

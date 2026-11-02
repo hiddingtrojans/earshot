@@ -1,0 +1,242 @@
+[
+  {
+    "band": [
+      0.2,
+      0.5
+    ],
+    "smooth": 0.25,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.2,
+      0.5
+    ],
+    "smooth": 0.5,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.2,
+      0.5
+    ],
+    "smooth": 0.75,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.2,
+      0.5
+    ],
+    "smooth": 1.0,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.25,
+      0.55
+    ],
+    "smooth": 0.25,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.25,
+      0.55
+    ],
+    "smooth": 0.5,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.25,
+      0.55
+    ],
+    "smooth": 0.75,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.25,
+      0.55
+    ],
+    "smooth": 1.0,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.3,
+      0.6
+    ],
+    "smooth": 0.25,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.3,
+      0.6
+    ],
+    "smooth": 0.5,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.3,
+      0.6
+    ],
+    "smooth": 0.75,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.3,
+      0.6
+    ],
+    "smooth": 1.0,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.35,
+      0.65
+    ],
+    "smooth": 0.25,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.35,
+      0.65
+    ],
+    "smooth": 0.5,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.35,
+      0.65
+    ],
+    "smooth": 0.75,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.35,
+      0.65
+    ],
+    "smooth": 1.0,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.4,
+      0.7
+    ],
+    "smooth": 0.25,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.4,
+      0.7
+    ],
+    "smooth": 0.5,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.4,
+      0.7
+    ],
+    "smooth": 0.75,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  },
+  {
+    "band": [
+      0.4,
+      0.7
+    ],
+    "smooth": 1.0,
+    "metrics": {
+      "wer": 2.571,
+      "attribution": 0.547,
+      "overlap_recall": 0.553
+    }
+  }
+]
