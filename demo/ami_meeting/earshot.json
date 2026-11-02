@@ -12572,8 +12572,8 @@
   },
   {
    "id": "c002",
-   "person": 2,
-   "name": "Speaker C",
+   "person": 1,
+   "name": "Speaker B",
    "start": 7.26,
    "end": 16.14,
    "text": "Yeah, and if if you'd save the more complicated functions maybe for separate remotes that you wouldn't need to use every day",
@@ -12596,8 +12596,8 @@
   },
   {
    "id": "c004",
-   "person": 1,
-   "name": "Speaker B",
+   "person": 2,
+   "name": "Speaker C",
    "start": 39.26,
    "end": 44.06,
    "text": "Can I ask, I ask, are we designing a remote control for a television only?",
@@ -12620,8 +12620,8 @@
   },
   {
    "id": "c006",
-   "person": 1,
-   "name": "Speaker B",
+   "person": 2,
+   "name": "Speaker C",
    "start": 45.82,
    "end": 56.46,
    "text": "And if this device is just to be used with a television, would we even technically be possible to include video recorder functions on it?",
@@ -12644,8 +12644,8 @@
   },
   {
    "id": "c008",
-   "person": 1,
-   "name": "Speaker B",
+   "person": 2,
+   "name": "Speaker C",
    "start": 57.18,
    "end": 65.34,
    "text": "Or should we just stick to to having television related buttons on?",
@@ -12762,6 +12762,12 @@
   ],
   [
    [
+    7.26,
+    16.14
+   ]
+  ],
+  [
+   [
     39.26,
     44.06
    ],
@@ -12776,12 +12782,6 @@
   ],
   [
    [
-    7.26,
-    16.14
-   ]
-  ],
-  [
-   [
     0.0,
     6.94
    ],
@@ -12792,14 +12792,28 @@
   ]
  ],
  "overlaps": [],
+ "attribution": {
+  "mapping": {
+   "A": 3,
+   "B": 1,
+   "C": 0,
+   "D": 2
+  },
+  "confidence": {
+   "A": 0.2789709667737049,
+   "B": 0.13065072529217714,
+   "C": 0.3575841550828842,
+   "D": 0.0444400952066826
+  }
+ },
  "threads": [
   {
    "thread": 1,
-   "topic": "Main versus special functions"
+   "topic": "Remote button layout"
   },
   {
    "thread": 2,
-   "topic": "TV only design scope"
+   "topic": "TV only scope"
   }
  ],
  "catchups": [
@@ -12813,14 +12827,14 @@
    "who": "the table",
    "sentences": [
     {
-     "text": "Speaker D said each thing should stay in its separate place, not with all the on buttons together.",
+     "text": "Speaker D said everything is in its separate place and not all the on buttons together because then you don't know what you're turning on. [c001]",
      "cite": [
       "c001"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker C agreed and said to save the more complicated functions for separate remotes you would not use every day.",
+     "text": "Speaker B said to save the more complicated functions for separate remotes that you wouldn't need to use every day. [c002]",
      "cite": [
       "c002"
      ],
@@ -12847,8 +12861,15 @@
     10.0
    ],
    "who": "Speaker B",
-   "sentences": [],
-   "note": "Nothing was said."
+   "sentences": [
+    {
+     "text": "Speaker B said to save the more complicated functions for separate remotes you wouldn't need to use every day [c002].",
+     "cite": [
+      "c002"
+     ],
+     "status": "verified"
+    }
+   ]
   },
   {
    "t": 10.0,
@@ -12858,22 +12879,8 @@
     10.0
    ],
    "who": "Speaker C",
-   "sentences": [
-    {
-     "text": "Speaker C said to save the more complicated functions for separate remotes.",
-     "cite": [
-      "c002"
-     ],
-     "status": "verified"
-    },
-    {
-     "text": "Those are remotes you would not need to use every day.",
-     "cite": [
-      "c002"
-     ],
-     "status": "verified"
-    }
-   ]
+   "sentences": [],
+   "note": "Nothing was said."
   },
   {
    "t": 10.0,
@@ -12885,18 +12892,11 @@
    "who": "Speaker D",
    "sentences": [
     {
-     "text": "Speaker D said everything programmed should stay in its own separate place.",
+     "text": "Speaker D: “whatever else we have programmed into it, it's all just in in its separate place and not like all the on buttons together because then you're like, I don't even know what I'm what I'm turning on.”",
      "cite": [
       "c001"
      ],
-     "status": "verified"
-    },
-    {
-     "text": "Speaker D said putting all the on buttons together is confusing because you don't know what you are turning on.",
-     "cite": [
-      "c001"
-     ],
-     "status": "verified"
+     "status": "verbatim"
     }
    ]
   },
@@ -12910,16 +12910,22 @@
    "who": "the table",
    "sentences": [
     {
-     "text": "Speaker D said programmed buttons should stay in separate places, not all the on buttons together, so you know what you are turning on.",
+     "text": "Speaker D says programmed functions should be in separate places so you don't get confused about what you're turning on c001",
      "cite": [
       "c001"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker C and Speaker A said to keep main functions like on-off, channel changing, and volume on one everyday remote and put the more complicated special functions on a separate remote.",
+     "text": "Speaker B says save more complicated functions for a separate remote you wouldn't need every day c002",
      "cite": [
-      "c002",
+      "c002"
+     ],
+     "status": "verified"
+    },
+    {
+     "text": "Speaker A proposes one remote for main functions like on off channel changing volume and another remote for special things needed only occasionally c003",
+     "cite": [
       "c003"
      ],
      "status": "verified"
@@ -12936,14 +12942,14 @@
    "who": "Speaker A",
    "sentences": [
     {
-     "text": "Speaker A suggested having one remote with main functions like on/off, channel changing, and volume.",
+     "text": "Speaker A suggests one remote for main functions like on/off, channel changing and volume. [c003]",
      "cite": [
       "c003"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker A said a second remote could hold the special buttons that TVs no longer have for occasional use.",
+     "text": "Speaker A suggests a second remote for special functions that are needed occasionally but not on the normal remote. [c003]",
      "cite": [
       "c003"
      ],
@@ -12959,8 +12965,15 @@
     20.0
    ],
    "who": "Speaker B",
-   "sentences": [],
-   "note": "Nothing was said."
+   "sentences": [
+    {
+     "text": "Speaker B said to save the more complicated functions for separate remotes you wouldn't need to use every day [c002].",
+     "cite": [
+      "c002"
+     ],
+     "status": "verified"
+    }
+   ]
   },
   {
    "t": 20.0,
@@ -12970,22 +12983,8 @@
     20.0
    ],
    "who": "Speaker C",
-   "sentences": [
-    {
-     "text": "Speaker C said to save the more complicated functions for separate remotes.",
-     "cite": [
-      "c002"
-     ],
-     "status": "verified"
-    },
-    {
-     "text": "Those are remotes you would not need to use every day.",
-     "cite": [
-      "c002"
-     ],
-     "status": "verified"
-    }
-   ]
+   "sentences": [],
+   "note": "Nothing was said."
   },
   {
    "t": 20.0,
@@ -12997,18 +12996,11 @@
    "who": "Speaker D",
    "sentences": [
     {
-     "text": "Speaker D said everything programmed should stay in its own separate place.",
+     "text": "Speaker D: “whatever else we have programmed into it, it's all just in in its separate place and not like all the on buttons together because then you're like, I don't even know what I'm what I'm turning on.”",
      "cite": [
       "c001"
      ],
-     "status": "verified"
-    },
-    {
-     "text": "Speaker D said putting all the on buttons together is confusing because you don't know what you are turning on.",
-     "cite": [
-      "c001"
-     ],
-     "status": "verified"
+     "status": "verbatim"
     }
    ]
   },
@@ -13022,16 +13014,22 @@
    "who": "the table",
    "sentences": [
     {
-     "text": "Speaker D said programmed buttons should stay in separate places, not all the on buttons together, so you know what you are turning on.",
+     "text": "Speaker D says programmed functions should be in separate places so you don't get confused about what you're turning on c001",
      "cite": [
       "c001"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker C and Speaker A said to keep main functions like on-off, channel changing, and volume on one everyday remote and put the more complicated special functions on a separate remote.",
+     "text": "Speaker B says save more complicated functions for a separate remote you wouldn't need every day c002",
      "cite": [
-      "c002",
+      "c002"
+     ],
+     "status": "verified"
+    },
+    {
+     "text": "Speaker A proposes one remote for main functions like on off channel changing volume and another remote for special things needed only occasionally c003",
+     "cite": [
       "c003"
      ],
      "status": "verified"
@@ -13048,14 +13046,14 @@
    "who": "Speaker A",
    "sentences": [
     {
-     "text": "Speaker A suggested having one remote with main functions like on/off, channel changing, and volume.",
+     "text": "Speaker A suggests one remote for main functions like on/off, channel changing and volume. [c003]",
      "cite": [
       "c003"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker A said a second remote could hold the special buttons that TVs no longer have for occasional use.",
+     "text": "Speaker A suggests a second remote for special functions that are needed occasionally but not on the normal remote. [c003]",
      "cite": [
       "c003"
      ],
@@ -13071,8 +13069,15 @@
     30.0
    ],
    "who": "Speaker B",
-   "sentences": [],
-   "note": "Nothing was said."
+   "sentences": [
+    {
+     "text": "Speaker B said to save the more complicated functions for separate remotes you wouldn't need to use every day [c002].",
+     "cite": [
+      "c002"
+     ],
+     "status": "verified"
+    }
+   ]
   },
   {
    "t": 30.0,
@@ -13082,22 +13087,8 @@
     30.0
    ],
    "who": "Speaker C",
-   "sentences": [
-    {
-     "text": "Speaker C said to save the more complicated functions for separate remotes.",
-     "cite": [
-      "c002"
-     ],
-     "status": "verified"
-    },
-    {
-     "text": "Those are remotes you would not need to use every day.",
-     "cite": [
-      "c002"
-     ],
-     "status": "verified"
-    }
-   ]
+   "sentences": [],
+   "note": "Nothing was said."
   },
   {
    "t": 30.0,
@@ -13109,18 +13100,11 @@
    "who": "Speaker D",
    "sentences": [
     {
-     "text": "Speaker D said everything programmed should stay in its own separate place.",
+     "text": "Speaker D: “whatever else we have programmed into it, it's all just in in its separate place and not like all the on buttons together because then you're like, I don't even know what I'm what I'm turning on.”",
      "cite": [
       "c001"
      ],
-     "status": "verified"
-    },
-    {
-     "text": "Speaker D said putting all the on buttons together is confusing because you don't know what you are turning on.",
-     "cite": [
-      "c001"
-     ],
-     "status": "verified"
+     "status": "verbatim"
     }
    ]
   },
@@ -13134,21 +13118,21 @@
    "who": "the table",
    "sentences": [
     {
-     "text": "Speaker C said to save the more complicated functions for separate remotes you would not use every day.",
+     "text": "Speaker B suggested saving complicated functions for a separate remote you wouldn't need every day [c002].",
      "cite": [
       "c002"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker A suggested one remote with main functions like on-off, channel and volume, and another remote with special things.",
+     "text": "Speaker A suggested one remote with main functions like on off channel changing volume and another remote with all the special things [c003].",
      "cite": [
       "c003"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker B asked if you are designing a remote control for a television only.",
+     "text": "Speaker C asked if they are designing a remote control for a television only [c004].",
      "cite": [
       "c004"
      ],
@@ -13166,14 +13150,14 @@
    "who": "Speaker A",
    "sentences": [
     {
-     "text": "Speaker A suggested having one remote with main functions like on/off, channel changing, and volume.",
+     "text": "Speaker A suggests one remote for main functions like on/off, channel changing and volume. [c003]",
      "cite": [
       "c003"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker A said a second remote could hold the special buttons that TVs no longer have for occasional use.",
+     "text": "Speaker A suggests a second remote for special functions that are needed occasionally but not on the normal remote. [c003]",
      "cite": [
       "c003"
      ],
@@ -13191,9 +13175,9 @@
    "who": "Speaker B",
    "sentences": [
     {
-     "text": "Speaker B asked if you are designing a remote control for a television only.",
+     "text": "Speaker B said to save the more complicated functions for separate remotes you wouldn't need to use every day [c002].",
      "cite": [
-      "c004"
+      "c002"
      ],
      "status": "verified"
     }
@@ -13209,16 +13193,9 @@
    "who": "Speaker C",
    "sentences": [
     {
-     "text": "Speaker C said to save the more complicated functions for separate remotes.",
+     "text": "Speaker C asks if we are designing a remote control for a television only. c004",
      "cite": [
-      "c002"
-     ],
-     "status": "verified"
-    },
-    {
-     "text": "Those are remotes you would not need to use every day.",
-     "cite": [
-      "c002"
+      "c004"
      ],
      "status": "verified"
     }
@@ -13245,16 +13222,23 @@
    "who": "the table",
    "sentences": [
     {
-     "text": "Speaker A suggested one remote for main functions like on/off, channel changing and volume, and another remote for special functions.",
+     "text": "Speaker A suggested one remote with main functions like on off channel changing and volume and another remote for special things needed occasionally. [c003]",
      "cite": [
       "c003"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker B asked if they are designing a remote for television only, and if video recorder functions could be included.",
+     "text": "Speaker C asked if they are designing a remote control for a television only and Speaker A said Good question. [c004][c005]",
      "cite": [
       "c004",
+      "c005"
+     ],
+     "status": "verified"
+    },
+    {
+     "text": "Speaker C then asked if video recorder functions could be included if the device is just to be used with a television. [c006]",
+     "cite": [
       "c006"
      ],
      "status": "verified"
@@ -13271,21 +13255,14 @@
    "who": "Speaker A",
    "sentences": [
     {
-     "text": "Speaker A suggested one remote for main functions like on/off, channel changing, and volume.",
+     "text": "Speaker A suggested having one remote for main functions like on/off, channel changing and volume, and another remote for the special functions that are needed occasionally but not on the normal remote.",
      "cite": [
       "c003"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker A suggested a second remote for special functions that TVs no longer have, for occasional use.",
-     "cite": [
-      "c003"
-     ],
-     "status": "verified"
-    },
-    {
-     "text": "Speaker A said, \"Good question.\"",
+     "text": "Speaker A said 'Good question.'",
      "cite": [
       "c005"
      ],
@@ -13301,22 +13278,8 @@
     50.0
    ],
    "who": "Speaker B",
-   "sentences": [
-    {
-     "text": "Speaker B asked if we are designing a remote control for a television only.",
-     "cite": [
-      "c004"
-     ],
-     "status": "verified"
-    },
-    {
-     "text": "Speaker B also asked if video recorder functions could technically be included if it is just for a television.",
-     "cite": [
-      "c006"
-     ],
-     "status": "verified"
-    }
-   ]
+   "sentences": [],
+   "note": "Nothing was said."
   },
   {
    "t": 50.0,
@@ -13326,8 +13289,22 @@
     50.0
    ],
    "who": "Speaker C",
-   "sentences": [],
-   "note": "Nothing was said."
+   "sentences": [
+    {
+     "text": "Speaker C asks if they are designing a remote control for a television only [c004].",
+     "cite": [
+      "c004"
+     ],
+     "status": "verified"
+    },
+    {
+     "text": "Speaker C asks if it would be technically possible to include video recorder functions on it if this device is just to be used with a television [c006].",
+     "cite": [
+      "c006"
+     ],
+     "status": "verified"
+    }
+   ]
   },
   {
    "t": 50.0,
@@ -13350,17 +13327,22 @@
    "who": "the table",
    "sentences": [
     {
-     "text": "Speaker A suggested one remote for main functions like on and off, channel and volume, and another remote for special functions.",
+     "text": "Speaker A suggested one remote for main functions like on off channel changing volume and another remote for special functions needed occasionally. [c003]",
      "cite": [
       "c003"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker B asked if it is for television only and if video recorder functions should be included, and Speaker A said good question but he did not know yet.",
+     "text": "Speaker C asked if they are designing a remote control for a television only. [c004]",
      "cite": [
-      "c004",
-      "c005",
+      "c004"
+     ],
+     "status": "verified"
+    },
+    {
+     "text": "Speaker C asked if video recorder functions could be included if it is just for television and if they should stick to television related buttons, and Speaker A said they don't know that yet. [c006][c007][c008]",
+     "cite": [
       "c006",
       "c007",
       "c008"
@@ -13379,16 +13361,22 @@
    "who": "Speaker A",
    "sentences": [
     {
-     "text": "Speaker A suggested having one remote for main functions like on/off, channel, and volume, and another remote for special functions.",
+     "text": "Speaker A suggested having one remote with main functions like on/off, channel changing and volume, and another remote with special functions for occasional use. [c003]",
      "cite": [
       "c003"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker A said good question, but they do not know that yet.",
+     "text": "Speaker A said 'Good question.' [c005]",
      "cite": [
-      "c005",
+      "c005"
+     ],
+     "status": "verified"
+    },
+    {
+     "text": "Speaker A said 'I don't know that yet.' [c007]",
+     "cite": [
       "c007"
      ],
      "status": "verified"
@@ -13403,23 +13391,8 @@
     60.0
    ],
    "who": "Speaker B",
-   "sentences": [
-    {
-     "text": "Speaker B asked if we are designing a remote control for a television only.",
-     "cite": [
-      "c004"
-     ],
-     "status": "verified"
-    },
-    {
-     "text": "Speaker B asked if video recorder functions are technically possible and if we should stick to television buttons.",
-     "cite": [
-      "c006",
-      "c008"
-     ],
-     "status": "verified"
-    }
-   ]
+   "sentences": [],
+   "note": "Nothing was said."
   },
   {
    "t": 60.0,
@@ -13429,8 +13402,29 @@
     60.0
    ],
    "who": "Speaker C",
-   "sentences": [],
-   "note": "Nothing was said."
+   "sentences": [
+    {
+     "text": "Speaker C asked if we are designing a remote control for a television only.",
+     "cite": [
+      "c004"
+     ],
+     "status": "verified"
+    },
+    {
+     "text": "Speaker C asked if we could technically include video recorder functions if the device is just to be used with a television.",
+     "cite": [
+      "c006"
+     ],
+     "status": "verified"
+    },
+    {
+     "text": "Speaker C asked if we should just stick to having television related buttons on.",
+     "cite": [
+      "c008"
+     ],
+     "status": "verified"
+    }
+   ]
   },
   {
    "t": 60.0,
@@ -13453,16 +13447,22 @@
    "who": "the table",
    "sentences": [
     {
-     "text": "Speaker B asked if the remote is for a television only, and if video recorder functions can be included or if it should have television buttons only.",
+     "text": "Speaker C asked if we are designing a remote control for a television only.",
      "cite": [
-      "c004",
+      "c004"
+     ],
+     "status": "verified"
+    },
+    {
+     "text": "Speaker C asked if video recorder functions could be technically possible and asked if we should stick to television related buttons.",
+     "cite": [
       "c006",
       "c008"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker A said that is a good question, they do not know yet, and they will look into it.",
+     "text": "Speaker A called it a good question, said they do not know yet, and said they will look into it.",
      "cite": [
       "c005",
       "c007",
@@ -13482,21 +13482,21 @@
    "who": "Speaker A",
    "sentences": [
     {
-     "text": "Speaker A said good question.",
+     "text": "Speaker A said \"Good question.\" c005",
      "cite": [
       "c005"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker A said they don't know that yet.",
+     "text": "Speaker A said \"I don't know that yet.\" c007",
      "cite": [
       "c007"
      ],
      "status": "verified"
     },
     {
-     "text": "Speaker A said they will look into it.",
+     "text": "Speaker A said \"that's a good question I'll I'll look into it\" c009",
      "cite": [
       "c009"
      ],
@@ -13512,23 +13512,8 @@
     70.0
    ],
    "who": "Speaker B",
-   "sentences": [
-    {
-     "text": "Speaker B asked if we are designing a remote control for a television only.",
-     "cite": [
-      "c004"
-     ],
-     "status": "verified"
-    },
-    {
-     "text": "Speaker B asked if video recorder functions are technically possible and if we should stick to television buttons.",
-     "cite": [
-      "c006",
-      "c008"
-     ],
-     "status": "verified"
-    }
-   ]
+   "sentences": [],
+   "note": "Nothing was said."
   },
   {
    "t": 70.0,
@@ -13538,8 +13523,29 @@
     70.0
    ],
    "who": "Speaker C",
-   "sentences": [],
-   "note": "Nothing was said."
+   "sentences": [
+    {
+     "text": "Speaker C asked if we are designing a remote control for a television only.",
+     "cite": [
+      "c004"
+     ],
+     "status": "verified"
+    },
+    {
+     "text": "Speaker C asked if we could technically include video recorder functions if the device is just to be used with a television.",
+     "cite": [
+      "c006"
+     ],
+     "status": "verified"
+    },
+    {
+     "text": "Speaker C asked if we should just stick to having television related buttons on.",
+     "cite": [
+      "c008"
+     ],
+     "status": "verified"
+    }
+   ]
   },
   {
    "t": 70.0,
@@ -13553,15 +13559,16 @@
    "note": "Nothing was said."
   }
  ],
+ "catchup_model": "glimmer",
  "translations": {
   "es": {
-   "c001": "todo lo demás que hayamos programado en él, está todo en su lugar separado y no con todos los botones de encendido juntos porque entonces es como, ni siquiera sé lo que estoy encendiendo.",
+   "c001": "todo lo demás que hayamos programado en él, está todo en su lugar separado y no como todos los botones de encendido juntos porque entonces es como, ni siquiera sé lo que estoy encendiendo.",
    "c002": "Sí, y si reservaras las funciones más complicadas quizás para mandos separados que no necesitarías usar todos los días",
-   "c003": "Vale, así que quizás tener un mando que tenga las funciones principales, encendido apagado cambio de canal volumen y otro mando con todas las cosas especiales porque eso es algo que los mandos suelen tener botones que los televisores ya no tienen tampoco. así que tienes que tenerlos en algún sitio porque vas a necesitar esas funciones especiales de vez en cuando pero no necesariamente en el mando normal",
+   "c003": "Vale, así que quizás tener como un mando que tenga las funciones principales, encendido, apagado, cambio de canal, volumen, y otro mando con todas las cosas especiales porque eso es algo que los mandos suelen tener, botones que los televisores ya no tienen. así que tienes que tenerlos en algún lugar porque vas a necesitar esas funciones especiales ocasionalmente pero no necesariamente en el mando normal",
    "c004": "¿Puedo preguntar, pregunto, estamos diseñando un mando a distancia solo para un televisor?",
    "c005": "Buena pregunta.",
-   "c006": "Y si este dispositivo solo se va a usar con un televisor, ¿sería siquiera técnicamente posible incluir funciones de grabadora de vídeo en él?",
-   "c007": "Eso aún no lo sé.",
+   "c006": "Y si este dispositivo es solo para usarse con un televisor, ¿sería siquiera técnicamente posible incluir funciones de videograbadora en él?",
+   "c007": "Aún no lo sé.",
    "c008": "¿O deberíamos limitarnos a tener botones relacionados con la televisión?",
    "c009": "esa es una buena pregunta, lo investigaré",
    "c010": "Creo que es solo TV, quiero decir, si lo estamos tomando"
