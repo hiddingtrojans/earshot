@@ -15,3 +15,7 @@ bench/ami_ES2008a/*
 !bench/ami_ES2008a/truth.json
 !bench/ami_ES2008a/taps.txt
 !bench/ami_ES2008a/ATTRIBUTION.md
+bench/ami_ES2008a_635/*
+!bench/ami_ES2008a_635/truth.json
+!bench/ami_ES2008a_635/taps.txt
+!bench/ami_ES2008a_635/ATTRIBUTION.md

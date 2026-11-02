@@ -232,10 +232,13 @@ def build(output: Path, cache: Path) -> None:
 
 
 def main() -> None:
+    global START
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--cache", type=Path, default=Path("bench/.ami_cache/ES2008a"))
+    parser.add_argument("--start", type=float, default=START, help="window start in seconds (default: 745)")
     args = parser.parse_args()
+    START = args.start
     build(args.out, args.cache)
 
 
