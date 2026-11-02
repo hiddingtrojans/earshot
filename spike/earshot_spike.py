@@ -302,7 +302,7 @@ def cmd_run(a: argparse.Namespace) -> None:
 
     report: dict = {
         "clip": str(clip), "clip_seconds": round(clip_s, 2), "box": a.box,
-        "control_box": a.control_box, "model": a.model, "seed": a.seed,
+        "control_box": a.control_box, "model": a.model, "seed": a.seed, "mask_mode": a.mask_mode,
         "python": sys.version.split()[0], "platform": platform.platform(),
         "runs": {},
     }
@@ -357,7 +357,8 @@ def cmd_run(a: argparse.Namespace) -> None:
         nonlocal device
         kwargs = {"audios": [str(clip)], "descriptions": [description]}
         if box is not None:
-            kwargs["masked_videos"] = processor.mask_videos([frames], [box_mask(n, h, w, box)])
+            from earshot.separation import apply_mask_mode
+            kwargs["masked_videos"] = apply_mask_mode(processor, [frames], [box_mask(n, h, w, box)], a.mask_mode)
         entry: dict = {"description": description, "box": box}
         attempts = [device] + (["cpu"] if device != "cpu" else [])
         for attempt in attempts:
@@ -470,6 +471,7 @@ def main() -> None:
     r.add_argument("--text-features", default=str(Path(__file__).resolve().parent.parent / "assets" / "text_features.npz"),
                    help="precomputed text conditioning (default: the repo's assets/text_features.npz)")
     r.add_argument("--allow-t5", action="store_true", help="run SAM Audio's own T5 encoder instead")
+    r.add_argument("--mask-mode", choices=["keep", "remove"], default="remove")
     r.set_defaults(func=cmd_run)
 
     a = p.parse_args()

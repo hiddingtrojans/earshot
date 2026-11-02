@@ -30,6 +30,14 @@ DEFAULT_MODEL = os.environ.get("EARSHOT_SAM_AUDIO", "facebook/sam-audio-small-tv
 DEFAULT_TEXT_FEATURES = Path(__file__).resolve().parent.parent / "assets" / "text_features.npz"
 
 
+def apply_mask_mode(processor, frames, masks, mask_mode: str):
+    if mask_mode not in ("keep", "remove"):
+        raise ValueError(f"unknown mask mode {mask_mode!r}")
+    if mask_mode == "keep":
+        masks = [~mask for mask in masks]
+    return processor.mask_videos(frames, masks)
+
+
 def crossfade_windows(total: int, window: int, overlap: int) -> list[tuple[int, int]]:
     if total <= window:
         return [(0, total)]
@@ -75,6 +83,7 @@ class SamAudioSeparator:
     window_s: float = 10.0
     overlap_s: float = 1.0
     work_width: int = 640
+    mask_mode: str = "remove"
     text_features: Path | None = DEFAULT_TEXT_FEATURES
     allow_t5: bool = False         # precomputed output by default; true runs T5-base locally
     seed: int = 0
@@ -113,7 +122,7 @@ class SamAudioSeparator:
             b"".join(tracks.regions[person][f][4] for f in sorted(tracks.regions[person]))
         ).hexdigest()
         key = (content_key(mixture.tobytes()), mask_digest, self.description, self.window_s,
-               self.overlap_s, self.work_width, self.seed, bool(self.text_features))
+               self.overlap_s, self.work_width, self.seed, self.mask_mode, bool(self.text_features))
         out_holder: dict = {}
 
         def run():
@@ -155,7 +164,7 @@ class SamAudioSeparator:
             audio = torch.from_numpy(mixture[s0:s1]).unsqueeze(0)
             batch = self._processor(
                 audios=[audio], descriptions=[self.description],
-                masked_videos=self._processor.mask_videos([frames], [m]),
+                masked_videos=apply_mask_mode(self._processor, [frames], [m], self.mask_mode),
             ).to(self.device)
             with torch.inference_mode():
                 result = self._model.separate(batch, predict_spans=False, reranking_candidates=1)
