@@ -115,6 +115,10 @@ class SamAudioSeparator:
         model = SAMAudio.from_pretrained(self.model_id, text_ranker=None, visual_ranker=None, span_predictor=None)
         self._model = model.eval().to(self.device)
         self._processor = SAMAudioProcessor.from_pretrained(self.model_id)
+        if self.device == "mps":
+            import gc
+
+            gc.freeze()
 
     # ---------- separation ----------
     def separate(self, video: Path, mixture: np.ndarray, tracks: Tracks, person: int, calls: CallLog) -> np.ndarray:
@@ -158,6 +162,14 @@ class SamAudioSeparator:
 
         self._load()
         torch.manual_seed(self.seed)
+        if self.device == "mps" and len(people) > 1:
+            audio, timings, errors = {}, {}, []
+            for person in people:
+                one_audio, one_timings, _, one_errors = self._separate_uncached(video, mixture, tracks, [person])
+                audio.update(one_audio)
+                timings.update(one_timings)
+                errors.extend(one_errors)
+            return audio, timings, "per-person (MPS batch stall avoided)", errors
         sr, fps = SEPARATION_SR, tracks.fps
         decoder = VideoDecoder(str(video), dimension_order="NCHW")
         n_frames = min(len(decoder), tracks.frames or len(decoder))
