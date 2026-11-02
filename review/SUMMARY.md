@@ -1,6 +1,6 @@
 # Earshot running summary
 
-Updated after GATE_T1 on 2026-11-02.
+Updated after GATE_T3 on 2026-11-02. T1 evidence is in `GATE_T1.md`; the SAM Audio access decision and organizer ruling are in `GATE_T3.md`.
 
 ## Done
 
@@ -40,4 +40,4 @@ T2 sync heuristic warning: C +0.480 s and D +0.560 s, with weak correlations 0.1
 
 ## Next
 
-Write the T3 blocked gate, implement word-level truth and repeat support, then run the three-repeat single-stream/Lite benchmark on the real AMI clip. Keep SAM Audio rows blocked unless model approval arrives.
+T3's blocked gate is committed (`25472c9`). Implement word-level truth and repeat support, then run the three-repeat single-stream/Lite benchmark on the real AMI clip. Keep SAM Audio rows blocked unless model approval arrives.
