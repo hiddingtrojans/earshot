@@ -36,6 +36,19 @@ def content_key(*parts: Any) -> str:
     return h.hexdigest()[:24]
 
 
+def response_metadata(response: dict, headers: Any = None) -> dict:
+    meta = {}
+    request_id = response.get("id") or response.get("request_id")
+    if headers is not None:
+        normalized = {str(key).lower(): value for key, value in headers.items()}
+        request_id = request_id or normalized.get("x-request-id") or normalized.get("request-id")
+    if request_id:
+        meta["request_id"] = str(request_id)
+    if response.get("usage") is not None:
+        meta["usage"] = response["usage"]
+    return meta
+
+
 @dataclass
 class CallLog:
     run_dir: Path

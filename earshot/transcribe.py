@@ -29,7 +29,9 @@ class Turn:
     text: str
 
 
-def _post_transcribe(audio_wav: bytes, mode: str) -> dict:
+def _post_transcribe(audio_wav: bytes, mode: str) -> tuple[dict, dict]:
+    from .calls import response_metadata
+
     request = {"mode": mode, "model": VOICE_MODEL, "audioEncoding": "WAV"}
     boundary = f"----earshot-{uuid.uuid4().hex}"
     body = b"".join([
@@ -47,7 +49,8 @@ def _post_transcribe(audio_wav: bytes, mode: str) -> dict:
     )
     try:
         with urllib.request.urlopen(req, timeout=300) as resp:
-            return json.loads(resp.read())
+            result = json.loads(resp.read())
+            return result, response_metadata(result, resp.headers)
     except urllib.error.HTTPError as err:
         detail = err.read().decode("utf-8", errors="replace")[:500]
         raise RuntimeError(f"Muse Voice returned HTTP {err.code}: {detail}") from err
@@ -61,7 +64,8 @@ def transcribe(audio_24k: np.ndarray, calls: CallLog, purpose: str, mode: str = 
     key = content_key(wav)
 
     def call():
-        return _post_transcribe(wav, mode), {"audio_seconds": round(audio_24k.size / TRANSCRIBE_SR, 2)}
+        result, response_meta = _post_transcribe(wav, mode)
+        return result, {"audio_seconds": round(audio_24k.size / TRANSCRIBE_SR, 2), **response_meta}
 
     result = calls.cached(model=VOICE_MODEL, purpose=purpose, where="hosted", key_parts=(key, mode), fn=call)
     return turns_from_response(result)

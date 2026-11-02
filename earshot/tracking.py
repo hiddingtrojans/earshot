@@ -170,11 +170,15 @@ def records_to_tracks(result, names: list[str], ids: list[str], width: int, heig
     return Tracks(names, width, height, fps, frames, regions)
 
 
-async def _sam_video_stream(file_id: str, text: str) -> str:
+async def _sam_video_stream(file_id: str, text: str) -> tuple[str, dict]:
     from contextlib import aclosing
 
     from meta_sam_parser import parse_responses_stream, video_segmentation_format
     from openai import AsyncOpenAI
+
+    from .calls import response_metadata
+
+    response_meta = {}
 
     async def normalized(stream):
         # The live API finalizes lanes with response.content_part.done only;
@@ -182,6 +186,8 @@ async def _sam_video_stream(file_id: str, text: str) -> str:
         done = set()
         async for event in stream:
             data = event.model_dump() if hasattr(event, "model_dump") else dict(event)
+            if isinstance(data.get("response"), dict):
+                response_meta.update(response_metadata(data["response"]))
             lane = (data.get("item_id"), data.get("output_index"), data.get("content_index"))
             if data.get("type") == "response.output_text.done":
                 if lane not in done:
@@ -213,7 +219,7 @@ async def _sam_video_stream(file_id: str, text: str) -> str:
                 result = await parsed.final_result()
     if result.outcome.status != "completed":
         raise RuntimeError(f"SAM segmentation incomplete: {result.outcome}")
-    return result.raw_output
+    return result.raw_output, response_meta
 
 
 def _upload(video: Path) -> str:
@@ -235,8 +241,8 @@ def track_people(video: Path, taps: list[Tap], info, calls: CallLog) -> Tracks:
     def segment():
         file_id = calls.cached(model="files", purpose="upload analysis video", where="hosted",
                                key_parts=(digest,), fn=upload)["file_id"]
-        raw = asyncio.run(_sam_video_stream(file_id, text))
-        return {"raw_output": raw}, {"prompt": text, "file_id": file_id}
+        raw, response_meta = asyncio.run(_sam_video_stream(file_id, text))
+        return {"raw_output": raw}, {"prompt": text, "file_id": file_id, **response_meta}
 
     raw = calls.cached(model=SAM_MODEL, purpose="track tapped people", where="hosted",
                        key_parts=(digest, text), fn=segment)["raw_output"]
