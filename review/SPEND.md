@@ -58,5 +58,8 @@ Generated from `cache=miss` rows in the supplied run folders. Cache hits and loc
 | runs/ui_live | `muse-spark-1.3` | what did I miss: the table | 224 uncached + 0 cached input; 694 output tokens | $0.003230 |
 | runs/ui_live | `muse-spark-1.3` | what did I miss: Speaker A | 176 uncached + 0 cached input; 562 output tokens | $0.002609 |
 | runs/ui_live | `muse-spark-1.3` | what did I miss: Speaker B | 202 uncached + 0 cached input; 548 output tokens | $0.002582 |
+| runs/ui_live | `muse-glimmer` | what did I miss: the table | local/cached | $0.000000 |
+| runs/ui_live | `muse-glimmer` | what did I miss: Speaker A | local/cached | $0.000000 |
+| runs/ui_live | `muse-glimmer` | what did I miss: Speaker B | local/cached | $0.000000 |
 
 Total before rounding: $0.977157150000. Stop new live calls before the cap is reached.
