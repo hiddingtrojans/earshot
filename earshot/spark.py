@@ -167,8 +167,9 @@ def translate_captions(captions: list[Caption], target_lang: str, calls: CallLog
         "required": ["items"], "additionalProperties": False,
     }
     instructions = (
-        f"Translate every caption's text into {target_lang}. Return every caption ID exactly once and no other IDs. "
-        "Preserve meaning, names, numbers, and caption IDs. Return only the translation items."
+        f"Translate every caption's spoken text into {target_lang}. Return every caption ID exactly once and no other IDs. "
+        "Preserve meaning, names, numbers, and caption IDs. Do not include speaker labels or timestamps in the "
+        "translated text; the viewer already shows them. Return only the translation items."
     )
     try:
         out = _respond(calls, f"translate captions to {target_lang}", instructions,
@@ -179,6 +180,9 @@ def translate_captions(captions: list[Caption], target_lang: str, calls: CallLog
             raise ValueError("translation caption IDs do not match the originals")
         if any(not isinstance(item["text"], str) or not item["text"].strip() for item in items):
             raise ValueError("translation contains empty text")
+        by_id = {caption.id: caption for caption in captions}
+        if any(item["text"].lstrip().lower().startswith(f"{by_id[item['id']].name.lower()}:") for item in items):
+            raise ValueError("translation repeats the viewer's speaker label")
         return {item["id"]: item["text"].strip() for item in items}, "translated"
     except (RuntimeError, ValueError, TypeError, KeyError):
         return original, "untranslated"

@@ -35,3 +35,12 @@ def test_translation_failure_keeps_originals(monkeypatch, tmp_path):
     translated, status = translate_captions(captions(), "es", CallLog(tmp_path))
     assert status == "untranslated"
     assert translated["c002"] == "Good question"
+
+
+def test_translation_rejects_duplicated_speaker_labels(monkeypatch, tmp_path):
+    monkeypatch.setattr("earshot.spark._respond", lambda *args: {"items": [
+        {"id": "c001", "text": "Speaker A: Hola"}, {"id": "c002", "text": "Buena pregunta"},
+    ]})
+    translated, status = translate_captions(captions(), "es", CallLog(tmp_path))
+    assert status == "untranslated"
+    assert translated == {"c001": "Hello", "c002": "Good question"}
