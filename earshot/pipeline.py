@@ -148,6 +148,7 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
         "baseline": [{"speaker": t.speaker, "start": t.start, "end": t.end, "text": t.text} for t in baseline],
         "activity": activity,
         "overlaps": overlap_windows(activity),
+        "attribution": {"mapping": mapping if opt.separator == "lite" else {}},
         "threads": threads,
         "catchups": catchups,
         "catchup_model": opt.catchup_model,

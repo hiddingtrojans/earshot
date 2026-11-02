@@ -113,20 +113,25 @@ def overlap_word_indexes_from_words(words: list[dict], person: str) -> set[int]:
     return out
 
 
-def oracle_baseline_text(baseline: list[dict], truth: dict[str, str]) -> dict[str, str]:
+def oracle_speaker_mapping(baseline: list[dict], truth: dict[str, str]) -> dict[str, str]:
     by_speaker: dict[str, list[str]] = {}
-    for t in sorted(baseline, key=lambda t: t["start"]):
-        by_speaker.setdefault(t["speaker"], []).append(t["text"])
-    scores = {(spk, p): align(tokens(" ".join(txt)), tokens(truth[p]))[1]
-              for spk, txt in by_speaker.items() for p in truth}
+    for turn in sorted(baseline, key=lambda turn: turn["start"]):
+        by_speaker.setdefault(turn["speaker"], []).append(turn["text"])
+    scores = {(speaker, person): align(tokens(" ".join(texts)), tokens(truth[person]))[1]
+              for speaker, texts in by_speaker.items() for person in truth}
     mapping: dict[str, str] = {}
-    for (spk, p), _ in sorted(scores.items(), key=lambda kv: -kv[1]):
-        if spk not in mapping:
-            mapping[spk] = p
-    out = {p: [] for p in truth}
-    for t in sorted(baseline, key=lambda t: t["start"]):
-        out[mapping.get(t["speaker"], next(iter(truth)))].append(t["text"])
-    return {p: " ".join(v) for p, v in out.items()}
+    for (speaker, person), _ in sorted(scores.items(), key=lambda item: -item[1]):
+        if speaker not in mapping:
+            mapping[speaker] = person
+    return mapping
+
+
+def oracle_baseline_text(baseline: list[dict], truth: dict[str, str]) -> dict[str, str]:
+    mapping = oracle_speaker_mapping(baseline, truth)
+    out = {person: [] for person in truth}
+    for turn in sorted(baseline, key=lambda turn: turn["start"]):
+        out[mapping.get(turn["speaker"], next(iter(truth)))].append(turn["text"])
+    return {person: " ".join(texts) for person, texts in out.items()}
 
 
 def si_sdr(est: np.ndarray, ref: np.ndarray) -> float:
@@ -152,7 +157,10 @@ def score_document(doc: dict, run: Path, truth: dict, truth_dir: Path) -> dict:
     caps = {n: " ".join(c["text"] for c in sorted(doc["captions"], key=lambda c: c["start"]) if c["name"] == n)
             for n in names}
     base = oracle_baseline_text(doc["baseline"], people_truth)
-    result = {"run": str(run), "separator": doc["separator"], "people": {}}
+    result = {"run": str(run), "separator": doc["separator"],
+              "oracle_mapping": oracle_speaker_mapping(doc["baseline"], people_truth), "people": {}}
+    if doc.get("attribution", {}).get("mapping") is not None:
+        result["lite_mapping"] = doc["attribution"]["mapping"]
     for n in people_truth:
         if words is not None:
             ov = overlap_word_indexes_from_words(words, n)
@@ -261,7 +269,10 @@ def _score_repeats(run: Path, truth: dict, truth_dir: Path, count: int) -> list[
         repeated["overlaps"] = overlap_windows(activity)
         repeated["threads"] = []
         repeated["catchups"] = []
-        results.append(score_document(repeated, run, truth, truth_dir))
+        scored = score_document(repeated, run, truth, truth_dir)
+        if lite:
+            scored["lite_mapping"] = mapping
+        results.append(scored)
     return results
 
 
