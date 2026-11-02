@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Earshot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* Earshot viewer.
+     Type: Atkinson Hyperlegible (Braille Institute) — chosen for caption legibility.
+     Color encodes people only; overlap is encoded by a link between bubbles and hatching. */
+  :root {
+    --porcelain: #E7ECF0;   /* page */
+    --paper: #FFFFFF;       /* panels, bubbles */
+    --ink: #1B2430;         /* text */
+    --ink-soft: #5A6675;    /* secondary text */
+    --rule: #CBD3DB;        /* dividers */
+    --stage: #121A22;       /* behind the video */
+    --focus: #2E5EAA;
+    --font: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+    --bubble-size: clamp(15px, 1.55vw, 22px);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--porcelain); color: var(--ink); font: 16px/1.5 var(--font); }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  .app { display: grid; grid-template-columns: minmax(0, 1fr) 360px; grid-template-rows: auto 1fr auto;
+         gap: 0 28px; min-height: 100vh; padding: 20px 28px 16px; }
+  header { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 18px; padding-bottom: 14px; }
+  header h1 { margin: 0; font-size: 28px; letter-spacing: -0.01em; }
+  header .tagline { color: var(--ink-soft); }
+  header .mode { margin-left: auto; display: inline-flex; border: 1px solid var(--rule); border-radius: 999px;
+                 background: var(--paper); padding: 3px; }
+  .mode button { border: 0; background: none; padding: 6px 14px; border-radius: 999px; }
+  .mode button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+  main { min-width: 0; }
+  .stage { position: relative; background: var(--stage); border-radius: 6px; overflow: hidden; line-height: 0; }
+  .stage video { width: 100%; display: block; }
+  .overlay { position: absolute; inset: 0; pointer-events: none; line-height: 1.35; }
+  .overlay svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .bubble { position: absolute; max-width: 34%; min-width: 120px; background: var(--paper); color: var(--ink);
+            border-radius: 14px; padding: 8px 14px 10px; font-size: var(--bubble-size);
+            box-shadow: 0 2px 0 rgba(18, 26, 34, .25); transition: opacity .18s ease; }
+  .bubble .who { display: block; font-size: .72em; font-weight: 700; margin-bottom: 2px; }
+  .bubble .tail { position: absolute; left: var(--tail-x, 50%); bottom: -11px; width: 0; height: 0;
+                  border: 11px solid transparent; border-bottom: 0; border-top-color: var(--paper);
+                  transform: translateX(-50%); }
+  .bubble.fading { opacity: .55; }
+  .simul { position: absolute; transform: translate(-50%, -50%); background: var(--ink); color: var(--paper);
+           font-size: 13px; padding: 2px 10px; border-radius: 999px; white-space: nowrap; }
+
+  .subtitle { position: absolute; left: 50%; bottom: 6%; transform: translateX(-50%); max-width: 80%;
+              background: rgba(0, 0, 0, .78); color: #fff; padding: 6px 14px; font-size: var(--bubble-size);
+              text-align: center; border-radius: 4px; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0 6px; }
+  .person { display: inline-flex; align-items: center; gap: 6px; background: var(--paper);
+            border: 1px solid var(--rule); border-radius: 10px; padding: 4px 6px 4px 10px; }
+  .person .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .person .name { font-weight: 700; margin-right: 4px; }
+  .person button { border: 1px solid var(--rule); background: var(--porcelain); border-radius: 7px; padding: 3px 9px; font-size: 14px; }
+  .person button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .table-btn { border: 1px solid var(--ink); background: var(--paper); border-radius: 10px; padding: 5px 12px; }
+
+  .lanes { margin-top: 10px; position: relative; user-select: none; }
+  .lane { position: relative; height: 22px; margin: 4px 0; display: grid; grid-template-columns: 90px 1fr; align-items: center; gap: 10px; }
+  .lane .label { font-size: 14px; color: var(--ink-soft); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lane .track { position: relative; height: 100%; background: var(--paper); border-radius: 4px; cursor: pointer; }
+  .seg { position: absolute; top: 3px; bottom: 3px; border-radius: 3px; }
+  .ovl { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, rgba(27,36,48,.20) 0 3px, transparent 3px 7px); }
+  .playhead { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--ink); pointer-events: none; }
+  .lanes .legend { font-size: 13px; color: var(--ink-soft); margin: 2px 0 0 100px; }
+
+  aside { min-width: 0; display: flex; flex-direction: column; gap: 22px; max-height: calc(100vh - 140px); }
+  aside h2 { font-size: 18px; margin: 0 0 8px; }
+  .missed { background: var(--paper); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--rule); }
+  .missed .empty { color: var(--ink-soft); margin: 0; }
+  .missed ol { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 10px; }
+  .missed li { font-size: 17px; }
+  .missed .check { display: block; font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+  .cite { border: 1px solid var(--rule); background: var(--porcelain); border-radius: 6px; padding: 0 6px; font-size: 13px; margin-left: 4px; }
+  .threads { overflow: auto; min-height: 0; padding-right: 4px; }
+  .thread { margin-bottom: 16px; }
+  .thread h3 { font-size: 15px; margin: 0 0 6px; color: var(--ink-soft); font-weight: 700; }
+  .line { display: grid; grid-template-columns: 4px 1fr; gap: 10px; padding: 4px 6px; border-radius: 6px; cursor: pointer; }
+  .line .bar { border-radius: 2px; }
+  .line .t { font-size: 13px; color: var(--ink-soft); }
+  .line.now { background: var(--paper); }
+  .line .sim { font-size: 12px; color: var(--ink-soft); font-style: italic; }
+
+  footer { grid-column: 1 / -1; margin-top: 14px; border-top: 1px solid var(--rule); padding-top: 10px; }
+  footer table { border-collapse: collapse; font-size: 13px; color: var(--ink-soft); }
+  footer td, footer th { padding: 2px 14px 2px 0; text-align: left; font-weight: 400; }
+  footer th { color: var(--ink); font-weight: 700; }
+  .where-local { color: #1B7F5B; }
+
+  @media (max-width: 1000px) {
+    .app { grid-template-columns: 1fr; }
+    aside { max-height: none; }
+    .bubble { max-width: 46%; }
+  }
+  @media (prefers-reduced-motion: reduce) { .bubble { transition: none; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Earshot</h1>
+    <span class="tagline">Every voice at the table, captioned, even when people talk at once.</span>
+    <div class="mode" role="group" aria-label="Caption style">
+      <button id="mode-earshot" aria-pressed="true">Earshot captions</button>
+      <button id="mode-single" aria-pressed="false">Single-stream captions</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="stage">
+      <video id="video" controls playsinline preload="auto"></video>
+      <div class="overlay" id="overlay"><svg id="links" aria-hidden="true"></svg></div>
+    </div>
+    <div class="controls" id="controls"></div>
+    <div class="lanes" id="lanes"></div>
+  </main>
+
+  <aside>
+    <section class="missed" aria-live="polite">
+      <h2 id="missed-title">What did I miss?</h2>
+      <div id="missed"><p class="empty">Pick a person, or the whole table, to catch up on the last 30 seconds.</p></div>
+    </section>
+    <section class="threads" id="threads"><h2>Conversations</h2></section>
+  </aside>
+
+  <footer><table id="calls"></table></footer>
+</div>
+
+<audio id="solo" preload="auto"></audio>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const video = $("#video"), overlay = $("#overlay"), links = $("#links"), solo = $("#solo");
+let doc, mode = "earshot", soloPerson = null;
+
+const fmt = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
+const words = s => s.split(/\s+/).filter(Boolean);
+
+async function load() {
+  doc = await (await fetch("earshot.json")).json();
+  video.src = doc.video;
+  buildControls(); buildLanes(); buildThreads(); loadCalls();
+  requestAnimationFrame(tick);
+}
+
+/* ---------- head anchors (interpolated) ---------- */
+function anchorAt(p, t) {
+  const a = doc.people[p].anchors;
+  if (!a.length) return null;
+  let lo = 0, hi = a.length - 1;
+  if (t <= a[0][0]) return a[0][0] - t < 0.5 ? a[0] : null;
+  if (t >= a[hi][0]) return t - a[hi][0] < 0.5 ? a[hi] : null;
+  while (hi - lo > 1) { const m = (lo + hi) >> 1; (a[m][0] <= t ? lo = m : hi = m); }
+  const [t0, x0, y0] = a[lo], [t1, x1, y1] = a[hi];
+  if (t1 - t0 > 1.0) return null; // person not visible in between
+  const k = (t - t0) / (t1 - t0 || 1);
+  return [t, x0 + (x1 - x0) * k, y0 + (y1 - y0) * k];
+}
+
+/* ---------- bubbles ---------- */
+function activeCaptions(t) {
+  return doc.captions.filter(c => t >= c.start - 0.05 && t <= c.end + 1.2);
+}
+
+function revealed(c, t) {
+  const w = words(c.text);
+  const k = Math.max(1, Math.min(w.length, Math.ceil(w.length * (t - c.start) / Math.max(0.3, c.end - c.start))));
+  return w.slice(Math.max(0, k - 16), k).join(" ");
+}
+
+function render(t) {
+  overlay.querySelectorAll(".bubble, .simul, .subtitle").forEach(n => n.remove());
+  links.innerHTML = "";
+  const W = overlay.clientWidth, H = overlay.clientHeight;
+  if (mode === "single") {
+    const b = doc.baseline.filter(s => t >= s.start && t <= s.end + 0.8).pop();
+    if (b) { const d = document.createElement("div"); d.className = "subtitle"; d.textContent = b.text; overlay.appendChild(d); }
+    return;
+  }
+  // newest caption per person
+  const perPerson = new Map();
+  for (const c of activeCaptions(t)) {
+    const prev = perPerson.get(c.person);
+    if (!prev || c.start > prev.start) perPerson.set(c.person, c);
+  }
+  const placed = [];
+  for (const [p, c] of perPerson) {
+    const a = anchorAt(p, t);
+    const el = document.createElement("div");
+    el.className = "bubble" + (t > c.end ? " fading" : "");
+    const person = doc.people[p];
+    el.innerHTML = `<span class="who" style="color:${person.color}">${person.name}</span><span class="txt"></span><span class="tail"></span>`;
+    el.querySelector(".txt").textContent = revealed(c, t);
+    el.style.borderTop = `4px solid ${person.color}`;
+    overlay.appendChild(el);
+    const bw = el.offsetWidth, bh = el.offsetHeight;
+    const headX = a ? a[1] * W : (p + 0.5) * W / doc.people.length;
+    const headY = a ? a[2] * H : H * 0.35;
+    placed.push({ el, c, headX, headY, bw, bh, x: headX - bw / 2, y: Math.max(8, headY - bh - 18) });
+  }
+  // keep bubbles inside the frame and apart from each other
+  placed.sort((m, n) => m.headX - n.headX);
+  for (let pass = 0; pass < 4; pass++) {
+    for (let i = 0; i < placed.length; i++) {
+      const b = placed[i];
+      b.x = Math.min(Math.max(8, b.x), W - b.bw - 8);
+      if (i > 0) {
+        const a = placed[i - 1];
+        const overlapY = !(b.y + b.bh < a.y || a.y + a.bh < b.y);
+        if (overlapY && b.x < a.x + a.bw + 10) { const push = (a.x + a.bw + 10 - b.x) / 2; a.x -= push; b.x += push; }
+      }
+    }
+  }
+  for (const b of placed) {
+    b.el.style.left = `${b.x}px`; b.el.style.top = `${b.y}px`;
+    b.el.style.setProperty("--tail-x", `${Math.min(Math.max(18, b.headX - b.x), b.bw - 18)}px`);
+  }
+  // people talking at the same time: link their bubbles
+  const live = placed.filter(b => t >= b.c.start && t <= b.c.end);
+  if (live.length >= 2) {
+    const pts = live.map(b => [b.x + b.bw / 2, b.y]);
+    const top = Math.min(...pts.map(q => q[1])) - 14;
+    const path = `M${pts[0][0]},${pts[0][1]} L${pts[0][0]},${top} L${pts[pts.length - 1][0]},${top} L${pts[pts.length - 1][0]},${pts[pts.length - 1][1]}`;
+    links.innerHTML = `<path d="${path}" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linejoin="round" opacity=".9"/>`;
+    const s = document.createElement("div");
+    s.className = "simul";
+    s.textContent = live.length === 2 ? "Both talking" : `${live.length} talking at once`;
+    s.style.left = `${(pts[0][0] + pts[pts.length - 1][0]) / 2}px`; s.style.top = `${Math.max(12, top)}px`;
+    overlay.appendChild(s);
+  }
+}
+
+/* ---------- controls ---------- */
+function buildControls() {
+  const box = $("#controls");
+  doc.people.forEach((p, i) => {
+    const el = document.createElement("div");
+    el.className = "person";
+    el.innerHTML = `<span class="dot" style="background:${p.color}"></span><span class="name"></span>
+      ${p.stem ? `<button data-solo="${i}" aria-pressed="false">Hear only ${p.name}</button>` : ""}
+      <button data-miss="${i}">What did ${p.name} say?</button>`;
+    el.querySelector(".name").textContent = p.name;
+    box.appendChild(el);
+  });
+  const all = document.createElement("button");
+  all.className = "table-btn"; all.dataset.miss = "all"; all.textContent = "What did the table say?";
+  box.appendChild(all);
+  box.addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.solo !== undefined) toggleSolo(+b.dataset.solo, b);
+    if (b.dataset.miss !== undefined) catchUp(b.dataset.miss);
+  });
+  $("#mode-earshot").onclick = () => setMode("earshot");
+  $("#mode-single").onclick = () => setMode("single");
+}
+
+function setMode(m) {
+  mode = m;
+  $("#mode-earshot").setAttribute("aria-pressed", m === "earshot");
+  $("#mode-single").setAttribute("aria-pressed", m === "single");
+}
+
+function toggleSolo(p, btn) {
+  document.querySelectorAll("[data-solo]").forEach(b => b.setAttribute("aria-pressed", "false"));
+  if (soloPerson === p) { soloPerson = null; solo.pause(); video.muted = false; return; }
+  soloPerson = p; btn.setAttribute("aria-pressed", "true");
+  solo.src = doc.people[p].stem; solo.currentTime = video.currentTime; video.muted = true;
+  if (!video.paused) solo.play();
+}
+video.addEventListener("play", () => { if (soloPerson !== null) { solo.currentTime = video.currentTime; solo.play(); } });
+video.addEventListener("pause", () => solo.pause());
+video.addEventListener("seeked", () => { if (soloPerson !== null) solo.currentTime = video.currentTime; });
+
+/* ---------- timeline lanes ---------- */
+function buildLanes() {
+  const box = $("#lanes"), D = doc.info.duration;
+  const pct = t => `${(100 * t / D).toFixed(3)}%`;
+  doc.people.forEach((p, i) => {
+    const lane = document.createElement("div");
+    lane.className = "lane";
+    lane.innerHTML = `<span class="label"></span><div class="track"></div>`;
+    lane.querySelector(".label").textContent = p.name;
+    const track = lane.querySelector(".track");
+    for (const o of doc.overlaps) { const d = document.createElement("div"); d.className = "ovl"; d.style.left = pct(o[0]); d.style.width = pct(o[1] - o[0]); track.appendChild(d); }
+    for (const c of doc.captions.filter(c => c.person === i)) {
+      const d = document.createElement("div"); d.className = "seg";
+      d.style.left = pct(c.start); d.style.width = pct(Math.max(0.15, c.end - c.start)); d.style.background = p.color;
+      d.title = `${fmt(c.start)} ${c.text}`; track.appendChild(d);
+    }
+    const ph = document.createElement("div"); ph.className = "playhead"; track.appendChild(ph);
+    track.addEventListener("click", e => { const r = track.getBoundingClientRect(); video.currentTime = D * (e.clientX - r.left) / r.width; });
+    box.appendChild(lane);
+  });
+  const n = doc.overlaps.reduce((s, o) => s + (o[1] - o[0]), 0);
+  const legend = document.createElement("div"); legend.className = "legend";
+  legend.textContent = doc.overlaps.length
+    ? `Hatched: people talking at the same time (${n.toFixed(1)} s in ${doc.overlaps.length} moments). Voices separated by ${doc.separator}.`
+    : `Voices separated by ${doc.separator}.`;
+  box.appendChild(legend);
+}
+
+/* ---------- threads ---------- */
+function buildThreads() {
+  const box = $("#threads");
+  const threads = doc.threads.length ? doc.threads : [{ thread: null, topic: "Conversation" }];
+  for (const th of threads) {
+    const sec = document.createElement("div"); sec.className = "thread";
+    const h = document.createElement("h3"); h.textContent = th.topic; sec.appendChild(h);
+    for (const c of doc.captions.filter(c => th.thread === null || c.thread === th.thread)) {
+      const p = doc.people[c.person];
+      const line = document.createElement("div"); line.className = "line"; line.dataset.id = c.id;
+      line.innerHTML = `<span class="bar" style="background:${p.color}"></span><span><span class="t">${fmt(c.start)} ${p.name}</span><br><span class="x"></span>${c.overlap ? ' <span class="sim">(at the same time)</span>' : ""}</span>`;
+      line.querySelector(".x").textContent = c.text;
+      line.onclick = () => { video.currentTime = c.start; };
+      sec.appendChild(line);
+    }
+    box.appendChild(sec);
+  }
+}
+
+function highlightThreads(t) {
+  const now = doc.captions.filter(c => t >= c.start && t <= c.end + 0.3).map(c => c.id);
+  document.querySelectorAll(".line").forEach(l => {
+    const on = now.includes(l.dataset.id);
+    if (on && !l.classList.contains("now")) l.scrollIntoView({ block: "nearest" });
+    l.classList.toggle("now", on);
+  });
+}
+
+/* ---------- what did I miss ---------- */
+async function catchUp(who) {
+  const t = video.currentTime;
+  const name = who === "all" ? "the table" : doc.people[+who].name;
+  $("#missed-title").textContent = `What ${name} said before ${fmt(t)}`;
+  const box = $("#missed"); box.innerHTML = `<p class="empty">Asking Muse Spark…</p>`;
+  let res;
+  try { res = await (await fetch(`/api/catchup?t=${t.toFixed(2)}&person=${who}&seconds=30`)).json(); }
+  catch { res = null; }
+  if (!res || res.error) {
+    const pre = doc.catchups.filter(c => String(c.person ?? "all") === who && c.t <= t + 0.01).pop();
+    res = pre || { sentences: [], note: res?.error || "The viewer server isn't running." };
+  }
+  if (!res.sentences?.length) { box.innerHTML = `<p class="empty">${res.note || "Nothing was said in that window."}</p>`; return; }
+  const ol = document.createElement("ol");
+  for (const s of res.sentences) {
+    const li = document.createElement("li");
+    li.appendChild(document.createTextNode(s.text));
+    for (const id of s.cite) {
+      const c = doc.captions.find(x => x.id === id); if (!c) continue;
+      const b = document.createElement("button"); b.className = "cite"; b.textContent = fmt(c.start);
+      b.title = `Jump to ${c.name}: ${c.text}`; b.onclick = () => { video.currentTime = c.start; };
+      li.appendChild(b);
+    }
+    const note = document.createElement("span"); note.className = "check";
+    note.textContent = s.status === "verified" ? "Checked against the captions it cites."
+      : s.status === "replaced" ? "Shown word for word: the summary didn't match the captions."
+      : "Shown word for word.";
+    li.appendChild(note); ol.appendChild(li);
+  }
+  box.innerHTML = ""; box.appendChild(ol);
+}
+
+/* ---------- model calls ---------- */
+async function loadCalls() {
+  let rows = [];
+  try { rows = (await (await fetch("calls.jsonl")).text()).trim().split("\n").filter(Boolean).map(JSON.parse); } catch {}
+  const agg = new Map();
+  for (const r of rows) {
+    const k = `${r.model}|${r.purpose.replace(/ (\w+)'s /, " a person's ")}|${r.where}`;
+    const a = agg.get(k) || { model: r.model, purpose: r.purpose.replace(/ (\w+)'s /, " a person's "), where: r.where, n: 0, ms: 0 };
+    a.n++; a.ms += r.latency_ms || 0; agg.set(k, a);
+  }
+  const t = $("#calls");
+  t.innerHTML = `<tr><th>Model</th><th>Used for</th><th>Runs</th><th>Calls</th><th>Time</th></tr>`;
+  for (const a of agg.values()) {
+    if (a.model === "files") continue;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td></td><td></td><td class="${a.where === "local" ? "where-local" : ""}">${a.where === "local" ? "On this computer" : "Meta Model API"}</td><td>${a.n}</td><td>${(a.ms / 1000).toFixed(1)} s</td>`;
+    tr.children[0].textContent = a.model; tr.children[1].textContent = a.purpose;
+    t.appendChild(tr);
+  }
+}
+
+/* ---------- loop ---------- */
+function tick() {
+  const t = video.currentTime;
+  render(t);
+  highlightThreads(t);
+  document.querySelectorAll(".playhead").forEach(p => p.style.left = `${100 * t / doc.info.duration}%`);
+  if (soloPerson !== null && Math.abs(solo.currentTime - t) > 0.15) solo.currentTime = t;
+  requestAnimationFrame(tick);
+}
+
+load();
+</script>
+</body>
+</html>
