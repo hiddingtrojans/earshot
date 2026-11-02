@@ -36,6 +36,8 @@ def main() -> None:
     b.add_argument("run", type=Path)
     b.add_argument("--truth", type=Path, required=True, help="truth JSON (see bench/README.md)")
     b.add_argument("--out", type=Path)
+    b.add_argument("--repeat", type=int,
+                   help="re-run Voice transcription N times with repeat-specific cache keys")
 
     args = p.parse_args()
     if getattr(args, "replay", False):
@@ -56,7 +58,7 @@ def main() -> None:
     elif args.cmd == "bench":
         from .bench import run_bench
 
-        run_bench(args.run, args.truth, args.out)
+        run_bench(args.run, args.truth, args.out, repeat=args.repeat)
 
 
 if __name__ == "__main__":

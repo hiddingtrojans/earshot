@@ -5,12 +5,15 @@ Truth file (JSON):
     {
       "people": {"Ana": "what Ana said, as one text", "Raúl": "..."},   # required
       "reference_tracks": {"Ana": "ref_left.wav", "Raúl": "ref_right.wav"},  # optional (composed clips)
-      "turns": [{"person": "Ana", "start": 0.5, "end": 3.0, "text": "..."}]  # optional timing
+      "turns": [{"person": "Ana", "start": 0.5, "end": 3.0, "text": "..."}],  # optional timing
+      "words": [{"person": "Ana", "start": 0.5, "end": 0.7, "text": "word"}]  # optional exact timing
     }
 
-If `turns` is missing but `reference_tracks` are given, truth turns come from
-transcribing each clean track on its own (what captions would show with no
-overlap at all), so overlap recall measures how much of that Earshot recovers.
+Word-level truth takes precedence and marks a word overlapping when its interval
+intersects another person's word. If `words` and `turns` are missing but
+`reference_tracks` are given, truth turns come from transcribing each clean track
+on its own (what captions would show with no overlap at all), so overlap recall
+measures how much of that Earshot recovers.
 
 Metrics per person:
   wer                — word error rate of Earshot's captions vs that person's text
@@ -94,6 +97,22 @@ def overlap_word_indexes(turns: list[dict], person: str) -> set[int]:
     return out
 
 
+def overlap_word_indexes_from_words(words: list[dict], person: str) -> set[int]:
+    """Indexes into the person's truth text, using exact word-level overlap intervals."""
+    out = set()
+    index = 0
+    own = sorted((word for word in words if word["person"] == person),
+                 key=lambda word: (word["start"], word["end"], word["person"]))
+    for word in own:
+        size = len(tokens(word["text"]))
+        overlaps = any(other["person"] != person and other["start"] < word["end"]
+                       and other["end"] > word["start"] for other in words)
+        if overlaps:
+            out.update(range(index, index + size))
+        index += size
+    return out
+
+
 def oracle_baseline_text(baseline: list[dict], truth: dict[str, str]) -> dict[str, str]:
     by_speaker: dict[str, list[str]] = {}
     for t in sorted(baseline, key=lambda t: t["start"]):
@@ -120,17 +139,25 @@ def si_sdr(est: np.ndarray, ref: np.ndarray) -> float:
 
 def score(run: Path, truth: dict, truth_dir: Path) -> dict:
     doc = json.loads((run / "earshot.json").read_text())
+    return score_document(doc, run, truth, truth_dir)
+
+
+def score_document(doc: dict, run: Path, truth: dict, truth_dir: Path) -> dict:
     names = [p["name"] for p in doc["people"]]
     people_truth: dict[str, str] = truth["people"]
+    words = truth.get("words")
     turns = truth.get("turns")
-    if turns is None and truth.get("reference_tracks"):
+    if words is None and turns is None and truth.get("reference_tracks"):
         turns = _turns_from_references(run, truth, truth_dir)
     caps = {n: " ".join(c["text"] for c in sorted(doc["captions"], key=lambda c: c["start"]) if c["name"] == n)
             for n in names}
     base = oracle_baseline_text(doc["baseline"], people_truth)
     result = {"run": str(run), "separator": doc["separator"], "people": {}}
     for n in people_truth:
-        ov = overlap_word_indexes(turns, n) if turns else None
+        if words is not None:
+            ov = overlap_word_indexes_from_words(words, n)
+        else:
+            ov = overlap_word_indexes(turns, n) if turns else None
         entry = {"earshot": person_scores(caps.get(n, ""), people_truth[n], ov),
                  "baseline": person_scores(base.get(n, ""), people_truth[n], ov)}
         ref_path = (truth.get("reference_tracks") or {}).get(n)
@@ -165,20 +192,119 @@ def _summary(people: dict) -> dict:
         vals = [p[system][key] for p in people.values() if key in p[system]]
         return round(sum(vals) / len(vals), 3) if vals else None
 
-    return {system: {k: mean(system, k) for k in ("wer", "attribution", "overlap_recall")}
-            for system in ("earshot", "baseline")}
+    summary = {system: {k: mean(system, k) for k in ("wer", "attribution", "overlap_recall")}
+               for system in ("earshot", "baseline")}
+    gains = [p["si_sdr_db"]["isolated"] - p["si_sdr_db"]["mixture"]
+             for p in people.values() if "si_sdr_db" in p]
+    if gains:
+        summary["si_sdr_gain_db"] = round(sum(gains) / len(gains), 3)
+    return summary
 
 
-def run_bench(run: Path, truth_path: Path, out: Path | None = None) -> dict:
+def _score_repeats(run: Path, truth: dict, truth_dir: Path, count: int) -> list[dict]:
+    from copy import deepcopy
+
+    from .activity import overlap_windows, speech_segments
+    from .calls import CallLog
+    from .media import SEPARATION_SR, TRANSCRIBE_SR, read_audio, resample
+    from .timeline import build_captions
+    from .transcribe import Turn, transcribe
+
+    doc = json.loads((run / "earshot.json").read_text())
+    names = [person["name"] for person in doc["people"]]
+    calls = CallLog(run)
+    mixture = read_audio(run / doc["video"], SEPARATION_SR)
+    mix24 = resample(mixture, SEPARATION_SR, TRANSCRIBE_SR)
+    lite = "Earshot-Lite" in doc["separator"]
+    if lite:
+        from .lite import attribute_turns, gray_frames, head_motion
+        from .tracking import Tracks
+
+        tracks = Tracks.load(run / "tracks.json")
+        frames = gray_frames(run / doc["video"])
+        motion = [head_motion(frames, tracks, person) for person in range(len(names))]
+        isolated = []
+    else:
+        if not all(person.get("stem") for person in doc["people"]):
+            raise ValueError("repeats need either an Earshot-Lite run or isolated stems for every person")
+        isolated = [read_audio(run / person["stem"], SEPARATION_SR) for person in doc["people"]]
+        activity = [speech_segments(resample(audio, SEPARATION_SR, 16_000), 16_000) for audio in isolated]
+
+    results = []
+    for index in range(count):
+        baseline = transcribe(mix24, calls, purpose=f"bench repeat {index}: diarize the raw mix", repeat=index)
+        if lite:
+            mapping = attribute_turns(baseline, motion, doc["info"]["fps"])
+            turns = [[Turn(str(person), turn.start, turn.end, turn.text) for turn in baseline
+                      if mapping.get(turn.speaker) == person] for person in range(len(names))]
+            activity = [[(turn.start, turn.end) for turn in person_turns] for person_turns in turns]
+        else:
+            turns = [transcribe(resample(audio, SEPARATION_SR, TRANSCRIBE_SR), calls,
+                                purpose=f"bench repeat {index}: transcribe {name}'s isolated voice", repeat=index)
+                     for name, audio in zip(names, isolated)]
+        captions = build_captions(names, turns, activity)
+        repeated = deepcopy(doc)
+        repeated["baseline"] = [{"speaker": turn.speaker, "start": turn.start, "end": turn.end, "text": turn.text}
+                                for turn in baseline]
+        repeated["captions"] = [caption.to_json() for caption in captions]
+        repeated["activity"] = activity
+        repeated["overlaps"] = overlap_windows(activity)
+        repeated["threads"] = []
+        repeated["catchups"] = []
+        results.append(score_document(repeated, run, truth, truth_dir))
+    return results
+
+
+def _spread(values: list[float]) -> dict | None:
+    if not values:
+        return None
+    return {"mean": round(sum(values) / len(values), 3),
+            "min": round(min(values), 3), "max": round(max(values), 3)}
+
+
+def _repeat_summary(repeats: list[dict]) -> dict:
+    summary = {}
+    for system in ("earshot", "baseline"):
+        summary[system] = {}
+        for key in ("wer", "attribution", "overlap_recall"):
+            values = [repeat["summary"][system][key] for repeat in repeats
+                      if repeat["summary"][system][key] is not None]
+            summary[system][key] = _spread(values)
+    gains = [repeat["summary"]["si_sdr_gain_db"] for repeat in repeats
+             if "si_sdr_gain_db" in repeat["summary"]]
+    if gains:
+        summary["si_sdr_gain_db"] = _spread(gains)
+    return summary
+
+
+def run_bench(run: Path, truth_path: Path, out: Path | None = None, repeat: int | None = None) -> dict:
     truth = json.loads(truth_path.read_text())
-    res = score(run, truth, truth_path.parent)
+    if repeat is not None:
+        if repeat < 1:
+            raise ValueError("--repeat must be at least 1")
+        repeats = _score_repeats(run, truth, truth_path.parent, repeat)
+        res = {"run": str(run), "separator": repeats[0]["separator"], "repeat_count": repeat,
+               "repeats": repeats, "summary": _repeat_summary(repeats)}
+    else:
+        res = score(run, truth, truth_path.parent)
     out = out or (run / "bench.json")
     out.write_text(json.dumps(res, indent=2, ensure_ascii=False))
     s = res["summary"]
-    print(f"{'':16}{'Earshot':>10}{'Single stream':>16}")
+    print(f"{'':16}{'Earshot':>22}{'Single stream':>22}")
     for k, label in (("wer", "Word error rate"), ("attribution", "Right person"), ("overlap_recall", "Overlap words")):
         e, b = s["earshot"][k], s["baseline"][k]
-        if e is not None:
-            print(f"{label:16}{e:>10.3f}{b:>16.3f}")
+        if e is None:
+            continue
+        if repeat is not None:
+            print(f"{label:16}{e['mean']:>10.3f} [{e['min']:.3f}, {e['max']:.3f}]"
+                  f"{b['mean']:>12.3f} [{b['min']:.3f}, {b['max']:.3f}]")
+        else:
+            print(f"{label:16}{e:>22.3f}{b:>22.3f}")
+    if "si_sdr_gain_db" in s:
+        gain = s["si_sdr_gain_db"]
+        if repeat is not None:
+            print(f"SI-SDR gain dB {gain['mean']:.3f} [{gain['min']:.3f}, {gain['max']:.3f}]")
+        else:
+            print(f"SI-SDR gain dB {gain:.3f}")
     print(f"wrote {out}")
     return res

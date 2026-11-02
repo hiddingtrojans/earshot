@@ -56,8 +56,9 @@ def _post_transcribe(audio_wav: bytes, mode: str) -> tuple[dict, dict]:
         raise RuntimeError(f"Muse Voice returned HTTP {err.code}: {detail}") from err
 
 
-def transcribe(audio_24k: np.ndarray, calls: CallLog, purpose: str, mode: str = "DIARIZATION") -> list[Turn]:
-    """Transcribe a mono 24 kHz signal. Cached by audio content."""
+def transcribe(audio_24k: np.ndarray, calls: CallLog, purpose: str, mode: str = "DIARIZATION",
+               repeat: int | None = None) -> list[Turn]:
+    """Transcribe a mono 24 kHz signal, optionally with a repeat-specific cache key."""
     if audio_24k.size / TRANSCRIBE_SR > MAX_SECONDS:
         raise ValueError("audio longer than the 10-minute file limit; split it first")
     wav = wav_bytes(audio_24k, TRANSCRIBE_SR)
@@ -67,7 +68,8 @@ def transcribe(audio_24k: np.ndarray, calls: CallLog, purpose: str, mode: str = 
         result, response_meta = _post_transcribe(wav, mode)
         return result, {"audio_seconds": round(audio_24k.size / TRANSCRIBE_SR, 2), **response_meta}
 
-    result = calls.cached(model=VOICE_MODEL, purpose=purpose, where="hosted", key_parts=(key, mode), fn=call)
+    key_parts = (key, mode) if repeat is None else (key, mode, repeat)
+    result = calls.cached(model=VOICE_MODEL, purpose=purpose, where="hosted", key_parts=key_parts, fn=call)
     return turns_from_response(result)
 
 
