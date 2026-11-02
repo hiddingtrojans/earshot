@@ -16,15 +16,17 @@ def log_energy_envelope(audio: np.ndarray, sample_rate: int = 48_000) -> np.ndar
     return uniform_filter1d(np.log10(rms), size=max(1, int(round(0.2 / 0.025))), mode="nearest")
 
 
-def envelope_correlation(estimate: np.ndarray, reference: np.ndarray) -> float:
+def envelope_correlation(estimate: np.ndarray, reference: np.ndarray,
+                         mixture: np.ndarray | None = None) -> float:
     left = log_energy_envelope(estimate)
     right = log_energy_envelope(reference)
-    size = min(left.size, right.size)
+    gate = log_energy_envelope(reference if mixture is None else mixture)
+    size = min(left.size, right.size, gate.size)
     if size < 2:
         return 0.0
-    left, right = left[:size], right[:size]
-    noise_floor = float(np.percentile(right, 20))
-    active = right > noise_floor
+    left, right, gate = left[:size], right[:size], gate[:size]
+    noise_floor = float(np.percentile(gate, 20))
+    active = gate > noise_floor
     if active.sum() < 2:
         return 0.0
     left, right = left[active] - left[active].mean(), right[active] - right[active].mean()

@@ -185,10 +185,12 @@ def score_document(doc: dict, run: Path, truth: dict, truth_dir: Path) -> dict:
         references = {name: read_audio(truth_dir / path, SEPARATION_SR)
                       for name, path in reference_tracks.items()}
         mixture_audio = read_audio(run / doc["video"], SEPARATION_SR)
-        baseline_envelope = [round(envelope_correlation(mixture_audio, references[name]), 4) for name in references]
+        baseline_envelope = [round(envelope_correlation(mixture_audio, references[name], mixture_audio), 4)
+                             for name in references]
         result["envelope"] = {
             "people": {}, "mixture": baseline_envelope,
             "mixture_correct_voice_rate": correct_voice_rate([baseline_envelope] * len(references)),
+            "gate": "Frames with mixture log energy above its 20th percentile",
             "si_sdr_note": "Far-field mixture is -32.91 dB against headsets; SI-SDR is not meaningful here.",
         }
         for name, person in ((name, next((p for p in doc["people"] if p["name"] == name), None))
@@ -196,7 +198,8 @@ def score_document(doc: dict, run: Path, truth: dict, truth_dir: Path) -> dict:
             if person and person.get("stem"):
                 estimate = read_audio(run / person["stem"], SEPARATION_SR)
                 result["envelope"]["people"][name] = [
-                    round(envelope_correlation(estimate, reference), 4) for reference in references.values()
+                    round(envelope_correlation(estimate, reference, mixture_audio), 4)
+                    for reference in references.values()
                 ]
         result["envelope"]["correct_voice_rate"] = correct_voice_rate(list(result["envelope"]["people"].values()))
     result["summary"] = _summary(result["people"])
