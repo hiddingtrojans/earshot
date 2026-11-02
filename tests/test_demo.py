@@ -1,5 +1,10 @@
 import json
+import shutil
+import subprocess
 import wave
+from pathlib import Path
+
+import pytest
 
 import numpy as np
 
@@ -50,3 +55,10 @@ def test_demo_lite_has_no_invented_stems(tmp_path):
     build_demo(source, destination, attribution)
     assert json.loads((destination / "earshot.json").read_text())["people"][0]["stem"] is None
     assert not (destination / "stems").exists()
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="optional JavaScript syntax check needs Node.js")
+def test_viewer_javascript_syntax():
+    html = (Path(__file__).parent.parent / "web" / "index.html").read_text()
+    script = html.split("<script>", 1)[1].split("</script>", 1)[0]
+    subprocess.run(["node", "--check"], input=script, text=True, check=True, capture_output=True)

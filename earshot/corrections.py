@@ -32,8 +32,8 @@ def apply_correction(doc: dict, from_person: int, to_person: int, x: float, y: f
     for label, person in list((attribution.get("mapping") or {}).items()):
         if person == from_person:
             attribution["mapping"][label] = to_person
-    for label in list((attribution.get("confidence") or {}).keys()):
-        attribution["confidence"][label] = 1.0
+            if label in (attribution.get("confidence") or {}):
+                attribution["confidence"][label] = 1.0
     if record:
         doc.setdefault("corrections", []).append(correction)
     return correction

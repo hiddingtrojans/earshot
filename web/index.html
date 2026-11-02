@@ -223,7 +223,7 @@ video.addEventListener("click", async event => {
   if (x < 0 || x > 1 || y < 0 || y > 1) return;
   const response = await fetch("/api/correct", {
     method: "POST", headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({person: correcting, x, y, frame: Math.floor(video.currentTime * doc.info.fps})
+    body: JSON.stringify({person: correcting, x, y, frame: Math.floor(video.currentTime * doc.info.fps)})
   });
   const result = await response.json();
   if (!response.ok) {
@@ -350,7 +350,9 @@ function buildControls() {
       ${p.stem ? `<button data-solo="${i}" aria-pressed="false">Hear only ${p.name}</button>` : ""}
       <button data-miss="${i}">What did ${p.name} say?</button>`;
     el.querySelector(".name").textContent = p.name;
-    if ((doc.attribution?.confidence?.[p.name] ?? 1) < 0.15) {
+    const lowConfidence = Object.entries(doc.attribution?.mapping || {}).some(([label, person]) =>
+      person === i && (doc.attribution?.confidence?.[label] ?? 1) < 0.15);
+    if (lowConfidence) {
       const correct = document.createElement("button");
       correct.dataset.correct = i;
       correct.textContent = `Not ${p.name}?`;
@@ -430,15 +432,17 @@ function buildLanes() {
   });
   const n = doc.overlaps.reduce((s, o) => s + (o[1] - o[0]), 0);
   const legend = document.createElement("div"); legend.className = "legend";
+  const method = doc.separator.includes("Earshot-Lite") ? `Voice attribution: ${doc.separator}` : `Voices separated by ${doc.separator}`;
   legend.textContent = doc.overlaps.length
-    ? `Hatched: people talking at the same time (${n.toFixed(1)} s in ${doc.overlaps.length} moments). Voices separated by ${doc.separator}.`
-    : `Voices separated by ${doc.separator}.`;
+    ? `Hatched: people talking at the same time (${n.toFixed(1)} s in ${doc.overlaps.length} moments). ${method}.`
+    : `${method}.`;
   box.appendChild(legend);
 }
 
 /* ---------- threads ---------- */
 function buildThreads() {
   const box = $("#threads");
+  box.querySelectorAll(".thread").forEach(thread => thread.remove());
   const threads = doc.threads.length ? doc.threads : [{ thread: null, topic: "Conversation" }];
   for (const th of threads) {
     const sec = document.createElement("div"); sec.className = "thread";

@@ -6,7 +6,7 @@ def doc():
         "people": [{"name": "Speaker A", "tap": [0.25, 0.29, 0]}, {"name": "Speaker B", "tap": [0.8, 0.36, 0]}],
         "captions": [{"id": "c001", "person": 0, "name": "Speaker A", "text": "hello"}],
         "activity": [[(0.0, 1.0)], [(1.0, 2.0)]],
-        "attribution": {"mapping": {"A": 0}, "confidence": {"A": 0.1}},
+        "attribution": {"mapping": {"A": 0, "B": 1}, "confidence": {"A": 0.1, "B": 0.05}},
     }
 
 
@@ -20,6 +20,7 @@ def test_correction_moves_captions_and_is_replayable():
     assert document["captions"][0]["name"] == "Speaker B"
     assert document["activity"] == [[], [(1.0, 2.0), (0.0, 1.0)]]
     assert document["attribution"]["confidence"]["A"] == 1.0
+    assert document["attribution"]["confidence"]["B"] == 0.05
     apply_saved_corrections(document)
     apply_saved_corrections(document)
     assert document["corrections"] == [correction]
