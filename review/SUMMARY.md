@@ -1,6 +1,6 @@
 # Earshot running summary
 
-Updated after GATE_T6 on 2026-11-02. Evidence: `GATE_T1.md`, `GATE_T3.md`, `GATE_T4.md`, and `GATE_T6.md`.
+Final update after GATE_T12 on 2026-11-02. Evidence: `GATE_T1.md`, `GATE_T3.md`, `GATE_T4.md`, `GATE_T6.md`, and `GATE_T12.md`. **Engineering implementation and freeze verification are complete. No remote push has been performed.**
 
 ## Done
 
@@ -9,20 +9,29 @@ Updated after GATE_T6 on 2026-11-02. Evidence: `GATE_T1.md`, `GATE_T3.md`, `GATE
 - **T1:** real SAM 3.1, Voice Transcribe, and Spark smoke passed. All four people have masks on 252/252 frames, Voice returned two turns, Spark returned valid threads and two verified catch-up sentences. Replay returned 4/4 cache hits with no network fallback.
 - **T4:** three real Voice repeats scored against exact word-level truth; README and `bench/RESULTS.md` contain matching measured values. Exact assignment and a compression-noise floor fixed the Lite implementation. Final negative control: 0 captions for the empty tap.
 - **T5:** pointer and keyboard tap-to-start, real background analysis with plain progress, and bounded replay snapping all passed in the browser, including a real 10 s live run.
-- **T6:** 42.62 MB real AMI demo committed. A fresh clone rendered it with no API key and an unreachable Meta URL; HTTP viewer/range/catch-up checks passed. Current suite: **43 passed**. No remote push has been performed.
+- **T6:** real AMI demo committed. A fresh clone rendered it with no API key and an unreachable Meta URL; HTTP viewer/range/catch-up checks passed.
+- **T7:** real cached Spanish for all 10 captions, strict ID/label validation, visible untranslated fallback, and original-on-hover/focus all passed in the browser.
+- **T8/T9:** offline VTT/SRT export and downloads implemented. Native browser `<track>` showed a coloured, positioned short cue; stem download was fixture-verified. Lite correctly reports no isolated audio.
+- **T10:** real local Muse Glimmer ran three cited catch-ups with local provenance and viewer label “On this computer.” Verifier fixed caption-ID numeric handling; replay was all cache hits.
+- **T11:** README includes a real demo screenshot, exact results, models/locations, organizer ruling, Lite limitations, replay/setup/export commands, responsible use, and attribution.
+- **T12:** **54 tests passed**; base editable install succeeded in a clean venv; final clean-clone replay, exports, banned-runtime scan, and history secret scan passed. Final demo size is **42.65 MB**.
 
-See `ami_lite_bench_repeat3_optimized.log` for the final scorer output and `SPEND.md` for actual call usage.
+See `ami_lite_bench_repeat3_optimized.log`, `glimmer_analyze.log`, and `SPEND.md` for real outputs and usage.
 
-## Blocked
+## Blocked / not submission-ready
 
-- **T3 / SAM Audio:** `hf auth whoami` succeeds as `hiddingpickles`, but downloading `facebook/sam-audio-small-tv` returns `Access denied. Model ... requires approval.` T3 cannot run until the owner receives gated-model approval. The Lite path will proceed.
-- The public GitHub repository required by T0 does not yet exist because this run is explicitly local-only.
+- **T3 / SAM Audio:** `hf auth whoami` succeeds as `hiddingpickles`, but `facebook/sam-audio-small-tv` returns `Access denied ... requires approval.` No separation run, stem, or SAM Audio metric is claimed.
+- **Public repository:** does not exist yet because this run was explicitly local-only.
+- **VLC:** not installed, so VLC colour playback is unverified. A long 22-second VTT cue also rendered poorly in the browser; the README records this limitation.
+- **Video and submission:** owner must record/check the ≤2:59 video, publish the repo, complete/read back the form, and link the X post.
 
 ## Exact owner actions needed, in order
 
-1. In Hugging Face, obtain approval for `facebook/sam-audio-small-tv` for `hiddingpickles`; then rerun T3 with the existing precomputed text features. No token is needed in the report.
-2. After reviewing the local history, push it to a new public GitHub repository with all commits included.
-3. Before submission, retain the organizer's 2 Nov 06:06 Discord ruling in the README/demo: SAM Audio counts as a Meta model and its internal T5 is allowed with disclosure. The implementation nevertheless keeps the runbook's stricter precomputed-features/no-T5 path. Thread: https://discord.com/channels/1557169028080869426/1564043204725182484/threads/1566631376868876419
+1. If separation is still wanted before feature freeze, obtain `facebook/sam-audio-small-tv` approval and rerun T3/T4 with precomputed text features. Otherwise keep the honest Lite demo.
+2. Review and push all local history and the demo to a new public GitHub repository.
+3. Check VTT in VLC, including a long cue; adjust player-specific layout if needed.
+4. Record the real ≤2:59 video with the opening new-work disclosure and AMI credit. Do not claim live processing, SAM Audio separation, or simultaneous-caption recovery from this Lite demo. Explain local Glimmer if using it for the open-weight bonus. Preserve the organizer's T5 ruling quoted in README: https://discord.com/channels/1557169028080869426/1564043204725182484/threads/1566631376868876419
+5. Check the video logged out, read back every submission field, and link the exact X post.
 
 ## Current benchmark
 
@@ -38,8 +47,8 @@ Lite underperforms the generous oracle-mapped baseline and must not be presented
 
 ## Estimated spend
 
-**$0.967408 of $20.00.** See `SPEND.md` for per-call usage and arithmetic. Demo packaging and clean-clone replay added $0.
+**$0.977157 of $20.00.** See `SPEND.md` for per-call usage and arithmetic. Replay and local Glimmer added no hosted spend after the accepted Spanish call.
 
 ## Next
 
-T6 gate is committed (`84d7f41`). Implement T8 subtitle export and T9 audio-download behavior (explicitly unavailable for this no-stem Lite demo), then T7 cached Spanish bubbles. Regenerate and revalidate the demo afterward.
+T12 is complete. Only the owner/external actions above remain. Resume implementation only if SAM Audio approval arrives or the owner requests further changes after review.
