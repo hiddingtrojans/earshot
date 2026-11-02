@@ -80,8 +80,8 @@ python -m earshot export runs/table --vtt table.vtt --srt table.srt
 ### Install SAM Audio (Apple Silicon)
 
 ```bash
-pip install torch torchaudio torchvision torchcodec "transformers>=4.54" einops torchdiffeq \
-    huggingface_hub safetensors timm ftfy regex sentencepiece
+pip install torch torchaudio torchvision torchcodec "transformers==4.56.2" einops torchdiffeq \
+    "huggingface_hub==0.36.2" safetensors timm ftfy regex sentencepiece
 pip install "git+https://github.com/facebookresearch/dacvae.git"
 # --no-deps: perception_models lists decord and xformers (no macOS arm64 wheels, not needed here)
 pip install --no-deps "git+https://github.com/facebookresearch/perception_models@unpin-deps"
