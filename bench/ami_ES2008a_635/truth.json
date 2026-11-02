@@ -1,0 +1,1474 @@
+{
+  "source": "AMI Meeting Corpus ES2008a, CC BY 4.0",
+  "window": [
+    635.0,
+    710.0
+  ],
+  "mixture": "Array1-01",
+  "people": {
+    "Speaker A": "Mm-hmm Um I would imagine all of them but we could but it's possible we could use like a lithium battery um that would last a lot longer than like double A_s Um like tho those are the batteries that are used in a lot of um M_P_ three players now and that kind of thing Um Um Okay it seems we have a little bit of a conflict over um to uh combining all the remotes cont together versus having f five different remotes So um like you said you don't like having all the buttons on one on one remote and yet you don't wanna have five remotes So how do we work with that",
+    "Speaker B": "of moving it around to get it to work with the infra-red Um I think there is a way around that but I know in my residence right now the the television you sort of have to walk all around the room to get it to turn on so i it's just simpler just to just turn around the T_V_ itself and I think that's if we're gonna make a remote control it should actually work for what it's doing So I know Yeah something that doesn't Mm Yeah Could we get something that just",
+    "Speaker C": "Yeah Mm",
+    "Speaker D": "Yeah What about like batteries and things like that like are there some remotes that don don't require like batteries or do all remotes require batteries Mm-hmm Mm-hmm"
+  },
+  "words": [
+    {
+      "person": "Speaker B",
+      "start": -0.06,
+      "end": 0.08,
+      "text": "of"
+    },
+    {
+      "person": "Speaker B",
+      "start": 0.08,
+      "end": 0.42,
+      "text": "moving"
+    },
+    {
+      "person": "Speaker B",
+      "start": 0.42,
+      "end": 0.55,
+      "text": "it"
+    },
+    {
+      "person": "Speaker B",
+      "start": 0.55,
+      "end": 1.05,
+      "text": "around"
+    },
+    {
+      "person": "Speaker B",
+      "start": 1.05,
+      "end": 1.18,
+      "text": "to"
+    },
+    {
+      "person": "Speaker B",
+      "start": 1.18,
+      "end": 1.31,
+      "text": "get"
+    },
+    {
+      "person": "Speaker B",
+      "start": 1.31,
+      "end": 1.41,
+      "text": "it"
+    },
+    {
+      "person": "Speaker B",
+      "start": 1.41,
+      "end": 1.53,
+      "text": "to"
+    },
+    {
+      "person": "Speaker B",
+      "start": 1.53,
+      "end": 1.76,
+      "text": "work"
+    },
+    {
+      "person": "Speaker B",
+      "start": 1.76,
+      "end": 1.9,
+      "text": "with"
+    },
+    {
+      "person": "Speaker B",
+      "start": 1.9,
+      "end": 2.07,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 2.07,
+      "end": 3.34,
+      "text": "infra-red"
+    },
+    {
+      "person": "Speaker D",
+      "start": 2.59,
+      "end": 3.03,
+      "text": "Yeah"
+    },
+    {
+      "person": "Speaker C",
+      "start": 3.12,
+      "end": 3.29,
+      "text": "Yeah"
+    },
+    {
+      "person": "Speaker B",
+      "start": 3.34,
+      "end": 4.03,
+      "text": "Um"
+    },
+    {
+      "person": "Speaker B",
+      "start": 4.03,
+      "end": 4.14,
+      "text": "I"
+    },
+    {
+      "person": "Speaker B",
+      "start": 4.14,
+      "end": 4.36,
+      "text": "think"
+    },
+    {
+      "person": "Speaker B",
+      "start": 4.36,
+      "end": 4.46,
+      "text": "there"
+    },
+    {
+      "person": "Speaker B",
+      "start": 4.46,
+      "end": 4.54,
+      "text": "is"
+    },
+    {
+      "person": "Speaker B",
+      "start": 4.54,
+      "end": 4.6,
+      "text": "a"
+    },
+    {
+      "person": "Speaker B",
+      "start": 4.6,
+      "end": 4.74,
+      "text": "way"
+    },
+    {
+      "person": "Speaker B",
+      "start": 4.74,
+      "end": 5.06,
+      "text": "around"
+    },
+    {
+      "person": "Speaker B",
+      "start": 5.06,
+      "end": 5.92,
+      "text": "that"
+    },
+    {
+      "person": "Speaker B",
+      "start": 5.92,
+      "end": 6.13,
+      "text": "but"
+    },
+    {
+      "person": "Speaker B",
+      "start": 6.13,
+      "end": 6.24,
+      "text": "I"
+    },
+    {
+      "person": "Speaker B",
+      "start": 6.24,
+      "end": 6.63,
+      "text": "know"
+    },
+    {
+      "person": "Speaker B",
+      "start": 6.63,
+      "end": 6.74,
+      "text": "in"
+    },
+    {
+      "person": "Speaker B",
+      "start": 6.74,
+      "end": 6.86,
+      "text": "my"
+    },
+    {
+      "person": "Speaker B",
+      "start": 6.86,
+      "end": 7.45,
+      "text": "residence"
+    },
+    {
+      "person": "Speaker B",
+      "start": 7.45,
+      "end": 7.62,
+      "text": "right"
+    },
+    {
+      "person": "Speaker B",
+      "start": 7.62,
+      "end": 7.82,
+      "text": "now"
+    },
+    {
+      "person": "Speaker B",
+      "start": 7.82,
+      "end": 8.79,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 8.79,
+      "end": 8.85,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 8.85,
+      "end": 9.36,
+      "text": "television"
+    },
+    {
+      "person": "Speaker B",
+      "start": 9.36,
+      "end": 9.48,
+      "text": "you"
+    },
+    {
+      "person": "Speaker B",
+      "start": 9.48,
+      "end": 9.64,
+      "text": "sort"
+    },
+    {
+      "person": "Speaker B",
+      "start": 9.64,
+      "end": 9.7,
+      "text": "of"
+    },
+    {
+      "person": "Speaker B",
+      "start": 9.7,
+      "end": 9.84,
+      "text": "have"
+    },
+    {
+      "person": "Speaker B",
+      "start": 9.84,
+      "end": 9.97,
+      "text": "to"
+    },
+    {
+      "person": "Speaker B",
+      "start": 9.97,
+      "end": 10.33,
+      "text": "walk"
+    },
+    {
+      "person": "Speaker B",
+      "start": 10.33,
+      "end": 10.55,
+      "text": "all"
+    },
+    {
+      "person": "Speaker B",
+      "start": 10.55,
+      "end": 10.78,
+      "text": "around"
+    },
+    {
+      "person": "Speaker B",
+      "start": 10.78,
+      "end": 10.88,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 10.88,
+      "end": 11.37,
+      "text": "room"
+    },
+    {
+      "person": "Speaker B",
+      "start": 11.37,
+      "end": 11.49,
+      "text": "to"
+    },
+    {
+      "person": "Speaker B",
+      "start": 11.49,
+      "end": 11.62,
+      "text": "get"
+    },
+    {
+      "person": "Speaker A",
+      "start": 11.49,
+      "end": 12.99,
+      "text": "Mm-hmm"
+    },
+    {
+      "person": "Speaker B",
+      "start": 11.62,
+      "end": 11.73,
+      "text": "it"
+    },
+    {
+      "person": "Speaker B",
+      "start": 11.73,
+      "end": 11.84,
+      "text": "to"
+    },
+    {
+      "person": "Speaker B",
+      "start": 11.84,
+      "end": 12.09,
+      "text": "turn"
+    },
+    {
+      "person": "Speaker B",
+      "start": 12.09,
+      "end": 12.35,
+      "text": "on"
+    },
+    {
+      "person": "Speaker B",
+      "start": 12.35,
+      "end": 12.54,
+      "text": "so"
+    },
+    {
+      "person": "Speaker B",
+      "start": 12.54,
+      "end": 12.63,
+      "text": "i"
+    },
+    {
+      "person": "Speaker B",
+      "start": 12.63,
+      "end": 12.8,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker B",
+      "start": 12.8,
+      "end": 12.99,
+      "text": "just"
+    },
+    {
+      "person": "Speaker B",
+      "start": 12.99,
+      "end": 14.27,
+      "text": "simpler"
+    },
+    {
+      "person": "Speaker B",
+      "start": 14.27,
+      "end": 14.52,
+      "text": "just"
+    },
+    {
+      "person": "Speaker B",
+      "start": 14.52,
+      "end": 14.82,
+      "text": "to"
+    },
+    {
+      "person": "Speaker B",
+      "start": 14.82,
+      "end": 15.06,
+      "text": "just"
+    },
+    {
+      "person": "Speaker B",
+      "start": 15.06,
+      "end": 15.3,
+      "text": "turn"
+    },
+    {
+      "person": "Speaker B",
+      "start": 15.3,
+      "end": 15.45,
+      "text": "around"
+    },
+    {
+      "person": "Speaker B",
+      "start": 15.45,
+      "end": 15.54,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 15.54,
+      "end": 15.82,
+      "text": "T_V_"
+    },
+    {
+      "person": "Speaker B",
+      "start": 15.82,
+      "end": 16.26,
+      "text": "itself"
+    },
+    {
+      "person": "Speaker B",
+      "start": 16.26,
+      "end": 16.37,
+      "text": "and"
+    },
+    {
+      "person": "Speaker B",
+      "start": 16.37,
+      "end": 16.46,
+      "text": "I"
+    },
+    {
+      "person": "Speaker B",
+      "start": 16.46,
+      "end": 16.65,
+      "text": "think"
+    },
+    {
+      "person": "Speaker B",
+      "start": 16.65,
+      "end": 17.57,
+      "text": "that's"
+    },
+    {
+      "person": "Speaker B",
+      "start": 17.57,
+      "end": 17.67,
+      "text": "if"
+    },
+    {
+      "person": "Speaker B",
+      "start": 17.67,
+      "end": 17.78,
+      "text": "we're"
+    },
+    {
+      "person": "Speaker B",
+      "start": 17.78,
+      "end": 17.93,
+      "text": "gonna"
+    },
+    {
+      "person": "Speaker B",
+      "start": 17.93,
+      "end": 18.1,
+      "text": "make"
+    },
+    {
+      "person": "Speaker B",
+      "start": 18.1,
+      "end": 18.16,
+      "text": "a"
+    },
+    {
+      "person": "Speaker B",
+      "start": 18.16,
+      "end": 18.4,
+      "text": "remote"
+    },
+    {
+      "person": "Speaker B",
+      "start": 18.4,
+      "end": 18.87,
+      "text": "control"
+    },
+    {
+      "person": "Speaker B",
+      "start": 18.87,
+      "end": 19.03,
+      "text": "it"
+    },
+    {
+      "person": "Speaker B",
+      "start": 19.03,
+      "end": 19.19,
+      "text": "should"
+    },
+    {
+      "person": "Speaker B",
+      "start": 19.19,
+      "end": 19.68,
+      "text": "actually"
+    },
+    {
+      "person": "Speaker B",
+      "start": 19.68,
+      "end": 19.97,
+      "text": "work"
+    },
+    {
+      "person": "Speaker B",
+      "start": 19.97,
+      "end": 20.14,
+      "text": "for"
+    },
+    {
+      "person": "Speaker B",
+      "start": 20.14,
+      "end": 20.29,
+      "text": "what"
+    },
+    {
+      "person": "Speaker B",
+      "start": 20.29,
+      "end": 20.46,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker B",
+      "start": 20.46,
+      "end": 20.81,
+      "text": "doing"
+    },
+    {
+      "person": "Speaker B",
+      "start": 22.32,
+      "end": 22.8,
+      "text": "So"
+    },
+    {
+      "person": "Speaker D",
+      "start": 22.92,
+      "end": 23.01,
+      "text": "What"
+    },
+    {
+      "person": "Speaker D",
+      "start": 23.01,
+      "end": 23.23,
+      "text": "about"
+    },
+    {
+      "person": "Speaker D",
+      "start": 23.23,
+      "end": 23.48,
+      "text": "like"
+    },
+    {
+      "person": "Speaker D",
+      "start": 23.48,
+      "end": 24.03,
+      "text": "batteries"
+    },
+    {
+      "person": "Speaker D",
+      "start": 24.03,
+      "end": 24.19,
+      "text": "and"
+    },
+    {
+      "person": "Speaker D",
+      "start": 24.19,
+      "end": 24.39,
+      "text": "things"
+    },
+    {
+      "person": "Speaker D",
+      "start": 24.39,
+      "end": 24.55,
+      "text": "like"
+    },
+    {
+      "person": "Speaker D",
+      "start": 24.55,
+      "end": 24.83,
+      "text": "that"
+    },
+    {
+      "person": "Speaker D",
+      "start": 24.83,
+      "end": 24.95,
+      "text": "like"
+    },
+    {
+      "person": "Speaker D",
+      "start": 24.95,
+      "end": 25.06,
+      "text": "are"
+    },
+    {
+      "person": "Speaker D",
+      "start": 25.06,
+      "end": 25.22,
+      "text": "there"
+    },
+    {
+      "person": "Speaker D",
+      "start": 25.22,
+      "end": 25.56,
+      "text": "some"
+    },
+    {
+      "person": "Speaker D",
+      "start": 25.56,
+      "end": 25.92,
+      "text": "remotes"
+    },
+    {
+      "person": "Speaker D",
+      "start": 25.92,
+      "end": 26.03,
+      "text": "that"
+    },
+    {
+      "person": "Speaker D",
+      "start": 26.03,
+      "end": 26.45,
+      "text": "don"
+    },
+    {
+      "person": "Speaker D",
+      "start": 26.45,
+      "end": 26.65,
+      "text": "don't"
+    },
+    {
+      "person": "Speaker D",
+      "start": 26.65,
+      "end": 27.32,
+      "text": "require"
+    },
+    {
+      "person": "Speaker D",
+      "start": 28.43,
+      "end": 28.64,
+      "text": "like"
+    },
+    {
+      "person": "Speaker D",
+      "start": 28.64,
+      "end": 29.43,
+      "text": "batteries"
+    },
+    {
+      "person": "Speaker D",
+      "start": 29.43,
+      "end": 29.78,
+      "text": "or"
+    },
+    {
+      "person": "Speaker D",
+      "start": 29.78,
+      "end": 29.9,
+      "text": "do"
+    },
+    {
+      "person": "Speaker D",
+      "start": 29.9,
+      "end": 30.08,
+      "text": "all"
+    },
+    {
+      "person": "Speaker D",
+      "start": 30.08,
+      "end": 30.38,
+      "text": "remotes"
+    },
+    {
+      "person": "Speaker D",
+      "start": 30.38,
+      "end": 30.66,
+      "text": "require"
+    },
+    {
+      "person": "Speaker D",
+      "start": 30.66,
+      "end": 31.33,
+      "text": "batteries"
+    },
+    {
+      "person": "Speaker A",
+      "start": 31.65,
+      "end": 32.32,
+      "text": "Um"
+    },
+    {
+      "person": "Speaker A",
+      "start": 32.32,
+      "end": 32.36,
+      "text": "I"
+    },
+    {
+      "person": "Speaker A",
+      "start": 32.36,
+      "end": 32.45,
+      "text": "would"
+    },
+    {
+      "person": "Speaker A",
+      "start": 32.45,
+      "end": 32.73,
+      "text": "imagine"
+    },
+    {
+      "person": "Speaker B",
+      "start": 32.58,
+      "end": 32.63,
+      "text": "I"
+    },
+    {
+      "person": "Speaker B",
+      "start": 32.63,
+      "end": 33.62,
+      "text": "know"
+    },
+    {
+      "person": "Speaker A",
+      "start": 32.73,
+      "end": 32.9,
+      "text": "all"
+    },
+    {
+      "person": "Speaker A",
+      "start": 32.9,
+      "end": 32.96,
+      "text": "of"
+    },
+    {
+      "person": "Speaker A",
+      "start": 32.96,
+      "end": 33.12,
+      "text": "them"
+    },
+    {
+      "person": "Speaker A",
+      "start": 33.12,
+      "end": 33.26,
+      "text": "but"
+    },
+    {
+      "person": "Speaker A",
+      "start": 33.26,
+      "end": 33.36,
+      "text": "we"
+    },
+    {
+      "person": "Speaker A",
+      "start": 33.36,
+      "end": 34.3,
+      "text": "could"
+    },
+    {
+      "person": "Speaker A",
+      "start": 34.3,
+      "end": 34.43,
+      "text": "but"
+    },
+    {
+      "person": "Speaker A",
+      "start": 34.43,
+      "end": 34.55,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker A",
+      "start": 34.55,
+      "end": 34.83,
+      "text": "possible"
+    },
+    {
+      "person": "Speaker A",
+      "start": 34.83,
+      "end": 34.92,
+      "text": "we"
+    },
+    {
+      "person": "Speaker A",
+      "start": 34.92,
+      "end": 35.09,
+      "text": "could"
+    },
+    {
+      "person": "Speaker A",
+      "start": 35.09,
+      "end": 35.3,
+      "text": "use"
+    },
+    {
+      "person": "Speaker A",
+      "start": 35.3,
+      "end": 35.44,
+      "text": "like"
+    },
+    {
+      "person": "Speaker A",
+      "start": 35.44,
+      "end": 35.55,
+      "text": "a"
+    },
+    {
+      "person": "Speaker A",
+      "start": 35.55,
+      "end": 35.97,
+      "text": "lithium"
+    },
+    {
+      "person": "Speaker A",
+      "start": 35.97,
+      "end": 36.5,
+      "text": "battery"
+    },
+    {
+      "person": "Speaker A",
+      "start": 36.5,
+      "end": 37.36,
+      "text": "um"
+    },
+    {
+      "person": "Speaker B",
+      "start": 36.94,
+      "end": 37.19,
+      "text": "Yeah"
+    },
+    {
+      "person": "Speaker B",
+      "start": 37.19,
+      "end": 37.47,
+      "text": "something"
+    },
+    {
+      "person": "Speaker A",
+      "start": 37.36,
+      "end": 37.51,
+      "text": "that"
+    },
+    {
+      "person": "Speaker B",
+      "start": 37.47,
+      "end": 37.6,
+      "text": "that"
+    },
+    {
+      "person": "Speaker A",
+      "start": 37.51,
+      "end": 37.61,
+      "text": "would"
+    },
+    {
+      "person": "Speaker B",
+      "start": 37.6,
+      "end": 38.3,
+      "text": "doesn't"
+    },
+    {
+      "person": "Speaker A",
+      "start": 37.61,
+      "end": 37.91,
+      "text": "last"
+    },
+    {
+      "person": "Speaker A",
+      "start": 37.91,
+      "end": 37.97,
+      "text": "a"
+    },
+    {
+      "person": "Speaker A",
+      "start": 37.97,
+      "end": 38.13,
+      "text": "lot"
+    },
+    {
+      "person": "Speaker A",
+      "start": 38.13,
+      "end": 38.46,
+      "text": "longer"
+    },
+    {
+      "person": "Speaker A",
+      "start": 38.46,
+      "end": 38.61,
+      "text": "than"
+    },
+    {
+      "person": "Speaker A",
+      "start": 38.61,
+      "end": 38.74,
+      "text": "like"
+    },
+    {
+      "person": "Speaker D",
+      "start": 38.67,
+      "end": 39.06,
+      "text": "Mm-hmm"
+    },
+    {
+      "person": "Speaker A",
+      "start": 38.74,
+      "end": 39.01,
+      "text": "double"
+    },
+    {
+      "person": "Speaker A",
+      "start": 39.01,
+      "end": 39.81,
+      "text": "A_s"
+    },
+    {
+      "person": "Speaker A",
+      "start": 39.81,
+      "end": 40.67,
+      "text": "Um"
+    },
+    {
+      "person": "Speaker A",
+      "start": 40.67,
+      "end": 40.8,
+      "text": "like"
+    },
+    {
+      "person": "Speaker A",
+      "start": 40.8,
+      "end": 40.96,
+      "text": "tho"
+    },
+    {
+      "person": "Speaker A",
+      "start": 40.96,
+      "end": 41.24,
+      "text": "those"
+    },
+    {
+      "person": "Speaker A",
+      "start": 41.24,
+      "end": 41.3,
+      "text": "are"
+    },
+    {
+      "person": "Speaker A",
+      "start": 41.3,
+      "end": 41.43,
+      "text": "the"
+    },
+    {
+      "person": "Speaker A",
+      "start": 41.43,
+      "end": 41.75,
+      "text": "batteries"
+    },
+    {
+      "person": "Speaker A",
+      "start": 41.75,
+      "end": 41.86,
+      "text": "that"
+    },
+    {
+      "person": "Speaker A",
+      "start": 41.86,
+      "end": 41.93,
+      "text": "are"
+    },
+    {
+      "person": "Speaker A",
+      "start": 41.93,
+      "end": 42.22,
+      "text": "used"
+    },
+    {
+      "person": "Speaker A",
+      "start": 42.22,
+      "end": 42.32,
+      "text": "in"
+    },
+    {
+      "person": "Speaker A",
+      "start": 42.32,
+      "end": 42.39,
+      "text": "a"
+    },
+    {
+      "person": "Speaker A",
+      "start": 42.39,
+      "end": 42.6,
+      "text": "lot"
+    },
+    {
+      "person": "Speaker A",
+      "start": 42.6,
+      "end": 42.79,
+      "text": "of"
+    },
+    {
+      "person": "Speaker A",
+      "start": 42.79,
+      "end": 43.26,
+      "text": "um"
+    },
+    {
+      "person": "Speaker A",
+      "start": 43.26,
+      "end": 43.44,
+      "text": "M_P_"
+    },
+    {
+      "person": "Speaker A",
+      "start": 43.44,
+      "end": 43.6,
+      "text": "three"
+    },
+    {
+      "person": "Speaker A",
+      "start": 43.6,
+      "end": 43.98,
+      "text": "players"
+    },
+    {
+      "person": "Speaker A",
+      "start": 43.98,
+      "end": 44.29,
+      "text": "now"
+    },
+    {
+      "person": "Speaker A",
+      "start": 44.29,
+      "end": 44.38,
+      "text": "and"
+    },
+    {
+      "person": "Speaker A",
+      "start": 44.38,
+      "end": 44.48,
+      "text": "that"
+    },
+    {
+      "person": "Speaker A",
+      "start": 44.48,
+      "end": 44.6,
+      "text": "kind"
+    },
+    {
+      "person": "Speaker A",
+      "start": 44.6,
+      "end": 44.67,
+      "text": "of"
+    },
+    {
+      "person": "Speaker A",
+      "start": 44.67,
+      "end": 46.06,
+      "text": "thing"
+    },
+    {
+      "person": "Speaker D",
+      "start": 45.0,
+      "end": 45.25,
+      "text": "Mm-hmm"
+    },
+    {
+      "person": "Speaker A",
+      "start": 46.06,
+      "end": 46.4,
+      "text": "Um"
+    },
+    {
+      "person": "Speaker B",
+      "start": 47.36,
+      "end": 47.44,
+      "text": "Mm"
+    },
+    {
+      "person": "Speaker A",
+      "start": 50.9,
+      "end": 52.94,
+      "text": "Um"
+    },
+    {
+      "person": "Speaker A",
+      "start": 52.94,
+      "end": 53.1,
+      "text": "Okay"
+    },
+    {
+      "person": "Speaker A",
+      "start": 53.1,
+      "end": 53.18,
+      "text": "it"
+    },
+    {
+      "person": "Speaker A",
+      "start": 53.18,
+      "end": 53.39,
+      "text": "seems"
+    },
+    {
+      "person": "Speaker A",
+      "start": 53.39,
+      "end": 53.49,
+      "text": "we"
+    },
+    {
+      "person": "Speaker A",
+      "start": 53.49,
+      "end": 53.59,
+      "text": "have"
+    },
+    {
+      "person": "Speaker A",
+      "start": 53.59,
+      "end": 53.63,
+      "text": "a"
+    },
+    {
+      "person": "Speaker A",
+      "start": 53.63,
+      "end": 53.78,
+      "text": "little"
+    },
+    {
+      "person": "Speaker A",
+      "start": 53.78,
+      "end": 53.9,
+      "text": "bit"
+    },
+    {
+      "person": "Speaker A",
+      "start": 53.9,
+      "end": 53.97,
+      "text": "of"
+    },
+    {
+      "person": "Speaker A",
+      "start": 53.97,
+      "end": 54.0,
+      "text": "a"
+    },
+    {
+      "person": "Speaker A",
+      "start": 54.0,
+      "end": 54.6,
+      "text": "conflict"
+    },
+    {
+      "person": "Speaker A",
+      "start": 54.6,
+      "end": 55.13,
+      "text": "over"
+    },
+    {
+      "person": "Speaker A",
+      "start": 55.13,
+      "end": 57.06,
+      "text": "um"
+    },
+    {
+      "person": "Speaker A",
+      "start": 57.06,
+      "end": 57.25,
+      "text": "to"
+    },
+    {
+      "person": "Speaker A",
+      "start": 57.25,
+      "end": 57.39,
+      "text": "uh"
+    },
+    {
+      "person": "Speaker A",
+      "start": 57.39,
+      "end": 57.93,
+      "text": "combining"
+    },
+    {
+      "person": "Speaker A",
+      "start": 57.93,
+      "end": 58.05,
+      "text": "all"
+    },
+    {
+      "person": "Speaker A",
+      "start": 58.05,
+      "end": 58.15,
+      "text": "the"
+    },
+    {
+      "person": "Speaker A",
+      "start": 58.15,
+      "end": 58.49,
+      "text": "remotes"
+    },
+    {
+      "person": "Speaker A",
+      "start": 58.49,
+      "end": 58.82,
+      "text": "cont"
+    },
+    {
+      "person": "Speaker A",
+      "start": 58.82,
+      "end": 59.35,
+      "text": "together"
+    },
+    {
+      "person": "Speaker A",
+      "start": 59.35,
+      "end": 59.64,
+      "text": "versus"
+    },
+    {
+      "person": "Speaker A",
+      "start": 59.64,
+      "end": 60.74,
+      "text": "having"
+    },
+    {
+      "person": "Speaker A",
+      "start": 60.74,
+      "end": 61.17,
+      "text": "f"
+    },
+    {
+      "person": "Speaker A",
+      "start": 61.17,
+      "end": 61.4,
+      "text": "five"
+    },
+    {
+      "person": "Speaker A",
+      "start": 61.4,
+      "end": 61.67,
+      "text": "different"
+    },
+    {
+      "person": "Speaker A",
+      "start": 61.67,
+      "end": 62.8,
+      "text": "remotes"
+    },
+    {
+      "person": "Speaker A",
+      "start": 62.8,
+      "end": 63.29,
+      "text": "So"
+    },
+    {
+      "person": "Speaker A",
+      "start": 63.29,
+      "end": 64.15,
+      "text": "um"
+    },
+    {
+      "person": "Speaker A",
+      "start": 64.15,
+      "end": 64.32,
+      "text": "like"
+    },
+    {
+      "person": "Speaker A",
+      "start": 64.32,
+      "end": 64.44,
+      "text": "you"
+    },
+    {
+      "person": "Speaker A",
+      "start": 64.44,
+      "end": 64.6,
+      "text": "said"
+    },
+    {
+      "person": "Speaker A",
+      "start": 64.6,
+      "end": 64.67,
+      "text": "you"
+    },
+    {
+      "person": "Speaker A",
+      "start": 64.67,
+      "end": 64.87,
+      "text": "don't"
+    },
+    {
+      "person": "Speaker A",
+      "start": 64.87,
+      "end": 65.12,
+      "text": "like"
+    },
+    {
+      "person": "Speaker A",
+      "start": 65.12,
+      "end": 65.41,
+      "text": "having"
+    },
+    {
+      "person": "Speaker A",
+      "start": 65.41,
+      "end": 65.54,
+      "text": "all"
+    },
+    {
+      "person": "Speaker A",
+      "start": 65.54,
+      "end": 65.64,
+      "text": "the"
+    },
+    {
+      "person": "Speaker A",
+      "start": 65.64,
+      "end": 65.94,
+      "text": "buttons"
+    },
+    {
+      "person": "Speaker A",
+      "start": 65.94,
+      "end": 66.09,
+      "text": "on"
+    },
+    {
+      "person": "Speaker A",
+      "start": 66.09,
+      "end": 66.82,
+      "text": "one"
+    },
+    {
+      "person": "Speaker A",
+      "start": 66.82,
+      "end": 67.07,
+      "text": "on"
+    },
+    {
+      "person": "Speaker A",
+      "start": 67.07,
+      "end": 67.28,
+      "text": "one"
+    },
+    {
+      "person": "Speaker A",
+      "start": 67.28,
+      "end": 68.16,
+      "text": "remote"
+    },
+    {
+      "person": "Speaker A",
+      "start": 68.16,
+      "end": 68.33,
+      "text": "and"
+    },
+    {
+      "person": "Speaker A",
+      "start": 68.33,
+      "end": 68.54,
+      "text": "yet"
+    },
+    {
+      "person": "Speaker A",
+      "start": 68.54,
+      "end": 68.63,
+      "text": "you"
+    },
+    {
+      "person": "Speaker A",
+      "start": 68.63,
+      "end": 68.79,
+      "text": "don't"
+    },
+    {
+      "person": "Speaker A",
+      "start": 68.79,
+      "end": 68.98,
+      "text": "wanna"
+    },
+    {
+      "person": "Speaker A",
+      "start": 68.98,
+      "end": 69.36,
+      "text": "have"
+    },
+    {
+      "person": "Speaker A",
+      "start": 69.36,
+      "end": 69.59,
+      "text": "five"
+    },
+    {
+      "person": "Speaker A",
+      "start": 69.59,
+      "end": 70.75,
+      "text": "remotes"
+    },
+    {
+      "person": "Speaker A",
+      "start": 70.75,
+      "end": 70.86,
+      "text": "So"
+    },
+    {
+      "person": "Speaker A",
+      "start": 70.86,
+      "end": 70.98,
+      "text": "how"
+    },
+    {
+      "person": "Speaker C",
+      "start": 70.9,
+      "end": 71.12,
+      "text": "Mm"
+    },
+    {
+      "person": "Speaker A",
+      "start": 70.98,
+      "end": 71.06,
+      "text": "do"
+    },
+    {
+      "person": "Speaker A",
+      "start": 71.06,
+      "end": 71.15,
+      "text": "we"
+    },
+    {
+      "person": "Speaker A",
+      "start": 71.15,
+      "end": 71.35,
+      "text": "work"
+    },
+    {
+      "person": "Speaker B",
+      "start": 71.24,
+      "end": 72.48,
+      "text": "Yeah"
+    },
+    {
+      "person": "Speaker A",
+      "start": 71.35,
+      "end": 71.45,
+      "text": "with"
+    },
+    {
+      "person": "Speaker A",
+      "start": 71.45,
+      "end": 71.71,
+      "text": "that"
+    },
+    {
+      "person": "Speaker B",
+      "start": 72.48,
+      "end": 72.68,
+      "text": "Could"
+    },
+    {
+      "person": "Speaker B",
+      "start": 72.68,
+      "end": 72.77,
+      "text": "we"
+    },
+    {
+      "person": "Speaker B",
+      "start": 72.77,
+      "end": 72.95,
+      "text": "get"
+    },
+    {
+      "person": "Speaker B",
+      "start": 72.95,
+      "end": 73.35,
+      "text": "something"
+    },
+    {
+      "person": "Speaker B",
+      "start": 73.35,
+      "end": 73.61,
+      "text": "that"
+    },
+    {
+      "person": "Speaker B",
+      "start": 74.65,
+      "end": 74.99,
+      "text": "just"
+    }
+  ],
+  "reference_tracks": {
+    "Speaker A": "ref_A.wav",
+    "Speaker B": "ref_B.wav",
+    "Speaker C": "ref_C.wav",
+    "Speaker D": "ref_D.wav"
+  }
+}
