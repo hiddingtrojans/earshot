@@ -39,3 +39,10 @@ def test_lite_attribution_uses_optimal_not_greedy_assignment():
     person0 = np.array([5.0, 4.0, 1.0, 1.0, 1.0])
     person1 = np.array([4.0, 1.0, 1.0, 1.0, 1.0])
     assert attribute_turns(turns, [person0, person1], 1.0) == {"A": 1, "B": 0}
+
+
+def test_lite_attribution_does_not_amplify_static_region_noise():
+    turns = [Turn("speech", 0.0, 2.0, "words")]
+    face = np.array([2.0, 2.0, 1.0, 1.0, 1.0])
+    empty = np.full(5, 0.0045)
+    assert attribute_turns(turns, [face, empty], 1.0) == {"speech": 0}

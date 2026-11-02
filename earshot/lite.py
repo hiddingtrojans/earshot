@@ -58,7 +58,7 @@ def attribute_turns(turns: list[Turn], motion: list[np.ndarray], fps: float) -> 
     people = len(motion)
     norm = []
     for m in motion:
-        base = np.nanmedian(m) if np.isfinite(m).any() else 1.0
+        base = max(float(np.nanmedian(m)), 0.1) if np.isfinite(m).any() else 1.0
         norm.append(m / (base + 1e-6))
     score: dict[str, np.ndarray] = {}
     for t in turns:
