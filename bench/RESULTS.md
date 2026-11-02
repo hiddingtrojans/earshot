@@ -48,7 +48,42 @@ Protocol: 50 ms frames, 25 ms hop, log energy, 200 ms smoothing, Pearson correla
 | Speaker D | 0.1402 | **0.2091** | 0.0480 | 0.1349 |
 | Mixture | **0.3887** | 0.0834 | 0.0950 | 0.2559 |
 
-Stems: **0.500 correct-voice rate**. Mixture: **0.250**. A and C select their own headsets; B and D do not. SI-SDR remains in the JSON rather than the headline because the far-field mixture/close-talk-headset comparison is not meaningful here (mixture/Speaker A = -32.91 dB). `keep` SI-SDR gain is -0.008 dB; legacy `remove` gain is -2.415 dB.
+Stems: **0.500 correct-voice rate**. Mixture: **0.250**. A and C select their own headsets; B and D do not. SI-SDR remains in the JSON rather than the headline because far-field mixture/close-talk-headset comparisons are not meaningful here. The 10 s A/B mixture/Speaker A value is -32.91 dB; the full primary value is -24.77 dB. `keep` SI-SDR gain is -0.008 dB; legacy `remove` gain is -2.415 dB.
+
+## Review round 2: 635 s held-out SAM Audio check
+
+The same `keep` semantics and per-person MPS code were run on the 635–710 s window before 23:00 Madrid. This is distinct from the Lite development-window result above. Three repeats produced:
+
+| Mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | Correct voice ↑ |
+|---|---:|---:|---:|---:|
+| SAM Audio `keep` (635 s) | 2.731 [1.097, 3.825] | 0.382 [0.296, 0.537] | 0.185 [0.158, 0.230] | 0.250 |
+| Same-run single stream, oracle-mapped | 0.384 [0.377, 0.395] | 0.693 [0.689, 0.697] | 0.486 [0.424, 0.524] | 0.250 mixture |
+
+**Held-out NO-GO on quality too.** Right-person is below 0.80 in every repeat. Overlap recall is below the mean baseline +0.10 threshold of 0.586; every paired repeat also fails. WER is reported, not used as a gate. SI-SDR gain is -5.19 dB and the measured mixture/Speaker A value is -51.11 dB, retained only as secondary JSON evidence.
+
+| Stem \ headset | A | B | C | D |
+|---|---:|---:|---:|---:|
+| Speaker A | 0.4208 | 0.1495 | **0.4300** | -0.1635 |
+| Speaker B | 0.3426 | 0.1441 | **0.5587** | 0.0420 |
+| Speaker C | 0.3801 | 0.0880 | **0.5102** | 0.0059 |
+| Speaker D | 0.3436 | 0.1410 | **0.5589** | 0.0439 |
+| Mixture | 0.3413 | 0.1183 | **0.6501** | 0.1514 |
+
+Every stem best matches C; only C's own row is correct, for **0.250 correct-voice rate**. Separation wall time was **772.703 s**. Per-person model/window-wall times were A 158.669/161.5 s, B 188.832/191.9 s, C 178.132/180.7 s and D 210.156/213.1 s. Totals: model **735.789 s**, windows **747.2 s**. Speed is not a rejection criterion.
+
+```bash
+zsh -ic 'env HF_HUB_CACHE="$PWD/.hf-cache/hub" caffeinate -i \
+  .venv/bin/python -u -m earshot analyze bench/ami_ES2008a_635/clip.mp4 \
+  --tap "Speaker A@0.25,0.29" --tap "Speaker B@0.80,0.36" \
+  --tap "Speaker C@0.31,0.78" --tap "Speaker D@0.71,0.78" \
+  --out runs/ami_samaudio_keep_635 --separator samaudio \
+  --device mps --mask-mode keep --no-spark'
+zsh -ic 'caffeinate -i .venv/bin/python -m earshot bench runs/ami_samaudio_keep_635 \
+  --truth bench/ami_ES2008a_635/truth.json --repeat 3 \
+  --out runs/ami_samaudio_keep_635/bench_review2.json'
+```
+
+The verified masks and all four baseline Voice responses were reused from `runs/ami_lite_635`; only isolated-voice transcription required new hosted calls. Logs are `review/ami_samaudio_keep_635_analyze.log` and `review/ami_samaudio_keep_635_bench_review2.log`; JSON is `runs/ami_samaudio_keep_635/bench_review2.json`.
 
 ## Review round 2: visual-mask A/B
 

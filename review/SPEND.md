@@ -1,6 +1,6 @@
 # Estimated Meta API spend
 
-Run cap: **$20.00**. **Running total: $2.377451.**
+Run cap: **$20.00**. **Running total: $3.286617.**
 
 Generated from `cache=miss` rows in the supplied run folders. Cache hits and local models add $0. Prices: SAM $0.20/1,000 processed video frames; Voice $0.18/audio hour; Spark $1.25/1M uncached input, $0.15/1M cached input, and $4.25/1M output tokens. Unknown hosted models are an error, not a zero.
 
@@ -48,6 +48,29 @@ Generated from `cache=miss` rows in the supplied run folders. Cache hits and loc
 | runs/ami_lite | `muse-spark-1.3` | what did I miss: Speaker A | 95 uncached + 113 cached input; 585 output tokens | $0.002622 |
 | runs/ami_lite | `muse-spark-1.3` | translate captions to es | 473 uncached + 0 cached input; 987 output tokens | $0.004786 |
 | runs/ami_lite | `muse-spark-1.3` | translate captions to es | 492 uncached + 0 cached input; 1023 output tokens | $0.004963 |
+| runs/ami_lite | `muse-spark-1.3` | split conversation into threads | 548 uncached + 0 cached input; 738 output tokens | $0.003821 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: the table | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: Speaker B | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: Speaker D | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: the table | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: Speaker A | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: the table | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: Speaker C | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: the table | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: Speaker A | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: Speaker C | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: the table | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: Speaker A | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: Speaker C | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: the table | local/cached | $0.000000 |
+| runs/ami_lite | `muse-glimmer` | what did I miss: Speaker A | local/cached | $0.000000 |
+| runs/ami_lite | `muse-spark-1.3` | translate captions to es | 492 uncached + 0 cached input; 1094 output tokens | $0.005265 |
+| runs/ami_lite_635 | `files` | upload analysis video | file upload | $0.000000 |
+| runs/ami_lite_635 | `sam-3.1` | track tapped people | 1875 video frames | $0.375000 |
+| runs/ami_lite_635 | `muse-voice-transcribe-1.0` | diarize the raw mix (today's captions) | 75.040 audio seconds | $0.003752 |
+| runs/ami_lite_635 | `muse-voice-transcribe-1.0` | bench repeat 0: diarize the raw mix | 75.040 audio seconds | $0.003752 |
+| runs/ami_lite_635 | `muse-voice-transcribe-1.0` | bench repeat 1: diarize the raw mix | 75.040 audio seconds | $0.003752 |
+| runs/ami_lite_635 | `muse-voice-transcribe-1.0` | bench repeat 2: diarize the raw mix | 75.040 audio seconds | $0.003752 |
 | runs/ami_negative | `files` | upload analysis video | file upload | $0.000000 |
 | runs/ami_negative | `sam-3.1` | track tapped people | 1875 video frames | $0.375000 |
 | runs/ami_negative | `muse-voice-transcribe-1.0` | diarize the raw mix (today's captions) | 75.040 audio seconds | $0.003752 |
@@ -204,5 +227,45 @@ Generated from `cache=miss` rows in the supplied run folders. Cache hits and loc
 | runs/spark_ami | `muse-spark-1.3` | unverified AV overlap transcription 50.0 | 2939 uncached + 113 cached input; 1445 output tokens | $0.009832 |
 | runs/spark_ami | `muse-spark-1.3` | unverified AV overlap transcription 60.0 | 2889 uncached + 113 cached input; 1061 output tokens | $0.008137 |
 | runs/spark_ami | `muse-spark-1.3` | unverified AV overlap transcription 70.0 | 1712 uncached + 0 cached input; 1290 output tokens | $0.007622 |
+| runs/ami_samaudio_keep | `files` | upload analysis video | file upload | $0.000000 |
+| runs/ami_samaudio_keep | `sam-3.1` | track tapped people | 1875 video frames | $0.375000 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | diarize the raw mix (today's captions) | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `facebook/sam-audio-small-tv` | isolate tapped voices | local/cached | $0.000000 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 0: diarize the raw mix | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 1: diarize the raw mix | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 2: diarize the raw mix | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `facebook/sam-audio-small-tv` | isolate tapped voices | local/cached | $0.000000 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
 
-Total before rounding: $2.377450600000. Stop new live calls before the cap is reached.
+Total before rounding: $3.286616600000. Stop new live calls before the cap is reached.
