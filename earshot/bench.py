@@ -1,0 +1,184 @@
+"""Dinner Table Bench: score a run against ground truth. Deterministic.
+
+Truth file (JSON):
+
+    {
+      "people": {"Ana": "what Ana said, as one text", "Raúl": "..."},   # required
+      "reference_tracks": {"Ana": "ref_left.wav", "Raúl": "ref_right.wav"},  # optional (composed clips)
+      "turns": [{"person": "Ana", "start": 0.5, "end": 3.0, "text": "..."}]  # optional timing
+    }
+
+If `turns` is missing but `reference_tracks` are given, truth turns come from
+transcribing each clean track on its own (what captions would show with no
+overlap at all), so overlap recall measures how much of that Earshot recovers.
+
+Metrics per person:
+  wer                — word error rate of Earshot's captions vs that person's text
+  attribution        — share of caption words that belong to that person's text
+  overlap_recall     — share of words spoken while someone else was talking that
+                       appear in that person's captions (needs turn timing)
+  si_sdr_db          — separation quality of the isolated track (needs references)
+Baseline = Voice Transcribe's single diarized stream of the mix, with each
+anonymous speaker mapped to the person it matches best (an oracle mapping, so the
+baseline is shown at its best).
+"""
+
+from __future__ import annotations
+
+import json
+import math
+from pathlib import Path
+
+import numpy as np
+
+from .timeline import tokens
+
+
+def align(hyp: list[str], ref: list[str]) -> tuple[int, int, list[int]]:
+    """Returns (word edit distance, matched words, indexes of matched ref words).
+
+    Edits come from Levenshtein distance (for WER); matched words from the
+    longest common subsequence (for attribution and overlap recall).
+    """
+    n, m = len(hyp), len(ref)
+    d = np.zeros((n + 1, m + 1), dtype=np.int32)
+    d[:, 0] = np.arange(n + 1)
+    d[0, :] = np.arange(m + 1)
+    lcs = np.zeros((n + 1, m + 1), dtype=np.int32)
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            same = hyp[i - 1] == ref[j - 1]
+            d[i, j] = min(d[i - 1, j] + 1, d[i, j - 1] + 1, d[i - 1, j - 1] + (not same))
+            lcs[i, j] = lcs[i - 1, j - 1] + 1 if same else max(lcs[i - 1, j], lcs[i, j - 1])
+    i, j, matched = n, m, []
+    while i > 0 and j > 0:
+        if hyp[i - 1] == ref[j - 1]:
+            matched.append(j - 1)
+            i, j = i - 1, j - 1
+        elif lcs[i - 1, j] >= lcs[i, j - 1]:
+            i -= 1
+        else:
+            j -= 1
+    return int(d[n, m]), len(matched), sorted(matched)
+
+
+def wer(hyp: str, ref: str) -> float:
+    r = tokens(ref)
+    return align(tokens(hyp), r)[0] / max(1, len(r))
+
+
+def person_scores(caption_text: str, truth_text: str, overlap_ref_idx: set[int] | None) -> dict:
+    hyp, ref = tokens(caption_text), tokens(truth_text)
+    edits, matches, matched = align(hyp, ref)
+    out = {"words_truth": len(ref), "words_captioned": len(hyp),
+           "wer": round(edits / max(1, len(ref)), 3),
+           "attribution": round(matches / max(1, len(hyp)), 3)}
+    if overlap_ref_idx:
+        out["overlap_words"] = len(overlap_ref_idx)
+        out["overlap_recall"] = round(len(overlap_ref_idx & set(matched)) / len(overlap_ref_idx), 3)
+    return out
+
+
+def overlap_word_indexes(turns: list[dict], person: str) -> set[int]:
+    """Indexes (into the person's concatenated truth words) spoken during someone else's turn."""
+    idx, out = 0, set()
+    for t in sorted((t for t in turns if t["person"] == person), key=lambda t: t["start"]):
+        ws = tokens(t["text"])
+        others = [o for o in turns if o["person"] != person and o["end"] > t["start"] and o["start"] < t["end"]]
+        for k in range(len(ws)):
+            # word time by linear interpolation within the turn
+            wt = t["start"] + (k + 0.5) * (t["end"] - t["start"]) / max(1, len(ws))
+            if any(o["start"] <= wt <= o["end"] for o in others):
+                out.add(idx + k)
+        idx += len(ws)
+    return out
+
+
+def oracle_baseline_text(baseline: list[dict], truth: dict[str, str]) -> dict[str, str]:
+    by_speaker: dict[str, list[str]] = {}
+    for t in sorted(baseline, key=lambda t: t["start"]):
+        by_speaker.setdefault(t["speaker"], []).append(t["text"])
+    scores = {(spk, p): align(tokens(" ".join(txt)), tokens(truth[p]))[1]
+              for spk, txt in by_speaker.items() for p in truth}
+    mapping: dict[str, str] = {}
+    for (spk, p), _ in sorted(scores.items(), key=lambda kv: -kv[1]):
+        if spk not in mapping:
+            mapping[spk] = p
+    out = {p: [] for p in truth}
+    for t in sorted(baseline, key=lambda t: t["start"]):
+        out[mapping.get(t["speaker"], next(iter(truth)))].append(t["text"])
+    return {p: " ".join(v) for p, v in out.items()}
+
+
+def si_sdr(est: np.ndarray, ref: np.ndarray) -> float:
+    n = min(est.size, ref.size)
+    est, ref = est[:n] - est[:n].mean(), ref[:n] - ref[:n].mean()
+    alpha = float(est @ ref) / (float(ref @ ref) + 1e-12)
+    noise = est - alpha * ref
+    return 10 * math.log10((alpha * alpha * float(ref @ ref) + 1e-12) / (float(noise @ noise) + 1e-12))
+
+
+def score(run: Path, truth: dict, truth_dir: Path) -> dict:
+    doc = json.loads((run / "earshot.json").read_text())
+    names = [p["name"] for p in doc["people"]]
+    people_truth: dict[str, str] = truth["people"]
+    turns = truth.get("turns")
+    if turns is None and truth.get("reference_tracks"):
+        turns = _turns_from_references(run, truth, truth_dir)
+    caps = {n: " ".join(c["text"] for c in sorted(doc["captions"], key=lambda c: c["start"]) if c["name"] == n)
+            for n in names}
+    base = oracle_baseline_text(doc["baseline"], people_truth)
+    result = {"run": str(run), "separator": doc["separator"], "people": {}}
+    for n in people_truth:
+        ov = overlap_word_indexes(turns, n) if turns else None
+        entry = {"earshot": person_scores(caps.get(n, ""), people_truth[n], ov),
+                 "baseline": person_scores(base.get(n, ""), people_truth[n], ov)}
+        ref_path = (truth.get("reference_tracks") or {}).get(n)
+        person = next((p for p in doc["people"] if p["name"] == n), None)
+        if ref_path and person and person.get("stem"):
+            from .media import SEPARATION_SR, read_audio
+
+            ref = read_audio(truth_dir / ref_path, SEPARATION_SR)
+            entry["si_sdr_db"] = {"isolated": round(si_sdr(read_audio(run / person["stem"], SEPARATION_SR), ref), 2),
+                                  "mixture": round(si_sdr(read_audio(run / doc["video"], SEPARATION_SR), ref), 2)}
+        result["people"][n] = entry
+    result["summary"] = _summary(result["people"])
+    return result
+
+
+def _turns_from_references(run: Path, truth: dict, truth_dir: Path) -> list[dict]:
+    from .calls import CallLog
+    from .media import TRANSCRIBE_SR, read_audio
+    from .transcribe import transcribe
+
+    calls = CallLog(run)
+    out = []
+    for name, path in truth["reference_tracks"].items():
+        audio = read_audio(truth_dir / path, TRANSCRIBE_SR)
+        for t in transcribe(audio, calls, purpose=f"bench: transcribe {name}'s clean reference track"):
+            out.append({"person": name, "start": t.start, "end": t.end, "text": t.text})
+    return out
+
+
+def _summary(people: dict) -> dict:
+    def mean(system: str, key: str):
+        vals = [p[system][key] for p in people.values() if key in p[system]]
+        return round(sum(vals) / len(vals), 3) if vals else None
+
+    return {system: {k: mean(system, k) for k in ("wer", "attribution", "overlap_recall")}
+            for system in ("earshot", "baseline")}
+
+
+def run_bench(run: Path, truth_path: Path, out: Path | None = None) -> dict:
+    truth = json.loads(truth_path.read_text())
+    res = score(run, truth, truth_path.parent)
+    out = out or (run / "bench.json")
+    out.write_text(json.dumps(res, indent=2, ensure_ascii=False))
+    s = res["summary"]
+    print(f"{'':16}{'Earshot':>10}{'Single stream':>16}")
+    for k, label in (("wer", "Word error rate"), ("attribution", "Right person"), ("overlap_recall", "Overlap words")):
+        e, b = s["earshot"][k], s["baseline"][k]
+        if e is not None:
+            print(f"{label:16}{e:>10.3f}{b:>16.3f}")
+    print(f"wrote {out}")
+    return res

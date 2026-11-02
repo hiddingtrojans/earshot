@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: earshot
+Version: 0.1.0
+Summary: Every voice at the table, captioned — even when people talk at once.
+License: MIT
+Requires-Python: >=3.11
+License-File: LICENSE
+Requires-Dist: numpy>=1.26
+Requires-Dist: openai>=1.60
+Requires-Dist: meta_sam_parser>=0.1
+Provides-Extra: separation
+Requires-Dist: torch; extra == "separation"
+Requires-Dist: torchaudio; extra == "separation"
+Requires-Dist: torchvision; extra == "separation"
+Requires-Dist: torchcodec; extra == "separation"
+Requires-Dist: transformers>=4.54; extra == "separation"
+Requires-Dist: einops; extra == "separation"
+Requires-Dist: torchdiffeq; extra == "separation"
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
+Dynamic: license-file
