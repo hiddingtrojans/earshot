@@ -1,6 +1,6 @@
 # Estimated Meta API spend
 
-Run cap: **$20.00**. **Running total: $0.906028.**
+Run cap: **$20.00**. **Running total: $0.967408.**
 
 Generated from `cache=miss` rows in the supplied run folders. Cache hits and local models add $0. Prices: SAM $0.20/1,000 processed video frames; Voice $0.18/audio hour; Spark $1.25/1M uncached input, $0.15/1M cached input, and $4.25/1M output tokens. Unknown hosted models are an error, not a zero.
 
@@ -49,5 +49,12 @@ Generated from `cache=miss` rows in the supplied run folders. Cache hits and loc
 | runs/ami_negative | `files` | upload analysis video | file upload | $0.000000 |
 | runs/ami_negative | `sam-3.1` | track tapped people | 1875 video frames | $0.375000 |
 | runs/ami_negative | `muse-voice-transcribe-1.0` | diarize the raw mix (today's captions) | 75.040 audio seconds | $0.003752 |
+| runs/ui_live | `files` | upload analysis video | file upload | $0.000000 |
+| runs/ui_live | `sam-3.1` | track tapped people | 252 video frames | $0.050400 |
+| runs/ui_live | `muse-voice-transcribe-1.0` | diarize the raw mix (today's captions) | 10.080 audio seconds | $0.000504 |
+| runs/ui_live | `muse-spark-1.3` | split conversation into threads | 265 uncached + 0 cached input; 406 output tokens | $0.002057 |
+| runs/ui_live | `muse-spark-1.3` | what did I miss: the table | 224 uncached + 0 cached input; 694 output tokens | $0.003230 |
+| runs/ui_live | `muse-spark-1.3` | what did I miss: Speaker A | 176 uncached + 0 cached input; 562 output tokens | $0.002609 |
+| runs/ui_live | `muse-spark-1.3` | what did I miss: Speaker B | 202 uncached + 0 cached input; 548 output tokens | $0.002582 |
 
-Total before rounding: $0.906028150000. Stop new live calls before the cap is reached.
+Total before rounding: $0.967408400000. Stop new live calls before the cap is reached.
