@@ -42,7 +42,7 @@ The shipped text features and fail-closed behavior are covered by `tests/test_te
 
 ## Review checklist self-check
 
-- ✓ Existing deterministic tests are green and the no-T5/precomputed-conditioning code remains in place.
+- ✓ Existing deterministic tests are green; precomputed conditioning remains the default and `--allow-t5` is now allowed by the organizers.
 - ✓ No dependency or request-format change was made to bypass access.
 - ✓ No private media, credentials, non-Meta hosted model, or unapproved runtime fallback was used.
 - ✗ Real-weight checks (three `None` overrides at runtime, forbidden-module report, RTF, listening, SI-SDR, and go/no-go) remain unverified.
@@ -52,3 +52,17 @@ The shipped text features and fail-closed behavior are covered by `tests/test_te
 Owner: obtain Hugging Face approval for `facebook/sam-audio-small-tv` for `hiddingpickles`. After approval, run the spike and full SAM Audio analysis from the implementation pack, then add real T3/T4 rows.
 
 Next: T4 single-stream and Earshot-Lite benchmark only. Additional Meta API spend for this gate: **$0.000000**; running total remains **$0.055881**.
+
+## Addendum — T5 ruling and same-seed comparison
+
+Commit `c6851f4` applied the organizers' 2 Nov 06:06 Madrid ruling (`docs/10_T5_RULING.md`). Precomputed conditioning remains the default, `--allow-t5` is allowed, and Lite is not a T5 fallback.
+
+Access was rechecked after the ruling:
+
+```text
+✓ Logged in
+  user: hiddingpickles
+Error: Access denied. Model 'facebook/sam-audio-small-tv' requires approval.
+```
+
+The new check—two runs of the same 10 s with one seed, precomputed default versus `--allow-t5`, then SI-SDR between their outputs—**could not be run**. No comparison SI-SDR is reported and the default remains unchanged. It must run after weight approval; select `--allow-t5` as the default only if the measured value is below 30 dB.

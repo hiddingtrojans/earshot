@@ -20,7 +20,7 @@ See `ami_lite_bench_repeat3_optimized.log`, `glimmer_analyze.log`, and `SPEND.md
 
 ## Blocked / not submission-ready
 
-- **T3 / SAM Audio:** `hf auth whoami` succeeds as `hiddingpickles`, but `facebook/sam-audio-small-tv` returns `Access denied ... requires approval.` No separation run, stem, or SAM Audio metric is claimed.
+- **T3 / SAM Audio:** `hf auth whoami` succeeds as `hiddingpickles`, but `facebook/sam-audio-small-tv` returns `Access denied ... requires approval.` No separation run, stem, or SAM Audio metric is claimed. The new same-seed precomputed-vs-`--allow-t5` comparison is also blocked; no comparison SI-SDR exists and the precomputed default is unchanged.
 - **Public repository:** does not exist yet because this run was explicitly local-only.
 - **VLC:** not installed, so VLC colour playback is unverified. A long 22-second VTT cue also rendered poorly in the browser; the README records this limitation.
 - **Video and submission:** owner must record/check the ≤2:59 video, publish the repo, complete/read back the form, and link the X post.
