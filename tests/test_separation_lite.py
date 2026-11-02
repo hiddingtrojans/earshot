@@ -1,6 +1,7 @@
 import numpy as np
 
-from earshot.lite import attribute_turns
+from earshot.lite import attribute_turns, head_motion
+from earshot.tracking import Tracks
 from earshot.separation import crossfade_windows, overlap_add
 from earshot.transcribe import Turn
 
@@ -46,3 +47,22 @@ def test_lite_attribution_does_not_amplify_static_region_noise():
     face = np.array([2.0, 2.0, 1.0, 1.0, 1.0])
     empty = np.full(5, 0.0045)
     assert attribute_turns(turns, [face, empty], 1.0) == {"speech": 0}
+
+
+def test_activity_match_beats_larger_overall_motion():
+    turns = [Turn("speaker2", 2.0, 6.0, "words")]
+    overall = np.full(100, 100.0)
+    other = np.full(100, 1.0)
+    aligned = np.r_[np.full(20, 1.0), np.full(40, 100.0), np.full(40, 1.0)]
+    assert attribute_turns(turns, [overall, other, aligned], 10.0) == {"speaker2": 2}
+
+
+def test_head_motion_uses_central_mouth_band():
+    packed = np.packbits(np.ones(100 * 200, dtype=np.uint8)).tobytes()
+    tracks = Tracks(["Speaker A"], 100, 300, 25.0, 2, [{1: (10, 100, 100, 200, packed)}])
+    frames = np.zeros((2, 300, 100), dtype=np.uint8)
+    frames[0, 100:130, 30:90] = 50
+    frames[1, 100:130, 30:90] = 100
+    frames[0, 160:220, 30:90] = 10
+    frames[1, 160:220, 30:90] = 20
+    assert head_motion(frames, tracks, 0)[1] == 10.0

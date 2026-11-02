@@ -1,10 +1,9 @@
 """Earshot-Lite: attribute diarized turns to faces by mouth movement. No models.
 
-Fallback when voice separation isn't available. Muse Voice Transcribe diarizes
-the mixture into anonymous speakers; for each turn we measure motion in the top
-part of each person's SAM 3.1 mask (their head) and give each anonymous speaker
-to the person whose head moves most while that speaker talks. This keeps the
-face-anchored captions without the manual voice-to-person matching step, but it
+Muse Voice Transcribe diarizes the mixture into anonymous speakers. For each
+label, an activity signal is correlated with mouth-band motion over the clip.
+One-to-one assignment maximizes total correlation; it does not reward people for
+moving more overall. This binds voices to faces without manual matching, but it
 cannot recover words lost to overlapping speech.
 """
 
@@ -33,8 +32,9 @@ def gray_frames(video: Path, width: int = GRAY_WIDTH) -> np.ndarray:
     return np.frombuffer(raw, dtype=np.uint8).reshape(-1, h, width)
 
 
-def head_motion(frames: np.ndarray, tracks: Tracks, person: int, head_frac: float = 0.35) -> np.ndarray:
-    """Mean absolute frame difference inside the person's head box, per frame."""
+def head_motion(frames: np.ndarray, tracks: Tracks, person: int,
+                mouth_band: tuple[float, float] = (0.30, 0.60), center_frac: float = 0.60) -> np.ndarray:
+    """Mean absolute frame difference in a central mouth band, per frame."""
     n, h, w = frames.shape
     sx, sy = w / tracks.width, h / tracks.height
     motion = np.full(n, np.nan)
@@ -43,9 +43,12 @@ def head_motion(frames: np.ndarray, tracks: Tracks, person: int, head_frac: floa
         if box is None:
             continue
         x0, y0, x1, y1 = box
-        y1 = y0 + max(1, int((y1 - y0) * head_frac))
-        xa, xb = int(x0 * sx), max(int(x0 * sx) + 1, int(x1 * sx))
-        ya, yb = int(y0 * sy), max(int(y0 * sy) + 1, int(y1 * sy))
+        height, width = y1 - y0, x1 - x0
+        ya = int((y0 + height * mouth_band[0]) * sy)
+        yb = max(ya + 1, int((y0 + height * mouth_band[1]) * sy))
+        centre = (x0 + width / 2) * sx
+        half = width * center_frac * sx / 2
+        xa, xb = max(0, int(centre - half)), min(w, max(int(centre - half) + 1, int(centre + half)))
         a = frames[f, ya:yb, xa:xb].astype(np.int16)
         b = frames[f - 1, ya:yb, xa:xb].astype(np.int16)
         if a.size:
@@ -53,35 +56,69 @@ def head_motion(frames: np.ndarray, tracks: Tracks, person: int, head_frac: floa
     return motion
 
 
-def attribute_turns(turns: list[Turn], motion: list[np.ndarray], fps: float) -> dict[str, int]:
-    """Map each anonymous speaker label to a person index."""
-    people = len(motion)
-    norm = []
-    for m in motion:
-        base = max(float(np.nanmedian(m)), 0.1) if np.isfinite(m).any() else 1.0
-        norm.append(m / (base + 1e-6))
-    score: dict[str, np.ndarray] = {}
-    for t in turns:
-        f0, f1 = int(t.start * fps), max(int(t.start * fps) + 1, int(t.end * fps))
-        per_person = np.array([np.nanmean(n[f0:f1]) if np.isfinite(n[f0:f1]).any() else 0.0 for n in norm])
-        score.setdefault(t.speaker, np.zeros(people))
-        score[t.speaker] += np.nan_to_num(per_person) * (t.end - t.start)
-    if not score:
-        return {}
-    speakers = sorted(score)
-    if len(speakers) <= people and len(speakers) <= 8:
-        from itertools import permutations
+def _smooth(values: np.ndarray, frames: int) -> np.ndarray:
+    from scipy.ndimage import uniform_filter1d
 
-        best = max(permutations(range(people), len(speakers)),
-                   key=lambda assignment: sum(score[speaker][person]
-                                              for speaker, person in zip(speakers, assignment)))
-        return dict(zip(speakers, best))
-    mapping: dict[str, int] = {}
-    pairs = sorted(((s[p], spk, p) for spk, s in score.items() for p in range(people)), reverse=True)
-    used_people: set[int] = set()
-    for _, spk, p in pairs:
-        if spk in mapping or (p in used_people and len(used_people) < people):
+    values = np.nan_to_num(np.asarray(values, dtype=float), nan=0.0)
+    return uniform_filter1d(values, size=frames, mode="nearest")
+
+
+def _zscore(values: np.ndarray) -> np.ndarray:
+    values = np.asarray(values, dtype=float)
+    deviation = float(values.std())
+    return (values - values.mean()) / deviation if deviation > 1e-12 else np.zeros_like(values)
+
+
+def _activity(turns: list[Turn], speaker: str, frames: int, fps: float) -> np.ndarray:
+    out = np.zeros(frames)
+    for turn in turns:
+        if turn.speaker != speaker:
             continue
-        mapping[spk] = p
-        used_people.add(p)
+        start = max(0, int(round(turn.start * fps)))
+        end = min(frames, max(start + 1, int(round(turn.end * fps))))
+        out[start:end] = 1.0
+    return out
+
+
+def _correlation(left: np.ndarray, right: np.ndarray) -> float:
+    denominator = float(np.linalg.norm(left) * np.linalg.norm(right))
+    return float(np.dot(left, right) / denominator) if denominator else 0.0
+
+
+def attribute_turns(turns: list[Turn], motion: list[np.ndarray], fps: float,
+                    smooth_seconds: float = 0.5) -> dict[str, int]:
+    """Map diarized labels to people by smoothed activity/mouth-motion correlation."""
+    from scipy.optimize import linear_sum_assignment
+
+    people = len(motion)
+    window = max(1, int(round(fps * smooth_seconds)))
+    smoothed = []
+    for values in motion:
+        if not np.isfinite(values).any() or float(np.nanmedian(np.abs(values))) < 0.1:
+            smoothed.append(np.zeros_like(values, dtype=float))
+        else:
+            smoothed.append(_zscore(_smooth(values, window)))
+    speakers = sorted({turn.speaker for turn in turns})
+    candidates = []
+    for speaker in speakers:
+        raw_activity = _activity(turns, speaker, len(motion[0]), fps)
+        activity = _smooth(raw_activity, window)
+        if activity.std() <= 1e-12:
+            score = np.array([float(values.std()) for values in smoothed])
+        else:
+            activity = _zscore(activity)
+            score = np.array([_correlation(activity, values) for values in smoothed])
+        if score.size and float(score.max()) != 0:
+            candidates.append((speaker, score))
+    mapping: dict[str, int] = {}
+    if not candidates:
+        return {speaker: index % people for index, speaker in enumerate(speakers)} if people else mapping
+    labels = [speaker for speaker, _ in candidates]
+    matrix = np.stack([score for _, score in candidates])
+    rows, columns = linear_sum_assignment(-matrix)
+    for row, column in zip(rows, columns):
+        mapping[labels[row]] = int(column)
+    for row, label in enumerate(labels):
+        if label not in mapping:
+            mapping[label] = int(np.argmax(matrix[row]))
     return mapping
