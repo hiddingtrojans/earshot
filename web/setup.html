@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Earshot — tap to start</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@0,400;0,700&display=swap" rel="stylesheet">
+<style>
+  :root { --page:#E7ECF0; --paper:#FFF; --ink:#1B2430; --soft:#5A6675; --rule:#CBD3DB; --stage:#121A22; --focus:#2E5EAA; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--page); color:var(--ink); font:16px/1.5 "Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif; }
+  main { max-width:1100px; margin:auto; padding:24px; }
+  h1 { margin:0; font-size:30px; } h2 { font-size:19px; margin:18px 0 8px; }
+  button,input,select { font:inherit; color:inherit; } button { cursor:pointer; }
+  :focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+  .hint { color:var(--soft); max-width:760px; }
+  .notice { background:var(--paper); border-left:4px solid var(--focus); padding:10px 14px; margin:14px 0; }
+  .stage { position:relative; background:var(--stage); line-height:0; border-radius:8px; overflow:hidden; margin-top:16px; }
+  video { display:block; width:100%; max-height:68vh; }
+  .layer { position:absolute; inset:0; pointer-events:none; line-height:1.4; }
+  .crosshair { position:absolute; width:30px; height:30px; transform:translate(-50%,-50%); border:2px solid #FFF; border-radius:50%; background:rgba(46,94,170,.35); pointer-events:auto; padding:0; }
+  .crosshair::before,.crosshair::after { content:""; position:absolute; background:#FFF; left:50%; top:50%; transform:translate(-50%,-50%); }
+  .crosshair::before { width:16px; height:2px; } .crosshair::after { width:2px; height:16px; }
+  .marker { position:absolute; transform:translate(-50%,-50%); min-width:32px; height:32px; border-radius:999px; border:3px solid #FFF; background:var(--focus); color:#FFF; pointer-events:auto; padding:0 7px; font-weight:700; }
+  .setup-controls { display:flex; flex-wrap:wrap; gap:12px; align-items:end; margin:16px 0; }
+  label { display:grid; gap:4px; font-weight:700; }
+  input,select { border:1px solid var(--rule); border-radius:6px; background:var(--paper); padding:7px 9px; }
+  .analyze { border:1px solid var(--ink); border-radius:8px; background:var(--ink); color:#FFF; padding:9px 18px; font-weight:700; }
+  .analyze:disabled { opacity:.45; cursor:not-allowed; }
+  #people { display:grid; gap:8px; padding:0; list-style:none; }
+  #people li { display:flex; gap:8px; align-items:center; }
+  #people input { min-width:220px; }
+  .delete { border:1px solid var(--rule); border-radius:6px; background:var(--paper); padding:6px 10px; }
+  #status { margin-top:14px; font-weight:700; } #error { color:#9B2C2C; font-weight:700; }
+  #steps { color:var(--soft); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Earshot</h1>
+  <p class="hint">Tap each face once in a recorded clip. Choose a frame with the player, then click a face. Keyboard: focus the crosshair, move it with arrow keys, and press Enter or Space to add a person. Names can be edited or markers deleted.</p>
+  <div class="notice" id="mode-note">Loading setup…</div>
+  <div class="stage" id="stage">
+    <video id="source" controls playsinline preload="auto" src="/api/setup/video"></video>
+    <div class="layer" id="layer">
+      <button class="crosshair" id="crosshair" style="left:50%;top:50%" aria-label="Add person at focused crosshair"></button>
+    </div>
+  </div>
+  <p class="hint" id="frame">Frame 0</p>
+  <div class="setup-controls">
+    <label>Separation
+      <select id="separator">
+        <option value="lite">Earshot-Lite (no local weights)</option>
+        <option value="samaudio">SAM Audio (local weights)</option>
+      </select>
+    </label>
+    <button class="analyze" id="analyze" disabled>Analyze recorded clip</button>
+  </div>
+  <h2>People</h2>
+  <ul id="people"></ul>
+  <div id="status" role="status" aria-live="polite"></div>
+  <div id="error" role="alert"></div>
+  <ol id="steps"></ol>
+</main>
+<script>
+const $ = selector => document.querySelector(selector);
+const video = $("#source"), crosshair = $("#crosshair"), analyzeButton = $("#analyze");
+let taps = [], cross = {x:0.5, y:0.5}, info = null, busy = false;
+
+function defaultName() { return `Speaker ${String.fromCharCode(65 + taps.length)}`; }
+function draw() {
+  document.querySelectorAll(".marker").forEach(marker => marker.remove());
+  taps.forEach((tap, index) => {
+    const marker = document.createElement("button");
+    marker.className = "marker";
+    marker.style.left = `${tap.x * 100}%`;
+    marker.style.top = `${tap.y * 100}%`;
+    marker.textContent = index + 1;
+    marker.title = `Delete ${tap.name}`;
+    marker.setAttribute("aria-label", `Delete ${tap.name}`);
+    marker.addEventListener("click", event => { event.stopPropagation(); removeTap(index); });
+    $("#layer").appendChild(marker);
+  });
+  crosshair.style.left = `${cross.x * 100}%`;
+  crosshair.style.top = `${cross.y * 100}%`;
+  const list = $("#people");
+  list.replaceChildren();
+  taps.forEach((tap, index) => {
+    const item = document.createElement("li");
+    const label = document.createElement("label");
+    label.textContent = `Person ${index + 1}`;
+    const input = document.createElement("input");
+    input.value = tap.name;
+    input.maxLength = 80;
+    input.disabled = busy;
+    input.setAttribute("aria-label", `Name for person ${index + 1}`);
+    input.addEventListener("input", () => { tap.name = input.value; drawMarkersOnly(); });
+    const remove = document.createElement("button");
+    remove.className = "delete";
+    remove.textContent = "Delete";
+    remove.disabled = busy;
+    remove.addEventListener("click", () => removeTap(index));
+    label.appendChild(input);
+    item.append(label, remove);
+    list.appendChild(item);
+  });
+  analyzeButton.disabled = busy || taps.length === 0;
+}
+function drawMarkersOnly() {
+  document.querySelectorAll(".marker").forEach((marker, index) => {
+    marker.title = `Delete ${taps[index].name}`;
+    marker.setAttribute("aria-label", `Delete ${taps[index].name}`);
+  });
+}
+function addTap(x, y) {
+  if (busy || taps.length >= 8) return;
+  taps.push({name:defaultName(), x, y, frame:Math.round(video.currentTime * (info?.fps || 25))});
+  draw();
+}
+function removeTap(index) {
+  if (busy) return;
+  taps.splice(index, 1);
+  draw();
+}
+video.addEventListener("click", event => {
+  if (busy) return;
+  const rect = video.getBoundingClientRect();
+  cross = {x:Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)),
+           y:Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height))};
+  addTap(cross.x, cross.y);
+});
+video.addEventListener("timeupdate", () => {
+  $("#frame").textContent = `Frame ${Math.round(video.currentTime * (info?.fps || 25))} at ${video.currentTime.toFixed(2)} s`;
+});
+crosshair.addEventListener("click", () => addTap(cross.x, cross.y));
+crosshair.addEventListener("keydown", event => {
+  const moves = {ArrowLeft:[-0.01,0], ArrowRight:[0.01,0], ArrowUp:[0,-0.01], ArrowDown:[0,0.01]};
+  if (moves[event.key]) {
+    event.preventDefault();
+    const [dx,dy] = moves[event.key];
+    cross.x = Math.max(0, Math.min(1, cross.x + dx));
+    cross.y = Math.max(0, Math.min(1, cross.y + dy));
+    draw();
+  } else if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    addTap(cross.x, cross.y);
+  }
+});
+async function poll(job) {
+  const response = await fetch(`/api/analyze/status?job=${encodeURIComponent(job)}`);
+  const result = await response.json();
+  $("#steps").replaceChildren(...result.steps.map(step => {
+    const item = document.createElement("li"); item.textContent = step; return item;
+  }));
+  $("#status").textContent = result.step || result.status;
+  if (result.status === "done") { window.location.href = result.url; return; }
+  if (result.status === "error") {
+    busy = false;
+    $("#error").textContent = result.error || "Analysis failed";
+    draw();
+    return;
+  }
+  setTimeout(() => poll(job), 600);
+}
+analyzeButton.addEventListener("click", async () => {
+  busy = true;
+  $("#error").textContent = "";
+  $("#status").textContent = "Submitting taps…";
+  draw();
+  try {
+    const response = await fetch("/api/analyze", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({taps, separator:$("#separator").value})
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Could not start analysis");
+    if (result.done) {
+      taps = result.taps;
+      $("#status").textContent = "Snapped to cached taps. Loading cached results…";
+      draw();
+      window.location.href = result.url;
+      return;
+    }
+    poll(result.job);
+  } catch (error) {
+    busy = false;
+    $("#status").textContent = "";
+    $("#error").textContent = error.message;
+    draw();
+  }
+});
+(async () => {
+  const response = await fetch("/api/setup/info");
+  info = await response.json();
+  $("#separator").value = info.separator;
+  $("#separator").disabled = info.replay;
+  $("#mode-note").textContent = info.replay
+    ? "Replay mode: taps within 5% snap to the cached people, then saved results load immediately. Analysis is not being rerun."
+    : "Live analysis mode: a background job processes this recorded clip. It is not real-time; actual steps appear below.";
+  draw();
+})();
+</script>
+</body>
+</html>

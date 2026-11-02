@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import shutil
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -29,10 +30,13 @@ class Options:
     catchup_every: float = 10.0      # precompute catch-ups so replay mode has them
     catchup_seconds: float = 30.0
     max_edge: int = 960
+    progress: Callable[[str], None] | None = None
 
 
 def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
     out.mkdir(parents=True, exist_ok=True)
+    report = opt.progress or (lambda step: None)
+    report("Preparing the recorded clip")
     calls = CallLog(out, replay=opt.replay)
     analysis = out / "analysis.mp4"
     if not analysis.exists():
@@ -55,12 +59,16 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
                     and cached.fps == info.fps:
                 tracks = cached
     if tracks is None:
+        report("Tracking people with SAM 3.1")
         tracks = track_people(analysis, taps, info, calls)
         tracks.save(tracks_path)
+    else:
+        report("Loading cached person tracks")
 
     mixture = read_audio(analysis, SEPARATION_SR)
     mix24 = resample(mixture, SEPARATION_SR, TRANSCRIBE_SR)
     # Today's captions: one diarized stream for the whole table (also the bench baseline).
+    report("Transcribing the group with Muse Voice Transcribe")
     baseline = transcribe(mix24, calls, purpose="diarize the raw mix (today's captions)")
 
     stems: list[str | None] = [None] * len(names)
@@ -74,17 +82,20 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
         sep = SamAudioSeparator(description=opt.prompt, text_features=features, allow_t5=opt.allow_t5)
         turns, activity = [], []
         for p, name in enumerate(names):
+            report(f"Separating {name}'s voice with SAM Audio")
             iso = sep.separate(analysis, mixture, tracks, p, calls)
             stem = f"stems/{p}_{_slug(name)}.wav"
             write_wav(out / stem, iso, SEPARATION_SR)
             stems[p] = stem
             activity.append(speech_segments(resample(iso, SEPARATION_SR, 16_000), 16_000))
+            report(f"Transcribing {name}'s voice with Muse Voice Transcribe")
             turns.append(transcribe(resample(iso, SEPARATION_SR, TRANSCRIBE_SR), calls,
                                     purpose=f"transcribe {name}'s isolated voice"))
         separator_name = sep.name
     elif opt.separator == "lite":
         from .lite import attribute_turns, gray_frames, head_motion
 
+        report("Matching voices to faces with Earshot-Lite")
         frames = gray_frames(analysis)
         motion = [head_motion(frames, tracks, p) for p in range(len(names))]
         mapping = attribute_turns(baseline, motion, info.fps)
@@ -95,10 +106,14 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
     else:
         raise ValueError(f"unknown separator {opt.separator!r}")
 
+    report("Building per-person captions")
     captions = build_captions(names, turns, activity)
+    if opt.spark and captions:
+        report("Grouping conversations with Muse Spark")
     threads = assign_threads(captions, calls) if opt.spark and captions else []
     catchups = []
     if opt.spark and captions and opt.catchup_every > 0:
+        report("Preparing cited catch-ups with Muse Spark")
         t = opt.catchup_every
         while t <= info.duration + 1e-6:
             for person in [None, *range(len(names))]:

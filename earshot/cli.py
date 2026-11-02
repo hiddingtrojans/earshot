@@ -28,9 +28,11 @@ def main() -> None:
     a.add_argument("--replay", action="store_true", help="use cached model responses only (no API key)")
 
     s = sub.add_parser("serve", help="open the viewer for a run folder")
-    s.add_argument("run", type=Path)
+    s.add_argument("run", type=Path, nargs="?", help="run folder (defaults to demo in replay or runs/<video> in setup)")
     s.add_argument("--port", type=int, default=8765)
     s.add_argument("--replay", action="store_true")
+    s.add_argument("--setup", type=Path, help="show the tap-to-start screen for this recorded video")
+    s.add_argument("--separator", choices=["samaudio", "lite"], default="lite")
 
     b = sub.add_parser("bench", help="score runs against ground truth (Dinner Table Bench)")
     b.add_argument("run", type=Path)
@@ -54,7 +56,13 @@ def main() -> None:
     elif args.cmd == "serve":
         from .server import serve
 
-        serve(args.run, args.port, replay=True if args.replay else None)
+        if not args.run and not args.setup:
+            s.error("provide a run folder or --setup VIDEO")
+        run = args.run
+        if run is None:
+            replay_demo = Path("demo/ami_meeting")
+            run = replay_demo if args.replay and replay_demo.exists() else Path("runs") / args.setup.stem
+        serve(run, args.port, replay=True if args.replay else None, setup=args.setup, separator=args.separator)
     elif args.cmd == "bench":
         from .bench import run_bench
 
