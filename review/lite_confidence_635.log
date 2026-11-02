@@ -1,0 +1,5 @@
+                               Earshot         Single stream
+Word error rate      2.571 [0.395, 3.719]       0.384 [0.377, 0.395]
+Right person         0.547 [0.473, 0.693]       0.693 [0.689, 0.697]
+Overlap words        0.553 [0.424, 0.624]       0.486 [0.424, 0.524]
+wrote runs/ami_lite_635/bench_confidence.json

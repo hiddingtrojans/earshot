@@ -40,6 +40,8 @@ The 635 s window was used for development sweeps; 745 s was evaluated separately
 
 A development-only 60–90% lower-mask band matched the 635 s baseline (0.384 / 0.693 / 0.486) but failed on 745 s (right-person 0.537). It is **not used**. The actual 30–60% mouth band is retained on the primary benchmark and was not selected from its test-window results. Mappings are recorded beside oracle mappings in each repeat's bench JSON.
 
+**One-tap correction:** confidence is best-minus-second-best correlation, with threshold **0.15 fixed in advance**. Taps needed to reach the oracle mapping were **0 / 0 / 0 on 745 s** and **1 / 1 / 0 on 635 s** (three repeats in order). Low-confidence corrections are exposed as “Not Speaker?” buttons and saved to `corrections.json` for replay.
+
 ## Commands
 
 ```bash
