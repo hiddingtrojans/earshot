@@ -2,7 +2,7 @@ import json
 from types import SimpleNamespace
 
 from earshot.calls import CallLog
-from earshot.sparkav import transcribe_window
+from earshot.sparkav import transcribe_window, transcribe_windows
 from earshot.tracking import Tap
 from earshot.transcribe import Turn
 
@@ -43,3 +43,20 @@ def test_spark_av_parses_json_and_reuses_cache(monkeypatch, tmp_path):
     transcribe_window(video, taps, baseline, 0.0, 0.2, calls)
     assert len(calls_seen) == 1
     assert json.loads(calls.log_path.read_text().splitlines()[-1])["cache"] == "hit"
+
+
+def test_spark_windows_stop_at_clip_end(monkeypatch, tmp_path):
+    calls = CallLog(tmp_path)
+    seen = []
+
+    def fake(video, taps, baseline, start, seconds, calls, repeat=None):
+        seen.append((start, seconds))
+        return [[] for _ in taps]
+
+    monkeypatch.setattr("earshot.sparkav.transcribe_window", fake)
+    taps = [Tap("Speaker A", 0.25, 0.29)]
+    _, activity = transcribe_windows(None, taps, [], 75.0, calls)
+    assert seen[-1] == (70.0, 5.0)
+    assert len(seen) == 8
+    assert all(seconds > 0 for _, seconds in seen)
+    assert activity == [[]]

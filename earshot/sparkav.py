@@ -94,7 +94,7 @@ def transcribe_window(video: Path, taps: list[Tap], baseline: list[Turn], start:
 def transcribe_windows(video: Path, taps: list[Tap], baseline: list[Turn], duration: float,
                        calls: CallLog, repeat: int | None = None) -> tuple[list[list[Turn]], list[list[tuple[float, float]]]]:
     turns = [[] for _ in taps]
-    for start in range(0, int(duration + 9.999), 10):
+    for start in range(0, int(duration + 0.999), 10):
         window = transcribe_window(video, taps, baseline, float(start), min(10.0, duration - start), calls, repeat)
         for person, segments in enumerate(window):
             turns[person].extend(segments)
