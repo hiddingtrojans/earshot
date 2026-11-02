@@ -9,6 +9,15 @@
 5. Record the real ≤2:59 video with the opening new-work disclosure and AMI credit. Do not claim live processing, SAM Audio separation, or simultaneous-caption recovery from this Lite demo. Explain that local Glimmer handles cached catch-ups on this computer. Preserve the T5 ruling and link in README. If SAM Audio appears, show: “SAM Audio includes a frozen Google T5-base text encoder (open source). Allowed by the organizers; disclosed in the README.”
 6. Check the video logged out, read back every submission field, and link the exact X post.
 
+## Claude review round 3 — span prompting negative result
+
+- Ran the bounded local experiment with runtime-Lite mappings, other-label-subtracted solo spans, balanced enrollment, and explicit positive/negative anchors. `spans-text` used no video; `spans-video` added `keep` video at matching enrollment times. Mode and complete anchor plans were included in cache keys and tested.
+- Both four-person A/B variants scored **0.25 correct-voice rate**, the same as round-2 visual-only `keep` on this window. Spans-text diagonal/off-diagonal means were 0.4141/0.4115; spans-video were 0.3757/0.3719. Only C's own row was correct in each matrix.
+- Separation call wall time was **36.290 s for text** and **225.084 s for video**. All eight WAVs are committed in `review/ab_listen_spans/`.
+- **No variant reached 3/4 correct rows. No full 745 s or 635 s runs, oracle benches, or new hosted transcription calls were made. New API spend is $0.** No oracle-mapped product result is claimed.
+- Demo, tagline and production separator behavior are unchanged. The negative result and exact matrices are in `bench/RESULTS.md` and `GATE_REVIEW3.md`.
+- Main suite: **76 passed**. Fresh clone/base install: **75 passed, 1 optional Torch-dependent skipped**, with no credentials or model downloads. See `review/clean_clone_review3.log`.
+
 ## Claude review round 2 — outcome
 
 - **Mask semantics:** `keep` leaves the target visible; `remove` blacks out the target. The mode is in every separation cache key and a unit test checks the pixels. All eight real A/B WAVs are committed. Neither mode was diagonal-dominant; both scored 0.25 correct-voice rate on the 10 s A/B. Keep/remove waveform pairs correlate at 0.999955–0.999986. **`keep` is the semantic default, not an A/B winner.**
