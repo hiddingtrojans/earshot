@@ -13552,5 +13552,22 @@
    "sentences": [],
    "note": "Nothing was said."
   }
- ]
+ ],
+ "translations": {
+  "es": {
+   "c001": "todo lo demás que hayamos programado en él, está todo en su lugar separado y no con todos los botones de encendido juntos porque entonces es como, ni siquiera sé lo que estoy encendiendo.",
+   "c002": "Sí, y si reservaras las funciones más complicadas quizás para mandos separados que no necesitarías usar todos los días",
+   "c003": "Vale, así que quizás tener un mando que tenga las funciones principales, encendido apagado cambio de canal volumen y otro mando con todas las cosas especiales porque eso es algo que los mandos suelen tener botones que los televisores ya no tienen tampoco. así que tienes que tenerlos en algún sitio porque vas a necesitar esas funciones especiales de vez en cuando pero no necesariamente en el mando normal",
+   "c004": "¿Puedo preguntar, pregunto, estamos diseñando un mando a distancia solo para un televisor?",
+   "c005": "Buena pregunta.",
+   "c006": "Y si este dispositivo solo se va a usar con un televisor, ¿sería siquiera técnicamente posible incluir funciones de grabadora de vídeo en él?",
+   "c007": "Eso aún no lo sé.",
+   "c008": "¿O deberíamos limitarnos a tener botones relacionados con la televisión?",
+   "c009": "esa es una buena pregunta, lo investigaré",
+   "c010": "Creo que es solo TV, quiero decir, si lo estamos tomando"
+  }
+ },
+ "translation_status": {
+  "es": "translated"
+ }
 }
