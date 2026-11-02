@@ -54,7 +54,7 @@
   .overlay { position: absolute; inset: 0; pointer-events: none; line-height: 1.35; }
   .overlay svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-  .bubble { position: absolute; max-width: 34%; min-width: 120px; background: var(--paper); color: var(--ink);
+  .bubble { position: absolute; max-width: 34%; min-width: 120px; background: var(--paper); color: var(--ink); pointer-events: auto;
             border-radius: 14px; padding: 8px 14px 10px; font-size: var(--bubble-size);
             box-shadow: 0 2px 0 rgba(18, 26, 34, .25); transition: opacity .18s ease; }
   .bubble .who { display: block; font-size: .72em; font-weight: 700; margin-bottom: 2px; }
@@ -220,10 +220,11 @@ function revealed(c, t) {
 }
 
 function render(t) {
-  overlay.querySelectorAll(".bubble, .simul, .subtitle").forEach(n => n.remove());
+  overlay.querySelectorAll(".simul, .subtitle").forEach(n => n.remove());
   links.innerHTML = "";
   const W = overlay.clientWidth, H = overlay.clientHeight;
   if (mode === "single") {
+    overlay.querySelectorAll(".bubble").forEach(n => n.remove());
     const b = doc.baseline.filter(s => t >= s.start && t <= s.end + 0.8).pop();
     if (b) { const d = document.createElement("div"); d.className = "subtitle"; d.textContent = b.text; overlay.appendChild(d); }
     return;
@@ -234,14 +235,23 @@ function render(t) {
     const prev = perPerson.get(c.person);
     if (!prev || c.start > prev.start) perPerson.set(c.person, c);
   }
+  const visibleIds = new Set([...perPerson.values()].map(c => c.id));
+  overlay.querySelectorAll(".bubble").forEach(n => { if (!visibleIds.has(n.dataset.caption)) n.remove(); });
   const placed = [];
   for (const [p, c] of perPerson) {
     const a = anchorAt(p, t);
-    const el = document.createElement("div");
+    let el = overlay.querySelector(`[data-caption="${c.id}"]`);
+    if (!el) {
+      el = document.createElement("div");
+      el.dataset.caption = c.id;
+      el.innerHTML = `<span class="who" style="color:${doc.people[p].color}">${doc.people[p].name}</span><span class="txt"></span><span class="original"></span><span class="tail"></span>`;
+    }
     el.className = "bubble" + (t > c.end ? " fading" : "");
+    el.tabIndex = -1;
+    el.title = "";
     const person = doc.people[p];
-    el.innerHTML = `<span class="who" style="color:${person.color}">${person.name}</span><span class="txt"></span><span class="original"></span><span class="tail"></span>`;
     el.querySelector(".txt").textContent = revealed(c, t);
+    el.querySelector(".original").textContent = "";
     if (language && captionText(c) !== c.text) {
       el.classList.add("has-original");
       el.tabIndex = 0;
@@ -249,7 +259,7 @@ function render(t) {
       el.querySelector(".original").textContent = `Original: ${c.text}`;
     }
     el.style.borderTop = `4px solid ${person.color}`;
-    overlay.appendChild(el);
+    if (!el.isConnected) overlay.appendChild(el);
     const bw = el.offsetWidth, bh = el.offsetHeight;
     const headX = a ? a[1] * W : (p + 0.5) * W / doc.people.length;
     const headY = a ? a[2] * H : H * 0.35;
