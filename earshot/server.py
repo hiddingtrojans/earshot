@@ -1,4 +1,4 @@
-"""Local viewer server: static files with HTTP Range (video seeking) + catch-up API."""
+"""Local setup/viewer server: background analysis, replay snapping, media ranges, catch-up and exports."""
 
 from __future__ import annotations
 

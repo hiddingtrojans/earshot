@@ -1,4 +1,4 @@
-"""Command line: `python -m earshot analyze|serve|bench`."""
+"""Command line: `python -m earshot analyze|serve|bench|export`."""
 
 from __future__ import annotations
 
