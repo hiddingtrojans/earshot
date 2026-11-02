@@ -17,6 +17,8 @@ def build_demo(source: Path, destination: Path, attribution: Path) -> None:
         shutil.copy2(source / name, destination / name)
     for cached in (source / "calls").glob("*.json"):
         shutil.copy2(cached, destination / "calls" / cached.name)
+    if (source / "corrections.json").exists():
+        shutil.copy2(source / "corrections.json", destination / "corrections.json")
     shutil.copy2(attribution, destination / "ATTRIBUTION.md")
 
     doc = json.loads((source / "earshot.json").read_text())

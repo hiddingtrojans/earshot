@@ -15,6 +15,7 @@ def test_demo_copies_json_cache_and_converts_stems(tmp_path):
     (source / "calls.jsonl").write_text("{}\n")
     (source / "calls" / "response.json").write_text("{}")
     (source / "calls" / "sep_private.npy").write_bytes(b"not copied")
+    (source / "corrections.json").write_text('[{"from": 0, "to": 1, "tap": [0.8, 0.36, 0]}]')
     attribution = tmp_path / "ATTRIBUTION.md"
     attribution.write_text("AMI test attribution")
     pcm = (np.sin(np.arange(4800) * 0.1) * 1000).astype("<i2")
@@ -33,6 +34,7 @@ def test_demo_copies_json_cache_and_converts_stems(tmp_path):
     assert not (destination / "calls" / "sep_private.npy").exists()
     assert json.loads((destination / "earshot.json").read_text())["people"][0]["stem"] == "stems/voice.m4a"
     assert (destination / "ATTRIBUTION.md").read_text() == "AMI test attribution"
+    assert (destination / "corrections.json").exists()
 
 
 def test_demo_lite_has_no_invented_stems(tmp_path):
