@@ -191,7 +191,7 @@ def score_document(doc: dict, run: Path, truth: dict, truth_dir: Path) -> dict:
             "people": {}, "mixture": baseline_envelope,
             "mixture_correct_voice_rate": correct_voice_rate([baseline_envelope] * len(references)),
             "gate": "Frames with mixture log energy above its 20th percentile",
-            "si_sdr_note": "Far-field mixture is -32.91 dB against headsets; SI-SDR is not meaningful here.",
+            "si_sdr_note": "Mixture–Speaker A headset SI-SDR is -32.91 dB; far-field mixture SI-SDR is not meaningful here.",
         }
         for name, person in ((name, next((p for p in doc["people"] if p["name"] == name), None))
                              for name in references):
@@ -359,11 +359,13 @@ def run_bench(run: Path, truth_path: Path, out: Path | None = None, repeat: int 
                   f"{b['mean']:>12.3f} [{b['min']:.3f}, {b['max']:.3f}]")
         else:
             print(f"{label:16}{e:>22.3f}{b:>22.3f}")
-    if "si_sdr_gain_db" in s:
-        gain = s["si_sdr_gain_db"]
-        if repeat is not None:
-            print(f"SI-SDR gain dB {gain['mean']:.3f} [{gain['min']:.3f}, {gain['max']:.3f}]")
-        else:
-            print(f"SI-SDR gain dB {gain:.3f}")
+    if "correct_voice_rate" in s:
+        for label, key in (("Correct voice", "correct_voice_rate"),
+                           ("Mixture correct voice", "mixture_correct_voice_rate")):
+            value = s[key]
+            if repeat is not None:
+                print(f"{label:16}{value['mean']:>10.3f} [{value['min']:.3f}, {value['max']:.3f}]")
+            else:
+                print(f"{label:16}{value:>10.3f}")
     print(f"wrote {out}")
     return res
