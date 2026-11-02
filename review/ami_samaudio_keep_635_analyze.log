@@ -1,0 +1,43 @@
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 4133.13it/s]
+/Users/raulacedo/src/earshot/earshot-app/.venv/lib/python3.12/site-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+SAM Audio device=mps people=[0] window 0-10s total=19.6s
+SAM Audio device=mps people=[0] window 9-19s total=18.1s
+SAM Audio device=mps people=[0] window 18-28s total=18.9s
+SAM Audio device=mps people=[0] window 27-37s total=18.2s
+SAM Audio device=mps people=[0] window 36-46s total=18.8s
+SAM Audio device=mps people=[0] window 45-55s total=19.2s
+SAM Audio device=mps people=[0] window 54-64s total=21.1s
+SAM Audio device=mps people=[0] window 63-73s total=21.3s
+SAM Audio device=mps people=[0] window 72-75s total=6.3s
+SAM Audio device=mps people=[1] window 0-10s total=36.8s
+SAM Audio device=mps people=[1] window 9-19s total=22.7s
+SAM Audio device=mps people=[1] window 18-28s total=21.9s
+SAM Audio device=mps people=[1] window 27-37s total=20.4s
+SAM Audio device=mps people=[1] window 36-46s total=19.4s
+SAM Audio device=mps people=[1] window 45-55s total=19.7s
+SAM Audio device=mps people=[1] window 54-64s total=24.0s
+SAM Audio device=mps people=[1] window 63-73s total=20.7s
+SAM Audio device=mps people=[1] window 72-75s total=6.3s
+SAM Audio device=mps people=[2] window 0-10s total=22.9s
+SAM Audio device=mps people=[2] window 9-19s total=21.3s
+SAM Audio device=mps people=[2] window 18-28s total=20.9s
+SAM Audio device=mps people=[2] window 27-37s total=21.8s
+SAM Audio device=mps people=[2] window 36-46s total=21.8s
+SAM Audio device=mps people=[2] window 45-55s total=22.2s
+SAM Audio device=mps people=[2] window 54-64s total=20.9s
+SAM Audio device=mps people=[2] window 63-73s total=21.6s
+SAM Audio device=mps people=[2] window 72-75s total=7.3s
+SAM Audio device=mps people=[3] window 0-10s total=26.2s
+SAM Audio device=mps people=[3] window 9-19s total=23.7s
+SAM Audio device=mps people=[3] window 18-28s total=25.0s
+SAM Audio device=mps people=[3] window 27-37s total=27.2s
+SAM Audio device=mps people=[3] window 36-46s total=28.1s
+SAM Audio device=mps people=[3] window 45-55s total=23.6s
+SAM Audio device=mps people=[3] window 54-64s total=25.7s
+SAM Audio device=mps people=[3] window 63-73s total=25.8s
+SAM Audio device=mps people=[3] window 72-75s total=7.8s
+wrote runs/ami_samaudio_keep_635/earshot.json
+view it: python -m earshot serve runs/ami_samaudio_keep_635

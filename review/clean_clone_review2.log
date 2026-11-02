@@ -1,0 +1,249 @@
+
+[notice] A new release of pip is available: 26.1 -> 26.2.2
+[notice] To update, run: /private/tmp/earshot-review2-clone-EcDC20/venv/bin/python3.12 -m pip install --upgrade pip
+........F......................F...F.....................F.....s.....    [100%]
+=================================== FAILURES ===================================
+______________ test_voice_repeats_have_independent_cache_entries _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108aeb170>
+tmp_path = PosixPath('/private/var/folders/jn/lc3z73zx65n2gz888km31gq40000gn/T/pytest-of-raulacedo/pytest-126/test_voice_repeats_have_indepe0')
+
+    def test_voice_repeats_have_independent_cache_entries(monkeypatch, tmp_path):
+        transcribe_module = importlib.import_module("earshot.transcribe")
+        calls = CallLog(tmp_path)
+        invocations = []
+
+        def fake_post(wav, mode):
+            invocations.append((wav, mode))
+            return {"turns": []}, {"sessionId": f"session-{len(invocations)}"}
+
+        monkeypatch.setattr(transcribe_module, "_post_transcribe", fake_post)
+        audio = np.zeros(240, dtype=np.float32)
+        for repeat in (None, None, 0, 1, 0):
+>           transcribe_module.transcribe(audio, calls, purpose="repeat test", repeat=repeat)
+
+tests/test_bench_repeats.py:32:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+earshot/transcribe.py:72: in transcribe
+    result = calls.cached(model=VOICE_MODEL, purpose=purpose, where="hosted", key_parts=key_parts, fn=call)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = CallLog(run_dir=PosixPath('/private/var/folders/jn/lc3z73zx65n2gz888km31gq40000gn/T/pytest-of-raulacedo/pytest-126/test_voice_repeats_have_indepe0'), replay=True)
+model = 'muse-voice-transcribe-1.0', purpose = 'repeat test', where = 'hosted'
+key_parts = ('676c5325f7344a8e4fa9b7a8', 'DIARIZATION')
+fn = <function transcribe.<locals>.call at 0x108be7920>
+
+    def cached(self, *, model: str, purpose: str, where: str, key_parts: tuple,
+               fn: Callable[[], tuple[Any, dict]]) -> Any:
+        """Run `fn` (returning (result_json, meta)) unless a cached result exists."""
+        key = content_key(model, purpose, *key_parts)
+        path = self.calls_dir / f"{key}.json"
+        if path.exists():
+            stored = json.loads(path.read_text())
+            self._log({**stored["meta"], "cache": "hit", "key": key})
+            return stored["result"]
+        if self.replay:
+>           raise ReplayMiss(f"replay mode: no cached response for {purpose} ({model}), key {key}")
+E           earshot.calls.ReplayMiss: replay mode: no cached response for repeat test (muse-voice-transcribe-1.0), key 190f93596c604381cce9cf67
+
+earshot/calls.py:72: ReplayMiss
+_______________ test_glimmer_json_mode_fallback_and_local_cache ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108c3ac30>
+tmp_path = PosixPath('/private/var/folders/jn/lc3z73zx65n2gz888km31gq40000gn/T/pytest-of-raulacedo/pytest-126/test_glimmer_json_mode_fallbac0')
+
+    def test_glimmer_json_mode_fallback_and_local_cache(monkeypatch, tmp_path):
+        requests = []
+
+        class UnsupportedSchema(Exception):
+            status_code = 400
+
+        class Completions:
+            def create(self, **kwargs):
+                requests.append(kwargs)
+                if kwargs["response_format"]["type"] == "json_schema":
+                    raise UnsupportedSchema()
+                return SimpleNamespace(
+                    id="chatcmpl-local-1",
+                    choices=[SimpleNamespace(message=SimpleNamespace(content='{"sentences": []}'))],
+                    usage=None,
+                )
+
+        class Client:
+            def __init__(self, **kwargs):
+                self.chat = SimpleNamespace(completions=Completions())
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                return None
+
+        monkeypatch.setattr("openai.OpenAI", Client)
+        calls = CallLog(tmp_path)
+>       result = _glimmer_respond(calls, "test local catch-up", "instructions", "captions", CATCHUP_SCHEMA, "catchup")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_glimmer.py:38:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+earshot/spark.py:100: in _glimmer_respond
+    return calls.cached(model="muse-glimmer", purpose=purpose, where="local",
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = CallLog(run_dir=PosixPath('/private/var/folders/jn/lc3z73zx65n2gz888km31gq40000gn/T/pytest-of-raulacedo/pytest-126/test_glimmer_json_mode_fallbac0'), replay=True)
+model = 'muse-glimmer', purpose = 'test local catch-up', where = 'local'
+key_parts = ('instructions', 'captions', {'type': 'object', 'properties': {'sentences': {'type': 'array', 'items': {'type': 'objec...quired': ['text', 'cite'], 'additionalProperties': False}}}, 'required': ['sentences'], 'additionalProperties': False})
+fn = <function _glimmer_respond.<locals>.call at 0x108c5c5e0>
+
+    def cached(self, *, model: str, purpose: str, where: str, key_parts: tuple,
+               fn: Callable[[], tuple[Any, dict]]) -> Any:
+        """Run `fn` (returning (result_json, meta)) unless a cached result exists."""
+        key = content_key(model, purpose, *key_parts)
+        path = self.calls_dir / f"{key}.json"
+        if path.exists():
+            stored = json.loads(path.read_text())
+            self._log({**stored["meta"], "cache": "hit", "key": key})
+            return stored["result"]
+        if self.replay:
+>           raise ReplayMiss(f"replay mode: no cached response for {purpose} ({model}), key {key}")
+E           earshot.calls.ReplayMiss: replay mode: no cached response for test local catch-up (muse-glimmer), key 52b497dca2611b0ac2215658
+
+earshot/calls.py:72: ReplayMiss
+_________________ test_batched_people_cache_includes_mask_mode _________________
+
+tmp_path = PosixPath('/private/var/folders/jn/lc3z73zx65n2gz888km31gq40000gn/T/pytest-of-raulacedo/pytest-126/test_batched_people_cache_incl0')
+
+    def test_batched_people_cache_includes_mask_mode(tmp_path):
+        from earshot.calls import CallLog
+        from earshot.separation import SamAudioSeparator
+        from earshot.tracking import Tracks
+
+        calls = CallLog(tmp_path)
+        tracks = Tracks(["A", "B"], 1, 1, 25.0, 1, [{}, {}])
+        separator = SamAudioSeparator(mask_mode="keep")
+        separator._separate_uncached = lambda *args: (
+            {0: np.array([1.0]), 1: np.array([2.0])},
+            {"0": 10, "1": 20}, "batched", [],
+        )
+>       result = separator.separate_people(None, np.zeros(1), tracks, calls)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mask_mode.py:52:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+earshot/separation.py:150: in separate_people
+    result = calls.cached(model=self.model_id, purpose="isolate tapped voices", where="local",
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = CallLog(run_dir=PosixPath('/private/var/folders/jn/lc3z73zx65n2gz888km31gq40000gn/T/pytest-of-raulacedo/pytest-126/test_batched_people_cache_incl0'), replay=True)
+model = 'facebook/sam-audio-small-tv', purpose = 'isolate tapped voices'
+where = 'local'
+key_parts = ('3e7077fd2f66d689e0cee6a7', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', '', 10.0, 1.0, 640, ...)
+fn = <function SamAudioSeparator.separate_people.<locals>.run at 0x109e1fe20>
+
+    def cached(self, *, model: str, purpose: str, where: str, key_parts: tuple,
+               fn: Callable[[], tuple[Any, dict]]) -> Any:
+        """Run `fn` (returning (result_json, meta)) unless a cached result exists."""
+        key = content_key(model, purpose, *key_parts)
+        path = self.calls_dir / f"{key}.json"
+        if path.exists():
+            stored = json.loads(path.read_text())
+            self._log({**stored["meta"], "cache": "hit", "key": key})
+            return stored["result"]
+        if self.replay:
+>           raise ReplayMiss(f"replay mode: no cached response for {purpose} ({model}), key {key}")
+E           earshot.calls.ReplayMiss: replay mode: no cached response for isolate tapped voices (facebook/sam-audio-small-tv), key d61e49a8ea48a3271f9c2e2a
+
+earshot/calls.py:72: ReplayMiss
+__________________ test_spark_av_parses_json_and_reuses_cache __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a1f78c0>
+tmp_path = PosixPath('/private/var/folders/jn/lc3z73zx65n2gz888km31gq40000gn/T/pytest-of-raulacedo/pytest-126/test_spark_av_parses_json_and_0')
+
+    def test_spark_av_parses_json_and_reuses_cache(monkeypatch, tmp_path):
+        monkeypatch.setattr("earshot.sparkav._upload", lambda video: "file-av-test")
+        monkeypatch.setattr("earshot.sparkav.api_key", lambda: "test-key")
+        payload = {"segments": [
+            {"person": 1, "start": 0.05, "end": 0.15, "text": " overlapping words "},
+            {"person": 9, "start": 0.0, "end": 0.1, "text": "ignored"},
+        ]}
+        calls_seen = []
+
+        class Responses:
+            def create(self, **kwargs):
+                calls_seen.append(kwargs)
+                return SimpleNamespace(output_text=json.dumps(payload), id="resp_av", usage=None)
+
+        class Client:
+            def __init__(self, **kwargs):
+                self.responses = Responses()
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                return None
+
+        monkeypatch.setattr("openai.OpenAI", Client)
+        calls = CallLog(tmp_path)
+        taps = [Tap("Speaker A", 0.25, 0.29), Tap("Speaker B", 0.8, 0.36)]
+        baseline = [Turn("A", 0.0, 0.2, "hint")]
+        video = tmp_path / "synthetic.mp4"
+        synthetic.make_video(video)
+>       turns = transcribe_window(video, taps, baseline, 0.0, 0.2, calls)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sparkav.py:41:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+earshot/sparkav.py:81: in transcribe_window
+    result = calls.cached(model=SPARK_MODEL, purpose=f"unverified AV overlap transcription {start:.1f}",
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = CallLog(run_dir=PosixPath('/private/var/folders/jn/lc3z73zx65n2gz888km31gq40000gn/T/pytest-of-raulacedo/pytest-126/test_spark_av_parses_json_and_0'), replay=True)
+model = 'muse-spark-1.3', purpose = 'unverified AV overlap transcription 0.0'
+where = 'hosted'
+key_parts = ('b140c718d71079f3c4010742ab542341f66c4350f5fbc5f11cf33c46a7a94f01', 'Watch the video and LISTEN to its audio. Transcr...', 'start', 'end', 'text'], 'additionalProperties': False}}}, 'required': ['segments'], 'additionalProperties': False})
+fn = <function transcribe_window.<locals>.call at 0x10b4218a0>
+
+    def cached(self, *, model: str, purpose: str, where: str, key_parts: tuple,
+               fn: Callable[[], tuple[Any, dict]]) -> Any:
+        """Run `fn` (returning (result_json, meta)) unless a cached result exists."""
+        key = content_key(model, purpose, *key_parts)
+        path = self.calls_dir / f"{key}.json"
+        if path.exists():
+            stored = json.loads(path.read_text())
+            self._log({**stored["meta"], "cache": "hit", "key": key})
+            return stored["result"]
+        if self.replay:
+>           raise ReplayMiss(f"replay mode: no cached response for {purpose} ({model}), key {key}")
+E           earshot.calls.ReplayMiss: replay mode: no cached response for unverified AV overlap transcription 0.0 (muse-spark-1.3), key ec0c6efe50fa7bfb1d039da4
+
+earshot/calls.py:72: ReplayMiss
+=========================== short test summary info ============================
+FAILED tests/test_bench_repeats.py::test_voice_repeats_have_independent_cache_entries
+FAILED tests/test_glimmer.py::test_glimmer_json_mode_fallback_and_local_cache
+FAILED tests/test_mask_mode.py::test_batched_people_cache_includes_mask_mode
+FAILED tests/test_sparkav.py::test_spark_av_parses_json_and_reuses_cache - ea...
+4 failed, 64 passed, 1 skipped in 12.56s
+
+[notice] A new release of pip is available: 26.1 -> 26.2.2
+[notice] To update, run: /private/tmp/earshot-review2-clean-0mck7R/venv/bin/python3.12 -m pip install --upgrade pip
+...............................................................s.....    [100%]
+68 passed, 1 skipped in 11.81s
+Fresh-clone Glimmer replay with unreachable model endpoints: PASS
+
+[notice] A new release of pip is available: 26.1 -> 26.3
+[notice] To update, run: /private/tmp/earshot-review2-final-clone-Y2dY5t/venv/bin/python3.12 -m pip install --upgrade pip
+................................................................s.....   [100%]
+69 passed, 1 skipped in 13.39s
+wrote /tmp/earshot-review2-final-clone-Y2dY5t/demo.vtt
+wrote /tmp/earshot-review2-final-clone-Y2dY5t/demo.srt
+Final fresh-clone Glimmer replay with unreachable model endpoints: PASS
+
+[notice] A new release of pip is available: 26.1 -> 26.3
+[notice] To update, run: /private/tmp/earshot-review2-deliverable-ckf2E2/venv/bin/python3.12 -m pip install --upgrade pip
+................................................................s.....   [100%]
+69 passed, 1 skipped in 11.16s
+wrote /tmp/earshot-review2-deliverable-ckf2E2/demo.vtt
+wrote /tmp/earshot-review2-deliverable-ckf2E2/demo.srt
+Deliverable fresh-clone Glimmer replay with unreachable model endpoints: PASS

@@ -1,0 +1,7 @@
+                               Earshot         Single stream
+Word error rate      2.731 [1.097, 3.825]       0.384 [0.377, 0.395]
+Right person         0.382 [0.296, 0.537]       0.693 [0.689, 0.697]
+Overlap words        0.185 [0.158, 0.230]       0.486 [0.424, 0.524]
+Correct voice        0.250 [0.250, 0.250]
+Mixture correct voice     0.250 [0.250, 0.250]
+wrote runs/ami_samaudio_keep_635/bench_review2.json
