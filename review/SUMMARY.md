@@ -9,6 +9,15 @@
 5. Record the real ≤2:59 video with the opening new-work disclosure and AMI credit. Do not claim live processing, SAM Audio separation, or simultaneous-caption recovery from this Lite demo. Explain that local Glimmer handles cached catch-ups on this computer. Preserve the T5 ruling and link in README. If SAM Audio appears, show: “SAM Audio includes a frozen Google T5-base text encoder (open source). Allowed by the organizers; disclosed in the README.”
 6. Check the video logged out, read back every submission field, and link the exact X post.
 
+## Claude review round 4 — final SAM Audio checks
+
+- **Integration sanity passed:** clean reference plus 0 dB white noise improved SI-SDR by **16.8751 dB** (mixture -0.0214 dB, target 16.8538 dB). Target RMS was 0.00701538 and residual RMS 0.00665512. Input and output were both 480,000 samples; the input, batch and processor rates were all 48,000 Hz. The initial harness device-placement error was fixed; production already moved batches correctly.
+- All three variants on **clean mixed-down mic (AMI Mix-Headset)** scored **0.25 correct-voice rate**. Visual `keep` diagonal/off-diagonal means were 0.3232/0.3133; text-only spans were 0.3114/0.3096; video-plus-spans were 0.3102/0.3113. Only C's own row was correct in each matrix. All 12 stems and the mixture are in `review/ab_listen_cleanmic/`.
+- On clean mixed-down mic (AMI Mix-Headset), separation call wall times were **83.535 s visual-only**, **31.539 s text-only spans**, and **370.815 s video-plus-spans**. No variant reached 3/4 correct rows.
+- **No full 745 s or 635 s run, three-repeat clean-mic bench, or `demo/ami_meeting_cleanmic` was created.** The existing demo, tagline and production separator are unchanged. Separation work ends after this round.
+- Main suite: **78 passed**. Fresh clone/base install: **77 passed, 1 optional Torch-dependent skipped**. See `review/clean_clone_review4.log`.
+- New hosted spend was **$0.003752** for the clean-mic baseline transcription; all A/B separation was local with hosted endpoints disabled. Total estimated spend remains under the cap at **$3.290369 of $20.00**. See `GATE_REVIEW4.md` and `bench/RESULTS.md`.
+
 ## Claude review round 3 — span prompting negative result
 
 - Ran the bounded local experiment with runtime-Lite mappings, other-label-subtracted solo spans, balanced enrollment, and explicit positive/negative anchors. `spans-text` used no video; `spans-video` added `keep` video at matching enrollment times. Mode and complete anchor plans were included in cache keys and tested.

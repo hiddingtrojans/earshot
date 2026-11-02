@@ -1,0 +1,6 @@
+
+[notice] A new release of pip is available: 26.1 -> 26.3
+[notice] To update, run: /private/tmp/earshot-review4-clone-R52koI/venv/bin/python3.12 -m pip install --upgrade pip
+........................................................................ [ 92%]
+s.....                                                                   [100%]
+77 passed, 1 skipped in 13.75s
