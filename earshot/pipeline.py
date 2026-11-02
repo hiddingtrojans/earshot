@@ -43,8 +43,20 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
     names = [t.name for t in taps]
 
     tracks_path = out / "tracks.json"
-    tracks = track_people(analysis, taps, info, calls)
-    tracks.save(tracks_path)
+    tracks = None
+    previous = out / "earshot.json"
+    if tracks_path.exists() and previous.exists():
+        prior = json.loads(previous.read_text())
+        prior_taps = [person.get("tap") for person in prior.get("people", [])]
+        expected_taps = [[tap.x, tap.y, tap.frame] for tap in taps]
+        if prior_taps == expected_taps and prior.get("people", []) and names == [p["name"] for p in prior["people"]]:
+            cached = Tracks.load(tracks_path)
+            if (cached.width, cached.height, cached.frames) == (info.width, info.height, info.frames) \
+                    and cached.fps == info.fps:
+                tracks = cached
+    if tracks is None:
+        tracks = track_people(analysis, taps, info, calls)
+        tracks.save(tracks_path)
 
     mixture = read_audio(analysis, SEPARATION_SR)
     mix24 = resample(mixture, SEPARATION_SR, TRANSCRIBE_SR)

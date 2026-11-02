@@ -50,3 +50,19 @@ def test_lite_path_runs_without_separation(tmp_path, fakes):
     doc, _ = run(tmp_path, "lite")
     assert doc["separator"].startswith("none")
     assert doc["captions"] and all(p["stem"] is None for p in doc["people"])
+
+
+def test_same_run_reuses_saved_tracks(tmp_path, fakes, monkeypatch):
+    video = tmp_path / "in.mp4"
+    synthetic.make_video(video)
+    out = tmp_path / "run_lite"
+    taps = [Tap("Ana", 0.30, 0.35), Tap("Raúl", 0.70, 0.35)]
+    options = pipeline.Options(separator="lite", catchup_every=10)
+    pipeline.analyze(video, taps, out, options)
+
+    def unexpected_tracking(*args):
+        raise AssertionError("same taps should load the saved tracks")
+
+    monkeypatch.setattr(pipeline, "track_people", unexpected_tracking)
+    doc = pipeline.analyze(video, taps, out, options)
+    assert json.loads(doc.read_text())["captions"]
