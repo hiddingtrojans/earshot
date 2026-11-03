@@ -116,6 +116,7 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
             mapping, confidence = corrected["attribution"]["mapping"], corrected["attribution"]["confidence"]
         turns = [[Turn(str(person), turn.start, turn.end, turn.text) for turn in baseline
                   if mapping.get(turn.speaker) == person] for person in range(len(names))]
+        attributed_turns = turns
         guides, guide_metadata = guide_activities(turns, motion, info.fps, info.frames)
         audio, _ = load_array(opt.array_path, opt.array_channels)
         report("Separating voices with classical MVDR beamforming")
@@ -124,6 +125,11 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
         beamforming_seconds = time.perf_counter() - started
         turns, activity = [], []
         for person, name in enumerate(names):
+            if mvdr_metadata[str(person)].get("degenerate_guide"):
+                report(f"Insufficient guide for {name}; using single-stream attribution without isolated audio")
+                turns.append(attributed_turns[person])
+                activity.append([(turn.start, turn.end) for turn in attributed_turns[person]])
+                continue
             audio24 = resample(separated[person], 16_000, TRANSCRIBE_SR)
             stem = f"stems/{person}_{_slug(name)}.wav"
             write_wav(out / stem, audio24, TRANSCRIBE_SR)

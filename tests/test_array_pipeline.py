@@ -41,6 +41,12 @@ def test_array_pipeline_builds_stems_and_delay_sum(tmp_path, monkeypatch):
     monkeypatch.setattr(pipeline, "track_people", lambda video, taps, info, calls: synthetic.fake_tracks([t.name for t in taps], info))
     monkeypatch.setattr(pipeline, "transcribe", synthetic.fake_transcribe)
     monkeypatch.setattr(spark, "_respond", synthetic.fake_respond)
+
+    def healthy_guides(turns, motion, fps, frames):
+        mask = np.arange(frames) % 2 == 0
+        return [mask, ~mask], {}
+
+    monkeypatch.setattr("earshot.motion.guide_activities", healthy_guides)
     monkeypatch.setattr(pipeline, "build_board", lambda captions, names, calls, model: {
         "items": [], "review": [], "verification_model": "muse-glimmer", "where": "local",
         "actions": "Review only: no automatic actions.", "counts": {"supported": 0, "not_accepted": 0},
@@ -58,6 +64,28 @@ def test_array_pipeline_builds_stems_and_delay_sum(tmp_path, monkeypatch):
     assert (out / doc["array"]["delay_sum"]).exists()
     assert all((out / person["stem"]).exists() for person in doc["people"])
     assert doc["captions"]
+
+
+def test_degenerate_guide_never_labels_raw_microphone_as_isolated(tmp_path, monkeypatch):
+    monkeypatch.setattr(pipeline, "track_people", lambda video, taps, info, calls: synthetic.fake_tracks([t.name for t in taps], info))
+    monkeypatch.setattr(pipeline, "transcribe", lambda audio, calls, purpose: [])
+    video = tmp_path / "in.mp4"
+    synthetic.make_video(video)
+    array = tmp_path / "array.wav"
+    make_array(array)
+
+    def degenerate(audio, guides, fps):
+        return {0: audio[:, 0], 1: audio[:, 0]}, {
+            "0": {"degenerate_guide": True}, "1": {"degenerate_guide": False},
+        }
+
+    monkeypatch.setattr("earshot.array.separate", degenerate)
+    out = tmp_path / "run"
+    doc_path = pipeline.analyze(video, [Tap("Ana", .30, .35), Tap("Raúl", .70, .35)], out,
+                                pipeline.Options(separator="array", array_path=array, spark=False))
+    doc = json.loads(doc_path.read_text())
+    assert doc["people"][0]["stem"] is None
+    assert not (out / "stems" / "0_ana.wav").exists()
 
 
 def test_delay_sum_baseline_is_scored_separately():
