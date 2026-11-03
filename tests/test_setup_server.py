@@ -214,3 +214,25 @@ def test_catchup_accepts_packaged_sentence_fields(tmp_path, monkeypatch):
             assert json.loads(response.read())["source"] == "glimmer"
     assert captured["captions"] == [caption]
     assert captured["model"] == "glimmer"
+
+
+def test_replay_miss_uses_precomputed_catchup_from_packaged_document(tmp_path, monkeypatch):
+    from earshot.calls import ReplayMiss
+
+    run = tmp_path / "run"
+    run.mkdir()
+    (run / "earshot.json").write_text(json.dumps({
+        "people": [], "captions": [], "catchup_model": "glimmer",
+        "catchups": [{"t": 40, "person": None, "sentences": [{"text": "Cached answer", "cite": ["c001"]}]}],
+    }))
+
+    def miss(*args, **kwargs):
+        raise ReplayMiss("no response for this different time window")
+
+    monkeypatch.setattr("earshot.server.catch_up", miss)
+    with running_server(make_handler(run, True)) as base:
+        with urllib.request.urlopen(base + "/api/catchup?t=45.58&person=all", timeout=2) as response:
+            result = json.loads(response.read())
+    assert response.status == 200
+    assert result["source"] == "precomputed"
+    assert result["sentences"][0]["text"] == "Cached answer"

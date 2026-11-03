@@ -147,7 +147,7 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
                                    model=current.get("catchup_model", "spark"))
                     return self._json({"t": t, "person": person, "source": current.get("catchup_model", "spark"), **res})
                 except (ReplayMiss, RuntimeError, FileNotFoundError) as exc:
-                    current = read_doc() if doc_path.exists() else {}
+                    current = read_doc()
                     pre = [c for c in current.get("catchups", []) if c["person"] == person and c["t"] <= t + 0.01]
                     if pre:
                         best = max(pre, key=lambda c: c["t"])
