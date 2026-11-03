@@ -1,6 +1,7 @@
 import io
 import urllib.error
 import wave
+from pathlib import Path
 
 import numpy as np
 
@@ -41,3 +42,22 @@ def test_make_array_writes_eight_channels_at_16khz(tmp_path, monkeypatch):
         frames = np.frombuffer(source.readframes(source.getnframes()), dtype="<i2").reshape(-1, 8)
     assert frames.shape == (160, 8)
     assert frames[0].tolist() == list(range(1, 9))
+
+
+def test_second_meeting_uses_its_own_source_and_taps(tmp_path, monkeypatch):
+    captured = {}
+
+    def fake_build(output, cache):
+        captured.update(output=output, cache=cache, mirror=make_ami_clip.MIRROR,
+                        meeting=make_ami_clip.MEETING, taps=make_ami_clip.TAPS)
+
+    monkeypatch.setattr(make_ami_clip, "build", fake_build)
+    for name in ("MEETING", "MIRROR", "TAPS", "START"):
+        monkeypatch.setattr(make_ami_clip, name, getattr(make_ami_clip, name))
+    monkeypatch.setattr("sys.argv", ["make_ami_clip", "--meeting", "ES2008b", "--out", str(tmp_path / "clip"),
+                                    "--tap", "Speaker A@0.1,0.2"])
+    make_ami_clip.main()
+    assert captured["mirror"].endswith("/ES2008b")
+    assert captured["cache"] == Path("bench/.ami_cache/ES2008b")
+    assert captured["meeting"] == "ES2008b"
+    assert captured["taps"] == '--tap "Speaker A@0.1,0.2"\n'

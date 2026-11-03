@@ -15,7 +15,8 @@ import numpy as np
 
 from earshot.media import read_audio
 
-MIRROR = "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/ES2008a"
+MEETING = "ES2008a"
+MIRROR = f"https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/{MEETING}"
 ANNOTATIONS = "https://groups.inf.ed.ac.uk/ami/AMICorpusAnnotations/ami_public_manual_1.6.2.zip"
 START = 745.0
 DURATION = 75.0
@@ -27,15 +28,13 @@ PEOPLE = (
     ("Speaker C", "C", "Headset-2", "Closeup3"),
     ("Speaker D", "D", "Headset-3", "Closeup1"),
 )
-TAPS = (
-    "--tap \"Speaker A@0.25,0.29\" --tap \"Speaker B@0.80,0.36\" "
-    "--tap \"Speaker C@0.31,0.78\" --tap \"Speaker D@0.71,0.78\"\n"
-)
+DEFAULT_TAPS = ["Speaker A@0.25,0.29", "Speaker B@0.80,0.36", "Speaker C@0.31,0.78", "Speaker D@0.71,0.78"]
+TAPS = " ".join(f'--tap "{tap}"' for tap in DEFAULT_TAPS) + "\n"
 ATTRIBUTION = """# AMI Meeting Corpus attribution
 
-Contains material from the AMI Meeting Corpus (meeting ES2008a), © University of Edinburgh and AMI Consortium, licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Carletta, J. et al. (2005). The AMI Meeting Corpus: A Pre-Announcement. MLMI 2005, LNCS 3869.
+Contains material from the AMI Meeting Corpus (meeting {meeting}), © University of Edinburgh and AMI Consortium, licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Carletta, J. et al. (2005). The AMI Meeting Corpus: A Pre-Announcement. MLMI 2005, LNCS 3869.
 
-Edited: four close-up cameras arranged in a 2×2 grid, cut to 12:25–13:40, audio from the far-field microphone Array1-01. `clip_cleanmic.mp4` instead uses Mix-Headset. Speaker labels A–D follow AMI's meeting metadata; no participant identity codes are used.
+Edited: four close-up cameras arranged in a 2×2 grid, cut to {start:g}–{end:g} seconds, audio from the far-field microphone Array1-01. `clip_cleanmic.mp4` instead uses Mix-Headset. Speaker labels A–D follow AMI's meeting metadata; no participant identity codes are used. Tap coordinates are supplied separately in taps.txt after inspecting frame0.png.
 """
 
 
@@ -69,7 +68,7 @@ def truth_from_annotations(archive: Path) -> dict:
     with zipfile.ZipFile(archive) as annotations:
         members = {Path(name).name: name for name in annotations.namelist()}
         for person, agent, _, _ in PEOPLE:
-            filename = f"ES2008a.{agent}.words.xml"
+            filename = f"{MEETING}.{agent}.words.xml"
             if filename not in members:
                 raise ValueError(f"Missing {filename} in {archive}")
             root = ET.fromstring(annotations.read(members[filename]))
@@ -93,7 +92,7 @@ def truth_from_annotations(archive: Path) -> dict:
                 })
     words.sort(key=lambda word: (word["start"], word["end"], word["person"]))
     return {
-        "source": "AMI Meeting Corpus ES2008a, CC BY 4.0",
+        "source": f"AMI Meeting Corpus {MEETING}, CC BY 4.0",
         "window": [START, START + DURATION],
         "mixture": "Array1-01",
         "people": {
@@ -117,8 +116,8 @@ def make_grid(cache: Path, output: Path, mixture: str) -> None:
         return
     command = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y"]
     for _, _, _, camera in PEOPLE:
-        command += ["-i", str(cache / "video" / f"ES2008a.{camera}.avi")]
-    command += ["-i", str(cache / "audio" / f"ES2008a.{mixture}.wav")]
+        command += ["-i", str(cache / "video" / f"{MEETING}.{camera}.avi")]
+    command += ["-i", str(cache / "audio" / f"{MEETING}.{mixture}.wav")]
     video_filters = ";".join(
         f"[{index}:v]fps={FPS},setsar=1[v{index}]" for index in range(4)
     )
@@ -143,7 +142,7 @@ def cut_references(cache: Path, output: Path) -> None:
             continue
         run(
             "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
-            "-i", str(cache / "audio" / f"ES2008a.{headset}.wav"),
+            "-i", str(cache / "audio" / f"{MEETING}.{headset}.wav"),
             "-ss", str(START), "-t", str(DURATION), "-vn", "-ac", "1",
             "-ar", str(SAMPLE_RATE), "-c:a", "pcm_s16le", str(destination),
         )
@@ -196,8 +195,8 @@ def best_lag(energy: np.ndarray, motion: np.ndarray, max_lag_seconds: float = 1.
 def check_sync(cache: Path, output: Path) -> None:
     rows = []
     for person, _, headset, camera in PEOPLE:
-        energy = energy_envelope(cache / "audio" / f"ES2008a.{headset}.wav")
-        motion = motion_envelope(cache / "video" / f"ES2008a.{camera}.avi")
+        energy = energy_envelope(cache / "audio" / f"{MEETING}.{headset}.wav")
+        motion = motion_envelope(cache / "video" / f"{MEETING}.{camera}.avi")
         lag, correlation = best_lag(energy, motion)
         row = {"person": person, "lag_seconds": round(lag, 3), "correlation": round(correlation, 4)}
         rows.append(row)
@@ -216,8 +215,8 @@ def make_array(output: Path, cache: Path) -> None:
         return
     channels = []
     for channel in range(1, 9):
-        path = cache / "audio" / f"ES2008a.Array1-{channel:02d}.wav"
-        download(f"{MIRROR}/audio/ES2008a.Array1-{channel:02d}.wav", path)
+        path = cache / "audio" / f"{MEETING}.Array1-{channel:02d}.wav"
+        download(f"{MIRROR}/audio/{MEETING}.Array1-{channel:02d}.wav", path)
         with wave.open(str(path), "rb") as source:
             if source.getnchannels() != 1 or source.getsampwidth() != 2 or source.getframerate() != 16_000:
                 raise ValueError(f"Expected 16 kHz mono PCM16: {path}")
@@ -239,22 +238,29 @@ def make_array(output: Path, cache: Path) -> None:
 
 
 def build(output: Path, cache: Path) -> None:
+    from concurrent.futures import ThreadPoolExecutor
+
     output.mkdir(parents=True, exist_ok=True)
     archive = cache / "ami_public_manual_1.6.2.zip"
     download(ANNOTATIONS, archive)
-    for _, _, headset, camera in PEOPLE:
-        download(f"{MIRROR}/video/ES2008a.{camera}.avi", cache / "video" / f"ES2008a.{camera}.avi")
-        download(f"{MIRROR}/audio/ES2008a.{headset}.wav", cache / "audio" / f"ES2008a.{headset}.wav")
-    for mixture in ("Array1-01", "Mix-Headset"):
-        download(f"{MIRROR}/audio/ES2008a.{mixture}.wav", cache / "audio" / f"ES2008a.{mixture}.wav")
+    sources = [("video", camera) for _, _, _, camera in PEOPLE]
+    sources += [("audio", headset) for _, _, headset, _ in PEOPLE]
+    sources += [("audio", mixture) for mixture in ("Array1-01", "Mix-Headset")]
 
+    def fetch(source):
+        kind, name = source
+        suffix = "avi" if kind == "video" else "wav"
+        download(f"{MIRROR}/{kind}/{MEETING}.{name}.{suffix}", cache / kind / f"{MEETING}.{name}.{suffix}")
+
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        list(pool.map(fetch, sources))
     make_grid(cache, output / "clip.mp4", "Array1-01")
     make_grid(cache, output / "clip_cleanmic.mp4", "Mix-Headset")
     cut_references(cache, output)
     truth = json.dumps(truth_from_annotations(archive), ensure_ascii=False, indent=2) + "\n"
     (output / "truth.json").write_text(truth)
     (output / "taps.txt").write_text(TAPS)
-    (output / "ATTRIBUTION.md").write_text(ATTRIBUTION)
+    (output / "ATTRIBUTION.md").write_text(ATTRIBUTION.format(meeting=MEETING, start=START, end=START + DURATION))
     if not (output / "frame0.png").exists():
         run("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", str(output / "clip.mp4"),
             "-frames:v", "1", str(output / "frame0.png"))
@@ -263,18 +269,23 @@ def build(output: Path, cache: Path) -> None:
 
 
 def main() -> None:
-    global START
+    global START, MEETING, MIRROR, TAPS
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--cache", type=Path, default=Path("bench/.ami_cache/ES2008a"))
+    parser.add_argument("--meeting", choices=["ES2008a", "ES2008b"], default=MEETING)
+    parser.add_argument("--cache", type=Path, help="source cache (default: bench/.ami_cache/<meeting>)")
     parser.add_argument("--start", type=float, default=START, help="window start in seconds (default: 745)")
+    parser.add_argument("--tap", action="append", help="Name@x,y on the verified first frame; repeatable")
     parser.add_argument("--array", action="store_true", help="download all eight microphones and write array.wav")
     args = parser.parse_args()
-    START = args.start
+    START, MEETING = args.start, args.meeting
+    MIRROR = f"https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/{MEETING}"
+    TAPS = " ".join(f'--tap "{tap}"' for tap in args.tap or DEFAULT_TAPS) + "\n"
+    cache = args.cache or Path("bench/.ami_cache") / MEETING
     if args.array:
-        make_array(args.out, args.cache)
+        make_array(args.out, cache)
     else:
-        build(args.out, args.cache)
+        build(args.out, cache)
 
 
 if __name__ == "__main__":
