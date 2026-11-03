@@ -1,0 +1,682 @@
+{
+  "source": "AMI Meeting Corpus ES2008b, CC BY 4.0",
+  "window": [
+    150.0,
+    225.0
+  ],
+  "mixture": "Array1-01",
+  "people": {
+    "Speaker A": "I do Yeah Function F_ eight yeah The blue one F_N_ Is it plugged in all the way and you screwed it in and Mm 'kay It's taking it a little bit",
+    "Speaker B": "Rose Yeah I I think you just have to push it in really hard Oh got it",
+    "Speaker C": "Well there's a wee a wee plug just just that one there Ah that's it yep And then you have to press function F_ eight I think it is on your laptop That's it",
+    "Speaker D": "Where does it go Mm-hmm Hmm I'm not supposed to move this but Where's function No signal Ah wait 's screw in Push the screw Mm alright"
+  },
+  "words": [
+    {
+      "person": "Speaker A",
+      "start": 0.03,
+      "end": 0.09,
+      "text": "I"
+    },
+    {
+      "person": "Speaker B",
+      "start": 0.06,
+      "end": 0.56,
+      "text": "Rose"
+    },
+    {
+      "person": "Speaker A",
+      "start": 0.09,
+      "end": 0.51,
+      "text": "do"
+    },
+    {
+      "person": "Speaker A",
+      "start": 11.68,
+      "end": 12.0,
+      "text": "Yeah"
+    },
+    {
+      "person": "Speaker C",
+      "start": 18.31,
+      "end": 18.5,
+      "text": "Well"
+    },
+    {
+      "person": "Speaker C",
+      "start": 18.5,
+      "end": 18.66,
+      "text": "there's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 18.66,
+      "end": 18.81,
+      "text": "a"
+    },
+    {
+      "person": "Speaker C",
+      "start": 18.81,
+      "end": 19.52,
+      "text": "wee"
+    },
+    {
+      "person": "Speaker D",
+      "start": 19.48,
+      "end": 19.57,
+      "text": "Where"
+    },
+    {
+      "person": "Speaker C",
+      "start": 19.52,
+      "end": 19.63,
+      "text": "a"
+    },
+    {
+      "person": "Speaker D",
+      "start": 19.57,
+      "end": 19.66,
+      "text": "does"
+    },
+    {
+      "person": "Speaker C",
+      "start": 19.63,
+      "end": 19.82,
+      "text": "wee"
+    },
+    {
+      "person": "Speaker D",
+      "start": 19.66,
+      "end": 19.72,
+      "text": "it"
+    },
+    {
+      "person": "Speaker D",
+      "start": 19.72,
+      "end": 20.18,
+      "text": "go"
+    },
+    {
+      "person": "Speaker C",
+      "start": 19.82,
+      "end": 20.13,
+      "text": "plug"
+    },
+    {
+      "person": "Speaker C",
+      "start": 20.13,
+      "end": 20.73,
+      "text": "just"
+    },
+    {
+      "person": "Speaker D",
+      "start": 20.18,
+      "end": 20.51,
+      "text": "Mm-hmm"
+    },
+    {
+      "person": "Speaker C",
+      "start": 20.73,
+      "end": 20.92,
+      "text": "just"
+    },
+    {
+      "person": "Speaker C",
+      "start": 20.92,
+      "end": 21.08,
+      "text": "that"
+    },
+    {
+      "person": "Speaker C",
+      "start": 21.08,
+      "end": 21.23,
+      "text": "one"
+    },
+    {
+      "person": "Speaker C",
+      "start": 21.23,
+      "end": 21.5,
+      "text": "there"
+    },
+    {
+      "person": "Speaker D",
+      "start": 22.83,
+      "end": 23.09,
+      "text": "Hmm"
+    },
+    {
+      "person": "Speaker D",
+      "start": 23.09,
+      "end": 23.37,
+      "text": "I'm"
+    },
+    {
+      "person": "Speaker D",
+      "start": 23.37,
+      "end": 23.61,
+      "text": "not"
+    },
+    {
+      "person": "Speaker D",
+      "start": 23.61,
+      "end": 23.8,
+      "text": "supposed"
+    },
+    {
+      "person": "Speaker D",
+      "start": 23.8,
+      "end": 23.93,
+      "text": "to"
+    },
+    {
+      "person": "Speaker D",
+      "start": 23.93,
+      "end": 24.26,
+      "text": "move"
+    },
+    {
+      "person": "Speaker D",
+      "start": 24.26,
+      "end": 24.74,
+      "text": "this"
+    },
+    {
+      "person": "Speaker D",
+      "start": 24.74,
+      "end": 24.91,
+      "text": "but"
+    },
+    {
+      "person": "Speaker C",
+      "start": 27.96,
+      "end": 28.1,
+      "text": "Ah"
+    },
+    {
+      "person": "Speaker C",
+      "start": 28.1,
+      "end": 28.31,
+      "text": "that's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 28.31,
+      "end": 28.41,
+      "text": "it"
+    },
+    {
+      "person": "Speaker C",
+      "start": 28.41,
+      "end": 28.86,
+      "text": "yep"
+    },
+    {
+      "person": "Speaker C",
+      "start": 36.71,
+      "end": 36.83,
+      "text": "And"
+    },
+    {
+      "person": "Speaker C",
+      "start": 36.83,
+      "end": 36.96,
+      "text": "then"
+    },
+    {
+      "person": "Speaker C",
+      "start": 36.96,
+      "end": 37.04,
+      "text": "you"
+    },
+    {
+      "person": "Speaker C",
+      "start": 37.04,
+      "end": 37.21,
+      "text": "have"
+    },
+    {
+      "person": "Speaker C",
+      "start": 37.21,
+      "end": 37.3,
+      "text": "to"
+    },
+    {
+      "person": "Speaker C",
+      "start": 37.3,
+      "end": 38.02,
+      "text": "press"
+    },
+    {
+      "person": "Speaker C",
+      "start": 38.02,
+      "end": 38.86,
+      "text": "function"
+    },
+    {
+      "person": "Speaker C",
+      "start": 38.86,
+      "end": 39.13,
+      "text": "F_"
+    },
+    {
+      "person": "Speaker C",
+      "start": 39.13,
+      "end": 39.48,
+      "text": "eight"
+    },
+    {
+      "person": "Speaker C",
+      "start": 39.48,
+      "end": 39.53,
+      "text": "I"
+    },
+    {
+      "person": "Speaker A",
+      "start": 39.51,
+      "end": 39.8,
+      "text": "Function"
+    },
+    {
+      "person": "Speaker C",
+      "start": 39.53,
+      "end": 39.77,
+      "text": "think"
+    },
+    {
+      "person": "Speaker C",
+      "start": 39.77,
+      "end": 39.87,
+      "text": "it"
+    },
+    {
+      "person": "Speaker A",
+      "start": 39.8,
+      "end": 39.94,
+      "text": "F_"
+    },
+    {
+      "person": "Speaker C",
+      "start": 39.87,
+      "end": 40.0,
+      "text": "is"
+    },
+    {
+      "person": "Speaker A",
+      "start": 39.94,
+      "end": 40.1,
+      "text": "eight"
+    },
+    {
+      "person": "Speaker C",
+      "start": 40.0,
+      "end": 40.16,
+      "text": "on"
+    },
+    {
+      "person": "Speaker A",
+      "start": 40.1,
+      "end": 40.3,
+      "text": "yeah"
+    },
+    {
+      "person": "Speaker C",
+      "start": 40.16,
+      "end": 40.31,
+      "text": "your"
+    },
+    {
+      "person": "Speaker C",
+      "start": 40.31,
+      "end": 40.84,
+      "text": "laptop"
+    },
+    {
+      "person": "Speaker D",
+      "start": 43.38,
+      "end": 43.83,
+      "text": "Where's"
+    },
+    {
+      "person": "Speaker A",
+      "start": 43.78,
+      "end": 44.1,
+      "text": "The"
+    },
+    {
+      "person": "Speaker D",
+      "start": 43.83,
+      "end": 44.34,
+      "text": "function"
+    },
+    {
+      "person": "Speaker A",
+      "start": 44.1,
+      "end": 44.34,
+      "text": "blue"
+    },
+    {
+      "person": "Speaker A",
+      "start": 44.34,
+      "end": 44.92,
+      "text": "one"
+    },
+    {
+      "person": "Speaker A",
+      "start": 44.92,
+      "end": 45.32,
+      "text": "F_N_"
+    },
+    {
+      "person": "Speaker D",
+      "start": 57.22,
+      "end": 57.51,
+      "text": "No"
+    },
+    {
+      "person": "Speaker D",
+      "start": 57.51,
+      "end": 58.01,
+      "text": "signal"
+    },
+    {
+      "person": "Speaker A",
+      "start": 59.14,
+      "end": 59.47,
+      "text": "Is"
+    },
+    {
+      "person": "Speaker A",
+      "start": 59.47,
+      "end": 59.61,
+      "text": "it"
+    },
+    {
+      "person": "Speaker A",
+      "start": 59.61,
+      "end": 59.91,
+      "text": "plugged"
+    },
+    {
+      "person": "Speaker A",
+      "start": 59.91,
+      "end": 60.07,
+      "text": "in"
+    },
+    {
+      "person": "Speaker A",
+      "start": 60.07,
+      "end": 60.21,
+      "text": "all"
+    },
+    {
+      "person": "Speaker A",
+      "start": 60.21,
+      "end": 60.28,
+      "text": "the"
+    },
+    {
+      "person": "Speaker A",
+      "start": 60.28,
+      "end": 60.45,
+      "text": "way"
+    },
+    {
+      "person": "Speaker A",
+      "start": 60.45,
+      "end": 60.72,
+      "text": "and"
+    },
+    {
+      "person": "Speaker A",
+      "start": 60.72,
+      "end": 61.31,
+      "text": "you"
+    },
+    {
+      "person": "Speaker A",
+      "start": 61.31,
+      "end": 61.65,
+      "text": "screwed"
+    },
+    {
+      "person": "Speaker A",
+      "start": 61.65,
+      "end": 61.76,
+      "text": "it"
+    },
+    {
+      "person": "Speaker A",
+      "start": 61.76,
+      "end": 62.01,
+      "text": "in"
+    },
+    {
+      "person": "Speaker A",
+      "start": 62.01,
+      "end": 62.41,
+      "text": "and"
+    },
+    {
+      "person": "Speaker D",
+      "start": 62.86,
+      "end": 63.07,
+      "text": "Ah"
+    },
+    {
+      "person": "Speaker B",
+      "start": 62.88,
+      "end": 63.17,
+      "text": "Yeah"
+    },
+    {
+      "person": "Speaker D",
+      "start": 63.07,
+      "end": 63.41,
+      "text": "wait"
+    },
+    {
+      "person": "Speaker D",
+      "start": 63.41,
+      "end": 63.45,
+      "text": "'s"
+    },
+    {
+      "person": "Speaker D",
+      "start": 63.45,
+      "end": 63.99,
+      "text": "screw"
+    },
+    {
+      "person": "Speaker D",
+      "start": 63.99,
+      "end": 64.1,
+      "text": "in"
+    },
+    {
+      "person": "Speaker B",
+      "start": 65.12,
+      "end": 65.25,
+      "text": "I"
+    },
+    {
+      "person": "Speaker B",
+      "start": 65.25,
+      "end": 65.36,
+      "text": "I"
+    },
+    {
+      "person": "Speaker D",
+      "start": 65.3,
+      "end": 65.46,
+      "text": "Push"
+    },
+    {
+      "person": "Speaker B",
+      "start": 65.36,
+      "end": 65.58,
+      "text": "think"
+    },
+    {
+      "person": "Speaker D",
+      "start": 65.46,
+      "end": 65.52,
+      "text": "the"
+    },
+    {
+      "person": "Speaker D",
+      "start": 65.52,
+      "end": 65.97,
+      "text": "screw"
+    },
+    {
+      "person": "Speaker B",
+      "start": 65.58,
+      "end": 65.64,
+      "text": "you"
+    },
+    {
+      "person": "Speaker B",
+      "start": 65.64,
+      "end": 65.77,
+      "text": "just"
+    },
+    {
+      "person": "Speaker B",
+      "start": 65.77,
+      "end": 65.89,
+      "text": "have"
+    },
+    {
+      "person": "Speaker B",
+      "start": 65.89,
+      "end": 65.96,
+      "text": "to"
+    },
+    {
+      "person": "Speaker B",
+      "start": 65.96,
+      "end": 66.16,
+      "text": "push"
+    },
+    {
+      "person": "Speaker B",
+      "start": 66.16,
+      "end": 66.22,
+      "text": "it"
+    },
+    {
+      "person": "Speaker B",
+      "start": 66.22,
+      "end": 66.38,
+      "text": "in"
+    },
+    {
+      "person": "Speaker B",
+      "start": 66.38,
+      "end": 66.62,
+      "text": "really"
+    },
+    {
+      "person": "Speaker B",
+      "start": 66.62,
+      "end": 66.9,
+      "text": "hard"
+    },
+    {
+      "person": "Speaker C",
+      "start": 70.08,
+      "end": 70.27,
+      "text": "That's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 70.27,
+      "end": 70.37,
+      "text": "it"
+    },
+    {
+      "person": "Speaker B",
+      "start": 70.86,
+      "end": 71.0,
+      "text": "Oh"
+    },
+    {
+      "person": "Speaker B",
+      "start": 71.0,
+      "end": 71.27,
+      "text": "got"
+    },
+    {
+      "person": "Speaker B",
+      "start": 71.27,
+      "end": 71.36,
+      "text": "it"
+    },
+    {
+      "person": "Speaker A",
+      "start": 72.41,
+      "end": 72.55,
+      "text": "Mm"
+    },
+    {
+      "person": "Speaker A",
+      "start": 72.55,
+      "end": 73.43,
+      "text": "'kay"
+    },
+    {
+      "person": "Speaker D",
+      "start": 72.86,
+      "end": 73.13,
+      "text": "Mm"
+    },
+    {
+      "person": "Speaker D",
+      "start": 73.13,
+      "end": 73.45,
+      "text": "alright"
+    },
+    {
+      "person": "Speaker A",
+      "start": 73.43,
+      "end": 73.65,
+      "text": "It's"
+    },
+    {
+      "person": "Speaker A",
+      "start": 73.65,
+      "end": 73.98,
+      "text": "taking"
+    },
+    {
+      "person": "Speaker A",
+      "start": 73.98,
+      "end": 74.09,
+      "text": "it"
+    },
+    {
+      "person": "Speaker A",
+      "start": 74.09,
+      "end": 74.15,
+      "text": "a"
+    },
+    {
+      "person": "Speaker A",
+      "start": 74.15,
+      "end": 74.33,
+      "text": "little"
+    },
+    {
+      "person": "Speaker A",
+      "start": 74.33,
+      "end": 74.58,
+      "text": "bit"
+    }
+  ],
+  "reference_tracks": {
+    "Speaker A": "ref_A.wav",
+    "Speaker B": "ref_B.wav",
+    "Speaker C": "ref_C.wav",
+    "Speaker D": "ref_D.wav"
+  }
+}

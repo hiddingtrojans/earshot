@@ -22,13 +22,13 @@ def read_taps(path: Path) -> list[str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--window", choices=["745", "635"], required=True)
+    parser.add_argument("--window", type=int, required=True, help="window start in seconds (e.g. 745 or 150)")
     parser.add_argument("--meeting", choices=["ES2008a", "ES2008b"], default="ES2008a")
     parser.add_argument("--subsets", default="8,5,4", help="microphone counts to evaluate (default: 8,5,4)")
     args = parser.parse_args()
-    suffix = "" if args.window == "745" else "_635"
+    suffix = "" if args.window == 745 else f"_{args.window}"
     bench = Path(f"bench/ami_{args.meeting}{suffix}")
-    original = args.meeting == "ES2008a"
+    original = args.meeting == "ES2008a" and args.window in (745, 635)
     source = Path("runs/ami_lite" + suffix) / "analysis.mp4" if original else bench / "clip.mp4"
     taps = TAPS if original else read_taps(bench / "taps.txt")
     counts = [int(count) for count in args.subsets.split(",")]

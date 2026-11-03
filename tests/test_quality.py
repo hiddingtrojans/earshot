@@ -26,3 +26,15 @@ def test_array_gate_does_not_hide_a_measured_pass(tmp_path):
     (tmp_path / "bench_array.json").write_text(json.dumps(result))
     assert array_quality(tmp_path)["decision"] == "GO on this window"
     assert array_quality(tmp_path)["status"] == "experimental"
+
+
+def test_no_overlap_truth_is_not_a_pass_or_failure(tmp_path):
+    result = {"repeat_count": 3, "summary": {
+        "earshot": {"attribution": {"mean": 0.232}, "overlap_recall": None},
+        "baseline": {"overlap_recall": None},
+        "delay_sum": {"overlap_recall": None},
+    }}
+    (tmp_path / "bench_array.json").write_text(json.dumps(result))
+    quality = array_quality(tmp_path)
+    assert quality["decision"] == "not evaluable: no overlapping truth words"
+    assert "gate" not in quality

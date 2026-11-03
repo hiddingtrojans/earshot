@@ -6,6 +6,15 @@ import json
 from pathlib import Path
 
 
+def better_overlap(summary: dict) -> float | None:
+    values = []
+    for system in ("baseline", "delay_sum"):
+        metric = summary.get(system, {}).get("overlap_recall")
+        if isinstance(metric, dict) and metric.get("mean") is not None:
+            values.append(metric["mean"])
+    return max(values) if values else None
+
+
 def array_quality(run: Path) -> dict:
     quality = {
         "status": "experimental",
@@ -18,13 +27,17 @@ def array_quality(run: Path) -> dict:
         return quality
     result = json.loads(path.read_text())
     summary = result.get("summary", {})
+    better = better_overlap(summary)
+    if better is None:
+        quality.update({"decision": "not evaluable: no overlapping truth words", "summary": summary,
+                        "repeat_count": result.get("repeat_count", 1)})
+        return quality
     try:
         recall = summary["earshot"]["overlap_recall"]["mean"]
         attribution = summary["earshot"]["attribution"]["mean"]
-        threshold = max(summary[baseline]["overlap_recall"]["mean"]
-                        for baseline in ("baseline", "delay_sum")) + 0.10
     except (KeyError, TypeError):
         return quality
+    threshold = better + 0.10
     passed = attribution >= 0.80 and recall >= threshold
     quality.update({
         "decision": "GO on this window" if passed else "NO-GO on this window",
