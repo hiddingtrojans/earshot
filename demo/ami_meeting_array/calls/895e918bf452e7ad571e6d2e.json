@@ -1,0 +1,1 @@
+{"meta": {"model": "muse-glimmer", "purpose": "what did I miss: Speaker B", "where": "local", "latency_ms": 40032, "time": 1793669215.646492, "request_id": "chatcmpl-896", "usage": {"completion_tokens": 8, "prompt_tokens": 877, "total_tokens": 885, "completion_tokens_details": null, "prompt_tokens_details": null}}, "result": {"sentences": []}}

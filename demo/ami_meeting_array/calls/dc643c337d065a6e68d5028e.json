@@ -1,0 +1,1 @@
+{"meta": {"model": "muse-glimmer", "purpose": "extract evidence-linked questions and commitments", "where": "local", "latency_ms": 80749, "time": 1793668825.52409, "request_id": "chatcmpl-777", "usage": {"completion_tokens": 9, "prompt_tokens": 2009, "total_tokens": 2018, "completion_tokens_details": null, "prompt_tokens_details": null}}, "result": {"items": []}}

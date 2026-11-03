@@ -1,0 +1,1 @@
+{"meta": {"model": "muse-glimmer", "purpose": "what did I miss: the table", "where": "local", "latency_ms": 59346, "time": 1793669274.996767, "request_id": "chatcmpl-173", "usage": {"completion_tokens": 9, "prompt_tokens": 1358, "total_tokens": 1367, "completion_tokens_details": null, "prompt_tokens_details": null}}, "result": {"sentences": []}}
