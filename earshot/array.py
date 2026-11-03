@@ -77,14 +77,13 @@ def souden_mvdr(spectrogram: np.ndarray, target_mask: np.ndarray) -> tuple[np.nd
     loading = DIAGONAL_LOAD * np.trace(noise, axis1=0, axis2=1) / channels
     loaded = noise + loading[None, None, :] * np.eye(channels)[:, :, None]
     target_f = np.moveaxis(target, -1, 0)
-    inverse = np.linalg.pinv(np.moveaxis(loaded, -1, 0), rcond=1e-8)
-    weights = inverse @ target_f
+    weights = np.linalg.solve(np.moveaxis(loaded, -1, 0), target_f)
     normalization = np.trace(weights, axis1=1, axis2=2)
     active = np.abs(normalization) > 1e-9 * max(1e-300, float(np.max(np.abs(normalization))))
     weights = weights / np.where(active, normalization, 1.0)[:, None, None]
     weights *= active[:, None, None]
-    target_power = np.real(np.diagonal(target, axis1=0, axis2=1)).sum(axis=1)
-    noise_power = np.real(np.diagonal(noise, axis1=0, axis2=1)).sum(axis=1)
+    target_power = np.real(np.diagonal(target, axis1=0, axis2=1)).sum(axis=0)
+    noise_power = np.real(np.diagonal(noise, axis1=0, axis2=1)).sum(axis=0)
     global_snr = target_power / np.maximum(noise_power, 1e-12)
     reference = int(np.argmax(global_snr))
     output = np.einsum("fd,dft->ft", weights[:, :, reference].conj(), spectrogram)

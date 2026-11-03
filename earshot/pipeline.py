@@ -35,6 +35,8 @@ class Options:
     max_edge: int = 960
     translate: list[str] | None = None
     progress: Callable[[str], None] | None = None
+    array_path: Path | None = None
+    array_channels: list[int] | None = None
 
 
 def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
@@ -84,7 +86,68 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
     baseline = transcribe(mix24, calls, purpose="diarize the raw mix (today's captions)")
 
     stems: list[str | None] = [None] * len(names)
-    if opt.separator == "samaudio":
+    array_metadata = None
+    array_baseline = []
+    if opt.separator == "array":
+        import time
+
+        from .array import delay_and_sum, load_array, separate
+        from .corrections import apply_saved_corrections
+        from .lite import attribute_with_confidence, gray_frames, head_motion
+        from .motion import guide_activities
+
+        if opt.array_path is None:
+            raise ValueError("--array PATH is required with --separator array")
+        report("Matching diarized voices to faces for the array guide")
+        frames = gray_frames(analysis)
+        motion = [head_motion(frames, tracks, person) for person in range(len(names))]
+        mapping, confidence = attribute_with_confidence(baseline, motion, info.fps)
+        corrections_path = out / "corrections.json"
+        if corrections_path.exists():
+            corrected = {
+                "people": [{"name": tap.name, "tap": [tap.x, tap.y, tap.frame]} for tap in taps],
+                "captions": [], "activity": [],
+                "attribution": {"mapping": mapping, "confidence": confidence},
+                "corrections": json.loads(corrections_path.read_text()),
+            }
+            apply_saved_corrections(corrected)
+            mapping, confidence = corrected["attribution"]["mapping"], corrected["attribution"]["confidence"]
+        turns = [[Turn(str(person), turn.start, turn.end, turn.text) for turn in baseline
+                  if mapping.get(turn.speaker) == person] for person in range(len(names))]
+        guides, guide_metadata = guide_activities(turns, motion, info.fps, info.frames)
+        audio, _ = load_array(opt.array_path, opt.array_channels)
+        report("Separating voices with classical MVDR beamforming")
+        started = time.perf_counter()
+        separated, mvdr_metadata = separate(audio, guides, info.fps)
+        beamforming_seconds = time.perf_counter() - started
+        turns, activity = [], []
+        for person, name in enumerate(names):
+            audio24 = resample(separated[person], 16_000, TRANSCRIBE_SR)
+            stem = f"stems/{person}_{_slug(name)}.wav"
+            write_wav(out / stem, audio24, TRANSCRIBE_SR)
+            stems[person] = stem
+            activity.append(speech_segments(audio24, TRANSCRIBE_SR))
+            report(f"Transcribing {name}'s voice with Muse Voice Transcribe")
+            turns.append(transcribe(audio24, calls, purpose=f"transcribe {name}'s isolated voice"))
+        report("Building the GCC-PHAT delay-and-sum baseline")
+        all_channels, _ = load_array(opt.array_path)
+        delay_sum, delays = delay_and_sum(all_channels)
+        delay24 = resample(delay_sum, 16_000, TRANSCRIBE_SR)
+        write_wav(out / "array_delay_sum.wav", delay24, TRANSCRIBE_SR)
+        delay_turns = transcribe(delay24, calls, purpose="diarize GCC-PHAT delay-and-sum 8-mic baseline")
+        array_baseline = [{"speaker": turn.speaker, "start": turn.start, "end": turn.end, "text": turn.text}
+                          for turn in delay_turns]
+        channels = opt.array_channels or list(range(1, 9))
+        separator_name = f"AMI 8-mic meeting-room array MVDR (classical; channels {channels})"
+        array_metadata = {
+            "source": "AMI 8-mic meeting-room array", "array_path": str(opt.array_path),
+            "channels": channels, "source_sample_rate": 16_000, "sample_rate": TRANSCRIBE_SR,
+            "delay_sum": "array_delay_sum.wav", "delays": delays,
+            "beamforming_seconds": round(beamforming_seconds, 3),
+            "analysis_seconds": round(time.perf_counter() - started, 3),
+            "guide": guide_metadata, "mvdr": mvdr_metadata, "mapping_source": "runtime-lite",
+        }
+    elif opt.separator == "samaudio":
         from .separation import SamAudioSeparator
 
         from .separation import DEFAULT_TEXT_FEATURES
@@ -164,13 +227,15 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
         "baseline": [{"speaker": t.speaker, "start": t.start, "end": t.end, "text": t.text} for t in baseline],
         "activity": activity,
         "overlaps": overlap_windows(activity),
-        "attribution": {"mapping": mapping if opt.separator == "lite" else {},
-                        "confidence": confidence if opt.separator == "lite" else {}},
+        "attribution": {"mapping": mapping if opt.separator in ("lite", "array") else {},
+                        "confidence": confidence if opt.separator in ("lite", "array") else {}},
         "threads": threads,
         "catchups": catchups,
         "catchup_model": opt.catchup_model,
         "translations": translations,
         "translation_status": translation_status,
+        "array": array_metadata,
+        "array_baseline": array_baseline,
     }
     (out / "earshot.json").write_text(json.dumps(doc, indent=1, ensure_ascii=False))
     _install_viewer(out)

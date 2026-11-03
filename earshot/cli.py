@@ -17,7 +17,10 @@ def main() -> None:
                    help='person to follow: "Name@x,y" (fractions of width/height on frame 0), '
                         'or "Name@x,y#frame"; repeat per person')
     a.add_argument("--out", type=Path, required=True)
-    a.add_argument("--separator", choices=["samaudio", "lite", "spark-av"], default="samaudio")
+    a.add_argument("--separator", choices=["samaudio", "lite", "spark-av", "array"], default="samaudio")
+    a.add_argument("--array", type=Path, help="eight-channel 16 kHz WAV for --separator array")
+    a.add_argument("--array-channels", default="1,2,3,4,5,6,7,8",
+                   help="comma-separated 1-based channels, e.g. 1,2,3,4,5 or 1,3,5,7")
     a.add_argument("--prompt", default="", help='SAM Audio text prompt alongside the visual one, e.g. "speech"')
     a.add_argument("--text-features", type=Path,
                    help="precomputed SAM Audio text features (default: assets/text_features.npz; no T5 at runtime)")
@@ -61,7 +64,8 @@ def main() -> None:
         doc = analyze(args.video, [Tap.parse(t) for t in args.tap], args.out, Options(
             separator=args.separator, replay=args.replay, text_features=args.text_features,
             allow_t5=args.allow_t5, mask_mode=args.mask_mode, device=args.device, prompt=args.prompt, spark=not args.no_spark, catchup_every=args.catchup_every,
-            catchup_model=args.catchup_model, translate=args.translate))
+            catchup_model=args.catchup_model, translate=args.translate,
+            array_path=args.array, array_channels=[int(value) for value in args.array_channels.split(",") if value.strip()]))
         print(f"wrote {doc}\nview it: python -m earshot serve {args.out}")
     elif args.cmd == "serve":
         from .server import serve

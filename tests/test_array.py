@@ -52,6 +52,7 @@ def test_souden_separation_improves_target_si_sdr():
     assert outputs[0].shape == target.shape
     assert si_sdr(outputs[0], target) > 5
     assert not metadata["0"]["degenerate_guide"]
+    assert metadata["0"]["reference_channel"] == 1
 
 
 def test_stft_roundtrip_preserves_samples_and_scale():

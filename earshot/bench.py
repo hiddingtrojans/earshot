@@ -157,8 +157,11 @@ def score_document(doc: dict, run: Path, truth: dict, truth_dir: Path) -> dict:
     caps = {n: " ".join(c["text"] for c in sorted(doc["captions"], key=lambda c: c["start"]) if c["name"] == n)
             for n in names}
     base = oracle_baseline_text(doc["baseline"], people_truth)
+    delay_base = oracle_baseline_text(doc["array_baseline"], people_truth) if doc.get("array_baseline") else None
     result = {"run": str(run), "separator": doc["separator"],
               "oracle_mapping": oracle_speaker_mapping(doc["baseline"], people_truth), "people": {}}
+    if delay_base is not None:
+        result["delay_sum_oracle_mapping"] = oracle_speaker_mapping(doc["array_baseline"], people_truth)
     if doc.get("attribution", {}).get("mapping") is not None:
         result["lite_mapping"] = doc["attribution"]["mapping"]
     for n in people_truth:
@@ -168,6 +171,8 @@ def score_document(doc: dict, run: Path, truth: dict, truth_dir: Path) -> dict:
             ov = overlap_word_indexes(turns, n) if turns else None
         entry = {"earshot": person_scores(caps.get(n, ""), people_truth[n], ov),
                  "baseline": person_scores(base.get(n, ""), people_truth[n], ov)}
+        if delay_base is not None:
+            entry["delay_sum"] = person_scores(delay_base.get(n, ""), people_truth[n], ov)
         ref_path = (truth.get("reference_tracks") or {}).get(n)
         person = next((p for p in doc["people"] if p["name"] == n), None)
         if ref_path and person and person.get("stem"):
@@ -234,8 +239,11 @@ def _summary(people: dict) -> dict:
         vals = [p[system][key] for p in people.values() if key in p[system]]
         return round(sum(vals) / len(vals), 3) if vals else None
 
+    systems = ["earshot", "baseline"]
+    if any("delay_sum" in person for person in people.values()):
+        systems.append("delay_sum")
     summary = {system: {k: mean(system, k) for k in ("wer", "attribution", "overlap_recall")}
-               for system in ("earshot", "baseline")}
+               for system in systems}
     gains = [p["si_sdr_db"]["isolated"] - p["si_sdr_db"]["mixture"]
              for p in people.values() if "si_sdr_db" in p]
     if gains:
@@ -257,6 +265,7 @@ def _score_repeats(run: Path, truth: dict, truth_dir: Path, count: int) -> list[
     calls = CallLog(run)
     mixture = read_audio(run / doc["video"], SEPARATION_SR)
     mix24 = resample(mixture, SEPARATION_SR, TRANSCRIBE_SR)
+    delay_sum_audio = read_audio(run / doc["array"]["delay_sum"], TRANSCRIBE_SR) if doc.get("array") else None
     lite = "Earshot-Lite" in doc["separator"]
     spark_av = "Spark AV" in doc["separator"]
     if lite:
@@ -301,6 +310,12 @@ def _score_repeats(run: Path, truth: dict, truth_dir: Path, count: int) -> list[
         repeated = deepcopy(doc)
         repeated["baseline"] = [{"speaker": turn.speaker, "start": turn.start, "end": turn.end, "text": turn.text}
                                 for turn in baseline]
+        if delay_sum_audio is not None:
+            delay_turns = transcribe(delay_sum_audio, calls,
+                                     purpose=f"bench repeat {index}: diarize GCC-PHAT delay-and-sum 8-mic baseline",
+                                     repeat=index)
+            repeated["array_baseline"] = [{"speaker": turn.speaker, "start": turn.start, "end": turn.end,
+                                           "text": turn.text} for turn in delay_turns]
         repeated["captions"] = [caption.to_json() for caption in captions]
         repeated["activity"] = activity
         repeated["overlaps"] = overlap_windows(activity)
@@ -324,7 +339,10 @@ def _spread(values: list[float]) -> dict | None:
 
 def _repeat_summary(repeats: list[dict]) -> dict:
     summary = {}
-    for system in ("earshot", "baseline"):
+    systems = ["earshot", "baseline"]
+    if "delay_sum" in repeats[0]["summary"]:
+        systems.append("delay_sum")
+    for system in systems:
         summary[system] = {}
         for key in ("wer", "attribution", "overlap_recall"):
             values = [repeat["summary"][system][key] for repeat in repeats
@@ -355,16 +373,24 @@ def run_bench(run: Path, truth_path: Path, out: Path | None = None, repeat: int 
     out = out or (run / "bench.json")
     out.write_text(json.dumps(res, indent=2, ensure_ascii=False))
     s = res["summary"]
-    print(f"{'':16}{'Earshot':>22}{'Single stream':>22}")
+    has_delay_sum = "delay_sum" in s
+    print(f"{'':16}{'Earshot':>22}{'Single stream':>22}{'Delay sum':>22}" if has_delay_sum
+          else f"{'':16}{'Earshot':>22}{'Single stream':>22}")
     for k, label in (("wer", "Word error rate"), ("attribution", "Right person"), ("overlap_recall", "Overlap words")):
         e, b = s["earshot"][k], s["baseline"][k]
         if e is None:
             continue
         if repeat is not None:
-            print(f"{label:16}{e['mean']:>10.3f} [{e['min']:.3f}, {e['max']:.3f}]"
-                  f"{b['mean']:>12.3f} [{b['min']:.3f}, {b['max']:.3f}]")
+            line = (f"{label:16}{e['mean']:>10.3f} [{e['min']:.3f}, {e['max']:.3f}]"
+                    f"{b['mean']:>12.3f} [{b['min']:.3f}, {b['max']:.3f}]")
+            if has_delay_sum:
+                value = s["delay_sum"][k]
+                line += f"{value['mean']:>10.3f} [{value['min']:.3f}, {value['max']:.3f}]"
         else:
-            print(f"{label:16}{e:>22.3f}{b:>22.3f}")
+            line = f"{label:16}{e:>22.3f}{b:>22.3f}"
+            if has_delay_sum:
+                line += f"{s['delay_sum'][k]:>22.3f}"
+        print(line)
     if "correct_voice_rate" in s:
         for label, key in (("Correct voice", "correct_voice_rate"),
                            ("Mixture correct voice", "mixture_correct_voice_rate")):
