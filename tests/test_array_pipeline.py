@@ -85,3 +85,10 @@ def test_cli_accepts_array_and_channel_subset(tmp_path, monkeypatch):
     assert captured["options"].separator == "array"
     assert captured["options"].array_path == Path("array.wav")
     assert captured["options"].array_channels == [1, 3, 5, 7]
+
+
+def test_envelope_stats_use_row_indexes():
+    from tools.summarize_array_results import envelope_stats
+
+    assert envelope_stats([[0.9, 0.8, 0.1], [0.8, 0.9, 0.1]]) == (0.9, 0.9)
+    assert envelope_stats([[0.9, 0.1], [0.8, 0.7]]) == (0.8, 0.45)

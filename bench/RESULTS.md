@@ -1,6 +1,6 @@
 # Dinner Table Bench — AMI ES2008a results
 
-Date: 2026-11-02. Hardware: Apple M5 Max, arm64. Source: public AMI Meeting Corpus ES2008a, 745.0–820.0 s, far-field `Array1-01`, four speakers, 234 manually timed words (53 overlapping). All numbers below come from `python -m earshot bench` on real cached runs.
+Date: 2026-11-02–03. Hardware: Apple M5 Max, arm64. Source: public AMI Meeting Corpus ES2008a, 745.0–820.0 s, far-field `Array1-01`, four speakers, 234 manually timed words (53 overlapping). All numbers below come from `python -m earshot bench` on real cached runs.
 
 Models: `sam-3.1` for person masks; `muse-voice-transcribe-1.0` for single-stream DIARIZATION and repeat transcription; `muse-spark-1.3` for threads, optional hosted catch-ups and translation; `muse-glimmer` for cached local catch-ups in the demo. Lite attribution is deterministic mouth motion, not another model.
 
@@ -19,6 +19,35 @@ Values are **mean [min, max] over 3 real Voice transcription repeats**. Repeats 
 The single-stream baseline is **oracle-mapped**: each anonymous Voice speaker is assigned to the real person whose truth it matches best. This is generous to the baseline and unavailable to Lite at runtime. The primary SAM comparison uses its own three Voice repeats. Lite and Spark AV use their own previously reported cached repeats, so their baselines are not silently substituted for the primary run's baseline.
 
 Lite does not separate audio and cannot recover words omitted by single-stream Voice. Its central 60% width, 30–60% mask-height mouth band, 0.5 s smoothing, z-scoring, Pearson correlation and `scipy.optimize.linear_sum_assignment` match the oracle baseline on its three 745 s repeats.
+
+## Review round 5: microphone array evaluation
+
+All numbers in this section are **AMI 8-mic meeting-room array**. The optional `--separator array` implementation is classical numpy/scipy MVDR, not SAM Audio. Runtime guide attribution is Lite with saved corrections; Speaker C uses the fixed motion fallback on 635 s at threshold 0.56507652. The delay-and-sum baseline uses GCC-PHAT alignment across all eight channels.
+
+| Window / channels | WER ↓ | Right person ↑ | Overlap recall ↑ | Better baseline +0.10 | Correct voice | Beamforming (s) | Analysis (s) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 745 s / 8 | 0.282 [0.240, 0.322] | 0.844 [0.835, 0.850] | 0.605 [0.555, 0.662] | 0.522 + 0.10 = 0.622 | 1.000 | 1.835 | 64.294 |
+| 745 s / 5 | 0.845 [0.715, 1.078] | 0.658 [0.570, 0.709] | 0.396 [0.349, 0.440] | 0.527 + 0.10 = 0.627 | 1.000 | 0.948 | 66.270 |
+| 745 s / 4 (1,3,5,7) | 0.740 [0.505, 1.127] | 0.638 [0.515, 0.708] | 0.392 [0.331, 0.470] | 0.502 + 0.10 = 0.602 | 1.000 | 0.676 | 67.298 |
+| 635 s / 8 | 0.403 [0.376, 0.451] | 0.680 [0.623, 0.714] | 0.437 [0.428, 0.442] | 0.486 + 0.10 = 0.586 | 0.750 | 1.907 | 58.664 |
+| 635 s / 5 | 1.498 [0.418, 3.122] | 0.584 [0.429, 0.672] | 0.418 [0.378, 0.448] | 0.486 + 0.10 = 0.586 | 0.750 | 0.897 | 62.282 |
+| 635 s / 4 (1,3,5,7) | 4.482 [3.452, 5.327] | 0.434 [0.378, 0.516] | 0.478 [0.398, 0.522] | 0.486 + 0.10 = 0.586 | 0.750 | 0.662 | 60.660 |
+
+**NO-GO on both windows.** On 745 s, 8 channels misses the overlap margin by 0.017 despite right-person 0.844; 5 and 4 channels fail both gates. On 635 s, all subsets fail both gates. Array1-01 overlap recall is 0.495/0.495/0.495/0.486, and delay-and-sum is the better 745 s baseline at 0.522/0.527/0.502. On 635 s, Array1-01 is the better baseline at 0.486. The 635 s automatic and one-tap-corrected mappings are identical with **0 taps**; no oracle mapping is used as a product claim.
+
+Eight-channel 745 s correct-voice matrix, diagonal mean 0.6291 and off-diagonal mean 0.0229:
+
+| Stem \ headset | A | B | C | D |
+|---|---:|---:|---:|---:|
+| Speaker A | **0.7629** | -0.0276 | -0.1870 | 0.1365 |
+| Speaker B | 0.1444 | **0.4798** | 0.0878 | 0.1424 |
+| Speaker C | -0.1037 | 0.0814 | **0.8092** | 0.0421 |
+| Speaker D | 0.0475 | -0.0353 | -0.0536 | **0.4644** |
+| Mixture | **0.3887** | 0.0834 | 0.0950 | 0.2559 |
+
+Other 745 s subsets also have correct-voice rate 1.000 (5 channels 0.5772/0.0664 and 4 channels 0.5842/0.0502 diagonal/off-diagonal means). On 635 s, the correct-voice rate is 0.750 for all subsets; diagonal/off-diagonal means are 0.5599/0.1129, 0.5571/0.1421 and 0.5545/0.1387. Full repeat values are in `review/array_745_summary.json` and `review/array_635_summary.json`; raw commands and scores are in `review/array_745.log` and `review/array_635.log`.
+
+**Demo decision:** no `demo/ami_meeting_array` is built. Lite remains the default demo and the single-mic mode; the overlap-recovery tagline is not restored. No claim is made that Earshot runs on glasses. The reference file `~/Downloads/array_exp.py` was missing, so no copy is committed at `docs/array_exp.py` and its exact matrix is not claimed as reproduced. The optional SAM Audio noise-cleaning experiment is not run, both because the array is NO-GO and because that direct reference reproduction is unresolved.
 
 ## Review round 5: sentence timing and Lite motion estimates
 

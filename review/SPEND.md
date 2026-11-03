@@ -1,6 +1,6 @@
 # Estimated Meta API spend
 
-Run cap: **$20.00**. **Running total: $3.290369.**
+Run cap: **$20.00**. **Running total: $4.115609.**
 
 Generated from `cache=miss` rows in the supplied run folders. Cache hits and local models add $0. Prices: SAM $0.20/1,000 processed video frames; Voice $0.18/audio hour; Spark $1.25/1M uncached input, $0.15/1M cached input, and $4.25/1M output tokens. Unknown hosted models are an error, not a zero.
 
@@ -268,5 +268,127 @@ Generated from `cache=miss` rows in the supplied run folders. Cache hits and loc
 | runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
 | runs/ami_samaudio_keep_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
 | runs/ami_cleanmic | `muse-voice-transcribe-1.0` | diarize the raw mix (today's captions) | 75.040 audio seconds | $0.003752 |
+| runs/array_wrong_args_backup | `files` | upload analysis video | file upload | $0.000000 |
+| runs/array_wrong_args_backup | `sam-3.1` | track tapped people | 1875 video frames | $0.375000 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 0: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 1: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8 | `muse-voice-transcribe-1.0` | bench repeat 2: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 0: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 1: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5 | `muse-voice-transcribe-1.0` | bench repeat 2: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 0: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 1: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4 | `muse-voice-transcribe-1.0` | bench repeat 2: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 0: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 1: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_8_635 | `muse-voice-transcribe-1.0` | bench repeat 2: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 0: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 1: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_5_635 | `muse-voice-transcribe-1.0` | bench repeat 2: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 0: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 0: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 1: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 1: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker A's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker B's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker C's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 2: transcribe Speaker D's isolated voice | 75.040 audio seconds | $0.003752 |
+| runs/ami_array_4_635 | `muse-voice-transcribe-1.0` | bench repeat 2: diarize GCC-PHAT delay-and-sum 8-mic baseline | 75.040 audio seconds | $0.003752 |
 
-Total before rounding: $3.290368600000. Stop new live calls before the cap is reached.
+Total before rounding: $4.115608600000. Stop new live calls before the cap is reached.

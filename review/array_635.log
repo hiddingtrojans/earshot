@@ -1,0 +1,33 @@
+ANALYZE ami_array_8_635: channels 1,2,3,4,5,6,7,8
+wrote runs/ami_array_8_635/earshot.json
+view it: python -m earshot serve runs/ami_array_8_635
+BENCH ami_array_8_635: three repeats
+                               Earshot         Single stream             Delay sum
+Word error rate      0.403 [0.376, 0.451]       0.384 [0.377, 0.395]     0.399 [0.372, 0.417]
+Right person         0.680 [0.623, 0.714]       0.693 [0.689, 0.697]     0.687 [0.663, 0.712]
+Overlap words        0.437 [0.428, 0.442]       0.486 [0.424, 0.524]     0.449 [0.382, 0.482]
+Correct voice        0.750 [0.750, 0.750]
+Mixture correct voice     0.250 [0.250, 0.250]
+wrote runs/ami_array_8_635/bench_array.json
+ANALYZE ami_array_5_635: channels 1,2,3,4,5
+wrote runs/ami_array_5_635/earshot.json
+view it: python -m earshot serve runs/ami_array_5_635
+BENCH ami_array_5_635: three repeats
+                               Earshot         Single stream             Delay sum
+Word error rate      1.498 [0.418, 3.122]       0.384 [0.377, 0.395]     0.390 [0.379, 0.404]
+Right person         0.584 [0.429, 0.672]       0.693 [0.689, 0.697]     0.700 [0.699, 0.701]
+Overlap words        0.418 [0.378, 0.448]       0.486 [0.424, 0.524]     0.406 [0.382, 0.455]
+Correct voice        0.750 [0.750, 0.750]
+Mixture correct voice     0.250 [0.250, 0.250]
+wrote runs/ami_array_5_635/bench_array.json
+ANALYZE ami_array_4_635: channels 1,3,5,7
+wrote runs/ami_array_4_635/earshot.json
+view it: python -m earshot serve runs/ami_array_4_635
+BENCH ami_array_4_635: three repeats
+                               Earshot         Single stream             Delay sum
+Word error rate      4.482 [3.452, 5.327]       0.384 [0.377, 0.395]     0.372 [0.365, 0.381]
+Right person         0.434 [0.378, 0.516]       0.693 [0.689, 0.697]     0.707 [0.698, 0.713]
+Overlap words        0.478 [0.398, 0.522]       0.486 [0.424, 0.524]     0.449 [0.382, 0.482]
+Correct voice        0.750 [0.750, 0.750]
+Mixture correct voice     0.250 [0.250, 0.250]
+wrote runs/ami_array_4_635/bench_array.json

@@ -51,7 +51,7 @@ python -m earshot serve demo/ami_meeting --replay
 # open http://127.0.0.1:8765/
 ```
 
-**Replay needs no API key and normally takes under five minutes from clone to viewer.** The included 42.67 MB demo uses a public AMI Meeting Corpus clip (CC BY 4.0) and real cached model responses. Replay makes no Meta calls. Use the language picker for Spanish, Download subtitles for VTT/SRT, and the catch-up/thread panels.
+**Replay needs no API key and normally takes under five minutes from clone to viewer.** The included 42.68 MB demo uses a public AMI Meeting Corpus clip (CC BY 4.0) and real cached model responses. Replay makes no Meta calls. Use the language picker for Spanish, Download subtitles for VTT/SRT, and the catch-up/thread panels.
 
 **Tap to start a new analysis** (recorded clips, not real-time processing):
 
@@ -161,6 +161,7 @@ tests/            deterministic unit tests and synthetic runs with explicitly fa
 
 ## Limitations
 
+- **SAM Audio finding:** It removes noise from speech in our setup (+16.9 dB), but no face or time-span prompt separated one speaker from others, on far-field or clean-mic audio.
 - Earshot analyzes recorded clips; it is not live or real-time. Fresh full-clip SAM mask decoding is slow pure-Python work, although identical runs reuse saved tracks.
 - SAM Audio `keep` failed the quality go/no-go on the primary far-field clip: right-person 0.386 and overlap recall 0.098, versus the same-run single-stream 0.913 and 0.480. Correct-voice rate was 0.500 versus 0.250 for the mixture; SI-SDR gain was -0.008 dB and is not the headline metric. Separation took 773.889 seconds, but speed alone is not the rejection reason. The 635 s held-out check also failed: right-person 0.382, overlap recall 0.185 and correct-voice rate 0.250. It is not used in the demo.
 - Spark AV returned spoken text but failed all adoption gates (WER 0.852, right-person 0.496, overlap recall 0.254). It is an unverified negative experiment, not a viewer mode.

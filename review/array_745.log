@@ -1,0 +1,42 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/raulacedo/src/earshot/earshot-app/earshot/__main__.py", line 3, in <module>
+    main()
+  File "/Users/raulacedo/src/earshot/earshot-app/earshot/cli.py", line 68, in main
+    array_path=args.array, array_channels=[int(value) for value in args.array_channels.split(",") if value.strip()]))
+                                           ^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '8 1'
+ANALYZE ami_array_8: channels 1,2,3,4,5,6,7,8
+wrote runs/ami_array_8/earshot.json
+view it: python -m earshot serve runs/ami_array_8
+BENCH ami_array_8: three repeats
+                               Earshot         Single stream             Delay sum
+Word error rate      0.282 [0.240, 0.322]       0.231 [0.221, 0.237]     0.235 [0.225, 0.252]
+Right person         0.844 [0.835, 0.850]       0.919 [0.918, 0.921]     0.913 [0.898, 0.925]
+Overlap words        0.605 [0.555, 0.662]       0.495 [0.444, 0.540]     0.522 [0.481, 0.543]
+Correct voice        1.000 [1.000, 1.000]
+Mixture correct voice     0.250 [0.250, 0.250]
+wrote runs/ami_array_8/bench_array.json
+ANALYZE ami_array_5: channels 1,2,3,4,5
+wrote runs/ami_array_5/earshot.json
+view it: python -m earshot serve runs/ami_array_5
+BENCH ami_array_5: three repeats
+                               Earshot         Single stream             Delay sum
+Word error rate      0.845 [0.715, 1.078]       0.231 [0.221, 0.237]     0.239 [0.233, 0.252]
+Right person         0.658 [0.570, 0.709]       0.919 [0.918, 0.921]     0.909 [0.891, 0.921]
+Overlap words        0.396 [0.349, 0.440]       0.495 [0.444, 0.540]     0.527 [0.494, 0.570]
+Correct voice        1.000 [1.000, 1.000]
+Mixture correct voice     0.250 [0.250, 0.250]
+wrote runs/ami_array_5/bench_array.json
+ANALYZE ami_array_4: channels 1,3,5,7
+wrote runs/ami_array_4/earshot.json
+view it: python -m earshot serve runs/ami_array_4
+BENCH ami_array_4: three repeats
+                               Earshot         Single stream             Delay sum
+Word error rate      0.740 [0.505, 1.127]       0.231 [0.221, 0.237]     0.254 [0.234, 0.275]
+Right person         0.638 [0.515, 0.708]       0.919 [0.918, 0.921]     0.907 [0.897, 0.917]
+Overlap words        0.392 [0.331, 0.470]       0.495 [0.444, 0.540]     0.502 [0.481, 0.531]
+Correct voice        1.000 [1.000, 1.000]
+Mixture correct voice     0.250 [0.250, 0.250]
+wrote runs/ami_array_4/bench_array.json

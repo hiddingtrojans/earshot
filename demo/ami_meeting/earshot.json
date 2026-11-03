@@ -12568,7 +12568,41 @@
    "overlap": false,
    "overlap_with": [],
    "own_activity": 1.0,
-   "thread": 1
+   "thread": 1,
+   "sentences": [
+    {
+     "caption_id": "c001",
+     "segment": 0,
+     "start": 0.0,
+     "end": 2.251,
+     "text": "whatever else we have programmed into it, it's all just in in",
+     "estimated": true
+    },
+    {
+     "caption_id": "c001",
+     "segment": 1,
+     "start": 2.251,
+     "end": 4.502,
+     "text": "its separate place and not like all the on buttons together because",
+     "estimated": true
+    },
+    {
+     "caption_id": "c001",
+     "segment": 2,
+     "start": 4.502,
+     "end": 6.752,
+     "text": "then you're like, I don't even know what I'm what I'm turning",
+     "estimated": true
+    },
+    {
+     "caption_id": "c001",
+     "segment": 3,
+     "start": 6.752,
+     "end": 6.94,
+     "text": "on.",
+     "estimated": true
+    }
+   ]
   },
   {
    "id": "c002",
@@ -12580,7 +12614,25 @@
    "overlap": false,
    "overlap_with": [],
    "own_activity": 1.0,
-   "thread": 1
+   "thread": 1,
+   "sentences": [
+    {
+     "caption_id": "c002",
+     "segment": 0,
+     "start": 7.26,
+     "end": 12.104,
+     "text": "Yeah, and if if you'd save the more complicated functions maybe for",
+     "estimated": true
+    },
+    {
+     "caption_id": "c002",
+     "segment": 1,
+     "start": 12.104,
+     "end": 16.14,
+     "text": "separate remotes that you wouldn't need to use every day",
+     "estimated": true
+    }
+   ]
   },
   {
    "id": "c003",
@@ -12592,7 +12644,65 @@
    "overlap": false,
    "overlap_with": [],
    "own_activity": 1.0,
-   "thread": 1
+   "thread": 1,
+   "sentences": [
+    {
+     "caption_id": "c003",
+     "segment": 0,
+     "start": 16.54,
+     "end": 20.326,
+     "text": "Okay, so maybe have like one remote that has the main functions",
+     "estimated": true
+    },
+    {
+     "caption_id": "c003",
+     "segment": 1,
+     "start": 20.326,
+     "end": 24.112,
+     "text": "on, on off channel changing volume and and another remote with all",
+     "estimated": true
+    },
+    {
+     "caption_id": "c003",
+     "segment": 2,
+     "start": 24.112,
+     "end": 27.898,
+     "text": "the special things because that is one thing that remotes tend to",
+     "estimated": true
+    },
+    {
+     "caption_id": "c003",
+     "segment": 3,
+     "start": 27.898,
+     "end": 31.053,
+     "text": "have buttons that the TVs no longer have as well.",
+     "estimated": true
+    },
+    {
+     "caption_id": "c003",
+     "segment": 4,
+     "start": 31.053,
+     "end": 34.839,
+     "text": "so like you have to have them somewhere because you're going to",
+     "estimated": true
+    },
+    {
+     "caption_id": "c003",
+     "segment": 5,
+     "start": 34.839,
+     "end": 38.625,
+     "text": "need those special functions occasionally occasionally but not necessarily on the normal",
+     "estimated": true
+    },
+    {
+     "caption_id": "c003",
+     "segment": 6,
+     "start": 38.625,
+     "end": 38.94,
+     "text": "remote",
+     "estimated": true
+    }
+   ]
   },
   {
    "id": "c004",
@@ -12604,7 +12714,25 @@
    "overlap": false,
    "overlap_with": [],
    "own_activity": 1.0,
-   "thread": 2
+   "thread": 2,
+   "sentences": [
+    {
+     "caption_id": "c004",
+     "segment": 0,
+     "start": 39.26,
+     "end": 43.1,
+     "text": "Can I ask, I ask, are we designing a remote control for",
+     "estimated": true
+    },
+    {
+     "caption_id": "c004",
+     "segment": 1,
+     "start": 43.1,
+     "end": 44.06,
+     "text": "a television only?",
+     "estimated": true
+    }
+   ]
   },
   {
    "id": "c005",
@@ -12616,7 +12744,17 @@
    "overlap": false,
    "overlap_with": [],
    "own_activity": 1.0,
-   "thread": 2
+   "thread": 2,
+   "sentences": [
+    {
+     "caption_id": "c005",
+     "segment": 0,
+     "start": 44.3,
+     "end": 45.82,
+     "text": "Good question.",
+     "estimated": true
+    }
+   ]
   },
   {
    "id": "c006",
@@ -12628,7 +12766,33 @@
    "overlap": false,
    "overlap_with": [],
    "own_activity": 1.0,
-   "thread": 2
+   "thread": 2,
+   "sentences": [
+    {
+     "caption_id": "c006",
+     "segment": 0,
+     "start": 45.82,
+     "end": 50.927,
+     "text": "And if this device is just to be used with a television,",
+     "estimated": true
+    },
+    {
+     "caption_id": "c006",
+     "segment": 1,
+     "start": 50.927,
+     "end": 56.034,
+     "text": "would we even technically be possible to include video recorder functions on",
+     "estimated": true
+    },
+    {
+     "caption_id": "c006",
+     "segment": 2,
+     "start": 56.034,
+     "end": 56.46,
+     "text": "it?",
+     "estimated": true
+    }
+   ]
   },
   {
    "id": "c007",
@@ -12640,7 +12804,17 @@
    "overlap": false,
    "overlap_with": [],
    "own_activity": 1.0,
-   "thread": 2
+   "thread": 2,
+   "sentences": [
+    {
+     "caption_id": "c007",
+     "segment": 0,
+     "start": 56.7,
+     "end": 57.18,
+     "text": "I don't know that yet.",
+     "estimated": true
+    }
+   ]
   },
   {
    "id": "c008",
@@ -12652,7 +12826,17 @@
    "overlap": false,
    "overlap_with": [],
    "own_activity": 1.0,
-   "thread": 2
+   "thread": 2,
+   "sentences": [
+    {
+     "caption_id": "c008",
+     "segment": 0,
+     "start": 57.18,
+     "end": 65.34,
+     "text": "Or should we just stick to to having television related buttons on?",
+     "estimated": true
+    }
+   ]
   },
   {
    "id": "c009",
@@ -12664,7 +12848,17 @@
    "overlap": false,
    "overlap_with": [],
    "own_activity": 1.0,
-   "thread": 2
+   "thread": 2,
+   "sentences": [
+    {
+     "caption_id": "c009",
+     "segment": 0,
+     "start": 65.58,
+     "end": 70.22,
+     "text": "that's a good question I'll I'll look into it",
+     "estimated": true
+    }
+   ]
   },
   {
    "id": "c010",
@@ -12676,7 +12870,25 @@
    "overlap": false,
    "overlap_with": [],
    "own_activity": 1.0,
-   "thread": 2
+   "thread": 2,
+   "sentences": [
+    {
+     "caption_id": "c010",
+     "segment": 0,
+     "start": 71.18,
+     "end": 74.282,
+     "text": "I think it's just TV, I mean, if it if we're taking",
+     "estimated": true
+    },
+    {
+     "caption_id": "c010",
+     "segment": 1,
+     "start": 74.282,
+     "end": 74.54,
+     "text": "it",
+     "estimated": true
+    }
+   ]
   }
  ],
  "baseline": [
@@ -13576,5 +13788,342 @@
  },
  "translation_status": {
   "es": "translated"
+ },
+ "translation_segments": {
+  "es": {
+   "c001": [
+    {
+     "caption_id": "c001",
+     "segment": 0,
+     "start": 0.0,
+     "end": 2.449,
+     "text": "todo lo demás que hayamos programado en él, está todo en su",
+     "estimated": true
+    },
+    {
+     "caption_id": "c001",
+     "segment": 1,
+     "start": 2.449,
+     "end": 4.899,
+     "text": "lugar separado y no como todos los botones de encendido juntos porque",
+     "estimated": true
+    },
+    {
+     "caption_id": "c001",
+     "segment": 2,
+     "start": 4.899,
+     "end": 6.94,
+     "text": "entonces es como, ni siquiera sé lo que estoy encendiendo.",
+     "estimated": true
+    }
+   ],
+   "c002": [
+    {
+     "caption_id": "c002",
+     "segment": 0,
+     "start": 7.26,
+     "end": 12.868,
+     "text": "Sí, y si reservaras las funciones más complicadas quizás para mandos separados",
+     "estimated": true
+    },
+    {
+     "caption_id": "c002",
+     "segment": 1,
+     "start": 12.868,
+     "end": 16.14,
+     "text": "que no necesitarías usar todos los días",
+     "estimated": true
+    }
+   ],
+   "c003": [
+    {
+     "caption_id": "c003",
+     "segment": 0,
+     "start": 16.54,
+     "end": 20.613,
+     "text": "Vale, así que quizás tener como un mando que tenga las funciones",
+     "estimated": true
+    },
+    {
+     "caption_id": "c003",
+     "segment": 1,
+     "start": 20.613,
+     "end": 24.685,
+     "text": "principales, encendido, apagado, cambio de canal, volumen, y otro mando con todas",
+     "estimated": true
+    },
+    {
+     "caption_id": "c003",
+     "segment": 2,
+     "start": 24.685,
+     "end": 28.758,
+     "text": "las cosas especiales porque eso es algo que los mandos suelen tener,",
+     "estimated": true
+    },
+    {
+     "caption_id": "c003",
+     "segment": 3,
+     "start": 28.758,
+     "end": 31.134,
+     "text": "botones que los televisores ya no tienen.",
+     "estimated": true
+    },
+    {
+     "caption_id": "c003",
+     "segment": 4,
+     "start": 31.134,
+     "end": 35.207,
+     "text": "así que tienes que tenerlos en algún lugar porque vas a necesitar",
+     "estimated": true
+    },
+    {
+     "caption_id": "c003",
+     "segment": 5,
+     "start": 35.207,
+     "end": 38.94,
+     "text": "esas funciones especiales ocasionalmente pero no necesariamente en el mando normal",
+     "estimated": true
+    }
+   ],
+   "c004": [
+    {
+     "caption_id": "c004",
+     "segment": 0,
+     "start": 39.26,
+     "end": 43.691,
+     "text": "¿Puedo preguntar, pregunto, estamos diseñando un mando a distancia solo para un",
+     "estimated": true
+    },
+    {
+     "caption_id": "c004",
+     "segment": 1,
+     "start": 43.691,
+     "end": 44.06,
+     "text": "televisor?",
+     "estimated": true
+    }
+   ],
+   "c005": [
+    {
+     "caption_id": "c005",
+     "segment": 0,
+     "start": 44.3,
+     "end": 45.82,
+     "text": "Buena pregunta.",
+     "estimated": true
+    }
+   ],
+   "c006": [
+    {
+     "caption_id": "c006",
+     "segment": 0,
+     "start": 45.82,
+     "end": 51.9,
+     "text": "Y si este dispositivo es solo para usarse con un televisor, ¿sería",
+     "estimated": true
+    },
+    {
+     "caption_id": "c006",
+     "segment": 1,
+     "start": 51.9,
+     "end": 56.46,
+     "text": "siquiera técnicamente posible incluir funciones de videograbadora en él?",
+     "estimated": true
+    }
+   ],
+   "c007": [
+    {
+     "caption_id": "c007",
+     "segment": 0,
+     "start": 56.7,
+     "end": 57.18,
+     "text": "Aún no lo sé.",
+     "estimated": true
+    }
+   ],
+   "c008": [
+    {
+     "caption_id": "c008",
+     "segment": 0,
+     "start": 57.18,
+     "end": 65.34,
+     "text": "¿O deberíamos limitarnos a tener botones relacionados con la televisión?",
+     "estimated": true
+    }
+   ],
+   "c009": [
+    {
+     "caption_id": "c009",
+     "segment": 0,
+     "start": 65.58,
+     "end": 70.22,
+     "text": "esa es una buena pregunta, lo investigaré",
+     "estimated": true
+    }
+   ],
+   "c010": [
+    {
+     "caption_id": "c010",
+     "segment": 0,
+     "start": 71.18,
+     "end": 74.54,
+     "text": "Creo que es solo TV, quiero decir, si lo estamos tomando",
+     "estimated": true
+    }
+   ]
+  }
+ },
+ "talked_over": {
+  "c002": [
+   {
+    "person": 0,
+    "start": 7.28,
+    "end": 8.08
+   },
+   {
+    "person": 3,
+    "start": 7.28,
+    "end": 7.92
+   },
+   {
+    "person": 3,
+    "start": 12.48,
+    "end": 13.92
+   }
+  ],
+  "c003": [
+   {
+    "person": 1,
+    "start": 23.76,
+    "end": 24.48
+   },
+   {
+    "person": 1,
+    "start": 29.16,
+    "end": 30.52
+   },
+   {
+    "person": 2,
+    "start": 32.84,
+    "end": 34.04
+   },
+   {
+    "person": 3,
+    "start": 17.96,
+    "end": 18.56
+   },
+   {
+    "person": 3,
+    "start": 30.64,
+    "end": 32.44
+   },
+   {
+    "person": 3,
+    "start": 35.36,
+    "end": 36.64
+   },
+   {
+    "person": 3,
+    "start": 36.92,
+    "end": 37.64
+   }
+  ],
+  "c004": [
+   {
+    "person": 0,
+    "start": 39.4,
+    "end": 40.16
+   },
+   {
+    "person": 1,
+    "start": 39.28,
+    "end": 39.88
+   },
+   {
+    "person": 1,
+    "start": 41.56,
+    "end": 42.2
+   },
+   {
+    "person": 1,
+    "start": 43.48,
+    "end": 44.06
+   }
+  ],
+  "c005": [
+   {
+    "person": 3,
+    "start": 44.36,
+    "end": 44.88
+   }
+  ],
+  "c006": [
+   {
+    "person": 1,
+    "start": 46.48,
+    "end": 47.4
+   },
+   {
+    "person": 1,
+    "start": 54.24,
+    "end": 55.04
+   },
+   {
+    "person": 3,
+    "start": 45.96,
+    "end": 46.52
+   }
+  ],
+  "c008": [
+   {
+    "person": 1,
+    "start": 57.6,
+    "end": 58.36
+   },
+   {
+    "person": 1,
+    "start": 63.04,
+    "end": 64.56
+   },
+   {
+    "person": 3,
+    "start": 60.12,
+    "end": 60.92
+   },
+   {
+    "person": 3,
+    "start": 61.44,
+    "end": 62.08
+   }
+  ],
+  "c010": [
+   {
+    "person": 0,
+    "start": 71.2,
+    "end": 72.16
+   },
+   {
+    "person": 1,
+    "start": 72.64,
+    "end": 74.54
+   },
+   {
+    "person": 2,
+    "start": 71.2,
+    "end": 73.72
+   }
+  ]
+ },
+ "motion_thresholds": {
+  "0": 4.493983836375141,
+  "1": 1.5153903903903903,
+  "2": 1.3310126506241216,
+  "3": 3.0732267399713504
+ },
+ "motion_protocol": {
+  "noise_floor": 0.1,
+  "mad_multiplier": 3.0,
+  "smooth_seconds": 0.5,
+  "min_event_seconds": 0.5
  }
 }
