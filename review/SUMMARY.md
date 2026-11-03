@@ -4,7 +4,7 @@
 
 1. **Listen to all eight files in `review/ab_listen/` and compare them with `mixture.wav`.** Specifically compare `{A,B,C,D}_{keep,remove}.wav`. The agent computed metrics but did not listen to the stems and does not claim a listening check.
 2. Keep **Lite** as the main mode and demo. The full SAM Audio `keep` run failed the quality gate; do not present it as overlap recovery or isolated listening.
-3. Review and publish the local history and demo. **No push was performed in this run.**
+3. Review and publish the local history and demo. **The final instruction authorizes a fast-forward push after the secret scan.**
 4. Check VTT in VLC, including a long cue. VLC is not installed here, so that playback remains unverified.
 5. Record the real ≤2:59 video with the opening new-work disclosure and AMI credit. Do not claim live processing, SAM Audio separation, or simultaneous-caption recovery from this Lite demo. Explain that local Glimmer handles cached catch-ups on this computer. Preserve the T5 ruling and link in README. If SAM Audio appears, show: “SAM Audio includes a frozen Google T5-base text encoder (open source). Allowed by the organizers; disclosed in the README.”
 6. Check the video logged out, read back every submission field, and link the exact X post.
