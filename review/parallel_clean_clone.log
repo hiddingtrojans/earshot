@@ -1,4 +1,4 @@
-........................................................................ [ 64%]
-.................................s.....                                  [100%]
-110 passed, 1 skipped in 16.50s
-STRICT REPLAY: all 35 catch-up windows, board, threads and translation exact; provenance unchanged: PASS
+........................................................................ [ 63%]
+....................................s.....                               [100%]
+113 passed, 1 skipped in 16.89s
+STRICT REPLAY: all 35 catch-up windows, full-quote board, threads and translation exact; provenance unchanged: PASS
