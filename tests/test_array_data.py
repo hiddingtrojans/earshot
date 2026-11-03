@@ -61,3 +61,11 @@ def test_second_meeting_uses_its_own_source_and_taps(tmp_path, monkeypatch):
     assert captured["cache"] == Path("bench/.ami_cache/ES2008b")
     assert captured["meeting"] == "ES2008b"
     assert captured["taps"] == '--tap "Speaker A@0.1,0.2"\n'
+
+
+def test_independent_bench_reads_verified_taps(tmp_path):
+    from tools.run_array_benches import read_taps
+
+    path = tmp_path / "taps.txt"
+    path.write_text('--tap "Speaker A@0.7,0.3" --tap "Speaker C@0.2,0.8"\n')
+    assert read_taps(path) == ["Speaker A@0.7,0.3", "Speaker C@0.2,0.8"]

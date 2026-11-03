@@ -1,0 +1,1324 @@
+{
+  "source": "AMI Meeting Corpus ES2008b, CC BY 4.0",
+  "window": [
+    745.0,
+    820.0
+  ],
+  "mixture": "Array1-01",
+  "people": {
+    "Speaker A": "",
+    "Speaker B": "",
+    "Speaker C": "from from the large majority of remote controls Here's two examples uh probably at the extreme ends of the spectrum Um on the left here we've got uh an engineering-based design for a remote control so it's one that's got lots of buttons it's it's fully featured everything you might possibly want to do is there you know it's got forward backwards up down channel numbers volume uh freeze frame Yeah it's it's fully featured and it might take a while to get to learn to use it but once you've learned it you can you can do whatever you want with your T_V_ The one on the right is a lot more basic It's just got the essential functions of the T_V_ changing the channel play stop volume It would be a lot quicker to learn to use it but again th it's it's swings and roundabouts There are disadvantages you can't use it say to to freeze the television picture Uh there's a lot of features that are missing from that remote control So we've got to to find our find a way of striking a balance between the two Um as I said before remote controls are subjective different people want want different things Um personally wa what I want from a remote control",
+    "Speaker D": ""
+  },
+  "words": [
+    {
+      "person": "Speaker C",
+      "start": 0.16,
+      "end": 0.73,
+      "text": "from"
+    },
+    {
+      "person": "Speaker C",
+      "start": 0.73,
+      "end": 0.94,
+      "text": "from"
+    },
+    {
+      "person": "Speaker C",
+      "start": 0.94,
+      "end": 1.05,
+      "text": "the"
+    },
+    {
+      "person": "Speaker C",
+      "start": 1.05,
+      "end": 1.26,
+      "text": "large"
+    },
+    {
+      "person": "Speaker C",
+      "start": 1.26,
+      "end": 1.75,
+      "text": "majority"
+    },
+    {
+      "person": "Speaker C",
+      "start": 1.75,
+      "end": 1.87,
+      "text": "of"
+    },
+    {
+      "person": "Speaker C",
+      "start": 1.87,
+      "end": 2.13,
+      "text": "remote"
+    },
+    {
+      "person": "Speaker C",
+      "start": 2.13,
+      "end": 2.7,
+      "text": "controls"
+    },
+    {
+      "person": "Speaker C",
+      "start": 4.49,
+      "end": 4.72,
+      "text": "Here's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 4.72,
+      "end": 4.89,
+      "text": "two"
+    },
+    {
+      "person": "Speaker C",
+      "start": 4.89,
+      "end": 5.75,
+      "text": "examples"
+    },
+    {
+      "person": "Speaker C",
+      "start": 5.75,
+      "end": 6.69,
+      "text": "uh"
+    },
+    {
+      "person": "Speaker C",
+      "start": 6.69,
+      "end": 7.06,
+      "text": "probably"
+    },
+    {
+      "person": "Speaker C",
+      "start": 7.06,
+      "end": 7.19,
+      "text": "at"
+    },
+    {
+      "person": "Speaker C",
+      "start": 7.19,
+      "end": 7.55,
+      "text": "the"
+    },
+    {
+      "person": "Speaker C",
+      "start": 7.55,
+      "end": 7.98,
+      "text": "extreme"
+    },
+    {
+      "person": "Speaker C",
+      "start": 7.98,
+      "end": 8.26,
+      "text": "ends"
+    },
+    {
+      "person": "Speaker C",
+      "start": 8.26,
+      "end": 8.36,
+      "text": "of"
+    },
+    {
+      "person": "Speaker C",
+      "start": 8.36,
+      "end": 8.45,
+      "text": "the"
+    },
+    {
+      "person": "Speaker C",
+      "start": 8.45,
+      "end": 9.15,
+      "text": "spectrum"
+    },
+    {
+      "person": "Speaker C",
+      "start": 9.15,
+      "end": 10.03,
+      "text": "Um"
+    },
+    {
+      "person": "Speaker C",
+      "start": 10.03,
+      "end": 10.17,
+      "text": "on"
+    },
+    {
+      "person": "Speaker C",
+      "start": 10.17,
+      "end": 10.26,
+      "text": "the"
+    },
+    {
+      "person": "Speaker C",
+      "start": 10.26,
+      "end": 10.57,
+      "text": "left"
+    },
+    {
+      "person": "Speaker C",
+      "start": 10.57,
+      "end": 10.96,
+      "text": "here"
+    },
+    {
+      "person": "Speaker C",
+      "start": 10.96,
+      "end": 11.21,
+      "text": "we've"
+    },
+    {
+      "person": "Speaker C",
+      "start": 11.21,
+      "end": 11.86,
+      "text": "got"
+    },
+    {
+      "person": "Speaker C",
+      "start": 11.86,
+      "end": 13.24,
+      "text": "uh"
+    },
+    {
+      "person": "Speaker C",
+      "start": 13.24,
+      "end": 13.58,
+      "text": "an"
+    },
+    {
+      "person": "Speaker C",
+      "start": 13.58,
+      "end": 15.27,
+      "text": "engineering-based"
+    },
+    {
+      "person": "Speaker C",
+      "start": 15.27,
+      "end": 15.69,
+      "text": "design"
+    },
+    {
+      "person": "Speaker C",
+      "start": 15.69,
+      "end": 15.84,
+      "text": "for"
+    },
+    {
+      "person": "Speaker C",
+      "start": 15.84,
+      "end": 15.88,
+      "text": "a"
+    },
+    {
+      "person": "Speaker C",
+      "start": 15.88,
+      "end": 16.22,
+      "text": "remote"
+    },
+    {
+      "person": "Speaker C",
+      "start": 16.22,
+      "end": 16.76,
+      "text": "control"
+    },
+    {
+      "person": "Speaker C",
+      "start": 16.76,
+      "end": 16.95,
+      "text": "so"
+    },
+    {
+      "person": "Speaker C",
+      "start": 16.95,
+      "end": 17.08,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 17.08,
+      "end": 17.28,
+      "text": "one"
+    },
+    {
+      "person": "Speaker C",
+      "start": 17.28,
+      "end": 17.43,
+      "text": "that's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 17.43,
+      "end": 17.98,
+      "text": "got"
+    },
+    {
+      "person": "Speaker C",
+      "start": 17.98,
+      "end": 18.21,
+      "text": "lots"
+    },
+    {
+      "person": "Speaker C",
+      "start": 18.21,
+      "end": 18.3,
+      "text": "of"
+    },
+    {
+      "person": "Speaker C",
+      "start": 18.3,
+      "end": 18.84,
+      "text": "buttons"
+    },
+    {
+      "person": "Speaker C",
+      "start": 18.84,
+      "end": 19.18,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 19.18,
+      "end": 19.35,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 19.35,
+      "end": 19.64,
+      "text": "fully"
+    },
+    {
+      "person": "Speaker C",
+      "start": 19.64,
+      "end": 20.74,
+      "text": "featured"
+    },
+    {
+      "person": "Speaker C",
+      "start": 20.74,
+      "end": 21.17,
+      "text": "everything"
+    },
+    {
+      "person": "Speaker C",
+      "start": 21.17,
+      "end": 21.33,
+      "text": "you"
+    },
+    {
+      "person": "Speaker C",
+      "start": 21.33,
+      "end": 21.56,
+      "text": "might"
+    },
+    {
+      "person": "Speaker C",
+      "start": 21.56,
+      "end": 21.94,
+      "text": "possibly"
+    },
+    {
+      "person": "Speaker C",
+      "start": 21.94,
+      "end": 22.1,
+      "text": "want"
+    },
+    {
+      "person": "Speaker C",
+      "start": 22.1,
+      "end": 22.2,
+      "text": "to"
+    },
+    {
+      "person": "Speaker C",
+      "start": 22.2,
+      "end": 22.42,
+      "text": "do"
+    },
+    {
+      "person": "Speaker C",
+      "start": 22.42,
+      "end": 22.57,
+      "text": "is"
+    },
+    {
+      "person": "Speaker C",
+      "start": 22.57,
+      "end": 22.81,
+      "text": "there"
+    },
+    {
+      "person": "Speaker C",
+      "start": 22.81,
+      "end": 22.94,
+      "text": "you"
+    },
+    {
+      "person": "Speaker C",
+      "start": 22.94,
+      "end": 23.05,
+      "text": "know"
+    },
+    {
+      "person": "Speaker C",
+      "start": 23.05,
+      "end": 23.19,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 23.19,
+      "end": 23.62,
+      "text": "got"
+    },
+    {
+      "person": "Speaker C",
+      "start": 23.62,
+      "end": 24.04,
+      "text": "forward"
+    },
+    {
+      "person": "Speaker C",
+      "start": 24.04,
+      "end": 24.57,
+      "text": "backwards"
+    },
+    {
+      "person": "Speaker C",
+      "start": 24.57,
+      "end": 24.78,
+      "text": "up"
+    },
+    {
+      "person": "Speaker C",
+      "start": 24.78,
+      "end": 25.23,
+      "text": "down"
+    },
+    {
+      "person": "Speaker C",
+      "start": 25.23,
+      "end": 25.54,
+      "text": "channel"
+    },
+    {
+      "person": "Speaker C",
+      "start": 25.54,
+      "end": 26.11,
+      "text": "numbers"
+    },
+    {
+      "person": "Speaker C",
+      "start": 26.11,
+      "end": 26.77,
+      "text": "volume"
+    },
+    {
+      "person": "Speaker C",
+      "start": 26.77,
+      "end": 27.05,
+      "text": "uh"
+    },
+    {
+      "person": "Speaker C",
+      "start": 27.05,
+      "end": 27.42,
+      "text": "freeze"
+    },
+    {
+      "person": "Speaker C",
+      "start": 27.42,
+      "end": 28.56,
+      "text": "frame"
+    },
+    {
+      "person": "Speaker C",
+      "start": 28.56,
+      "end": 28.81,
+      "text": "Yeah"
+    },
+    {
+      "person": "Speaker C",
+      "start": 28.81,
+      "end": 29.21,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 29.21,
+      "end": 29.44,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 29.44,
+      "end": 29.72,
+      "text": "fully"
+    },
+    {
+      "person": "Speaker C",
+      "start": 29.72,
+      "end": 30.35,
+      "text": "featured"
+    },
+    {
+      "person": "Speaker C",
+      "start": 30.35,
+      "end": 31.41,
+      "text": "and"
+    },
+    {
+      "person": "Speaker C",
+      "start": 31.41,
+      "end": 31.52,
+      "text": "it"
+    },
+    {
+      "person": "Speaker C",
+      "start": 31.52,
+      "end": 31.69,
+      "text": "might"
+    },
+    {
+      "person": "Speaker C",
+      "start": 31.69,
+      "end": 31.86,
+      "text": "take"
+    },
+    {
+      "person": "Speaker C",
+      "start": 31.86,
+      "end": 31.93,
+      "text": "a"
+    },
+    {
+      "person": "Speaker C",
+      "start": 31.93,
+      "end": 32.14,
+      "text": "while"
+    },
+    {
+      "person": "Speaker C",
+      "start": 32.14,
+      "end": 32.25,
+      "text": "to"
+    },
+    {
+      "person": "Speaker C",
+      "start": 32.25,
+      "end": 32.42,
+      "text": "get"
+    },
+    {
+      "person": "Speaker C",
+      "start": 32.42,
+      "end": 32.52,
+      "text": "to"
+    },
+    {
+      "person": "Speaker C",
+      "start": 32.52,
+      "end": 32.71,
+      "text": "learn"
+    },
+    {
+      "person": "Speaker C",
+      "start": 32.71,
+      "end": 32.84,
+      "text": "to"
+    },
+    {
+      "person": "Speaker C",
+      "start": 32.84,
+      "end": 33.04,
+      "text": "use"
+    },
+    {
+      "person": "Speaker C",
+      "start": 33.04,
+      "end": 33.38,
+      "text": "it"
+    },
+    {
+      "person": "Speaker C",
+      "start": 33.38,
+      "end": 33.69,
+      "text": "but"
+    },
+    {
+      "person": "Speaker C",
+      "start": 33.69,
+      "end": 33.93,
+      "text": "once"
+    },
+    {
+      "person": "Speaker C",
+      "start": 33.93,
+      "end": 34.08,
+      "text": "you've"
+    },
+    {
+      "person": "Speaker C",
+      "start": 34.08,
+      "end": 34.34,
+      "text": "learned"
+    },
+    {
+      "person": "Speaker C",
+      "start": 34.34,
+      "end": 34.67,
+      "text": "it"
+    },
+    {
+      "person": "Speaker C",
+      "start": 34.67,
+      "end": 34.8,
+      "text": "you"
+    },
+    {
+      "person": "Speaker C",
+      "start": 34.8,
+      "end": 35.03,
+      "text": "can"
+    },
+    {
+      "person": "Speaker C",
+      "start": 35.03,
+      "end": 35.16,
+      "text": "you"
+    },
+    {
+      "person": "Speaker C",
+      "start": 35.16,
+      "end": 35.28,
+      "text": "can"
+    },
+    {
+      "person": "Speaker C",
+      "start": 35.28,
+      "end": 35.42,
+      "text": "do"
+    },
+    {
+      "person": "Speaker C",
+      "start": 35.42,
+      "end": 35.72,
+      "text": "whatever"
+    },
+    {
+      "person": "Speaker C",
+      "start": 35.72,
+      "end": 35.81,
+      "text": "you"
+    },
+    {
+      "person": "Speaker C",
+      "start": 35.81,
+      "end": 36.05,
+      "text": "want"
+    },
+    {
+      "person": "Speaker C",
+      "start": 36.05,
+      "end": 36.16,
+      "text": "with"
+    },
+    {
+      "person": "Speaker C",
+      "start": 36.16,
+      "end": 36.32,
+      "text": "your"
+    },
+    {
+      "person": "Speaker C",
+      "start": 36.32,
+      "end": 36.83,
+      "text": "T_V_"
+    },
+    {
+      "person": "Speaker C",
+      "start": 37.58,
+      "end": 37.66,
+      "text": "The"
+    },
+    {
+      "person": "Speaker C",
+      "start": 37.66,
+      "end": 37.81,
+      "text": "one"
+    },
+    {
+      "person": "Speaker C",
+      "start": 37.81,
+      "end": 37.91,
+      "text": "on"
+    },
+    {
+      "person": "Speaker C",
+      "start": 37.91,
+      "end": 37.99,
+      "text": "the"
+    },
+    {
+      "person": "Speaker C",
+      "start": 37.99,
+      "end": 38.31,
+      "text": "right"
+    },
+    {
+      "person": "Speaker C",
+      "start": 38.31,
+      "end": 38.4,
+      "text": "is"
+    },
+    {
+      "person": "Speaker C",
+      "start": 38.4,
+      "end": 38.48,
+      "text": "a"
+    },
+    {
+      "person": "Speaker C",
+      "start": 38.48,
+      "end": 38.63,
+      "text": "lot"
+    },
+    {
+      "person": "Speaker C",
+      "start": 38.63,
+      "end": 38.79,
+      "text": "more"
+    },
+    {
+      "person": "Speaker C",
+      "start": 38.79,
+      "end": 39.39,
+      "text": "basic"
+    },
+    {
+      "person": "Speaker C",
+      "start": 39.39,
+      "end": 39.59,
+      "text": "It's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 39.59,
+      "end": 39.82,
+      "text": "just"
+    },
+    {
+      "person": "Speaker C",
+      "start": 39.82,
+      "end": 40.3,
+      "text": "got"
+    },
+    {
+      "person": "Speaker C",
+      "start": 40.3,
+      "end": 40.39,
+      "text": "the"
+    },
+    {
+      "person": "Speaker C",
+      "start": 40.39,
+      "end": 40.8,
+      "text": "essential"
+    },
+    {
+      "person": "Speaker C",
+      "start": 40.8,
+      "end": 41.24,
+      "text": "functions"
+    },
+    {
+      "person": "Speaker C",
+      "start": 41.24,
+      "end": 41.34,
+      "text": "of"
+    },
+    {
+      "person": "Speaker C",
+      "start": 41.34,
+      "end": 41.41,
+      "text": "the"
+    },
+    {
+      "person": "Speaker C",
+      "start": 41.41,
+      "end": 41.83,
+      "text": "T_V_"
+    },
+    {
+      "person": "Speaker C",
+      "start": 41.83,
+      "end": 42.22,
+      "text": "changing"
+    },
+    {
+      "person": "Speaker C",
+      "start": 42.22,
+      "end": 42.31,
+      "text": "the"
+    },
+    {
+      "person": "Speaker C",
+      "start": 42.31,
+      "end": 42.65,
+      "text": "channel"
+    },
+    {
+      "person": "Speaker C",
+      "start": 42.65,
+      "end": 42.86,
+      "text": "play"
+    },
+    {
+      "person": "Speaker C",
+      "start": 42.86,
+      "end": 43.34,
+      "text": "stop"
+    },
+    {
+      "person": "Speaker C",
+      "start": 43.34,
+      "end": 44.39,
+      "text": "volume"
+    },
+    {
+      "person": "Speaker C",
+      "start": 44.39,
+      "end": 44.56,
+      "text": "It"
+    },
+    {
+      "person": "Speaker C",
+      "start": 44.56,
+      "end": 44.72,
+      "text": "would"
+    },
+    {
+      "person": "Speaker C",
+      "start": 44.72,
+      "end": 44.83,
+      "text": "be"
+    },
+    {
+      "person": "Speaker C",
+      "start": 44.83,
+      "end": 44.91,
+      "text": "a"
+    },
+    {
+      "person": "Speaker C",
+      "start": 44.91,
+      "end": 45.08,
+      "text": "lot"
+    },
+    {
+      "person": "Speaker C",
+      "start": 45.08,
+      "end": 45.36,
+      "text": "quicker"
+    },
+    {
+      "person": "Speaker C",
+      "start": 45.36,
+      "end": 45.51,
+      "text": "to"
+    },
+    {
+      "person": "Speaker C",
+      "start": 45.51,
+      "end": 45.7,
+      "text": "learn"
+    },
+    {
+      "person": "Speaker C",
+      "start": 45.7,
+      "end": 45.83,
+      "text": "to"
+    },
+    {
+      "person": "Speaker C",
+      "start": 45.83,
+      "end": 46.03,
+      "text": "use"
+    },
+    {
+      "person": "Speaker C",
+      "start": 46.03,
+      "end": 46.47,
+      "text": "it"
+    },
+    {
+      "person": "Speaker C",
+      "start": 46.47,
+      "end": 47.3,
+      "text": "but"
+    },
+    {
+      "person": "Speaker C",
+      "start": 47.3,
+      "end": 48.34,
+      "text": "again"
+    },
+    {
+      "person": "Speaker C",
+      "start": 48.34,
+      "end": 48.46,
+      "text": "th"
+    },
+    {
+      "person": "Speaker C",
+      "start": 48.46,
+      "end": 48.72,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 48.72,
+      "end": 48.9,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 48.9,
+      "end": 49.18,
+      "text": "swings"
+    },
+    {
+      "person": "Speaker C",
+      "start": 49.18,
+      "end": 49.29,
+      "text": "and"
+    },
+    {
+      "person": "Speaker C",
+      "start": 49.29,
+      "end": 49.97,
+      "text": "roundabouts"
+    },
+    {
+      "person": "Speaker C",
+      "start": 49.97,
+      "end": 50.07,
+      "text": "There"
+    },
+    {
+      "person": "Speaker C",
+      "start": 50.07,
+      "end": 50.11,
+      "text": "are"
+    },
+    {
+      "person": "Speaker C",
+      "start": 50.11,
+      "end": 50.88,
+      "text": "disadvantages"
+    },
+    {
+      "person": "Speaker C",
+      "start": 50.88,
+      "end": 50.98,
+      "text": "you"
+    },
+    {
+      "person": "Speaker C",
+      "start": 50.98,
+      "end": 51.23,
+      "text": "can't"
+    },
+    {
+      "person": "Speaker C",
+      "start": 51.23,
+      "end": 51.43,
+      "text": "use"
+    },
+    {
+      "person": "Speaker C",
+      "start": 51.43,
+      "end": 52.0,
+      "text": "it"
+    },
+    {
+      "person": "Speaker C",
+      "start": 52.0,
+      "end": 52.35,
+      "text": "say"
+    },
+    {
+      "person": "Speaker C",
+      "start": 52.35,
+      "end": 53.24,
+      "text": "to"
+    },
+    {
+      "person": "Speaker C",
+      "start": 53.24,
+      "end": 53.38,
+      "text": "to"
+    },
+    {
+      "person": "Speaker C",
+      "start": 53.38,
+      "end": 53.77,
+      "text": "freeze"
+    },
+    {
+      "person": "Speaker C",
+      "start": 53.77,
+      "end": 53.84,
+      "text": "the"
+    },
+    {
+      "person": "Speaker C",
+      "start": 53.84,
+      "end": 54.36,
+      "text": "television"
+    },
+    {
+      "person": "Speaker C",
+      "start": 54.36,
+      "end": 54.89,
+      "text": "picture"
+    },
+    {
+      "person": "Speaker C",
+      "start": 54.89,
+      "end": 55.37,
+      "text": "Uh"
+    },
+    {
+      "person": "Speaker C",
+      "start": 55.37,
+      "end": 55.52,
+      "text": "there's"
+    },
+    {
+      "person": "Speaker C",
+      "start": 55.52,
+      "end": 55.6,
+      "text": "a"
+    },
+    {
+      "person": "Speaker C",
+      "start": 55.6,
+      "end": 55.79,
+      "text": "lot"
+    },
+    {
+      "person": "Speaker C",
+      "start": 55.79,
+      "end": 55.87,
+      "text": "of"
+    },
+    {
+      "person": "Speaker C",
+      "start": 55.87,
+      "end": 56.35,
+      "text": "features"
+    },
+    {
+      "person": "Speaker C",
+      "start": 56.35,
+      "end": 56.51,
+      "text": "that"
+    },
+    {
+      "person": "Speaker C",
+      "start": 56.51,
+      "end": 56.55,
+      "text": "are"
+    },
+    {
+      "person": "Speaker C",
+      "start": 56.55,
+      "end": 56.88,
+      "text": "missing"
+    },
+    {
+      "person": "Speaker C",
+      "start": 56.88,
+      "end": 57.04,
+      "text": "from"
+    },
+    {
+      "person": "Speaker C",
+      "start": 57.04,
+      "end": 57.21,
+      "text": "that"
+    },
+    {
+      "person": "Speaker C",
+      "start": 57.21,
+      "end": 57.48,
+      "text": "remote"
+    },
+    {
+      "person": "Speaker C",
+      "start": 57.48,
+      "end": 58.4,
+      "text": "control"
+    },
+    {
+      "person": "Speaker C",
+      "start": 58.4,
+      "end": 58.58,
+      "text": "So"
+    },
+    {
+      "person": "Speaker C",
+      "start": 58.58,
+      "end": 58.76,
+      "text": "we've"
+    },
+    {
+      "person": "Speaker C",
+      "start": 58.76,
+      "end": 58.9,
+      "text": "got"
+    },
+    {
+      "person": "Speaker C",
+      "start": 58.9,
+      "end": 59.62,
+      "text": "to"
+    },
+    {
+      "person": "Speaker C",
+      "start": 59.62,
+      "end": 59.74,
+      "text": "to"
+    },
+    {
+      "person": "Speaker C",
+      "start": 59.74,
+      "end": 60.0,
+      "text": "find"
+    },
+    {
+      "person": "Speaker C",
+      "start": 60.0,
+      "end": 60.67,
+      "text": "our"
+    },
+    {
+      "person": "Speaker C",
+      "start": 60.67,
+      "end": 60.91,
+      "text": "find"
+    },
+    {
+      "person": "Speaker C",
+      "start": 60.91,
+      "end": 60.96,
+      "text": "a"
+    },
+    {
+      "person": "Speaker C",
+      "start": 60.96,
+      "end": 61.06,
+      "text": "way"
+    },
+    {
+      "person": "Speaker C",
+      "start": 61.06,
+      "end": 61.14,
+      "text": "of"
+    },
+    {
+      "person": "Speaker C",
+      "start": 61.14,
+      "end": 61.54,
+      "text": "striking"
+    },
+    {
+      "person": "Speaker C",
+      "start": 61.54,
+      "end": 61.6,
+      "text": "a"
+    },
+    {
+      "person": "Speaker C",
+      "start": 61.6,
+      "end": 62.05,
+      "text": "balance"
+    },
+    {
+      "person": "Speaker C",
+      "start": 62.05,
+      "end": 62.35,
+      "text": "between"
+    },
+    {
+      "person": "Speaker C",
+      "start": 62.35,
+      "end": 62.44,
+      "text": "the"
+    },
+    {
+      "person": "Speaker C",
+      "start": 62.44,
+      "end": 62.67,
+      "text": "two"
+    },
+    {
+      "person": "Speaker C",
+      "start": 64.92,
+      "end": 65.91,
+      "text": "Um"
+    },
+    {
+      "person": "Speaker C",
+      "start": 65.91,
+      "end": 66.08,
+      "text": "as"
+    },
+    {
+      "person": "Speaker C",
+      "start": 66.08,
+      "end": 66.14,
+      "text": "I"
+    },
+    {
+      "person": "Speaker C",
+      "start": 66.14,
+      "end": 66.32,
+      "text": "said"
+    },
+    {
+      "person": "Speaker C",
+      "start": 66.32,
+      "end": 67.04,
+      "text": "before"
+    },
+    {
+      "person": "Speaker C",
+      "start": 67.04,
+      "end": 67.33,
+      "text": "remote"
+    },
+    {
+      "person": "Speaker C",
+      "start": 67.33,
+      "end": 67.72,
+      "text": "controls"
+    },
+    {
+      "person": "Speaker C",
+      "start": 67.72,
+      "end": 67.87,
+      "text": "are"
+    },
+    {
+      "person": "Speaker C",
+      "start": 67.87,
+      "end": 68.89,
+      "text": "subjective"
+    },
+    {
+      "person": "Speaker C",
+      "start": 68.89,
+      "end": 69.15,
+      "text": "different"
+    },
+    {
+      "person": "Speaker C",
+      "start": 69.15,
+      "end": 69.42,
+      "text": "people"
+    },
+    {
+      "person": "Speaker C",
+      "start": 69.42,
+      "end": 69.96,
+      "text": "want"
+    },
+    {
+      "person": "Speaker C",
+      "start": 69.96,
+      "end": 70.16,
+      "text": "want"
+    },
+    {
+      "person": "Speaker C",
+      "start": 70.16,
+      "end": 70.43,
+      "text": "different"
+    },
+    {
+      "person": "Speaker C",
+      "start": 70.43,
+      "end": 71.35,
+      "text": "things"
+    },
+    {
+      "person": "Speaker C",
+      "start": 71.35,
+      "end": 72.33,
+      "text": "Um"
+    },
+    {
+      "person": "Speaker C",
+      "start": 72.33,
+      "end": 72.8,
+      "text": "personally"
+    },
+    {
+      "person": "Speaker C",
+      "start": 72.8,
+      "end": 73.42,
+      "text": "wa"
+    },
+    {
+      "person": "Speaker C",
+      "start": 73.42,
+      "end": 73.62,
+      "text": "what"
+    },
+    {
+      "person": "Speaker C",
+      "start": 73.62,
+      "end": 73.66,
+      "text": "I"
+    },
+    {
+      "person": "Speaker C",
+      "start": 73.66,
+      "end": 73.91,
+      "text": "want"
+    },
+    {
+      "person": "Speaker C",
+      "start": 73.91,
+      "end": 74.13,
+      "text": "from"
+    },
+    {
+      "person": "Speaker C",
+      "start": 74.13,
+      "end": 74.24,
+      "text": "a"
+    },
+    {
+      "person": "Speaker C",
+      "start": 74.24,
+      "end": 74.5,
+      "text": "remote"
+    },
+    {
+      "person": "Speaker C",
+      "start": 74.5,
+      "end": 75.0,
+      "text": "control"
+    }
+  ],
+  "reference_tracks": {
+    "Speaker A": "ref_A.wav",
+    "Speaker B": "ref_B.wav",
+    "Speaker C": "ref_C.wav",
+    "Speaker D": "ref_D.wav"
+  }
+}
