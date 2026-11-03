@@ -12,7 +12,7 @@ from .activity import overlap_windows, speech_segments
 from .calls import CallLog
 from .media import SEPARATION_SR, TRANSCRIBE_SR, prepare_analysis_video, probe, read_audio, resample, write_wav
 from .spark import assign_threads, catch_up
-from .timeline import build_captions
+from .timeline import build_captions, sentence_segments
 from .tracking import Tap, Tracks, track_people
 from .transcribe import Turn, transcribe
 
@@ -88,6 +88,7 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
     stems: list[str | None] = [None] * len(names)
     array_metadata = None
     array_baseline = []
+    motion_markers, motion_thresholds, motion_protocol = {}, {}, None
     if opt.separator == "array":
         import time
 
@@ -195,6 +196,20 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
 
     report("Building per-person captions")
     captions = build_captions(names, turns, activity)
+    if opt.separator == "lite":
+        from .motion import (
+            MIN_EVENT_SECONDS,
+            MOTION_MAD_MULTIPLIER,
+            MOTION_NOISE_FLOOR,
+            MOTION_SMOOTH_SECONDS,
+            talked_over,
+        )
+
+        motion_markers, motion_thresholds = talked_over(captions, turns, motion, info.fps)
+        motion_protocol = {
+            "noise_floor": MOTION_NOISE_FLOOR, "mad_multiplier": MOTION_MAD_MULTIPLIER,
+            "smooth_seconds": MOTION_SMOOTH_SECONDS, "min_event_seconds": MIN_EVENT_SECONDS,
+        }
     if opt.spark and captions:
         report("Grouping conversations with Muse Spark")
     threads = assign_threads(captions, calls) if opt.spark and captions else []
@@ -211,10 +226,14 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
 
     from .spark import translate_captions
 
-    translations, translation_status = {}, {}
+    translations, translation_status, translation_segments = {}, {}, {}
     for language in opt.translate or []:
         report(f"Translating captions to {language} with Muse Spark")
         translations[language], translation_status[language] = translate_captions(captions, language, calls)
+        translation_segments[language] = {
+            caption.id: sentence_segments(translations[language][caption.id], caption.start, caption.end, caption.id)
+            for caption in captions if caption.id in translations[language]
+        }
 
     doc = {
         "video": "analysis.mp4",
@@ -234,6 +253,10 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
         "catchup_model": opt.catchup_model,
         "translations": translations,
         "translation_status": translation_status,
+        "translation_segments": translation_segments,
+        "talked_over": motion_markers,
+        "motion_thresholds": motion_thresholds,
+        "motion_protocol": motion_protocol,
         "array": array_metadata,
         "array_baseline": array_baseline,
     }

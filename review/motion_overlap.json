@@ -1,0 +1,130 @@
+{
+  "windows": [
+    {
+      "run": "runs/ami_lite",
+      "audio": "Array1-01 single-mic",
+      "mapping": {
+        "A": 3,
+        "B": 1,
+        "C": 0,
+        "D": 2
+      },
+      "confidence": {
+        "A": 0.2789709667737049,
+        "B": 0.13065072529217714,
+        "C": 0.3575841550828842,
+        "D": 0.0444400952066826
+      },
+      "motion_protocol": {
+        "noise_floor": 0.1,
+        "mad_multiplier": 3.0,
+        "smooth_seconds": 0.5,
+        "min_event_seconds": 0.5
+      },
+      "motion_thresholds": {
+        "0": 4.493983836375141,
+        "1": 1.5153903903903903,
+        "2": 1.3310126506241216,
+        "3": 3.0732267399713504
+      },
+      "metrics": {
+        "frame_rate": 25.0,
+        "frame_precision": "40 ms frames at 25 fps",
+        "precision": 0.0987,
+        "recall": 0.1888,
+        "true_positive_frames": 54,
+        "predicted_frames": 547,
+        "truth_frames": 286,
+        "per_person": {
+          "Speaker A": {
+            "precision": 0.161,
+            "recall": 0.2705,
+            "predicted_frames": 205,
+            "truth_frames": 122
+          },
+          "Speaker B": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "predicted_frames": 56,
+            "truth_frames": 49
+          },
+          "Speaker C": {
+            "precision": 0.0495,
+            "recall": 0.1695,
+            "predicted_frames": 202,
+            "truth_frames": 59
+          },
+          "Speaker D": {
+            "precision": 0.131,
+            "recall": 0.1964,
+            "predicted_frames": 84,
+            "truth_frames": 56
+          }
+        }
+      },
+      "written": true
+    },
+    {
+      "run": "runs/ami_lite_635",
+      "audio": "Array1-01 single-mic",
+      "mapping": {
+        "A": 1,
+        "B": 3,
+        "C": 0
+      },
+      "confidence": {
+        "A": 0.3080104048924135,
+        "B": 0.18766435522265873,
+        "C": 0.2340147818967541
+      },
+      "motion_protocol": {
+        "noise_floor": 0.1,
+        "mad_multiplier": 3.0,
+        "smooth_seconds": 0.5,
+        "min_event_seconds": 0.5
+      },
+      "motion_thresholds": {
+        "0": 4.313370674356699,
+        "1": 2.1330409356725144,
+        "2": 0.5650765201239298,
+        "3": 2.3135034013605438
+      },
+      "metrics": {
+        "frame_rate": 25.0,
+        "frame_precision": "40 ms frames at 25 fps",
+        "precision": 0.0695,
+        "recall": 0.1181,
+        "true_positive_frames": 34,
+        "predicted_frames": 489,
+        "truth_frames": 288,
+        "per_person": {
+          "Speaker A": {
+            "precision": 0.0552,
+            "recall": 0.1395,
+            "predicted_frames": 326,
+            "truth_frames": 129
+          },
+          "Speaker B": {
+            "precision": 0.0982,
+            "recall": 0.129,
+            "predicted_frames": 163,
+            "truth_frames": 124
+          },
+          "Speaker C": {
+            "precision": null,
+            "recall": 0.0,
+            "predicted_frames": 0,
+            "truth_frames": 9
+          },
+          "Speaker D": {
+            "precision": null,
+            "recall": 0.0,
+            "predicted_frames": 0,
+            "truth_frames": 26
+          }
+        }
+      },
+      "written": true
+    }
+  ]
+}

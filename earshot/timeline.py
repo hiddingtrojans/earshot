@@ -35,11 +35,37 @@ class Caption:
     thread: int | None = None
 
     def to_json(self) -> dict:
-        return asdict(self)
+        payload = asdict(self)
+        payload["sentences"] = sentence_segments(self.text, self.start, self.end, self.id)
+        return payload
 
 
 def tokens(text: str) -> list[str]:
     return re.findall(r"[\w']+", text.lower())
+
+
+def sentence_segments(text: str, start: float, end: float, caption_id: str,
+                      max_words: int = 12) -> list[dict]:
+    chunks = []
+    for clause in re.split(r"(?<=[.!?])\s+", text.strip()):
+        words = clause.split()
+        chunks.extend(words[index:index + max_words] for index in range(0, len(words), max_words))
+    if not chunks:
+        return [{"caption_id": caption_id, "segment": 0, "start": start, "end": end,
+                 "text": text, "estimated": True}]
+    total = sum(len(tokens(" ".join(chunk))) for chunk in chunks)
+    out = []
+    elapsed = 0.0
+    for index, chunk in enumerate(chunks):
+        fraction = len(tokens(" ".join(chunk))) / total
+        segment_start = start + elapsed * (end - start)
+        elapsed += fraction
+        out.append({
+            "caption_id": caption_id, "segment": index,
+            "start": round(segment_start, 3), "end": round(end if index == len(chunks) - 1 else start + elapsed * (end - start), 3),
+            "text": " ".join(chunk), "estimated": True,
+        })
+    return out
 
 
 def jaccard(a: str, b: str) -> float:

@@ -20,6 +20,19 @@ The single-stream baseline is **oracle-mapped**: each anonymous Voice speaker is
 
 Lite does not separate audio and cannot recover words omitted by single-stream Voice. Its central 60% width, 30–60% mask-height mouth band, 0.5 s smoothing, z-scoring, Pearson correlation and `scipy.optimize.linear_sum_assignment` match the oracle baseline on its three 745 s repeats.
 
+## Review round 5: sentence timing and Lite motion estimates
+
+Sentence bubbles preserve original caption IDs and divide text into punctuation-aware chunks of at most 12 words. Their start/end times are **estimated from text length**, and the viewer labels that estimate. Translated segments use the same original caption IDs. `Caption.to_json` emits nested `sentences` without changing the original caption or citation schema.
+
+Lite's motion-based “was also talking” markers use the fixed protocol chosen before evaluation: 0.5 s smoothing, threshold `max(0.1, median + 3×MAD)`, and 0.5 s minimum events. The displayed label is a **motion estimate**, not verified speech. Precision/recall are frame-level measurements at 40 ms against exact AMI word overlaps:
+
+| Window | Precision | Recall | True-positive frames | Predicted frames | Truth frames |
+|---|---:|---:|---:|---:|---:|
+| 745 s single-mic Array1-01 | 0.0987 | 0.1888 | 54 | 547 | 286 |
+| 635 s single-mic Array1-01 | 0.0695 | 0.1181 | 34 | 489 | 288 |
+
+These are weak motion estimates, not evidence of recovered overlap words. Exact per-person values and thresholds are in `review/motion_overlap.json`; generation and scoring use `tools/bench_motion_overlap.py`.
+
 ## Review round 2: full `keep` decision and timing
 
 **SAM Audio `keep` is a measured NO-GO on quality, not speed.** Right-person 0.386 is below 0.80 in every repeat. Overlap recall 0.098 must be at least the same-run baseline mean +0.10 = **0.580**, so it falls short by 0.382; every repeat also fails its paired comparison. WER is 0.967 and is reported rather than used as a gate. Lite remains the demo; the failed run is evidence, not demo media.

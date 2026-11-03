@@ -58,6 +58,8 @@
             border-radius: 14px; padding: 8px 14px 10px; font-size: var(--bubble-size);
             box-shadow: 0 2px 0 rgba(18, 26, 34, .25); transition: opacity .18s ease; }
   .bubble .who { display: block; font-size: .72em; font-weight: 700; margin-bottom: 2px; }
+  .bubble .estimate { font-size: .8em; font-weight: 400; opacity: .72; margin-left: 5px; }
+  .bubble .talked-over { display: block; margin-top: 5px; font-size: .75em; font-weight: 400; color: var(--ink-soft); }
   .bubble .tail { position: absolute; left: var(--tail-x, 50%); bottom: -11px; width: 0; height: 0;
                   border: 11px solid transparent; border-bottom: 0; border-top-color: var(--paper);
                   transform: translateX(-50%); }
@@ -190,7 +192,12 @@ function buildLanguage() {
   };
 }
 function captionText(c) {
-  return language && doc.translations?.[language]?.[c.id] ? doc.translations[language][c.id] : c.text;
+  if (c.segment !== undefined && c.caption_id) {
+    const translated = doc.translation_segments?.[language]?.[c.caption_id]?.[c.segment];
+    if (language && translated) return translated.text;
+  }
+  const id = c.caption_id || c.id;
+  return language && doc.translations?.[language]?.[id] ? doc.translations[language][id] : c.text;
 }
 
 async function load() {
@@ -252,7 +259,14 @@ function anchorAt(p, t) {
 
 /* ---------- bubbles ---------- */
 function activeCaptions(t) {
-  return doc.captions.filter(c => t >= c.start - 0.05 && t <= c.end + 1.2);
+  const expanded = [];
+  for (const c of doc.captions) {
+    const segments = c.sentences?.length ? c.sentences : [c];
+    for (const segment of segments) {
+      expanded.push({...c, ...segment, id: `${c.id}.s${segment.segment ?? 0}`, caption_id: c.id});
+    }
+  }
+  return expanded.filter(c => t >= c.start - 0.05 && t <= c.end + 1.2);
 }
 
 function revealed(c, t) {
@@ -286,21 +300,30 @@ function render(t) {
     if (!el) {
       el = document.createElement("div");
       el.dataset.caption = c.id;
-      el.innerHTML = `<span class="who" style="color:${doc.people[p].color}">${doc.people[p].name}</span><span class="txt"></span><span class="original"></span><span class="tail"></span>`;
+      el.innerHTML = `<span class="who" style="color:${doc.people[p].color}">${doc.people[p].name}${c.estimated ? '<span class="estimate">estimated timing</span>' : ''}</span><span class="txt"></span><span class="original"></span><span class="tail"></span>`;
     }
     el.className = "bubble" + (t > c.end ? " fading" : "");
     el.tabIndex = -1;
-    el.title = "";
+    const captionId = c.caption_id || c.id;
+    el.title = `Caption ${captionId}` + (c.estimated ? "; timing estimated from text length" : "");
     const person = doc.people[p];
     el.querySelector(".txt").textContent = revealed(c, t);
     el.querySelector(".original").textContent = "";
     if (language && captionText(c) !== c.text) {
       el.classList.add("has-original");
       el.tabIndex = 0;
-      el.title = `Original: ${c.text}`;
+      el.title += `\nOriginal: ${c.text}`;
       el.querySelector(".original").textContent = `Original: ${c.text}`;
     }
     el.style.borderTop = `4px solid ${person.color}`;
+    el.querySelectorAll(".talked-over").forEach(note => note.remove());
+    const other = (doc.talked_over?.[captionId] || []).find(marker => t >= marker.start && t <= marker.end);
+    if (other) {
+      const note = document.createElement("span");
+      note.className = "talked-over";
+      note.textContent = `${doc.people[other.person].name} was also talking (motion estimate)`;
+      el.appendChild(note);
+    }
     if (!el.isConnected) overlay.appendChild(el);
     const bw = el.offsetWidth, bh = el.offsetHeight;
     const headX = a ? a[1] * W : (p + 0.5) * W / doc.people.length;
