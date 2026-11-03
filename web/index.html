@@ -105,6 +105,16 @@
   .line .t { font-size: 13px; color: var(--ink-soft); }
   .line.now { background: var(--paper); }
   .line .sim { font-size: 12px; color: var(--ink-soft); font-style: italic; }
+  .board { background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; }
+  .board .board-note, .board .evidence { color: var(--ink-soft); font-size: 13px; margin: 5px 0 10px; }
+  .board-item { border-left: 4px solid var(--focus); padding: 5px 10px; margin: 10px 0; }
+  .board-item.question { border-left-color: #7BAE37; }
+  .board-item p { margin: 2px 0 5px; }
+  .board-item .kind { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--ink-soft); }
+  .board-item .owner { font-size: 14px; }
+  .board-review summary { cursor: pointer; font-size: 13px; }
+  .board-review .board-item { border-left-color: #9B2C2C; }
+  .board-review .fallback { color: var(--ink-soft); font-size: 13px; }
 
   footer { grid-column: 1 / -1; margin-top: 14px; border-top: 1px solid var(--rule); padding-top: 10px; }
   footer table { border-collapse: collapse; font-size: 13px; color: var(--ink-soft); }
@@ -147,6 +157,7 @@
   </main>
 
   <aside>
+    <section class="board" id="board" hidden></section>
     <section class="missed" aria-live="polite">
       <h2 id="missed-title">What did I miss?</h2>
       <div id="missed"><p class="empty">Pick a person, or the whole table, to catch up on the last 30 seconds.</p></div>
@@ -200,10 +211,71 @@ function captionText(c) {
   return language && doc.translations?.[language]?.[id] ? doc.translations[language][id] : c.text;
 }
 
+function citeButtons(parent, ids) {
+  for (const id of ids || []) {
+    const caption = doc.captions.find(c => c.id === id);
+    if (!caption) continue;
+    const button = document.createElement("button");
+    button.className = "cite"; button.textContent = `${id} · ${fmt(caption.start)}`;
+    button.title = `${caption.name}: ${caption.text}`;
+    button.onclick = () => { video.currentTime = caption.start; };
+    parent.appendChild(button);
+  }
+}
+
+function buildBoard() {
+  const box = $("#board"), data = doc.board;
+  if (!data) { box.hidden = true; return; }
+  box.hidden = false;
+  const title = document.createElement("h2"); title.textContent = "Questions & commitments";
+  const note = document.createElement("p"); note.className = "board-note";
+  note.textContent = "Suggested open questions and explicit acceptances. Local Glimmer checked the cited captions; this does not verify transcription accuracy. Review before acting.";
+  box.append(title, note);
+  for (const item of data.items || []) {
+    const card = document.createElement("article"); card.className = `board-item ${item.kind}`;
+    const kind = document.createElement("span"); kind.className = "kind";
+    kind.textContent = item.kind === "commitment" ? "Evidence-checked commitment" : "Open question";
+    const text = document.createElement("p"); text.textContent = item.text;
+    card.append(kind, text);
+    if (item.owner || item.due) {
+      const owner = document.createElement("div"); owner.className = "owner";
+      owner.textContent = [item.owner && `Owner: ${item.owner}`, item.due && `Due: ${item.due}`].filter(Boolean).join(" · ");
+      card.appendChild(owner);
+    }
+    citeButtons(card, item.cite); box.appendChild(card);
+  }
+  if (!(data.items || []).length) {
+    const empty = document.createElement("p"); empty.className = "board-note";
+    empty.textContent = "No question or commitment passed the evidence checks.";
+    box.appendChild(empty);
+  }
+  if ((data.review || []).length) {
+    const details = document.createElement("details"); details.className = "board-review";
+    const summary = document.createElement("summary");
+    summary.textContent = `${data.review.length} proposal${data.review.length === 1 ? "" : "s"} not accepted — inspect why`;
+    details.appendChild(summary);
+    for (const item of data.review) {
+      const card = document.createElement("article"); card.className = "board-item";
+      const status = document.createElement("span"); status.className = "kind"; status.textContent = item.status.replaceAll("_", " ");
+      const text = document.createElement("p"); text.textContent = item.text;
+      const reason = document.createElement("p"); reason.className = "evidence"; reason.textContent = item.evidence_check;
+      card.append(status, text, reason);
+      if (item.fallback) {
+        const fallback = document.createElement("p"); fallback.className = "fallback";
+        fallback.textContent = `Verbatim evidence: ${item.fallback.text}`; card.appendChild(fallback);
+      }
+      citeButtons(card, item.cite); details.appendChild(card);
+    }
+    box.appendChild(details);
+  }
+  const actions = document.createElement("p"); actions.className = "board-note";
+  actions.textContent = data.actions || "Review only; no automatic actions."; box.appendChild(actions);
+}
+
 async function load() {
   doc = await (await fetch("earshot.json")).json();
   video.src = doc.video;
-  buildLanguage(); buildControls(); buildLanes(); buildThreads(); loadCalls();
+  buildLanguage(); buildControls(); buildLanes(); buildThreads(); buildBoard(); loadCalls();
   requestAnimationFrame(tick);
 }
 

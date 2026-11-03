@@ -22,6 +22,11 @@ def build_demo(source: Path, destination: Path, attribution: Path) -> None:
     shutil.copy2(attribution, destination / "ATTRIBUTION.md")
 
     doc = json.loads((source / "earshot.json").read_text())
+    delay_sum = doc.get("array", {}).get("delay_sum") if doc.get("array") else None
+    if delay_sum:
+        if Path(delay_sum).name != delay_sum:
+            raise ValueError("Delay-and-sum audio must be a file in the run folder")
+        shutil.copy2(source / delay_sum, destination / delay_sum)
     for person in doc["people"]:
         stem = person.get("stem")
         if not stem:

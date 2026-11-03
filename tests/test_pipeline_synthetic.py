@@ -21,6 +21,10 @@ def fakes(monkeypatch):
     monkeypatch.setattr(pipeline, "transcribe", synthetic.fake_transcribe)
     monkeypatch.setattr(separation, "SamAudioSeparator", synthetic.FakeSeparator)
     monkeypatch.setattr(spark, "_respond", synthetic.fake_respond)
+    monkeypatch.setattr(pipeline, "build_board", lambda captions, names, calls, model: {
+        "items": [], "review": [], "verification_model": "muse-glimmer", "where": "local",
+        "actions": "Review only: no automatic actions.", "counts": {"supported": 0, "not_accepted": 0},
+    })
 
 
 def run(tmp_path, separator):

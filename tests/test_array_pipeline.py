@@ -41,6 +41,10 @@ def test_array_pipeline_builds_stems_and_delay_sum(tmp_path, monkeypatch):
     monkeypatch.setattr(pipeline, "track_people", lambda video, taps, info, calls: synthetic.fake_tracks([t.name for t in taps], info))
     monkeypatch.setattr(pipeline, "transcribe", synthetic.fake_transcribe)
     monkeypatch.setattr(spark, "_respond", synthetic.fake_respond)
+    monkeypatch.setattr(pipeline, "build_board", lambda captions, names, calls, model: {
+        "items": [], "review": [], "verification_model": "muse-glimmer", "where": "local",
+        "actions": "Review only: no automatic actions.", "counts": {"supported": 0, "not_accepted": 0},
+    })
     video = tmp_path / "in.mp4"
     synthetic.make_video(video)
     array = tmp_path / "array.wav"

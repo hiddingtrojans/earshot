@@ -5,6 +5,8 @@ __pycache__/
 .pytest_cache/
 # Run outputs: large media and per-run caches. Ship demo runs explicitly under demo/.
 runs/
+.replay-earshot.json
+.replay-corrections.json
 *.mov
 spike/out/
 *.egg-info/

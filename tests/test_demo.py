@@ -29,7 +29,9 @@ def test_demo_copies_json_cache_and_converts_stems(tmp_path):
         output.setsampwidth(2)
         output.setframerate(48000)
         output.writeframes(pcm.tobytes())
-    doc = {"video": "analysis.mp4", "people": [{"name": "Speaker A", "stem": "stems/voice.wav"}]}
+    doc = {"video": "analysis.mp4", "people": [{"name": "Speaker A", "stem": "stems/voice.wav"}],
+           "array": {"delay_sum": "array_delay_sum.wav"}}
+    (source / "array_delay_sum.wav").write_bytes(b"public test audio")
     (source / "earshot.json").write_text(json.dumps(doc))
 
     destination = tmp_path / "demo"
@@ -40,6 +42,7 @@ def test_demo_copies_json_cache_and_converts_stems(tmp_path):
     assert json.loads((destination / "earshot.json").read_text())["people"][0]["stem"] == "stems/voice.m4a"
     assert (destination / "ATTRIBUTION.md").read_text() == "AMI test attribution"
     assert (destination / "corrections.json").exists()
+    assert (destination / "array_delay_sum.wav").read_bytes() == b"public test audio"
 
 
 def test_demo_lite_has_no_invented_stems(tmp_path):

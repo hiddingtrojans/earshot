@@ -44,14 +44,18 @@ def snap_taps(taps: list[Tap], doc: dict) -> list[Tap]:
     return snapped
 
 
-def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separator: str = "lite"):
+def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separator: str = "lite",
+                 array_path: Path | None = None):
     from .corrections import apply_saved_corrections
 
-    doc_path = run / "earshot.json"
-    doc = json.loads(doc_path.read_text()) if doc_path.exists() else {}
-    corrections_path = run / "corrections.json"
-    if corrections_path.exists():
-        saved_corrections = json.loads(corrections_path.read_text())
+    doc_path = run / (".replay-earshot.json" if replay else "earshot.json")
+    source_doc = doc_path if doc_path.exists() else run / "earshot.json"
+    doc = json.loads(source_doc.read_text()) if source_doc.exists() else {}
+    read_doc = lambda: json.loads((doc_path if doc_path.exists() else run / "earshot.json").read_text())
+    corrections_path = run / (".replay-corrections.json" if replay else "corrections.json")
+    saved_path = corrections_path if corrections_path.exists() else run / "corrections.json"
+    if saved_path.exists():
+        saved_corrections = json.loads(saved_path.read_text())
         doc["corrections"] = saved_corrections
         apply_saved_corrections(doc)
     calls = CallLog(run, replay=replay)
@@ -71,7 +75,7 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
 
         try:
             analyze(setup_video, taps, run, Options(
-                separator=selected_separator, replay=False,
+                separator=selected_separator, replay=False, array_path=array_path,
                 progress=lambda step: update_job(job_id, step),
             ))
         except Exception as error:
@@ -111,7 +115,7 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
             if url.path in ("/api/subtitles.vtt", "/api/subtitles.srt"):
                 from .export import srt, vtt
 
-                current = json.loads(doc_path.read_text())
+                current = read_doc()
                 if url.path.endswith(".vtt"):
                     return self._text(vtt(current), "text/vtt; charset=utf-8")
                 return self._text(srt(current), "application/x-subrip; charset=utf-8")
@@ -136,19 +140,21 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
                 person = None if person in ("", "all") else int(person)
                 seconds = float(q.get("seconds", ["30"])[0])
                 try:
-                    current = json.loads(doc_path.read_text())
+                    current = read_doc()
                     names = [p["name"] for p in current["people"]]
                     captions = [Caption(**c) for c in current["captions"]]
                     res = catch_up(captions, names, t, seconds, calls, person=person,
                                    model=current.get("catchup_model", "spark"))
                     return self._json({"t": t, "person": person, "source": current.get("catchup_model", "spark"), **res})
                 except (ReplayMiss, RuntimeError, FileNotFoundError) as exc:
-                    current = json.loads(doc_path.read_text()) if doc_path.exists() else {}
+                    current = read_doc() if doc_path.exists() else {}
                     pre = [c for c in current.get("catchups", []) if c["person"] == person and c["t"] <= t + 0.01]
                     if pre:
                         best = max(pre, key=lambda c: c["t"])
                         return self._json({**best, "source": "precomputed", "note": str(exc)[:200]})
                     return self._json({"error": str(exc)[:300]}, HTTPStatus.SERVICE_UNAVAILABLE)
+            if url.path == "/earshot.json" and doc_path.exists():
+                return self._file(doc_path)
             path = (run / url.path.lstrip("/")).resolve()
             if run.resolve() not in path.parents and path != run.resolve():
                 return self.send_error(HTTPStatus.FORBIDDEN)
@@ -171,7 +177,7 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
                     distance, to_person = nearest_person(doc, x, y, exclude=from_person)
                     if distance > 0.05:
                         raise ValueError("Tap is more than 5% away from every other cached person")
-                    current = json.loads(doc_path.read_text())
+                    current = read_doc()
                     current["corrections"] = doc.get("corrections", [])
                     correction = apply_correction(current, from_person, to_person, x, y, frame)
                 except (ValueError, TypeError, KeyError, json.JSONDecodeError) as error:
@@ -211,8 +217,11 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
                 ]})
 
             selected_separator = payload.get("separator", separator)
-            if selected_separator not in ("lite", "samaudio"):
+            if selected_separator not in ("lite", "samaudio", "array"):
                 return self._json({"error": "Unknown separator"}, HTTPStatus.BAD_REQUEST)
+            if selected_separator == "array" and not array_path:
+                return self._json({"error": "Start the server with --array PATH to use array separation"},
+                                  HTTPStatus.BAD_REQUEST)
             job_id = uuid.uuid4().hex
             with jobs_lock:
                 jobs[job_id] = {"status": "running", "steps": [], "step": "Starting analysis"}
@@ -259,10 +268,10 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
 
 
 def serve(run: Path, port: int = 8765, replay: bool | None = None,
-          setup: Path | None = None, separator: str = "lite") -> None:
+          setup: Path | None = None, separator: str = "lite", array_path: Path | None = None) -> None:
     if replay is None:
         replay = os.environ.get("EARSHOT_REPLAY") == "1" or not os.environ.get("MODEL_API_KEY")
-    server = ThreadingHTTPServer(("127.0.0.1", port), make_handler(run, replay, setup, separator))
+    server = ThreadingHTTPServer(("127.0.0.1", port), make_handler(run, replay, setup, separator, array_path))
     mode = "replay (cached model responses)" if replay else "live"
     print(f"Earshot viewer: http://127.0.0.1:{port}/  [{mode}]  — Ctrl+C to stop")
     try:

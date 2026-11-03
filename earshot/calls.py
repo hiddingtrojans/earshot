@@ -5,7 +5,8 @@ Every hosted or local model call goes through `CallLog.cached(...)`:
 * live mode: the call runs, its response is stored under `<run>/calls/<key>.json`
   together with model, purpose, latency and request ID;
 * replay mode (`EARSHOT_REPLAY=1` or `--replay`): nothing is called, the stored
-  response is returned, so judges can run the whole demo without API keys.
+  response is returned without changing the evidence log, so judges can run the
+  whole demo without API keys.
 
 The UI shows `calls.jsonl` as the model-call strip.
 """
@@ -66,7 +67,8 @@ class CallLog:
         path = self.calls_dir / f"{key}.json"
         if path.exists():
             stored = json.loads(path.read_text())
-            self._log({**stored["meta"], "cache": "hit", "key": key})
+            if not self.replay:
+                self._log({**stored["meta"], "cache": "hit", "key": key})
             return stored["result"]
         if self.replay:
             raise ReplayMiss(f"replay mode: no cached response for {purpose} ({model}), key {key}")

@@ -39,7 +39,8 @@ def main() -> None:
     s.add_argument("--port", type=int, default=8765)
     s.add_argument("--replay", action="store_true")
     s.add_argument("--setup", type=Path, help="show the tap-to-start screen for this recorded video")
-    s.add_argument("--separator", choices=["samaudio", "lite"], default="lite")
+    s.add_argument("--separator", choices=["samaudio", "lite", "array"], default="lite")
+    s.add_argument("--array", type=Path, help="eight-channel 16 kHz WAV for --separator array")
 
     b = sub.add_parser("bench", help="score runs against ground truth (Dinner Table Bench)")
     b.add_argument("run", type=Path)
@@ -76,7 +77,8 @@ def main() -> None:
         if run is None:
             replay_demo = Path("demo/ami_meeting")
             run = replay_demo if args.replay and replay_demo.exists() else Path("runs") / args.setup.stem
-        serve(run, args.port, replay=True if args.replay else None, setup=args.setup, separator=args.separator)
+        serve(run, args.port, replay=True if args.replay else None, setup=args.setup, separator=args.separator,
+              array_path=args.array)
     elif args.cmd == "bench":
         from .bench import run_bench
 

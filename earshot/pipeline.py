@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from .activity import overlap_windows, speech_segments
+from .board import build_board, check_board_items
 from .calls import CallLog
 from .media import SEPARATION_SR, TRANSCRIBE_SR, prepare_analysis_video, probe, read_audio, resample, write_wav
 from .spark import assign_threads, catch_up
@@ -213,6 +214,10 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
     if opt.spark and captions:
         report("Grouping conversations with Muse Spark")
     threads = assign_threads(captions, calls) if opt.spark and captions else []
+    board = check_board_items([], captions, names)
+    if opt.spark and captions:
+        report("Checking questions and commitments against their cited captions")
+        board = build_board(captions, names, calls, model=opt.catchup_model)
     catchups = []
     if opt.spark and captions and opt.catchup_every > 0:
         report(f"Preparing cited catch-ups with {'Muse Glimmer' if opt.catchup_model == 'glimmer' else 'Muse Spark'}")
@@ -251,6 +256,7 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
         "threads": threads,
         "catchups": catchups,
         "catchup_model": opt.catchup_model,
+        "board": board,
         "translations": translations,
         "translation_status": translation_status,
         "translation_segments": translation_segments,
