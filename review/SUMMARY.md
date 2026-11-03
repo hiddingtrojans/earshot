@@ -9,6 +9,19 @@
 5. Record the real ≤2:59 video with the opening new-work disclosure and AMI credit. Do not claim live processing, SAM Audio separation, or simultaneous-caption recovery from this Lite demo. Explain that local Glimmer handles cached catch-ups on this computer. Preserve the T5 ruling and link in README. If SAM Audio appears, show: “SAM Audio includes a frozen Google T5-base text encoder (open source). Allowed by the organizers; disclosed in the README.”
 6. Check the video logged out, read back every submission field, and link the exact X post.
 
+## Claude review round 5 — microphone array and captions
+
+- **Reference limitation:** the supplied `~/Downloads/array_exp.py` is missing and no copy exists at `docs/array_exp.py`. Its exact 4/4, 0.66 matrix is not claimed as reproduced. The independent implementation is committed and measured. If a direct reference comparison is required, save the real reference file at that path.
+- **Array evaluation:** `array.wav` was generated at 16 kHz for both windows. `--separator array` uses runtime Lite/corrected guides, missing-label motion fallback, loaded Souden MVDR, Voice transcription, and a GCC-PHAT delay-and-sum baseline. It is classical numpy/scipy processing, not a new AI model.
+- **745 s:** 8 channels reached 4/4 correct-voice rows (diagonal 0.6291, off-diagonal 0.0229), with right-person 0.844 and overlap recall 0.605. The better delay-and-sum baseline was 0.522, requiring 0.622, so it misses by 0.017. The 5- and 4-channel runs also have 4/4 envelope rows but fail right-person (0.658, 0.638) and overlap (0.396, 0.392).
+- **635 s:** every subset scores 0.750 correct-voice and fails the quality gate. Right-person is 0.680, 0.584 and 0.434 for 8, 5 and 4 channels; overlap recall is 0.437, 0.418 and 0.478, against the raw baseline 0.486. Speaker C uses the fixed motion fallback at 0.56507652. Automatic and corrected mappings are identical with **0 taps**.
+- **Decision:** **NO-GO on both windows.** No `demo/ami_meeting_array` was created and the default Lite demo/tagline is unchanged. There is no claim that Earshot runs on glasses. Full values, matrices, baseline scores, WER and timings are in `bench/RESULTS.md`, `review/array_745_summary.json`, and `review/array_635_summary.json`.
+- **Sentence bubbles:** punctuation-aware chunks of at most 12 words have timing estimated from text length, visibly marked as estimated. Original caption and citation IDs are preserved, including translated segments. The real browser showed `estimated timing` and the exact motion marker at 7.28–8.08 s.
+- **Lite motion markers:** “was also talking” is explicitly a motion estimate, not verified speech. Precision/recall is **0.0987/0.1888 on 745 s** and **0.0695/0.1181 on 635 s**, using fixed 0.5 s smoothing, `max(0.1, median + 3×MAD)` and 0.5 s minimum events. Weak results are disclosed.
+- **SAM Audio conclusion:** it removes noise from speech in our sanity setup (+16.8751 dB), but no face or time-span prompt isolated a speaker from the others, on far-field or clean-mic audio. SAM Audio work is closed, and the optional noise-cleaning experiment was not run.
+- **Verification:** main suite **94 passed**; final fresh clone/base install **93 passed, 1 optional Torch-dependent skipped**. `review/clean_clone_review5.log` has the result.
+- **Spend:** **$4.115609 of $20.00**, including the preserved unintended $0.375 tracking run and all six array evaluations. `review/SPEND.md` has per-call accounting.
+
 ## Claude review round 4 — final SAM Audio checks
 
 - **Integration sanity passed:** clean reference plus 0 dB white noise improved SI-SDR by **16.8751 dB** (mixture -0.0214 dB, target 16.8538 dB). Target RMS was 0.00701538 and residual RMS 0.00665512. Input and output were both 480,000 samples; the input, batch and processor rates were all 48,000 Hz. The initial harness device-placement error was fixed; production already moved batches correctly.

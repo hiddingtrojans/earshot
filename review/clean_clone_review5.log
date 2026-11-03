@@ -1,0 +1,18 @@
+
+[notice] A new release of pip is available: 26.1 -> 26.3
+[notice] To update, run: /private/tmp/earshot-review5-clone-zlYTDo/venv/bin/python3.12 -m pip install --upgrade pip
+........................................................................ [ 77%]
+...............s.....                                                    [100%]
+92 passed, 1 skipped in 14.47s
+
+[notice] A new release of pip is available: 26.1 -> 26.3
+[notice] To update, run: /private/tmp/earshot-review5-final-xB9oIc/venv/bin/python3.12 -m pip install --upgrade pip
+........................................................................ [ 77%]
+...............s.....                                                    [100%]
+92 passed, 1 skipped in 14.86s
+
+[notice] A new release of pip is available: 26.1 -> 26.3
+[notice] To update, run: /private/tmp/earshot-review5-deliverable-QVY1op/venv/bin/python3.12 -m pip install --upgrade pip
+........................................................................ [ 76%]
+................s.....                                                   [100%]
+93 passed, 1 skipped in 14.74s
