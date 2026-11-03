@@ -29,6 +29,16 @@ def test_oracle_baseline_mapping():
     assert out == {"Ana": "did you book", "Raúl": "the dog ate it"}
 
 
+def test_oracle_mapping_is_one_to_one_and_drops_unmatched_speakers():
+    baseline = [
+        {"speaker": "A", "start": 0, "end": 1, "text": "alpha beta"},
+        {"speaker": "B", "start": 1, "end": 2, "text": "alpha gamma"},
+        {"speaker": "C", "start": 2, "end": 3, "text": "unrelated"},
+    ]
+    truth = {"Ana": "alpha beta", "Raúl": "gamma"}
+    assert oracle_baseline_text(baseline, truth) == {"Ana": "alpha beta", "Raúl": "alpha gamma"}
+
+
 def test_si_sdr():
     rng = np.random.default_rng(0)
     ref = rng.standard_normal(16000)

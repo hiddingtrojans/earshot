@@ -69,7 +69,7 @@ def _literal_candidates(captions: list[Caption]) -> list[dict]:
         if acceptance:
             context = [prior.id for prior in captions[max(0, index - 2):index]
                        if prior.person != caption.person and caption.start - prior.end <= 45]
-            candidates.append({"kind": "commitment", "text": f"{caption.name} said: “{acceptance.group(0)}.”",
+            candidates.append({"kind": "commitment", "text": f"{caption.name} said: “{caption.text}”",
                                "owner": caption.name, "action": acceptance.group(1), "due": None,
                                "cite": [*context, caption.id], "origin": "literal transcript"})
     return candidates[:8]
@@ -96,20 +96,19 @@ def _evidence_problems(item: dict, by_id: dict[str, Caption], names: list[str]) 
     evidence = " ".join(caption.text for caption in cited).lower()
     speakers = {caption.name.lower() for caption in cited}
     owner = _string(item.get("owner"))
-    if owner and owner.lower() not in speakers and owner.lower() not in evidence:
+    if owner and owner.lower() not in speakers and not re.search(rf"\b{re.escape(owner.lower())}\b", evidence):
         problems.append(f"owner {owner!r} is not in the cited captions")
-    if any(owner.lower() == name.lower() for name in names) and owner.lower() not in speakers \
-            and owner.lower() not in evidence:
-        problems.append("owner is not a speaker or person named in the evidence")
+    if item.get("kind") == "commitment" and owner and owner.lower() not in speakers:
+        problems.append("commitment owner is not an evidenced speaker")
     action = _string(item.get("action"))
     due = _string(item.get("due"))
     if item.get("kind") == "commitment" and (not owner or not action):
         problems.append("a commitment needs an explicitly evidenced owner and action")
-    if due and due.lower() not in evidence:
+    if due and not re.search(rf"\b{re.escape(due.lower())}\b", evidence):
         problems.append("due date or time is not stated verbatim in the cited captions")
     details = " ".join((_string(item.get("text")), action, due))
     for number in re.findall(r"\d+(?:[.,:]\d+)?", re.sub(r"\bc\d+\b", "", details.lower())):
-        if number not in evidence:
+        if not re.search(rf"\b{re.escape(number)}\b", evidence):
             problems.append(f"number {number} is not in the cited captions")
     return problems, cited
 

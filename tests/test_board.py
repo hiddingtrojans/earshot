@@ -124,3 +124,24 @@ def test_literal_questions_and_acceptance_still_need_glimmer_verification(monkey
     assert board["items"][1]["action"] == "look into it"
     assert board["items"][1]["cite"] == ["c001", "c002"]
     assert "I'll look into it" in board["items"][1]["text"]
+
+
+def test_literal_acceptance_preserves_the_full_conditional_quote():
+    from earshot.board import _literal_candidates
+
+    caption = Caption("c012", 0, "Speaker A", 65, 73, "that's a good question. I'll look into it. If I can.")
+    item = _literal_candidates([caption])[0]
+    assert "If I can." in item["text"]
+    assert item["text"].endswith("If I can.”")
+
+
+def test_owner_and_due_need_word_boundaries_and_commitment_needs_speaker():
+    captions = [Caption("c100", 0, "Speaker A", 0, 1, "Actually, Speaker B will check maybe.")]
+    items = [candidate(owner="Al", action="check", cite=["c100"]),
+             candidate(owner="Speaker B", action="check", cite=["c100"]),
+             candidate(due="may", cite=["c100"])]
+    board = check_board_items(items, captions, NAMES, [verdict(index) for index in range(3)])
+    assert not board["items"]
+    assert "not in the cited captions" in board["review"][0]["evidence_check"]
+    assert "not an evidenced speaker" in board["review"][1]["evidence_check"]
+    assert "due date" in board["review"][2]["evidence_check"]

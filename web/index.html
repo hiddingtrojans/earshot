@@ -584,6 +584,10 @@ async function catchUp(who) {
     const pre = doc.catchups.filter(c => String(c.person ?? "all") === who && c.t <= t + 0.01).pop();
     res = pre || { sentences: [], note: "No cached catch-up is available for this moment. Try a later point in the clip." };
   }
+  if (res.window) {
+    $("#missed-title").textContent = `What ${name} said, ${fmt(res.window[0])}–${fmt(res.window[1])}` +
+      (res.source === "precomputed" ? " (cached window)" : "");
+  }
   if (!res.sentences?.length) { box.innerHTML = `<p class="empty">${res.note || "Nothing was said in that window."}</p>`; return; }
   const ol = document.createElement("ol");
   for (const s of res.sentences) {

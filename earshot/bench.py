@@ -21,9 +21,9 @@ Metrics per person:
   overlap_recall     — share of words spoken while someone else was talking that
                        appear in that person's captions (needs turn timing)
   si_sdr_db          — separation quality of the isolated track (needs references)
-Baseline = Voice Transcribe's single diarized stream of the mix, with each
-anonymous speaker mapped to the person it matches best (an oracle mapping, so the
-baseline is shown at its best).
+Baseline = Voice Transcribe's single diarized stream of the mix, with anonymous
+speakers assigned one-to-one to people by maximum total word overlap (an oracle
+mapping, so the baseline is shown at its best). Unmatched speakers are excluded.
 """
 
 from __future__ import annotations
@@ -114,23 +114,26 @@ def overlap_word_indexes_from_words(words: list[dict], person: str) -> set[int]:
 
 
 def oracle_speaker_mapping(baseline: list[dict], truth: dict[str, str]) -> dict[str, str]:
+    from scipy.optimize import linear_sum_assignment
+
     by_speaker: dict[str, list[str]] = {}
     for turn in sorted(baseline, key=lambda turn: turn["start"]):
         by_speaker.setdefault(turn["speaker"], []).append(turn["text"])
-    scores = {(speaker, person): align(tokens(" ".join(texts)), tokens(truth[person]))[1]
-              for speaker, texts in by_speaker.items() for person in truth}
-    mapping: dict[str, str] = {}
-    for (speaker, person), _ in sorted(scores.items(), key=lambda item: -item[1]):
-        if speaker not in mapping:
-            mapping[speaker] = person
-    return mapping
+    speakers, people = list(by_speaker), list(truth)
+    if not speakers or not people:
+        return {}
+    scores = np.array([[align(tokens(" ".join(by_speaker[speaker])), tokens(truth[person]))[1]
+                        for person in people] for speaker in speakers])
+    rows, columns = linear_sum_assignment(-scores)
+    return {speakers[row]: people[column] for row, column in zip(rows, columns)}
 
 
 def oracle_baseline_text(baseline: list[dict], truth: dict[str, str]) -> dict[str, str]:
     mapping = oracle_speaker_mapping(baseline, truth)
     out = {person: [] for person in truth}
     for turn in sorted(baseline, key=lambda turn: turn["start"]):
-        out[mapping.get(turn["speaker"], next(iter(truth)))].append(turn["text"])
+        if turn["speaker"] in mapping:
+            out[mapping[turn["speaker"]]].append(turn["text"])
     return {person: " ".join(texts) for person, texts in out.items()}
 
 
