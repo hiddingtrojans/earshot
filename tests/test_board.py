@@ -107,3 +107,20 @@ def test_empty_conversation_has_no_invented_actions(tmp_path):
     board = build_board([], NAMES, CallLog(tmp_path))
     assert board["items"] == [] and board["review"] == []
     assert "no messages" in board["actions"]
+
+
+def test_literal_questions_and_acceptance_still_need_glimmer_verification(monkeypatch, tmp_path):
+    def respond(calls, purpose, instructions, user, schema, name):
+        if name == "meeting_board":
+            return {"items": []}
+        candidates = __import__("earshot.board", fromlist=["_literal_candidates"])._literal_candidates(CAPTIONS)
+        return {"verdicts": [verdict(index) for index in range(len(candidates))]}
+
+    monkeypatch.setattr("earshot.board._glimmer_respond", respond)
+    board = build_board(CAPTIONS, NAMES, CallLog(tmp_path))
+    assert board["proposal_source"] == "literal transcript"
+    assert [item["kind"] for item in board["items"]] == ["question", "commitment", "question"]
+    assert board["items"][1]["owner"] == "Speaker A"
+    assert board["items"][1]["action"] == "look into it"
+    assert board["items"][1]["cite"] == ["c001", "c002"]
+    assert "I'll look into it" in board["items"][1]["text"]

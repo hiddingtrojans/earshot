@@ -10,6 +10,7 @@ def test_sentence_timing_is_proportional_and_preserves_caption_id():
     assert first["start"] == 2 and first["end"] == 5.2
     assert second["start"] == 5.2 and second["end"] == 10
     assert first["estimated"] and second["estimated"]
+    assert Caption.from_json(payload) == caption
 
 
 def test_long_unpunctuated_turn_is_chunked_by_text_length():

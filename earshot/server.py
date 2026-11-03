@@ -142,7 +142,7 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
                 try:
                     current = read_doc()
                     names = [p["name"] for p in current["people"]]
-                    captions = [Caption(**c) for c in current["captions"]]
+                    captions = [Caption.from_json(c) for c in current["captions"]]
                     res = catch_up(captions, names, t, seconds, calls, person=person,
                                    model=current.get("catchup_model", "spark"))
                     return self._json({"t": t, "person": person, "source": current.get("catchup_model", "spark"), **res})
@@ -270,7 +270,8 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
 def serve(run: Path, port: int = 8765, replay: bool | None = None,
           setup: Path | None = None, separator: str = "lite", array_path: Path | None = None) -> None:
     if replay is None:
-        replay = os.environ.get("EARSHOT_REPLAY") == "1" or not os.environ.get("MODEL_API_KEY")
+        replay = run.parent.name == "demo" or os.environ.get("EARSHOT_REPLAY") == "1" \
+            or not os.environ.get("MODEL_API_KEY")
     server = ThreadingHTTPServer(("127.0.0.1", port), make_handler(run, replay, setup, separator, array_path))
     mode = "replay (cached model responses)" if replay else "live"
     print(f"Earshot viewer: http://127.0.0.1:{port}/  [{mode}]  — Ctrl+C to stop")

@@ -56,6 +56,25 @@ Do not use prior knowledge or fill in missing owners, actions, dates, or numbers
 with a short concrete reason. You are reviewing evidence, not approving or performing an action."""
 
 
+def _literal_candidates(captions: list[Caption]) -> list[dict]:
+    candidates = []
+    for index, caption in enumerate(captions):
+        if caption.text.rstrip().endswith("?") or re.search(
+                r"(?:^|[.!?]\s+)(?:or\s+)?(?:can|could|should|what|why|how|would|do|does|is|are)\b",
+                caption.text, re.IGNORECASE):
+            candidates.append({"kind": "question", "text": caption.text, "owner": None,
+                               "action": None, "due": None, "cite": [caption.id], "origin": "literal transcript"})
+        acceptance = re.search(r"\bI(?:'ll| will) (look into it|check|investigate|find out)\b",
+                               caption.text, re.IGNORECASE)
+        if acceptance:
+            context = [prior.id for prior in captions[max(0, index - 2):index]
+                       if prior.person != caption.person and caption.start - prior.end <= 45]
+            candidates.append({"kind": "commitment", "text": f"{caption.name} said: “{acceptance.group(0)}.”",
+                               "owner": caption.name, "action": acceptance.group(1), "due": None,
+                               "cite": [*context, caption.id], "origin": "literal transcript"})
+    return candidates[:8]
+
+
 def _string(value) -> str:
     return value.strip() if isinstance(value, str) else ""
 
@@ -145,6 +164,10 @@ def build_board(captions: list[Caption], names: list[str], calls: CallLog, model
     candidates = proposed.get("items", [])
     if not isinstance(candidates, list) or len(candidates) > 8:
         raise ValueError("board proposals must be a list of at most eight items")
+    source = "model proposal"
+    if not candidates:
+        candidates = _literal_candidates(captions)
+        source = "literal transcript"
     if not candidates:
         return check_board_items([], captions, names)
     cited_ids = {citation for item in candidates if isinstance(item, dict)
@@ -157,4 +180,6 @@ def build_board(captions: list[Caption], names: list[str], calls: CallLog, model
     verdicts = checked.get("verdicts", [])
     if not isinstance(verdicts, list):
         verdicts = []
-    return check_board_items(candidates, captions, names, verdicts)
+    result = check_board_items(candidates, captions, names, verdicts)
+    result["proposal_source"] = source
+    return result

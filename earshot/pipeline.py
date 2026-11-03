@@ -229,6 +229,7 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
                 catchups.append({"t": round(t, 2), "person": person, **res})
             t += opt.catchup_every
 
+    from .quality import array_quality
     from .spark import translate_captions
 
     translations, translation_status, translation_segments = {}, {}, {}
@@ -265,6 +266,7 @@ def analyze(video: Path, taps: list[Tap], out: Path, opt: Options) -> Path:
         "motion_protocol": motion_protocol,
         "array": array_metadata,
         "array_baseline": array_baseline,
+        "quality": array_quality(out) if opt.separator == "array" else None,
     }
     (out / "earshot.json").write_text(json.dumps(doc, indent=1, ensure_ascii=False))
     _install_viewer(out)

@@ -172,3 +172,45 @@ def test_replay_corrections_preserve_packaged_evidence(tmp_path):
     assert (run / "earshot.json").read_text() == original
     assert not (run / "corrections.json").exists()
     assert (run / ".replay-corrections.json").exists()
+
+
+def test_demo_server_defaults_to_replay_with_api_key_present(tmp_path, monkeypatch):
+    captured = {}
+
+    class Server:
+        def serve_forever(self):
+            return None
+
+    monkeypatch.setattr("earshot.server.make_handler",
+                        lambda run, replay, *args: captured.update(replay=replay))
+    monkeypatch.setattr("earshot.server.ThreadingHTTPServer", lambda address, handler: Server())
+    monkeypatch.setenv("MODEL_API_KEY", "test-placeholder")
+    monkeypatch.delenv("EARSHOT_REPLAY", raising=False)
+    from earshot.server import serve
+    serve(tmp_path / "demo" / "example")
+    assert captured["replay"] is True
+
+
+def test_catchup_accepts_packaged_sentence_fields(tmp_path, monkeypatch):
+    from earshot.timeline import Caption
+
+    run = tmp_path / "run"
+    run.mkdir()
+    captured = {}
+    caption = Caption("c001", 0, "Speaker A", 0, 1, "A packaged caption.")
+    (run / "earshot.json").write_text(json.dumps({
+        "people": [{"name": "Speaker A"}], "captions": [caption.to_json()],
+        "catchups": [], "catchup_model": "glimmer",
+    }))
+
+    def fake_catchup(captions, names, t, seconds, calls, person, model):
+        captured.update(captions=captions, model=model)
+        return {"window": [0, 1], "who": names[0], "sentences": []}
+
+    monkeypatch.setattr("earshot.server.catch_up", fake_catchup)
+    with running_server(make_handler(run, True)) as base:
+        with urllib.request.urlopen(base + "/api/catchup?t=1&person=0", timeout=2) as response:
+            assert response.status == 200
+            assert json.loads(response.read())["source"] == "glimmer"
+    assert captured["captions"] == [caption]
+    assert captured["model"] == "glimmer"

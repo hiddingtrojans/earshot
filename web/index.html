@@ -532,6 +532,13 @@ function buildLanes() {
     ? `Hatched: people talking at the same time (${n.toFixed(1)} s in ${doc.overlaps.length} moments). ${method}.`
     : `${method}.`;
   box.appendChild(legend);
+  if (doc.quality) {
+    const note = document.createElement("p"); note.className = "legend";
+    const gate = doc.quality.gate;
+    const numbers = gate ? ` Right-person ${gate.right_person.toFixed(3)}; overlap recall ${gate.overlap_recall.toFixed(3)} (required ≥ ${gate.required_at_least.toFixed(3)}).` : "";
+    note.textContent = `${doc.quality.decision}. ${doc.quality.overlap_recovery}${numbers} ${doc.quality.media_sync}`;
+    box.appendChild(note);
+  }
 }
 
 /* ---------- threads ---------- */
@@ -568,13 +575,14 @@ async function catchUp(who) {
   const t = video.currentTime;
   const name = who === "all" ? "the table" : doc.people[+who].name;
   $("#missed-title").textContent = `What ${name} said before ${fmt(t)}`;
-  const box = $("#missed"); box.innerHTML = `<p class="empty">Asking Muse Spark…</p>`;
+  const model = doc.catchup_model === "glimmer" ? "local Muse Glimmer" : "Muse Spark";
+  const box = $("#missed"); box.innerHTML = `<p class="empty">Asking ${model}…</p>`;
   let res;
   try { res = await (await fetch(`/api/catchup?t=${t.toFixed(2)}&person=${who}&seconds=30`)).json(); }
   catch { res = null; }
   if (!res || res.error) {
     const pre = doc.catchups.filter(c => String(c.person ?? "all") === who && c.t <= t + 0.01).pop();
-    res = pre || { sentences: [], note: res?.error || "The viewer server isn't running." };
+    res = pre || { sentences: [], note: "No cached catch-up is available for this moment. Try a later point in the clip." };
   }
   if (!res.sentences?.length) { box.innerHTML = `<p class="empty">${res.note || "Nothing was said in that window."}</p>`; return; }
   const ol = document.createElement("ol");

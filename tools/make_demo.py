@@ -22,6 +22,10 @@ def build_demo(source: Path, destination: Path, attribution: Path) -> None:
     shutil.copy2(attribution, destination / "ATTRIBUTION.md")
 
     doc = json.loads((source / "earshot.json").read_text())
+    if doc.get("array"):
+        from earshot.quality import array_quality
+
+        doc["quality"] = array_quality(source)
     delay_sum = doc.get("array", {}).get("delay_sum") if doc.get("array") else None
     if delay_sum:
         if Path(delay_sum).name != delay_sum:

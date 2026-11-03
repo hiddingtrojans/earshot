@@ -34,6 +34,10 @@ class Caption:
     own_activity: float = 1.0
     thread: int | None = None
 
+    @classmethod
+    def from_json(cls, payload: dict) -> "Caption":
+        return cls(**{key: payload[key] for key in cls.__dataclass_fields__ if key in payload})
+
     def to_json(self) -> dict:
         payload = asdict(self)
         payload["sentences"] = sentence_segments(self.text, self.start, self.end, self.id)
