@@ -7,12 +7,13 @@ Deaf and hard-of-hearing people have a name for being left out of group conversa
 Earshot takes a recorded video of the table and:
 
 1. **tracks each person you tap** with SAM 3.1;
-2. can **pull each person's voice out of the mix** with SAM Audio, using that person's masks as the visual prompt. It was evaluated on the full AMI clip but **failed the go/no-go on quality**, so it is not in the included demo;
+2. evaluates voice isolation with SAM Audio and with a classical microphone-array beamformer. SAM Audio failed its quality gate; the **experimental Parallel array demo** also failed its ES2008a overlap-recall gate and is labelled accordingly;
 3. **captions each voice separately** with Muse Voice Transcribe, or assigns diarized turns to faces with the deterministic Earshot-Lite fallback, and shows face-anchored bubbles;
-4. **splits side conversations into threads** and answers **"What did I miss?"** with Muse Spark. Every summary sentence must cite captions and pass deterministic checks, or it's replaced by the captions themselves;
-5. offers **cached Spanish bubbles**, positioned/coloured WebVTT, labelled SRT, and per-person audio downloads when isolated stems exist.
+4. **splits side conversations into threads** and answers **"What did I miss?"** with local Muse Glimmer or hosted Muse Spark. Summaries cite captions and pass deterministic checks, or fall back to verbatim captions;
+5. proposes **questions and commitments** with citations, then checks them with local Glimmer. Unsupported owners, dates, numbers, and citations are rejected. It never sends messages, creates tasks, or books events automatically;
+6. offers **cached Spanish bubbles**, positioned/coloured WebVTT, labelled SRT, and per-person audio downloads when isolated stems exist.
 
-> Built during the Meta Global AI Developer Hackathon (26 Oct – 4 Nov 2026). Everything in this repository was written during the event. Meta's cookbook recipe `07_sam/03_headlocked_speech_bubble_captions` already shows speech-bubble captions from diarization plus SAM 3.1, with voices matched to people by hand. Earshot addresses the case that recipe can't handle: separating **overlapping** speech, and binding each voice to a face with **no manual matching**. Earshot reuses no code from that recipe; it follows the cookbook's API request formats. The included real demo uses Lite, and the measured limitations are stated below rather than presented as a separation success.
+> Built during the Meta Global AI Developer Hackathon (26 Oct – 4 Nov 2026). Everything in this repository was written during the event. Meta's cookbook recipe `07_sam/03_headlocked_speech_bubble_captions` already shows speech-bubble captions from diarization plus SAM 3.1, with voices matched to people by hand. Earshot addresses the case that recipe can't handle: separating **overlapping** speech, and binding each voice to a face with **no manual matching**. Earshot reuses no code from that recipe; it follows the cookbook's API request formats. The default demo uses Lite; the separate Parallel demo is an explicitly labelled experiment, not a separation-success claim.
 
 ![Earshot replay on the public AMI meeting, showing a Spanish bubble and conversation threads](assets/earshot-demo.png)
 
@@ -25,9 +26,9 @@ Earshot takes a recorded video of the table and:
 | T5-base text encoder (Google, open source, Apache-2.0) | This computer, as part of SAM Audio | Part of SAM Audio's text conditioning. Earshot ships its output for the two fixed prompts as constants (`assets/text_features.npz`), or runs it locally with `--allow-t5`. | `earshot/separation.py` |
 | `muse-voice-transcribe-1.0` | Meta Model API | Diarizes the raw mix as the baseline and transcribes isolated voices when available | `earshot/transcribe.py` |
 | `muse-spark-1.3` | Meta Model API | Groups threads, optional hosted cited catch-ups, and translates caption text | `earshot/spark.py` |
-| `muse-glimmer` | This computer (Ollama) | Cached local cited catch-ups in the included 75 s demo | `earshot/spark.py` |
+| `muse-glimmer` | This computer (Ollama) | Cached local cited catch-ups and independent question/commitment evidence checks | `earshot/spark.py`, `earshot/board.py` |
 
-Everything else is deterministic code: voice activity (frame energy with hysteresis), the caption timeline and bleed filter, Lite assignment, citation checks, metrics, subtitle export, and FFmpeg for media. No other model runs at runtime.
+Everything else is deterministic code: classical MVDR beamforming, voice activity (frame energy with hysteresis), the caption timeline and bleed filter, Lite assignment, evidence checks, metrics, subtitle export, and FFmpeg for media. No other model runs at runtime.
 
 ### Rules notes (Meta-only runtime models)
 
@@ -52,6 +53,20 @@ python -m earshot serve demo/ami_meeting --replay
 ```
 
 **Replay needs no API key and normally takes under five minutes from clone to viewer.** The included 42.68 MB demo uses a public AMI Meeting Corpus clip (CC BY 4.0) and real cached model responses. Replay makes no Meta calls. Use the language picker for Spanish, Download subtitles for VTT/SRT, and the catch-up/thread panels.
+
+### Experimental Parallel replay
+
+```bash
+python -m earshot serve demo/ami_meeting_array --replay
+```
+
+This 47.71 MB package adds actual isolated-audio playback from an **AMI 8-mic meeting-room array**, “Both talking” captions, 35 local catch-ups, Spanish translation, and a local evidence-checked question/commitment board. The real board accepts three literal questions and rejects the conditional “I’ll look into it. If I can.” as an insufficient commitment; expand the rejection to inspect the verbatim evidence. No autonomous actions are taken.
+
+![Experimental Parallel replay: overlapping captions, cited questions, and a rejected conditional commitment](assets/earshot-parallel.png)
+
+**This is an experiment, not the default demo or verified overlap recovery.** On ES2008a 745 s, right-person is 0.844 but overlap recall is 0.605 against the required 0.622; the older 635 s window also fails. The viewer shows those measurements. Camera-motion/audio lag estimates are not a validated lip-sync correction, so no per-camera offset is applied. Replay corrections go to separate ignored overlay files rather than modifying the packaged evidence. Nothing here claims Earshot runs on Ray-Ban Meta glasses.
+
+To analyze a synchronized eight-channel 16 kHz recording, use `python -m earshot serve --setup table.mp4 --separator array --array array.wav`. This is recorded-clip processing, not live audio, and ordinary stereo audio is not an eight-mic array. A person with an unusable guide gets single-stream attribution without an isolated-audio button; a raw microphone channel is never labelled as their isolated voice.
 
 **Tap to start a new analysis** (recorded clips, not real-time processing):
 
@@ -137,6 +152,17 @@ The mixture's correct-voice rate is **0.250** on the primary 745 s window. The f
 
 Lite does not separate audio, but its reviewed mouth-band activity correlation matches the generous oracle baseline on its three 745 s repeats. The 60–90% lower-mask band won on 635 s and scored 0.537 on 745 s; the reviewer-fixed 30–60% mouth band scores 0.919 on 745 s and 0.547 on 635 s. With the correction threshold fixed at 0.15, reaching the oracle mapping needed **0 / 0 / 0 taps on 745 s** and **1 / 1 / 0 taps on 635 s**.
 
+### Classical microphone-array results
+
+Mean [min, max] over three real Voice repeats, using the **AMI 8-mic meeting-room array**. The threshold is the better of raw `Array1-01` and GCC-PHAT delay-and-sum overlap recall +0.10. These are runtime Lite-guided results, not oracle-mapped product claims.
+
+| Meeting and window | WER ↓ | Right person ↑ | Overlap recall ↑ | Required recall ↑ | Correct voice ↑ |
+|---|---:|---:|---:|---:|---:|
+| ES2008a 745 s | 0.282 [0.240, 0.322] | 0.844 [0.835, 0.850] | 0.605 [0.555, 0.662] | 0.622 | 1.000 |
+| ES2008a 635 s | 0.403 [0.376, 0.451] | 0.680 [0.623, 0.714] | 0.437 [0.428, 0.442] | 0.586 | 0.750 |
+
+Both existing windows are **NO-GO**. The 745 s run has a 4/4 correct-voice envelope matrix (diagonal 0.6291, off-diagonal 0.0229), but misses the overlap margin by 0.017; 635 s also fails right-person. Four- and five-mic subsets, exact matrices, WER ranges, and timings are in `bench/RESULTS.md`. The separate Parallel player exposes real isolated listening while preserving this negative quality decision.
+
 **SAM Audio `keep` is a quality no-go:** right-person 0.386 is below 0.80 and overlap recall 0.098 does not reach the same-run baseline +0.10 threshold (0.580). Separation took 773.889 seconds including loading, but speed is not a rejection criterion. Lite therefore remains the demo, without an overlap-recovery tagline. Spark AV also failed every adoption gate and remains an unverified negative experiment, not a viewer mode. See `bench/RESULTS.md` for both windows, exact commands, model IDs, hardware, timings, and negative control.
 
 ## How it's built
@@ -149,13 +175,17 @@ earshot/
   activity.py     deterministic voice activity and overlap windows
   timeline.py     per-person captions, bleed filter, overlap flags
   lite.py         mouth-band activity correlation and Hungarian voice-to-face assignment (no separation)
+  array.py        classical eight-mic MVDR and GCC-PHAT delay-and-sum baseline
+  board.py        literal/model candidates plus local evidence verification; no autonomous actions
+  quality.py      measured array gate and media-sync caveat from real benchmark artifacts
   spark.py        threads + verified catch-up + strictly validated translation
-  calls.py        model-call cache, replay mode and provenance log (shown in the viewer)
+  calls.py        model-call cache, read-only replay and provenance log (shown in the viewer)
   bench.py        word-level truth, repeat aggregation, Dinner Table Bench metrics
   export.py       positioned/coloured WebVTT and speaker-labelled SRT
   server.py       tap-to-start jobs, local viewer, Range requests, catch-up and offline export APIs
 web/              accessible setup and interactive viewer
-demo/ami_meeting  real cached AMI run with JSON responses and attribution
+demo/ami_meeting  default real cached Lite AMI run with JSON responses and attribution
+demo/ami_meeting_array  experimental Parallel replay with isolated audio and local evidence checks
 tests/            deterministic unit tests and synthetic runs with explicitly fake clients (never demo evidence)
 ```
 
@@ -168,7 +198,8 @@ tests/            deterministic unit tests and synthetic runs with explicitly fa
 - Lite does not isolate voices or prove recovery of words omitted by single-stream transcription. Its 745 s correlation mapping matches the oracle baseline, but the included demo does **not** demonstrate simultaneous per-person caption recovery or isolated listening.
 - Long WebVTT cues can lay out differently across players. Native browser `<track>` rendering and colours were checked; VLC was not installed, so VLC playback is unverified.
 - Translation failures retain original text and are labelled visibly. Per-person audio buttons appear only for real isolated stems.
-- Glimmer can return empty answers or citations outside the available captions. The verifier rejects those cases and falls back to verbatim captions; local inference is slower than the hosted Spark calls on this machine.
+- The experimental array fails its ES2008a overlap-recall gate. Isolated playback is a real feature, not evidence of reliable overlap recovery or lip-sync. Four- and five-mic subsets and the second ES2008a window also fail gates. A degenerate guide falls back to single-stream attribution without isolated audio.
+- Glimmer can return empty answers or citations outside the available captions. The verifier rejects those cases and falls back to verbatim captions; local inference is slower than hosted Spark on this machine. Board support means consistency with cited transcripts, not proof that the transcript or a proposed action is correct. Conditional acceptances can be rejected, as the included `c012` example shows.
 
 ## Use it responsibly
 
@@ -176,7 +207,7 @@ Use Earshot only with people who know they're being recorded. It does no face re
 
 ## Attribution
 
-- **AMI Meeting Corpus:** meeting ES2008a, © University of Edinburgh and AMI Consortium, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Carletta, J. et al. (2005). *The AMI Meeting Corpus: A Pre-Announcement*. MLMI 2005, LNCS 3869. Edited: four close-ups in a 2×2 grid, 12:25–13:40, far-field `Array1-01`; the clean-mic variant uses `Mix-Headset`. The README screenshot and committed demo contain this same public material and Speaker A–D labels, not inferred identities.
+- **AMI Meeting Corpus:** meetings ES2008a and ES2008b, © University of Edinburgh and AMI Consortium, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Carletta, J. et al. (2005). *The AMI Meeting Corpus: A Pre-Announcement*. MLMI 2005, LNCS 3869. The ES2008a demo edit has four close-ups in a 2×2 grid, 12:25–13:40, far-field `Array1-01`; the clean-mic variant uses `Mix-Headset`. The independent ES2008b benchmark uses the public 745–820 s window and timed word annotations, with camera assignments checked against corpus metadata. Speaker A–D labels are not inferred identities.
 - **Meta cookbook:** MIT. Earshot follows the API request formats in `meta-models/meta-model-cookbook`, especially `07_sam`; no recipe code is reused.
 - **SAM 3.1, SAM Audio, and `meta_sam_parser`:** SAM License. No SAM weights are redistributed. SAM Audio integration uses `perception_models`; review its licence terms before commercial use.
 - **Muse models:** used through the Meta Model API under its terms.
