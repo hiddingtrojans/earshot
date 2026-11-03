@@ -1,0 +1,1090 @@
+{
+  "ami_array_8": {
+    "before": {
+      "earshot": {
+        "wer": {
+          "mean": 0.282,
+          "min": 0.24,
+          "max": 0.322
+        },
+        "attribution": {
+          "mean": 0.844,
+          "min": 0.835,
+          "max": 0.85
+        },
+        "overlap_recall": {
+          "mean": 0.605,
+          "min": 0.555,
+          "max": 0.662
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.231,
+          "min": 0.221,
+          "max": 0.237
+        },
+        "attribution": {
+          "mean": 0.919,
+          "min": 0.918,
+          "max": 0.921
+        },
+        "overlap_recall": {
+          "mean": 0.495,
+          "min": 0.444,
+          "max": 0.54
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.235,
+          "min": 0.225,
+          "max": 0.252
+        },
+        "attribution": {
+          "mean": 0.913,
+          "min": 0.898,
+          "max": 0.925
+        },
+        "overlap_recall": {
+          "mean": 0.522,
+          "min": 0.481,
+          "max": 0.543
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 8.258,
+        "min": 8.258,
+        "max": 8.258
+      },
+      "correct_voice_rate": {
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "after": {
+      "earshot": {
+        "wer": {
+          "mean": 0.282,
+          "min": 0.24,
+          "max": 0.322
+        },
+        "attribution": {
+          "mean": 0.844,
+          "min": 0.835,
+          "max": 0.85
+        },
+        "overlap_recall": {
+          "mean": 0.605,
+          "min": 0.555,
+          "max": 0.662
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.231,
+          "min": 0.221,
+          "max": 0.237
+        },
+        "attribution": {
+          "mean": 0.919,
+          "min": 0.918,
+          "max": 0.921
+        },
+        "overlap_recall": {
+          "mean": 0.495,
+          "min": 0.444,
+          "max": 0.54
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.234,
+          "min": 0.225,
+          "max": 0.252
+        },
+        "attribution": {
+          "mean": 0.914,
+          "min": 0.898,
+          "max": 0.925
+        },
+        "overlap_recall": {
+          "mean": 0.522,
+          "min": 0.481,
+          "max": 0.543
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 8.258,
+        "min": 8.258,
+        "max": 8.258
+      },
+      "correct_voice_rate": {
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "changed": true
+  },
+  "ami_array_5": {
+    "before": {
+      "earshot": {
+        "wer": {
+          "mean": 0.845,
+          "min": 0.715,
+          "max": 1.078
+        },
+        "attribution": {
+          "mean": 0.658,
+          "min": 0.57,
+          "max": 0.709
+        },
+        "overlap_recall": {
+          "mean": 0.396,
+          "min": 0.349,
+          "max": 0.44
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.231,
+          "min": 0.221,
+          "max": 0.237
+        },
+        "attribution": {
+          "mean": 0.919,
+          "min": 0.918,
+          "max": 0.921
+        },
+        "overlap_recall": {
+          "mean": 0.495,
+          "min": 0.444,
+          "max": 0.54
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.239,
+          "min": 0.233,
+          "max": 0.252
+        },
+        "attribution": {
+          "mean": 0.909,
+          "min": 0.891,
+          "max": 0.921
+        },
+        "overlap_recall": {
+          "mean": 0.527,
+          "min": 0.494,
+          "max": 0.57
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 7.942,
+        "min": 7.942,
+        "max": 7.942
+      },
+      "correct_voice_rate": {
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "after": {
+      "earshot": {
+        "wer": {
+          "mean": 0.845,
+          "min": 0.715,
+          "max": 1.078
+        },
+        "attribution": {
+          "mean": 0.658,
+          "min": 0.57,
+          "max": 0.709
+        },
+        "overlap_recall": {
+          "mean": 0.396,
+          "min": 0.349,
+          "max": 0.44
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.231,
+          "min": 0.221,
+          "max": 0.237
+        },
+        "attribution": {
+          "mean": 0.919,
+          "min": 0.918,
+          "max": 0.921
+        },
+        "overlap_recall": {
+          "mean": 0.495,
+          "min": 0.444,
+          "max": 0.54
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.239,
+          "min": 0.233,
+          "max": 0.252
+        },
+        "attribution": {
+          "mean": 0.909,
+          "min": 0.891,
+          "max": 0.921
+        },
+        "overlap_recall": {
+          "mean": 0.527,
+          "min": 0.494,
+          "max": 0.57
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 7.942,
+        "min": 7.942,
+        "max": 7.942
+      },
+      "correct_voice_rate": {
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "changed": false
+  },
+  "ami_array_4": {
+    "before": {
+      "earshot": {
+        "wer": {
+          "mean": 0.74,
+          "min": 0.505,
+          "max": 1.127
+        },
+        "attribution": {
+          "mean": 0.638,
+          "min": 0.515,
+          "max": 0.708
+        },
+        "overlap_recall": {
+          "mean": 0.392,
+          "min": 0.331,
+          "max": 0.47
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.231,
+          "min": 0.221,
+          "max": 0.237
+        },
+        "attribution": {
+          "mean": 0.919,
+          "min": 0.918,
+          "max": 0.921
+        },
+        "overlap_recall": {
+          "mean": 0.495,
+          "min": 0.444,
+          "max": 0.54
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.254,
+          "min": 0.234,
+          "max": 0.275
+        },
+        "attribution": {
+          "mean": 0.907,
+          "min": 0.897,
+          "max": 0.917
+        },
+        "overlap_recall": {
+          "mean": 0.502,
+          "min": 0.481,
+          "max": 0.531
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 8.223,
+        "min": 8.223,
+        "max": 8.223
+      },
+      "correct_voice_rate": {
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "after": {
+      "earshot": {
+        "wer": {
+          "mean": 0.74,
+          "min": 0.505,
+          "max": 1.127
+        },
+        "attribution": {
+          "mean": 0.638,
+          "min": 0.515,
+          "max": 0.708
+        },
+        "overlap_recall": {
+          "mean": 0.392,
+          "min": 0.331,
+          "max": 0.47
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.231,
+          "min": 0.221,
+          "max": 0.237
+        },
+        "attribution": {
+          "mean": 0.919,
+          "min": 0.918,
+          "max": 0.921
+        },
+        "overlap_recall": {
+          "mean": 0.495,
+          "min": 0.444,
+          "max": 0.54
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.254,
+          "min": 0.234,
+          "max": 0.275
+        },
+        "attribution": {
+          "mean": 0.907,
+          "min": 0.897,
+          "max": 0.917
+        },
+        "overlap_recall": {
+          "mean": 0.502,
+          "min": 0.481,
+          "max": 0.531
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 8.223,
+        "min": 8.223,
+        "max": 8.223
+      },
+      "correct_voice_rate": {
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "changed": false
+  },
+  "ami_array_8_635": {
+    "before": {
+      "earshot": {
+        "wer": {
+          "mean": 0.403,
+          "min": 0.376,
+          "max": 0.451
+        },
+        "attribution": {
+          "mean": 0.68,
+          "min": 0.623,
+          "max": 0.714
+        },
+        "overlap_recall": {
+          "mean": 0.437,
+          "min": 0.428,
+          "max": 0.442
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.384,
+          "min": 0.377,
+          "max": 0.395
+        },
+        "attribution": {
+          "mean": 0.693,
+          "min": 0.689,
+          "max": 0.697
+        },
+        "overlap_recall": {
+          "mean": 0.486,
+          "min": 0.424,
+          "max": 0.524
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.399,
+          "min": 0.372,
+          "max": 0.417
+        },
+        "attribution": {
+          "mean": 0.687,
+          "min": 0.663,
+          "max": 0.712
+        },
+        "overlap_recall": {
+          "mean": 0.449,
+          "min": 0.382,
+          "max": 0.482
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 5.195,
+        "min": 5.195,
+        "max": 5.195
+      },
+      "correct_voice_rate": {
+        "mean": 0.75,
+        "min": 0.75,
+        "max": 0.75
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "after": {
+      "earshot": {
+        "wer": {
+          "mean": 0.403,
+          "min": 0.376,
+          "max": 0.451
+        },
+        "attribution": {
+          "mean": 0.68,
+          "min": 0.623,
+          "max": 0.714
+        },
+        "overlap_recall": {
+          "mean": 0.437,
+          "min": 0.428,
+          "max": 0.442
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.384,
+          "min": 0.377,
+          "max": 0.395
+        },
+        "attribution": {
+          "mean": 0.693,
+          "min": 0.689,
+          "max": 0.697
+        },
+        "overlap_recall": {
+          "mean": 0.486,
+          "min": 0.424,
+          "max": 0.524
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.441,
+          "min": 0.372,
+          "max": 0.542
+        },
+        "attribution": {
+          "mean": 0.69,
+          "min": 0.671,
+          "max": 0.712
+        },
+        "overlap_recall": {
+          "mean": 0.449,
+          "min": 0.382,
+          "max": 0.482
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 5.195,
+        "min": 5.195,
+        "max": 5.195
+      },
+      "correct_voice_rate": {
+        "mean": 0.75,
+        "min": 0.75,
+        "max": 0.75
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "changed": true
+  },
+  "ami_array_5_635": {
+    "before": {
+      "earshot": {
+        "wer": {
+          "mean": 1.498,
+          "min": 0.418,
+          "max": 3.122
+        },
+        "attribution": {
+          "mean": 0.584,
+          "min": 0.429,
+          "max": 0.672
+        },
+        "overlap_recall": {
+          "mean": 0.418,
+          "min": 0.378,
+          "max": 0.448
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.384,
+          "min": 0.377,
+          "max": 0.395
+        },
+        "attribution": {
+          "mean": 0.693,
+          "min": 0.689,
+          "max": 0.697
+        },
+        "overlap_recall": {
+          "mean": 0.486,
+          "min": 0.424,
+          "max": 0.524
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.39,
+          "min": 0.379,
+          "max": 0.404
+        },
+        "attribution": {
+          "mean": 0.7,
+          "min": 0.699,
+          "max": 0.701
+        },
+        "overlap_recall": {
+          "mean": 0.406,
+          "min": 0.382,
+          "max": 0.455
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 10.26,
+        "min": 10.26,
+        "max": 10.26
+      },
+      "correct_voice_rate": {
+        "mean": 0.75,
+        "min": 0.75,
+        "max": 0.75
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "after": {
+      "earshot": {
+        "wer": {
+          "mean": 1.498,
+          "min": 0.418,
+          "max": 3.122
+        },
+        "attribution": {
+          "mean": 0.584,
+          "min": 0.429,
+          "max": 0.672
+        },
+        "overlap_recall": {
+          "mean": 0.418,
+          "min": 0.378,
+          "max": 0.448
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.384,
+          "min": 0.377,
+          "max": 0.395
+        },
+        "attribution": {
+          "mean": 0.693,
+          "min": 0.689,
+          "max": 0.697
+        },
+        "overlap_recall": {
+          "mean": 0.486,
+          "min": 0.424,
+          "max": 0.524
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.39,
+          "min": 0.379,
+          "max": 0.404
+        },
+        "attribution": {
+          "mean": 0.7,
+          "min": 0.699,
+          "max": 0.701
+        },
+        "overlap_recall": {
+          "mean": 0.406,
+          "min": 0.382,
+          "max": 0.455
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 10.26,
+        "min": 10.26,
+        "max": 10.26
+      },
+      "correct_voice_rate": {
+        "mean": 0.75,
+        "min": 0.75,
+        "max": 0.75
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "changed": false
+  },
+  "ami_array_4_635": {
+    "before": {
+      "earshot": {
+        "wer": {
+          "mean": 4.482,
+          "min": 3.452,
+          "max": 5.327
+        },
+        "attribution": {
+          "mean": 0.434,
+          "min": 0.378,
+          "max": 0.516
+        },
+        "overlap_recall": {
+          "mean": 0.478,
+          "min": 0.398,
+          "max": 0.522
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.384,
+          "min": 0.377,
+          "max": 0.395
+        },
+        "attribution": {
+          "mean": 0.693,
+          "min": 0.689,
+          "max": 0.697
+        },
+        "overlap_recall": {
+          "mean": 0.486,
+          "min": 0.424,
+          "max": 0.524
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.372,
+          "min": 0.365,
+          "max": 0.381
+        },
+        "attribution": {
+          "mean": 0.707,
+          "min": 0.698,
+          "max": 0.713
+        },
+        "overlap_recall": {
+          "mean": 0.449,
+          "min": 0.382,
+          "max": 0.482
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 9.585,
+        "min": 9.585,
+        "max": 9.585
+      },
+      "correct_voice_rate": {
+        "mean": 0.75,
+        "min": 0.75,
+        "max": 0.75
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "after": {
+      "earshot": {
+        "wer": {
+          "mean": 4.482,
+          "min": 3.452,
+          "max": 5.327
+        },
+        "attribution": {
+          "mean": 0.434,
+          "min": 0.378,
+          "max": 0.516
+        },
+        "overlap_recall": {
+          "mean": 0.478,
+          "min": 0.398,
+          "max": 0.522
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.384,
+          "min": 0.377,
+          "max": 0.395
+        },
+        "attribution": {
+          "mean": 0.693,
+          "min": 0.689,
+          "max": 0.697
+        },
+        "overlap_recall": {
+          "mean": 0.486,
+          "min": 0.424,
+          "max": 0.524
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.372,
+          "min": 0.365,
+          "max": 0.381
+        },
+        "attribution": {
+          "mean": 0.707,
+          "min": 0.698,
+          "max": 0.713
+        },
+        "overlap_recall": {
+          "mean": 0.449,
+          "min": 0.382,
+          "max": 0.482
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 9.585,
+        "min": 9.585,
+        "max": 9.585
+      },
+      "correct_voice_rate": {
+        "mean": 0.75,
+        "min": 0.75,
+        "max": 0.75
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "changed": false
+  },
+  "ami_es2008b_array_8": {
+    "before": {
+      "earshot": {
+        "wer": {
+          "mean": 0.023,
+          "min": 0.016,
+          "max": 0.03
+        },
+        "attribution": {
+          "mean": 0.232,
+          "min": 0.227,
+          "max": 0.236
+        },
+        "overlap_recall": null
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.028,
+          "min": 0.023,
+          "max": 0.032
+        },
+        "attribution": {
+          "mean": 0.233,
+          "min": 0.233,
+          "max": 0.234
+        },
+        "overlap_recall": null
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.024,
+          "min": 0.022,
+          "max": 0.026
+        },
+        "attribution": {
+          "mean": 0.234,
+          "min": 0.232,
+          "max": 0.236
+        },
+        "overlap_recall": null
+      },
+      "si_sdr_gain_db": {
+        "mean": -1.778,
+        "min": -1.778,
+        "max": -1.778
+      },
+      "correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "after": {
+      "earshot": {
+        "wer": {
+          "mean": 0.023,
+          "min": 0.016,
+          "max": 0.03
+        },
+        "attribution": {
+          "mean": 0.232,
+          "min": 0.227,
+          "max": 0.236
+        },
+        "overlap_recall": null
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.028,
+          "min": 0.023,
+          "max": 0.032
+        },
+        "attribution": {
+          "mean": 0.233,
+          "min": 0.233,
+          "max": 0.234
+        },
+        "overlap_recall": null
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.024,
+          "min": 0.022,
+          "max": 0.026
+        },
+        "attribution": {
+          "mean": 0.234,
+          "min": 0.232,
+          "max": 0.236
+        },
+        "overlap_recall": null
+      },
+      "si_sdr_gain_db": {
+        "mean": -1.778,
+        "min": -1.778,
+        "max": -1.778
+      },
+      "correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "changed": false
+  },
+  "ami_es2008b_150_array_8": {
+    "before": {
+      "earshot": {
+        "wer": {
+          "mean": 0.891,
+          "min": 0.871,
+          "max": 0.901
+        },
+        "attribution": {
+          "mean": 0.337,
+          "min": 0.227,
+          "max": 0.49
+        },
+        "overlap_recall": {
+          "mean": 0.126,
+          "min": 0.106,
+          "max": 0.147
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.781,
+          "min": 0.629,
+          "max": 0.911
+        },
+        "attribution": {
+          "mean": 0.549,
+          "min": 0.372,
+          "max": 0.807
+        },
+        "overlap_recall": {
+          "mean": 0.131,
+          "min": 0.065,
+          "max": 0.167
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.781,
+          "min": 0.781,
+          "max": 0.781
+        },
+        "attribution": {
+          "mean": 0.512,
+          "min": 0.488,
+          "max": 0.549
+        },
+        "overlap_recall": {
+          "mean": 0.023,
+          "min": 0.023,
+          "max": 0.023
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 5.753,
+        "min": 5.753,
+        "max": 5.753
+      },
+      "correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "after": {
+      "earshot": {
+        "wer": {
+          "mean": 0.891,
+          "min": 0.871,
+          "max": 0.901
+        },
+        "attribution": {
+          "mean": 0.337,
+          "min": 0.227,
+          "max": 0.49
+        },
+        "overlap_recall": {
+          "mean": 0.126,
+          "min": 0.106,
+          "max": 0.147
+        }
+      },
+      "baseline": {
+        "wer": {
+          "mean": 0.781,
+          "min": 0.629,
+          "max": 0.911
+        },
+        "attribution": {
+          "mean": 0.549,
+          "min": 0.372,
+          "max": 0.807
+        },
+        "overlap_recall": {
+          "mean": 0.131,
+          "min": 0.065,
+          "max": 0.167
+        }
+      },
+      "delay_sum": {
+        "wer": {
+          "mean": 0.781,
+          "min": 0.781,
+          "max": 0.781
+        },
+        "attribution": {
+          "mean": 0.512,
+          "min": 0.488,
+          "max": 0.549
+        },
+        "overlap_recall": {
+          "mean": 0.023,
+          "min": 0.023,
+          "max": 0.023
+        }
+      },
+      "si_sdr_gain_db": {
+        "mean": 5.753,
+        "min": 5.753,
+        "max": 5.753
+      },
+      "correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      },
+      "mixture_correct_voice_rate": {
+        "mean": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      }
+    },
+    "changed": false
+  }
+}

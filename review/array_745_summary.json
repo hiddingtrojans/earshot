@@ -48,12 +48,12 @@
       },
       "delay_sum": {
         "wer": {
-          "mean": 0.235,
+          "mean": 0.234,
           "min": 0.225,
           "max": 0.252
         },
         "attribution": {
-          "mean": 0.913,
+          "mean": 0.914,
           "min": 0.898,
           "max": 0.925
         },
@@ -123,8 +123,8 @@
     "diagonal_mean": 0.6291,
     "off_diagonal_mean": 0.0229,
     "runtime": {
-      "beamforming_seconds": 1.835,
-      "analysis_seconds": 64.294,
+      "beamforming_seconds": 2.13,
+      "analysis_seconds": 3.027,
       "delays": [
         0,
         0,
@@ -176,8 +176,8 @@
           "overlap_recall": 0.444
         },
         "delay_sum": {
-          "wer": 0.228,
-          "attribution": 0.917,
+          "wer": 0.226,
+          "attribution": 0.92,
           "overlap_recall": 0.543
         },
         "si_sdr_gain_db": 8.258,

@@ -1,0 +1,7 @@
+                               Earshot         Single stream             Delay sum
+Word error rate      0.403 [0.376, 0.451]       0.384 [0.377, 0.395]     0.441 [0.372, 0.542]
+Right person         0.680 [0.623, 0.714]       0.693 [0.689, 0.697]     0.690 [0.671, 0.712]
+Overlap words        0.437 [0.428, 0.442]       0.486 [0.424, 0.524]     0.449 [0.382, 0.482]
+Correct voice        0.750 [0.750, 0.750]
+Mixture correct voice     0.250 [0.250, 0.250]
+wrote runs/ami_array_8_635/bench_array.json

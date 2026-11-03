@@ -1,80 +1,80 @@
 {
- "items": [
-  {
-   "kind": "question",
-   "text": "Can I ask, can we designing a remote control for a television only? only?",
-   "owner": null,
-   "action": null,
-   "due": null,
-   "cite": [
-    "c006"
-   ],
-   "id": "board-01",
-   "status": "supported",
-   "evidence_check": "Caption c006 contains the exact question wording spoken by Speaker C.",
-   "verifier": "muse-glimmer (local)"
+  "items": [
+    {
+      "kind": "question",
+      "text": "Can I ask, can we designing a remote control for a television only? only?",
+      "owner": null,
+      "action": null,
+      "due": null,
+      "cite": [
+        "c006"
+      ],
+      "id": "board-01",
+      "status": "supported",
+      "evidence_check": "c006 contains the exact wording asked by Speaker C.",
+      "verifier": "muse-glimmer (local)"
+    },
+    {
+      "kind": "question",
+      "text": "I mean if if this device is just to be used with a television would we even we even technically be possible to include include video recorder functions on it?",
+      "owner": null,
+      "action": null,
+      "due": null,
+      "cite": [
+        "c009"
+      ],
+      "id": "board-02",
+      "status": "supported",
+      "evidence_check": "c009 contains the exact wording asked by Speaker C.",
+      "verifier": "muse-glimmer (local)"
+    },
+    {
+      "kind": "question",
+      "text": "Or should we just stick to just stick to to having television television related buttons on",
+      "owner": null,
+      "action": null,
+      "due": null,
+      "cite": [
+        "c011"
+      ],
+      "id": "board-03",
+      "status": "supported",
+      "evidence_check": "c011 contains the exact wording asked by Speaker C.",
+      "verifier": "muse-glimmer (local)"
+    }
+  ],
+  "review": [
+    {
+      "kind": "commitment",
+      "text": "Speaker A said: “that's a good question. I'll look into it. If I can.”",
+      "owner": "Speaker A",
+      "action": "look into it",
+      "due": null,
+      "cite": [
+        "c010",
+        "c011",
+        "c012"
+      ],
+      "id": "board-04",
+      "status": "insufficient",
+      "evidence_check": "c012 records the conditional utterance 'I'll look into it. If I can.' which is not an explicit unconditional acceptance, and citations c010/c011 are by Speaker C and irrelevant to Speaker A's commitment.",
+      "verifier": "muse-glimmer (local)",
+      "fallback": {
+        "text": "Speaker C: “I don't know.” / Speaker C: “Or should we just stick to just stick to to having television television related buttons on” / Speaker A: “that's a good question. I'll look into it. If I can.”",
+        "cite": [
+          "c010",
+          "c011",
+          "c012"
+        ]
+      }
+    }
+  ],
+  "verification_model": "muse-glimmer",
+  "where": "local",
+  "actions": "Review only: no messages, tasks, or calendar events are created automatically.",
+  "counts": {
+    "supported": 3,
+    "not_accepted": 1
   },
-  {
-   "kind": "question",
-   "text": "I mean if if this device is just to be used with a television would we even we even technically be possible to include include video recorder functions on it?",
-   "owner": null,
-   "action": null,
-   "due": null,
-   "cite": [
-    "c009"
-   ],
-   "id": "board-02",
-   "status": "supported",
-   "evidence_check": "Caption c009 contains the exact question wording spoken by Speaker C.",
-   "verifier": "muse-glimmer (local)"
-  },
-  {
-   "kind": "question",
-   "text": "Or should we just stick to just stick to to having television television related buttons on",
-   "owner": null,
-   "action": null,
-   "due": null,
-   "cite": [
-    "c011"
-   ],
-   "id": "board-03",
-   "status": "supported",
-   "evidence_check": "Caption c011 contains the exact question wording spoken by Speaker C.",
-   "verifier": "muse-glimmer (local)"
-  }
- ],
- "review": [
-  {
-   "kind": "commitment",
-   "text": "Speaker A said: “I'll look into it.”",
-   "owner": "Speaker A",
-   "action": "look into it",
-   "due": null,
-   "cite": [
-    "c010",
-    "c011",
-    "c012"
-   ],
-   "id": "board-04",
-   "status": "insufficient",
-   "evidence_check": "c012 shows Speaker A saying “I'll look into it. If I can.” which is conditional, and citations c010/c011 are unrelated; no explicit unconditional commitment is evidenced.",
-   "verifier": "muse-glimmer (local)",
-   "fallback": {
-    "text": "Speaker C: “I don't know.” / Speaker C: “Or should we just stick to just stick to to having television television related buttons on” / Speaker A: “that's a good question. I'll look into it. If I can.”",
-    "cite": [
-     "c010",
-     "c011",
-     "c012"
-    ]
-   }
-  }
- ],
- "verification_model": "muse-glimmer",
- "where": "local",
- "actions": "Review only: no messages, tasks, or calendar events are created automatically.",
- "counts": {
-  "supported": 3,
-  "not_accepted": 1
- },
- "proposal_source": "literal transcript"
+  "proposal_source": "literal transcript"
 }

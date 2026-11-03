@@ -1,4 +1,4 @@
-........................................................................ [ 65%]
-................................s.....                                   [100%]
-109 passed, 1 skipped in 13.12s
-STRICT REPLAY: cited catch-up, board, four audio stems, unchanged document: PASS
+........................................................................ [ 64%]
+.................................s.....                                  [100%]
+110 passed, 1 skipped in 16.50s
+STRICT REPLAY: all 35 catch-up windows, board, threads and translation exact; provenance unchanged: PASS

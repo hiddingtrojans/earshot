@@ -1,4 +1,4 @@
-# Dinner Table Bench — AMI ES2008a results
+# Dinner Table Bench — public AMI results
 
 Date: 2026-11-02–03. Hardware: Apple M5 Max, arm64. Source: public AMI Meeting Corpus ES2008a, 745.0–820.0 s, far-field `Array1-01`, four speakers, 234 manually timed words (53 overlapping). All numbers below come from `python -m earshot bench` on real cached runs.
 
@@ -16,9 +16,33 @@ Values are **mean [min, max] over 3 real Voice transcription repeats**. Repeats 
 | SAM Audio legacy `remove` (745 s) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | 0.250 |
 | Spark AV experiment (unverified) | 0.852 [0.776, 0.897] | 0.496 [0.455, 0.529] | 0.254 [0.244, 0.262] | — |
 
-The single-stream baseline is **oracle-mapped**: each anonymous Voice speaker is assigned to the real person whose truth it matches best. This is generous to the baseline and unavailable to Lite at runtime. The primary SAM comparison uses its own three Voice repeats. Lite and Spark AV use their own previously reported cached repeats, so their baselines are not silently substituted for the primary run's baseline.
+The single-stream baseline is **oracle-mapped** with one-to-one maximum word-overlap assignment; unmatched voices are excluded. This is generous to the baseline and unavailable to Lite at runtime. The primary SAM comparison uses its own three Voice repeats. Lite and Spark AV use their own previously reported cached repeats, so their baselines are not silently substituted for the primary run's baseline.
 
 Lite does not separate audio and cannot recover words omitted by single-stream Voice. Its central 60% width, 30–60% mask-height mouth band, 0.5 s smoothing, z-scoring, Pearson correlation and `scipy.optimize.linear_sum_assignment` match the oracle baseline on its three 745 s repeats.
+
+## Independent public-meeting evaluation and scoring audit — 3 Nov
+
+The independent data source is **ES2008b, AMI 8-mic meeting-room array**, CC BY 4.0. Camera assignments came from corpus metadata and taps were inspected on each actual first frame. No synthetic meeting is used as robustness evidence.
+
+The initial 745 s window contains 217 words, all from Speaker C, and **zero overlapping truth words**. Its overlap gate is **not evaluable** (`go_no_go: null`), not a pass or failure. Its automatic mapping is the correct single active association (`A → Speaker C`). The 635 s candidate has only two overlapping words and was not run. Before inference on a replacement, an inclusion rule was fixed: at least two active speakers and at least 20 overlapping truth words in the same 75 s window. The earliest eligible start was **150 s**, with 110 truth words, 44 overlapping words, and all four speakers. Command: `python tools/run_array_benches.py --meeting ES2008b --window 150 --subsets 8`.
+
+| Meeting / start | WER ↓ | Right person ↑ | Overlap recall ↑ | Better baseline +0.10 | Correct voice | Beamforming (s) | Analysis section (s) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| ES2008b / 150 s | 0.891 [0.871, 0.901] | 0.337 [0.227, 0.490] | 0.126 [0.106, 0.147] | 0.131 + 0.10 = 0.231 | 0.250 | 1.731 | 52.604 |
+
+**NO-GO on the independent meeting.** It misses the overlap margin by 0.105 and right-person by 0.463. Raw single-stream overlap recall is 0.131 [0.065, 0.167]; delay-and-sum is 0.023. Beamforming and analysis-section times exclude tracking, mask parsing and transcription; the full analysis-and-three-repeat task took 1235.167 s wall time. Diarization found three labels. Speaker B used the fixed motion fallback at threshold 1.77380952. Automatic mapping was `{A:2, B:0, C:3}`; the diagnostic oracle association was `{A:Speaker C, B:Speaker B, C:Speaker A}`, so two corrections would be needed. No corrected or oracle-mapped result is presented as a product claim.
+
+| Stem \ headset | A | B | C | D |
+|---|---:|---:|---:|---:|
+| Speaker A | 0.1934 | 0.0697 | **0.4601** | 0.3481 |
+| Speaker B | 0.1237 | 0.1057 | **0.3911** | 0.1508 |
+| Speaker C | 0.0417 | 0.1036 | **0.8287** | 0.1412 |
+| Speaker D | **0.3346** | 0.0688 | 0.2785 | 0.2453 |
+| Mixture | 0.2228 | 0.1071 | **0.5274** | 0.2922 |
+
+Only Speaker C's row selects its own headset. Diagonal/off-diagonal means are 0.3433/0.2093; correct-voice is 0.250 for stems and mixture. Full repeats, mapping diagnostics and timing are in `review/ami_es2008b_150_array_8_summary.json`; raw output is in `review/parallel_es2008b_150_bench.log` and `review/ami_es2008b_150_array_8_oracle_recheck.log`. The Parallel experiment is not a validated robust separation result.
+
+**Oracle integrity:** review found that greedy assignment could map two diarized voices to one person and dump unmatched voices onto the first person. All array baselines now use one-to-one maximum word-overlap assignment (`scipy.optimize.linear_sum_assignment`), with unmatched voices excluded. Every array benchmark was recomputed cache-only. ES2008b and the 4/5-channel ES2008a summaries are unchanged. ES2008a 745 s delay-and-sum WER changed from 0.235 to 0.234; ES2008a 635 s delay-and-sum WER changed from 0.399 to 0.441. Recall, thresholds and every GO/NO-GO decision are unchanged. Before/after evidence is in `review/oracle_mapping_recheck.json` and the two `ami_array_8*_oracle_recheck.log` files.
 
 ## Review round 5: microphone array evaluation
 

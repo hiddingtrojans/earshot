@@ -48,13 +48,13 @@
       },
       "delay_sum": {
         "wer": {
-          "mean": 0.399,
+          "mean": 0.441,
           "min": 0.372,
-          "max": 0.417
+          "max": 0.542
         },
         "attribution": {
-          "mean": 0.687,
-          "min": 0.663,
+          "mean": 0.69,
+          "min": 0.671,
           "max": 0.712
         },
         "overlap_recall": {
@@ -180,8 +180,8 @@
           "overlap_recall": 0.51
         },
         "delay_sum": {
-          "wer": 0.417,
-          "attribution": 0.663,
+          "wer": 0.542,
+          "attribution": 0.671,
           "overlap_recall": 0.482
         },
         "si_sdr_gain_db": 5.195,
@@ -236,9 +236,9 @@
         "C": 0
       },
       "oracle_association": {
-        "C": "Speaker A",
         "A": "Speaker B",
-        "B": "Speaker D"
+        "B": "Speaker D",
+        "C": "Speaker A"
       },
       "correction_taps": 0,
       "mapping_after_one_tap_correction": {
@@ -483,9 +483,9 @@
         "C": 0
       },
       "oracle_association": {
-        "C": "Speaker A",
         "A": "Speaker B",
-        "B": "Speaker D"
+        "B": "Speaker D",
+        "C": "Speaker A"
       },
       "correction_taps": 0,
       "mapping_after_one_tap_correction": {
@@ -729,9 +729,9 @@
         "C": 0
       },
       "oracle_association": {
-        "C": "Speaker A",
         "A": "Speaker B",
-        "B": "Speaker D"
+        "B": "Speaker D",
+        "C": "Speaker A"
       },
       "correction_taps": 0,
       "mapping_after_one_tap_correction": {

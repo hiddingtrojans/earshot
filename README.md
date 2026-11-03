@@ -136,7 +136,7 @@ The baseline is the same table as one diarized stream (what single-stream captio
 
 ## Results
 
-Real AMI ES2008a far-field clip, mean [min, max] over 3 Voice transcription repeats. The single-stream baseline is oracle-mapped and therefore generous; it is not a runtime face-to-voice matcher. The primary SAM Audio comparison uses its own three repeats; Lite and Spark AV use their previously reported cached repeats.
+Real AMI ES2008a far-field clip, mean [min, max] over 3 Voice transcription repeats. The single-stream baseline uses one-to-one maximum word-overlap oracle assignment, excluding unmatched speakers; it is generous and not a runtime face-to-voice matcher. The primary SAM Audio comparison uses its own three repeats; Lite and Spark AV use their previously reported cached repeats.
 
 | Mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | Correct voice ↑ |
 |---|---:|---:|---:|---:|
@@ -160,8 +160,11 @@ Mean [min, max] over three real Voice repeats, using the **AMI 8-mic meeting-roo
 |---|---:|---:|---:|---:|---:|
 | ES2008a 745 s | 0.282 [0.240, 0.322] | 0.844 [0.835, 0.850] | 0.605 [0.555, 0.662] | 0.622 | 1.000 |
 | ES2008a 635 s | 0.403 [0.376, 0.451] | 0.680 [0.623, 0.714] | 0.437 [0.428, 0.442] | 0.586 | 0.750 |
+| ES2008b 150 s, independent | 0.891 [0.871, 0.901] | 0.337 [0.227, 0.490] | 0.126 [0.106, 0.147] | 0.231 | 0.250 |
 
-Both existing windows are **NO-GO**. The 745 s run has a 4/4 correct-voice envelope matrix (diagonal 0.6291, off-diagonal 0.0229), but misses the overlap margin by 0.017; 635 s also fails right-person. Four- and five-mic subsets, exact matrices, WER ranges, and timings are in `bench/RESULTS.md`. The separate Parallel player exposes real isolated listening while preserving this negative quality decision.
+All three overlap-bearing windows are **NO-GO**. The 745 s run has a 4/4 correct-voice envelope matrix (diagonal 0.6291, off-diagonal 0.0229), but misses the overlap margin by 0.017; the other ES2008a window also fails right-person. The independent ES2008b window has only 1/4 correct-voice rows (diagonal 0.3433, off-diagonal 0.2093), fails both gates, and uses the fixed motion fallback for Speaker B at threshold 1.77380952 because diarization found only three labels. Its automatic mapping needs two corrections to match the diagnostic oracle association; no oracle-mapped product claim or corrected-run pass is made.
+
+The first ES2008b 745 s window had 217 words from one speaker and zero overlaps, so its gate is **not evaluable**, not a pass or failure. The 635 s candidate had only two overlaps and was not run. Before inference on a replacement, the inclusion rule was fixed at ≥2 active speakers and ≥20 overlapping truth words; 150 s was the earliest eligible window (110 words, 44 overlaps, all four speakers). Four- and five-mic subsets, exact matrices, timing, the oracle-integrity recheck, and all independent results are in `bench/RESULTS.md`. The separate Parallel player exposes real isolated listening while preserving these negative quality decisions; it is not a validated overlap-recovery product.
 
 **SAM Audio `keep` is a quality no-go:** right-person 0.386 is below 0.80 and overlap recall 0.098 does not reach the same-run baseline +0.10 threshold (0.580). Separation took 773.889 seconds including loading, but speed is not a rejection criterion. Lite therefore remains the demo, without an overlap-recovery tagline. Spark AV also failed every adoption gate and remains an unverified negative experiment, not a viewer mode. See `bench/RESULTS.md` for both windows, exact commands, model IDs, hardware, timings, and negative control.
 
