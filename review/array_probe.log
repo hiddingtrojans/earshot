@@ -1,0 +1,79 @@
+Traceback (most recent call last):
+  File "<stdin>", line 20, in <module>
+  File "/Users/raulacedo/src/earshot/earshot-app/earshot/array.py", line 122, in separate
+    output, person_metadata = souden_mvdr(spectrogram, guide[indexes])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/raulacedo/src/earshot/earshot-app/earshot/array.py", line 90, in souden_mvdr
+    output = np.einsum("fd,dft->ft", weights[:, :, reference].conj(), spectrogram)
+                                     ~~~~~~~^^^^^^^^^^^^^^^^^
+IndexError: index 210 is out of bounds for axis 2 with size 8
+mapping {'A': 3, 'B': 1, 'C': 0, 'D': 2} guide {'motion_thresholds': {}, 'motion_fallback_people': []}
+matrix {'matrix': [[0.4152, -0.1545, 0.8512, 0.3894], [0.3718, 0.7571, 0.205, -0.2818], [0.4152, -0.1545, 0.8512, 0.3894], [0.1829, -0.5187, 0.6785, 0.6755]], 'mixture_baseline': [0.3929, -0.1761, 0.8536, 0.4089], 'correct_voice_rate': 0.5, 'mixture_correct_voice_rate': 0.25, 'diagonal_mean': 0.6747, 'off_diagonal_mean': 0.1978}
+metadata {
+  "0": {
+    "degenerate_guide": true,
+    "reference_channel": 3
+  },
+  "1": {
+    "degenerate_guide": false,
+    "reference_channel": 2,
+    "selected_snr": 0.1738359034061432
+  },
+  "2": {
+    "degenerate_guide": true,
+    "reference_channel": 3
+  },
+  "3": {
+    "degenerate_guide": false,
+    "reference_channel": 6,
+    "selected_snr": 6.738859176635742
+  }
+}
+mapping {'A': 3, 'B': 1, 'C': 0, 'D': 2} guide {'motion_thresholds': {}, 'motion_fallback_people': []}
+matrix {'matrix': [[0.5558, -0.0877, 0.6346, 0.2032], [0.3907, 0.659, 0.3694, -0.2072], [0.4628, 0.0571, 0.7812, 0.1939], [0.1461, -0.4639, 0.728, 0.6852]], 'mixture_baseline': [0.3929, -0.1761, 0.8536, 0.4089], 'correct_voice_rate': 0.5, 'mixture_correct_voice_rate': 0.25, 'diagonal_mean': 0.6703, 'off_diagonal_mean': 0.2023}
+metadata {
+  "0": {
+    "degenerate_guide": false,
+    "reference_channel": 5,
+    "selected_snr": 1.4654620885849
+  },
+  "1": {
+    "degenerate_guide": false,
+    "reference_channel": 2,
+    "selected_snr": 0.5861076712608337
+  },
+  "2": {
+    "degenerate_guide": false,
+    "reference_channel": 2,
+    "selected_snr": 0.3304084837436676
+  },
+  "3": {
+    "degenerate_guide": false,
+    "reference_channel": 6,
+    "selected_snr": 3.1024463176727295
+  }
+}
+mapping {'A': 3, 'B': 1, 'C': 0, 'D': 2} guide {'motion_thresholds': {}, 'motion_fallback_people': []}
+matrix {'matrix': [[0.5558, -0.0877, 0.6346, 0.2032], [0.3907, 0.659, 0.3694, -0.2072], [0.4628, 0.0571, 0.7812, 0.1939], [0.1461, -0.4639, 0.728, 0.6852]], 'mixture_baseline': [0.3929, -0.1761, 0.8536, 0.4089], 'correct_voice_rate': 0.5, 'mixture_correct_voice_rate': 0.25, 'diagonal_mean': 0.6703, 'off_diagonal_mean': 0.2023}
+metadata {
+  "0": {
+    "degenerate_guide": false,
+    "reference_channel": 5,
+    "selected_snr": 1.4654620885849
+  },
+  "1": {
+    "degenerate_guide": false,
+    "reference_channel": 2,
+    "selected_snr": 0.5861076712608337
+  },
+  "2": {
+    "degenerate_guide": false,
+    "reference_channel": 2,
+    "selected_snr": 0.3304084837436676
+  },
+  "3": {
+    "degenerate_guide": false,
+    "reference_channel": 6,
+    "selected_snr": 3.1024463176727295
+  }
+}
