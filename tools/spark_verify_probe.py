@@ -108,10 +108,11 @@ def clip_spans(turns, label: str) -> list[tuple[float, float]]:
     return spans
 
 
-def verify(mapping: dict, confidence: dict, answers: dict[str, list[str]], people: int) -> tuple[dict, dict]:
+def verify(mapping: dict, confidence: dict, answers: dict[str, list[str]], people: int,
+           all_labels: bool = False) -> tuple[dict, dict]:
     verified, status = dict(mapping), {}
     for label in mapping:
-        if confidence[label] >= CONFIDENCE_THRESHOLD:
+        if confidence[label] >= CONFIDENCE_THRESHOLD and not all_labels:
             status[label] = "confident"
             continue
         votes = Counter(a for a in answers.get(label, []) if a != "unclear")
@@ -128,7 +129,7 @@ def verify(mapping: dict, confidence: dict, answers: dict[str, list[str]], peopl
     return verified, status
 
 
-def build_cases(live: bool, only: str = "") -> tuple[list[dict], list[tuple]]:
+def build_cases(live: bool, only: str = "", all_labels: bool = False) -> tuple[list[dict], list[tuple]]:
     """Bind every window/source/repeat; return cases and (case, label, calls, video, start, seconds, taps, size) jobs."""
     jobs, cases = [], []
     for window, (run_dir, truth_dir) in WINDOWS.items():
@@ -155,9 +156,9 @@ def build_cases(live: bool, only: str = "") -> tuple[list[dict], list[tuple]]:
                 mapping, confidence = attribute_with_confidence(turns, motion, doc["info"]["fps"])
                 case = {"window": window, "source": source, "repeat": i, "doc": doc, "run": run, "truth": truth,
                         "truth_dir": truth_dir, "turns": turns, "mapping": mapping, "confidence": confidence,
-                        "answers": {}}
+                        "answers": {}, "all": all_labels}
                 for label in mapping:
-                    if confidence[label] >= CONFIDENCE_THRESHOLD:
+                    if confidence[label] >= CONFIDENCE_THRESHOLD and not all_labels:
                         continue
                     for start, seconds in clip_spans(turns, label):
                         jobs.append((case, label, verify_calls, run / doc["video"], start, seconds, taps, size))
@@ -170,7 +171,7 @@ def report(cases: list[dict], clips: int, out_path: Path) -> None:
     rows, by_window = [], {}
     for case in cases:
         names = [p["name"] for p in case["doc"]["people"]]
-        verified, status = verify(case["mapping"], case["confidence"], case["answers"], len(names))
+        verified, status = verify(case["mapping"], case["confidence"], case["answers"], len(names), case.get("all", False))
         oracle = oracle_speaker_mapping([{"speaker": t.speaker, "start": t.start, "end": t.end, "text": t.text}
                                          for t in case["turns"]], case["truth"]["people"])
         before = score_mapping(case["doc"], case["run"], case["truth"], case["truth_dir"], case["turns"],
