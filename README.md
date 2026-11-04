@@ -56,6 +56,14 @@ python -m earshot serve demo/ami_meeting --replay
 
 **Replay needs no API key and normally takes under five minutes from clone to viewer.** The included 42.68 MB demo uses a public AMI Meeting Corpus clip (CC BY 4.0) and real cached model responses. Replay makes no Meta calls. Use the language picker for Spanish, Download subtitles for VTT/SRT, and the catch-up/thread panels.
 
+### One-tap correction replay (held-out meeting)
+
+```bash
+python -m earshot serve demo/ami_es2008c_fix --replay
+```
+
+AMI ES2008c, a meeting held out from all tuning, with 8-mic delay-and-sum input. Automatic binding puts Speaker B's words under Speaker C's face and flags itself (confidence 0.07, below the 0.15 threshold). Press **Not Speaker C?**, then tap the woman top right: the captions move under the right face. **What did Speaker B say?** then replays a catch-up that local Muse Glimmer wrote after the correction. Catch-ups written before a correction are marked as possibly naming the old person. Corrections in replay go to `.replay-*` files, so the demo resets when you delete them.
+
 ### Experimental Parallel replay
 
 ```bash
