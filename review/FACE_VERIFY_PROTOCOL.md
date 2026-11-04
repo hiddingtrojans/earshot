@@ -91,4 +91,4 @@ Earshot-Lite binding is far below the oracle on this window (delay-and-sum 0.197
 | 2b per-face | 6 | 0 | 0 | 0 | **FAIL** (all 8 clip votes `unclear`) |
 | 2c pairwise | 6 | 1 | 1 | 0 | **FAIL** (needed ≥ 3 resolved) |
 
-The pairwise clip votes that were cast on delay-and-sum input were right 7 of 7, which motivated 2d (`review/IS1009A_PROTOCOL.md`).
+The pairwise clip votes that were cast were right 6 of 6 on delay-and-sum input (3 of 5 on raw), which motivated 2d (`review/IS1009A_PROTOCOL.md`).
