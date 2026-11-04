@@ -1,0 +1,171 @@
+[
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "A",
+    "start": 33.65,
+    "faces": [
+      "no",
+      "yes",
+      "unclear",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "C",
+    "start": 72.54,
+    "faces": [
+      "unclear",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "raw",
+    "repeat": 1,
+    "label": "C",
+    "start": 72.38,
+    "faces": [
+      "no",
+      "yes",
+      "yes",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "raw",
+    "repeat": 2,
+    "label": "A",
+    "start": 33.33,
+    "faces": [
+      "yes",
+      "yes",
+      "unclear",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "raw",
+    "repeat": 2,
+    "label": "D",
+    "start": 72.78,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "A",
+    "start": 27.49,
+    "faces": [
+      "yes",
+      "yes",
+      "unclear",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "A",
+    "start": 62.97,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "C",
+    "start": 72.62,
+    "faces": [
+      "no",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "A",
+    "start": 27.57,
+    "faces": [
+      "yes",
+      "yes",
+      "unclear",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "A",
+    "start": 63.01,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "B",
+    "start": 70.3,
+    "faces": [
+      "yes",
+      "no",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "C",
+    "start": 72.86,
+    "faces": [
+      "unclear",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "C",
+    "start": 72.78,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "no"
+    ]
+  }
+]

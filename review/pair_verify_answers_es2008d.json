@@ -1,0 +1,275 @@
+[
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "A",
+    "start": 33.65,
+    "pairs": {
+      "01": "right",
+      "02": "right",
+      "03": "right",
+      "10": "left",
+      "12": "left",
+      "13": "right",
+      "20": "left",
+      "21": "left",
+      "23": "right",
+      "30": "left",
+      "31": "left",
+      "32": "left"
+    }
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "C",
+    "start": 72.54,
+    "pairs": {
+      "01": "right",
+      "02": "right",
+      "03": "left",
+      "10": "left",
+      "12": "right",
+      "13": "left",
+      "20": "left",
+      "21": "left",
+      "23": "left",
+      "30": "unclear",
+      "31": "right",
+      "32": "right"
+    }
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "raw",
+    "repeat": 1,
+    "label": "C",
+    "start": 72.38,
+    "pairs": {
+      "01": "right",
+      "02": "right",
+      "03": "unclear",
+      "10": "left",
+      "12": "right",
+      "13": "left",
+      "20": "left",
+      "21": "left",
+      "23": "left",
+      "30": "unclear",
+      "31": "right",
+      "32": "right"
+    }
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "raw",
+    "repeat": 2,
+    "label": "A",
+    "start": 33.33,
+    "pairs": {
+      "01": "right",
+      "02": "right",
+      "03": "right",
+      "10": "left",
+      "12": "right",
+      "13": "right",
+      "20": "left",
+      "21": "unclear",
+      "23": "right",
+      "30": "left",
+      "31": "left",
+      "32": "left"
+    }
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "raw",
+    "repeat": 2,
+    "label": "D",
+    "start": 72.78,
+    "pairs": {
+      "01": "right",
+      "02": "right",
+      "03": "left",
+      "10": "left",
+      "12": "right",
+      "13": "left",
+      "20": "left",
+      "21": "left",
+      "23": "left",
+      "30": "right",
+      "31": "right",
+      "32": "right"
+    }
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "A",
+    "start": 27.49,
+    "pairs": {
+      "01": "right",
+      "02": "right",
+      "03": "left",
+      "10": "left",
+      "12": "left",
+      "13": "left",
+      "20": "right",
+      "21": "right",
+      "23": "left",
+      "30": "right",
+      "31": "right",
+      "32": "left"
+    }
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "A",
+    "start": 62.97,
+    "pairs": {
+      "01": "right",
+      "02": "left",
+      "03": "right",
+      "10": "left",
+      "12": "left",
+      "13": "left",
+      "20": "left",
+      "21": "right",
+      "23": "right",
+      "30": "left",
+      "31": "right",
+      "32": "unclear"
+    }
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "C",
+    "start": 72.62,
+    "pairs": {
+      "01": "right",
+      "02": "right",
+      "03": "unclear",
+      "10": "left",
+      "12": "left",
+      "13": "left",
+      "20": "left",
+      "21": "left",
+      "23": "left",
+      "30": "unclear",
+      "31": "right",
+      "32": "right"
+    }
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "A",
+    "start": 27.57,
+    "pairs": {
+      "01": "right",
+      "02": "right",
+      "03": "left",
+      "10": "left",
+      "12": "right",
+      "13": "left",
+      "20": "left",
+      "21": "right",
+      "23": "left",
+      "30": "left",
+      "31": "left",
+      "32": "right"
+    }
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "A",
+    "start": 63.01,
+    "pairs": {
+      "01": "right",
+      "02": "right",
+      "03": "right",
+      "10": "left",
+      "12": "left",
+      "13": "left",
+      "20": "left",
+      "21": "right",
+      "23": "right",
+      "30": "left",
+      "31": "right",
+      "32": "left"
+    }
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "B",
+    "start": 70.3,
+    "pairs": {
+      "01": "left",
+      "02": "left",
+      "03": "left",
+      "10": "right",
+      "12": "right",
+      "13": "left",
+      "20": "right",
+      "21": "left",
+      "23": "left",
+      "30": "right",
+      "31": "left",
+      "32": "right"
+    }
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "C",
+    "start": 72.86,
+    "pairs": {
+      "01": "right",
+      "02": "right",
+      "03": "right",
+      "10": "left",
+      "12": "right",
+      "13": "left",
+      "20": "left",
+      "21": "left",
+      "23": "left",
+      "30": "left",
+      "31": "right",
+      "32": "right"
+    }
+  },
+  {
+    "window": "ES2008d 120 s (held out)",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "C",
+    "start": 72.78,
+    "pairs": {
+      "01": "right",
+      "02": "right",
+      "03": "left",
+      "10": "left",
+      "12": "right",
+      "13": "left",
+      "20": "left",
+      "21": "left",
+      "23": "left",
+      "30": "right",
+      "31": "right",
+      "32": "right"
+    }
+  }
+]

@@ -79,3 +79,16 @@ Run 2026-11-04 ≈20:30 CET (`python -m tools.pair_verify_probe --live --only '!
 - Both orders agreed on 260 of 384 face pairs; a left/right bias remains (362 `left` vs 325 `right`).
 - A clip voted in 34 of 74 cases and was right **19 of 34** (56%, chance 25%). Part 1 managed 5 of 17. Better than chance, still too unreliable for 2 of 3 clips to agree.
 - Delay-and-sum: 1 of 2 errors fixed (rule met), 0 broken (met), 1 of 18 flags resolved (needed ≥ 9). **FAIL.** No binding was broken on either input.
+
+## Part 2 results on ES2008d (held out)
+
+Bench: `python tools/run_array_benches.py --meeting ES2008d --window 120 --subsets 8` (`review/ami_es2008d_120_array_8.log`). Verifiers: `--live --only ES2008d` (`review/{face,pair}_verify_probe_es2008d.{json,log}`).
+
+Earshot-Lite binding is far below the oracle on this window (delay-and-sum 0.197 vs oracle 0.616; raw 0.089 vs 0.664), and two wrong delay-and-sum bindings were **confident**, so they were never shown to a verifier.
+
+| Rule (delay-and-sum) | Flagged | Resolved | Fixed | Broken | Result |
+|---|---:|---:|---:|---:|---|
+| 2b per-face | 6 | 0 | 0 | 0 | **FAIL** (all 8 clip votes `unclear`) |
+| 2c pairwise | 6 | 1 | 1 | 0 | **FAIL** (needed ≥ 3 resolved) |
+
+The pairwise clip votes that were cast on delay-and-sum input were right 7 of 7, which motivated 2d (`review/IS1009A_PROTOCOL.md`).

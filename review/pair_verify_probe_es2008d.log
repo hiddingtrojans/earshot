@@ -1,0 +1,30 @@
+{
+  "raw": {
+    "flagged": 5,
+    "resolved": 0,
+    "fixed": 0,
+    "broken": 0,
+    "wrong_before": 10,
+    "wrong_after": 10,
+    "answers": {
+      "4": 2,
+      "3": 3
+    }
+  },
+  "delay_sum": {
+    "flagged": 6,
+    "resolved": 1,
+    "fixed": 1,
+    "broken": 0,
+    "wrong_before": 7,
+    "wrong_after": 6,
+    "answers": {
+      "2": 3,
+      "unclear": 2,
+      "1": 1,
+      "3": 2
+    }
+  }
+}
+ES2008d 120 s (held out)     raw       binding 0.089 verified 0.089 oracle 0.664
+ES2008d 120 s (held out)     delay_sum binding 0.197 verified 0.274 oracle 0.616
