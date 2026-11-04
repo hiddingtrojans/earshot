@@ -23,7 +23,7 @@ def read_taps(path: Path) -> list[str]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--window", type=int, required=True, help="window start in seconds (e.g. 745 or 150)")
-    parser.add_argument("--meeting", choices=["ES2008a", "ES2008b"], default="ES2008a")
+    parser.add_argument("--meeting", choices=["ES2008a", "ES2008b", "ES2008c"], default="ES2008a")
     parser.add_argument("--subsets", default="8,5,4", help="microphone counts to evaluate (default: 8,5,4)")
     args = parser.parse_args()
     suffix = "" if args.window == 745 else f"_{args.window}"

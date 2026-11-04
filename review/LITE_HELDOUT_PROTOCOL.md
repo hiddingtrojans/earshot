@@ -30,3 +30,7 @@ Raw-mix binding is reported alongside for comparison but does not decide the res
 ## Window selected (annotations only, before any media download)
 
 Earliest eligible start: **355 s** (251 truth words, 22 overlapping words). Only **Speaker B and Speaker D** speak in it, so binding has to place two voices among four tapped faces. That is a weaker test than four active speakers; it is kept because the rule was fixed in advance.
+
+## Taps (set on `frame0.png` before any model call)
+
+The ES2008b taps were tried first because the seats are the same. On ES2008c's first frame, Speaker D's landed on the background and Speaker A's on hair, so all four were moved onto faces by eye: `Speaker A@0.22,0.33`, `Speaker B@0.81,0.37`, `Speaker C@0.33,0.77`, `Speaker D@0.75,0.80` (`bench/ami_ES2008c_355/taps.txt`). The builder's headset/motion sync check gives lag −0.08 s and −0.12 s for B and D; A and C do not speak in this window, so their correlations are near zero, as expected.
