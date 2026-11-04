@@ -322,6 +322,7 @@ video.addEventListener("click", async event => {
   }
   doc = result.doc;
   correcting = null;
+  overlay.querySelectorAll(".bubble").forEach(n => n.remove());
   $("#translation-note").textContent = "Correction applied.";
   buildLanguage(); buildControls(); buildLanes(); buildThreads(); loadCalls(); render(video.currentTime);
 });
@@ -601,6 +602,11 @@ async function catchUp(who) {
   }
   if (!res.sentences?.length) { box.innerHTML = `<p class="empty">${res.note || "Nothing was said in that window."}</p>`; return; }
   const ol = document.createElement("ol");
+  if (doc.corrections?.length && (res.source === "precomputed" || !res.source)) {
+    const stale = document.createElement("p"); stale.className = "empty";
+    stale.textContent = "Written before your correction, so names in this summary may be out of date.";
+    box.replaceChildren(stale);
+  } else box.replaceChildren();
   for (const s of res.sentences) {
     const li = document.createElement("li");
     li.appendChild(document.createTextNode(s.text));
@@ -616,7 +622,7 @@ async function catchUp(who) {
       : "Shown word for word.";
     li.appendChild(note); ol.appendChild(li);
   }
-  box.innerHTML = ""; box.appendChild(ol);
+  box.appendChild(ol);
 }
 
 /* ---------- model calls ---------- */
