@@ -199,6 +199,7 @@ function buildLanguage() {
     language = picker.value;
     $("#translation-note").textContent = language && doc.translation_status?.[language] === "untranslated"
       ? "Translation unavailable; showing the original text." : "";
+    buildThreads();
     render(video.currentTime);
     updateSubtitleLinks();
   };
@@ -563,7 +564,7 @@ function buildThreads() {
       const p = doc.people[c.person];
       const line = document.createElement("div"); line.className = "line"; line.dataset.id = c.id;
       line.innerHTML = `<span class="bar" style="background:${p.color}"></span><span><span class="t">${fmt(c.start)} ${p.name}</span><br><span class="x"></span>${c.overlap ? ' <span class="sim">(at the same time)</span>' : ""}</span>`;
-      line.querySelector(".x").textContent = c.text;
+      line.querySelector(".x").textContent = captionText(c);
       line.onclick = () => { video.currentTime = c.start; };
       sec.appendChild(line);
     }
