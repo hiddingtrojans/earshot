@@ -39,7 +39,19 @@ def clean_text(value: object) -> str:
     return html.escape(" ".join(str(value).split()), quote=False)
 
 
-def vtt(doc: dict) -> str:
+def caption_text(doc: dict, caption: dict, language: str = "") -> str:
+    """Match the viewer: segment translation, then caption translation, then the original text."""
+    if not language:
+        return caption["text"]
+    if caption.get("segment") is not None and caption.get("caption_id"):
+        segments = ((doc.get("translation_segments") or {}).get(language) or {}).get(caption["caption_id"]) or []
+        if caption["segment"] < len(segments) and segments[caption["segment"]]:
+            return segments[caption["segment"]]["text"]
+    translated = ((doc.get("translations") or {}).get(language) or {}).get(caption.get("caption_id") or caption.get("id"))
+    return translated or caption["text"]
+
+
+def vtt(doc: dict, language: str = "") -> str:
     lines = ["WEBVTT", "", "STYLE"]
     for index, person in enumerate(doc["people"]):
         lines.append(f"::cue(.spk{index}) {{ color: {person['color']}; }}")
@@ -53,18 +65,18 @@ def vtt(doc: dict) -> str:
         start, end = caption["start"], max(caption["end"], caption["start"] + 0.001)
         lines += [
             f"{timestamp(start)} --> {timestamp(end)} line:{line}% position:{position}% align:middle size:45%",
-            f"<c.spk{person_index}><v {clean_text(person['name'])}>{clean_text(caption['text'])}</v></c>",
+            f"<c.spk{person_index}><v {clean_text(person['name'])}>{clean_text(caption_text(doc, caption, language))}</v></c>",
             "",
         ]
     return "\n".join(lines)
 
 
-def srt(doc: dict) -> str:
+def srt(doc: dict, language: str = "") -> str:
     blocks = []
     captions = sorted(doc["captions"], key=lambda item: (item["start"], item["person"]))
     for index, caption in enumerate(captions, start=1):
         name = " ".join(str(doc["people"][caption["person"]]["name"]).split())
-        text = " ".join(str(caption["text"]).split())
+        text = " ".join(str(caption_text(doc, caption, language)).split())
         start, end = caption["start"], max(caption["end"], caption["start"] + 0.001)
         blocks.append(f"{index}\n{timestamp(start, True)} --> {timestamp(end, True)}\n"
                       f"[{name}] {text}")

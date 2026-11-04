@@ -37,3 +37,19 @@ def test_anchor_falls_back_when_person_is_not_visible():
     x, y = anchor_at(doc, 0, 0.5)
     assert abs(x - 0.3) < 1e-12 and y == 0.4
     assert anchor_at(doc, 0, 10) == (0.25, 0.35)
+
+
+def test_exports_use_selected_translation_and_fall_back_to_original():
+    doc = sample_doc()
+    doc["translations"] = {"es": {"c001": "uno y dos"}}
+    assert "<c.spk0><v Speaker A>uno y dos</v></c>" in vtt(doc, "es")
+    assert "<c.spk1><v Speaker B>simultaneous</v></c>" in vtt(doc, "es")
+    assert "[Speaker A] uno y dos" in srt(doc, "es")
+    assert "[Speaker A] one & <two>" in srt(doc)
+
+
+def test_exports_use_translated_segments():
+    doc = sample_doc()
+    doc["captions"][0].update({"caption_id": "c001", "segment": 1})
+    doc["translation_segments"] = {"es": {"c001": [{"text": "primero"}, {"text": "segundo"}]}}
+    assert "[Speaker A] segundo" in srt(doc, "es")

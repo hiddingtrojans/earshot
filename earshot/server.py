@@ -116,9 +116,12 @@ def make_handler(run: Path, replay: bool, setup_video: Path | None = None, separ
                 from .export import srt, vtt
 
                 current = read_doc()
+                language = parse_qs(url.query).get("lang", [""])[0]
+                if language and language not in (current.get("translations") or {}):
+                    language = ""
                 if url.path.endswith(".vtt"):
-                    return self._text(vtt(current), "text/vtt; charset=utf-8")
-                return self._text(srt(current), "application/x-subrip; charset=utf-8")
+                    return self._text(vtt(current, language), "text/vtt; charset=utf-8")
+                return self._text(srt(current, language), "application/x-subrip; charset=utf-8")
             if url.path == "/api/setup/info" and setup_video:
                 info = probe(setup_video)
                 return self._json({"width": info.width, "height": info.height, "fps": info.fps, "frames": info.frames,

@@ -200,7 +200,17 @@ function buildLanguage() {
     $("#translation-note").textContent = language && doc.translation_status?.[language] === "untranslated"
       ? "Translation unavailable; showing the original text." : "";
     render(video.currentTime);
+    updateSubtitleLinks();
   };
+  updateSubtitleLinks();
+}
+function updateSubtitleLinks() {
+  const suffix = language ? `?lang=${encodeURIComponent(language)}` : "";
+  document.querySelectorAll(".download a[href^='/api/subtitles']").forEach(link => {
+    const kind = link.getAttribute("href").includes(".srt") ? "srt" : "vtt";
+    link.href = `/api/subtitles.${kind}${suffix}`;
+    link.download = `earshot${language ? "." + language : ""}.${kind}`;
+  });
 }
 function captionText(c) {
   if (c.segment !== undefined && c.caption_id) {
