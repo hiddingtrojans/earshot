@@ -41,7 +41,7 @@ The evaluation therefore uses the **strip image** instead of video. Everything e
 
 ## Part 1 result: FAIL
 
-Run 2026-11-04 20:03 CET (`python -m tools.face_verify_probe --live`; `review/face_verify_probe.json`, `review/face_verify_answers.json`, `review/face_verify_probe.log`). 296 per-face strip calls for 74 clips (≈ 830 input tokens each; roughly $0.35 at list price).
+Run 2026-11-04 20:03 CET (`python -m tools.face_verify_probe --live`; `review/face_verify_probe.json`, `review/face_verify_answers.json`, `review/face_verify_probe.log`). 296 per-face strip calls for 74 clips (≈ 830 input tokens each; first written as roughly $0.35, which counted input tokens only; with output tokens at list price it is ≈ $1.1).
 
 | Input | Flagged | Resolved | Fixed | Broken |
 |---|---:|---:|---:|---:|
@@ -84,7 +84,7 @@ Run 2026-11-04 ≈20:30 CET (`python -m tools.pair_verify_probe --live --only '!
 
 Bench: `python tools/run_array_benches.py --meeting ES2008d --window 120 --subsets 8` (`review/ami_es2008d_120_array_8.log`). Verifiers: `--live --only ES2008d` (`review/{face,pair}_verify_probe_es2008d.{json,log}`).
 
-Earshot-Lite binding is far below the oracle on this window (delay-and-sum 0.197 vs oracle 0.616; raw 0.089 vs 0.664), and two wrong delay-and-sum bindings were **confident**, so they were never shown to a verifier.
+Earshot-Lite binding is far below the oracle on this window (delay-and-sum 0.197 vs oracle 0.616; raw 0.089 vs 0.664), and 3 of the 7 wrong delay-and-sum bindings were **confident**, so they were never shown to a verifier (first written as "two"; corrected).
 
 | Rule (delay-and-sum) | Flagged | Resolved | Fixed | Broken | Result |
 |---|---:|---:|---:|---:|---|

@@ -29,7 +29,7 @@ Otherwise FAIL, reported in the README.
 
 ## Result: FAIL
 
-Run 2026-11-04 19:37 CET (`python -m tools.spark_verify_probe --live`; output `review/spark_verify_probe.json`, `review/spark_verify_probe.log`). 64 unique muted clips, one `muse-spark-1.3` call each (≈ 633 input tokens per call; roughly $0.10 in total at list price). A smoke clip from a known solo span of Speaker A was answered correctly ("1") before the run.
+Run 2026-11-04 19:37 CET (`python -m tools.spark_verify_probe --live`; output `review/spark_verify_probe.json`, `review/spark_verify_probe.log`). 64 unique muted clips, one `muse-spark-1.3` call each (≈ 633 input tokens per call; first written as roughly $0.10, input tokens only; ≈ $0.17 with output tokens at list price). A smoke clip from a known solo span of Speaker A was answered correctly ("1") before the run.
 
 | Input | Flagged labels | Confirmed or moved | Fixed | Broken |
 |---|---:|---:|---:|---:|

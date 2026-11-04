@@ -33,7 +33,7 @@ The builder's headset-energy vs lower-face-motion sync check warns for all four 
 
 ## 2d: Spark pairwise vote binds every label (pre-registered ≈21:05 CET, before the IS1009a bench finished and before any IS1009a binding or verifier output was seen)
 
-Motivation: on ES2008d delay-and-sum the pairwise clip votes were right 6 of 6 (3 of 5 on raw; first written as "7 of 7", a miscount, corrected 21:10 with no change to the rule), while Earshot-Lite was confidently wrong on 2 labels the verifier never looked at. 2d applies the pairwise verifier (`tools/pair_verify_probe.py`, unchanged prompt, strips and clip rule) to **every** diarized label, not only flagged ones. A label moves when 2 of its clips vote for the same face (collision rule unchanged); otherwise the Earshot-Lite binding stays.
+Motivation: on ES2008d delay-and-sum the pairwise clip votes were right 6 of 6 (3 of 5 on raw; first written as "7 of 7", a miscount, corrected 21:10 with no change to the rule), while Earshot-Lite was confidently wrong on 3 labels the verifier never looked at (first written as 2; corrected). 2d applies the pairwise verifier (`tools/pair_verify_probe.py`, unchanged prompt, strips and clip rule) to **every** diarized label, not only flagged ones. A label moves when 2 of its clips vote for the same face (collision rule unchanged); otherwise the Earshot-Lite binding stays.
 
 - Exploratory on the seen windows (ES2008a–d), delay-and-sum and raw, reported either way.
 - **Deciding, IS1009a delay-and-sum:** PASS only if mean right-person after 2d ≥ Earshot-Lite mean + 0.05 on the same three repeats, **and** 2d is not worse than Lite on any repeat. Raw reported.
