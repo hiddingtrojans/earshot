@@ -179,7 +179,11 @@ Binding equalled hand-matching in 9 of 9 repeats. It cannot exceed transcription
 | Raw single mic | 0.225 | 0.384 | 1 / 0 / 2 |
 | Delay-and-sum 8-mic | 0.284 | 0.439 | 1 / 0 / 1 |
 
-Uncorrected array-input binding is 0.155 below hand-matching (allowed: 0.05), so the zero-tap result above does not generalize. Array input still beats the single mic, and at most one correction tap reached the hand-matched mapping in every array repeat. Live cost of this test: about $0.47 at list price. The 30–60% mouth band was fixed by review before these runs; the 60–90% band won on 635 s and scored 0.537 on 745 s.
+Uncorrected array-input binding is 0.155 below hand-matching (allowed: 0.05), so the zero-tap result above does not generalize. Array input still beats the single mic, and at most one correction tap reached the hand-matched mapping in every array repeat. Live cost of this test: about $0.47 at list price.
+
+**Does the low-confidence flag catch the errors?** Across all four windows and three repeats (exploratory; `review/FLAG_COVERAGE.md`): on array input both wrong bindings out of 37 were flagged, so none was silent; on the single mic, 8 of 11 errors were flagged and 3 were confident and silent. The flag is cautious: it also fires on 16 of 35 correct array bindings.
+
+**Can Muse Spark resolve flags instead of a human? No (FAIL).** We showed Spark muted 2.5 s clips of each flagged voice with the four faces numbered, and asked who is talking, accepting an answer only when 2 of 3 clips agreed (`review/SPARK_VERIFY_PROTOCOL.md`, committed before the run). Spark answered "unclear" to 65 of 74 clips, and all 9 other answers named the same grid position whoever was talking. No flag was resolved; the agreement rule kept the biased answers from changing anything. Flags stay with the human tap. The 30–60% mouth band was fixed by review before these runs; the 60–90% band won on 635 s and scored 0.537 on 745 s.
 
 ## What didn't work: overlapping-speech separation
 
