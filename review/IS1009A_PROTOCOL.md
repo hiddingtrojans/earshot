@@ -24,3 +24,9 @@ Every result, pass or fail, goes in the README.
 ## Window selected (annotations only, before any media download)
 
 Earliest eligible start: **250 s** (153 truth words, 34 overlapping, speakers A, B, D active; C silent in this window and scores 0 attribution by construction, as everywhere else). The metadata mapping reproduces the hard-coded ES2008a–d table exactly.
+
+## Taps and sync (set ≈20:50 CET, before any model call on IS1009a)
+
+`Speaker A@0.33,0.31`, `Speaker B@0.65,0.36`, `Speaker C@0.29,0.89`, `Speaker D@0.79,0.79`, on face centres after a visual overlay check.
+
+The builder's headset-energy vs lower-face-motion sync check warns for all four (lags 0.72–1.0 s, correlation 0.09–0.44). The same check is as noisy on ES2008 (lags up to ±1.0 s, correlations down to −0.07), so it is not treated as evidence of misalignment; nothing is shifted. Recorded in `bench/ami_IS1009a_250/sync.json`.

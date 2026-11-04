@@ -1,0 +1,940 @@
+{
+  "source": "AMI Meeting Corpus IS1009a, CC BY 4.0",
+  "window": [
+    250.0,
+    325.0
+  ],
+  "mixture": "Array1-01",
+  "people": {
+    "Speaker A": "Yes Yeah okay All right Then tool training try out the white board participant can draw their favourite animal Does anybody want to go and see how the white board works So that in case we have to in the next meeting present something on the white board You wanna go Eileen and Whether you without hanging yourself And remember you have to press so it works Mm-hmm Fat a fat cat Okay And you're Francine right Would you like s like just to see um",
+    "Speaker B": "Yes I'm Francina Yes sure",
+    "Speaker C": "",
+    "Speaker D": "it After we've finished the remote control we'll get to that Okay I'll see what I can do See if I r See if I remember how to draw a kitty cat or a rabbit or something So that it will record okay Um uh um traditional kitty cat I've a very fat cat And it likes to sit like that Okay"
+  },
+  "words": [
+    {
+      "person": "Speaker D",
+      "start": -0.78,
+      "end": 1.04,
+      "text": "it"
+    },
+    {
+      "person": "Speaker A",
+      "start": 1.8,
+      "end": 2.7,
+      "text": "Yes"
+    },
+    {
+      "person": "Speaker D",
+      "start": 2.79,
+      "end": 3.03,
+      "text": "After"
+    },
+    {
+      "person": "Speaker D",
+      "start": 3.03,
+      "end": 3.14,
+      "text": "we've"
+    },
+    {
+      "person": "Speaker D",
+      "start": 3.14,
+      "end": 3.46,
+      "text": "finished"
+    },
+    {
+      "person": "Speaker D",
+      "start": 3.46,
+      "end": 3.53,
+      "text": "the"
+    },
+    {
+      "person": "Speaker D",
+      "start": 3.53,
+      "end": 3.8,
+      "text": "remote"
+    },
+    {
+      "person": "Speaker D",
+      "start": 3.8,
+      "end": 4.17,
+      "text": "control"
+    },
+    {
+      "person": "Speaker D",
+      "start": 4.17,
+      "end": 4.26,
+      "text": "we'll"
+    },
+    {
+      "person": "Speaker D",
+      "start": 4.26,
+      "end": 4.42,
+      "text": "get"
+    },
+    {
+      "person": "Speaker D",
+      "start": 4.42,
+      "end": 4.5,
+      "text": "to"
+    },
+    {
+      "person": "Speaker D",
+      "start": 4.5,
+      "end": 4.69,
+      "text": "that"
+    },
+    {
+      "person": "Speaker A",
+      "start": 5.24,
+      "end": 5.44,
+      "text": "Yeah"
+    },
+    {
+      "person": "Speaker A",
+      "start": 5.44,
+      "end": 7.36,
+      "text": "okay"
+    },
+    {
+      "person": "Speaker A",
+      "start": 7.36,
+      "end": 7.42,
+      "text": "All"
+    },
+    {
+      "person": "Speaker A",
+      "start": 7.42,
+      "end": 7.74,
+      "text": "right"
+    },
+    {
+      "person": "Speaker A",
+      "start": 10.02,
+      "end": 10.42,
+      "text": "Then"
+    },
+    {
+      "person": "Speaker A",
+      "start": 10.42,
+      "end": 10.64,
+      "text": "tool"
+    },
+    {
+      "person": "Speaker A",
+      "start": 10.64,
+      "end": 11.14,
+      "text": "training"
+    },
+    {
+      "person": "Speaker A",
+      "start": 11.14,
+      "end": 11.46,
+      "text": "try"
+    },
+    {
+      "person": "Speaker A",
+      "start": 11.46,
+      "end": 11.56,
+      "text": "out"
+    },
+    {
+      "person": "Speaker A",
+      "start": 11.56,
+      "end": 11.71,
+      "text": "the"
+    },
+    {
+      "person": "Speaker A",
+      "start": 11.71,
+      "end": 12.0,
+      "text": "white"
+    },
+    {
+      "person": "Speaker A",
+      "start": 12.0,
+      "end": 12.59,
+      "text": "board"
+    },
+    {
+      "person": "Speaker A",
+      "start": 12.59,
+      "end": 12.96,
+      "text": "participant"
+    },
+    {
+      "person": "Speaker A",
+      "start": 12.96,
+      "end": 13.11,
+      "text": "can"
+    },
+    {
+      "person": "Speaker A",
+      "start": 13.11,
+      "end": 13.31,
+      "text": "draw"
+    },
+    {
+      "person": "Speaker A",
+      "start": 13.31,
+      "end": 13.45,
+      "text": "their"
+    },
+    {
+      "person": "Speaker A",
+      "start": 13.45,
+      "end": 13.79,
+      "text": "favourite"
+    },
+    {
+      "person": "Speaker A",
+      "start": 13.79,
+      "end": 14.71,
+      "text": "animal"
+    },
+    {
+      "person": "Speaker A",
+      "start": 14.71,
+      "end": 14.88,
+      "text": "Does"
+    },
+    {
+      "person": "Speaker A",
+      "start": 14.88,
+      "end": 15.53,
+      "text": "anybody"
+    },
+    {
+      "person": "Speaker A",
+      "start": 15.53,
+      "end": 15.74,
+      "text": "want"
+    },
+    {
+      "person": "Speaker A",
+      "start": 15.74,
+      "end": 15.81,
+      "text": "to"
+    },
+    {
+      "person": "Speaker A",
+      "start": 15.81,
+      "end": 15.98,
+      "text": "go"
+    },
+    {
+      "person": "Speaker A",
+      "start": 15.98,
+      "end": 17.0,
+      "text": "and"
+    },
+    {
+      "person": "Speaker A",
+      "start": 17.0,
+      "end": 17.21,
+      "text": "see"
+    },
+    {
+      "person": "Speaker A",
+      "start": 17.21,
+      "end": 17.34,
+      "text": "how"
+    },
+    {
+      "person": "Speaker A",
+      "start": 17.34,
+      "end": 17.46,
+      "text": "the"
+    },
+    {
+      "person": "Speaker A",
+      "start": 17.46,
+      "end": 17.67,
+      "text": "white"
+    },
+    {
+      "person": "Speaker A",
+      "start": 17.67,
+      "end": 17.94,
+      "text": "board"
+    },
+    {
+      "person": "Speaker A",
+      "start": 17.94,
+      "end": 18.72,
+      "text": "works"
+    },
+    {
+      "person": "Speaker A",
+      "start": 18.72,
+      "end": 18.94,
+      "text": "So"
+    },
+    {
+      "person": "Speaker A",
+      "start": 18.94,
+      "end": 19.36,
+      "text": "that"
+    },
+    {
+      "person": "Speaker A",
+      "start": 19.36,
+      "end": 19.49,
+      "text": "in"
+    },
+    {
+      "person": "Speaker A",
+      "start": 19.49,
+      "end": 19.73,
+      "text": "case"
+    },
+    {
+      "person": "Speaker A",
+      "start": 19.73,
+      "end": 19.85,
+      "text": "we"
+    },
+    {
+      "person": "Speaker A",
+      "start": 19.85,
+      "end": 20.04,
+      "text": "have"
+    },
+    {
+      "person": "Speaker A",
+      "start": 20.04,
+      "end": 20.19,
+      "text": "to"
+    },
+    {
+      "person": "Speaker A",
+      "start": 20.19,
+      "end": 20.45,
+      "text": "in"
+    },
+    {
+      "person": "Speaker A",
+      "start": 20.45,
+      "end": 20.54,
+      "text": "the"
+    },
+    {
+      "person": "Speaker A",
+      "start": 20.54,
+      "end": 20.82,
+      "text": "next"
+    },
+    {
+      "person": "Speaker A",
+      "start": 20.82,
+      "end": 21.11,
+      "text": "meeting"
+    },
+    {
+      "person": "Speaker A",
+      "start": 21.11,
+      "end": 21.48,
+      "text": "present"
+    },
+    {
+      "person": "Speaker A",
+      "start": 21.48,
+      "end": 21.8,
+      "text": "something"
+    },
+    {
+      "person": "Speaker A",
+      "start": 21.8,
+      "end": 21.89,
+      "text": "on"
+    },
+    {
+      "person": "Speaker A",
+      "start": 21.89,
+      "end": 21.97,
+      "text": "the"
+    },
+    {
+      "person": "Speaker A",
+      "start": 21.97,
+      "end": 22.22,
+      "text": "white"
+    },
+    {
+      "person": "Speaker A",
+      "start": 22.22,
+      "end": 22.52,
+      "text": "board"
+    },
+    {
+      "person": "Speaker A",
+      "start": 24.68,
+      "end": 24.74,
+      "text": "You"
+    },
+    {
+      "person": "Speaker A",
+      "start": 24.74,
+      "end": 24.92,
+      "text": "wanna"
+    },
+    {
+      "person": "Speaker A",
+      "start": 24.92,
+      "end": 25.3,
+      "text": "go"
+    },
+    {
+      "person": "Speaker A",
+      "start": 25.3,
+      "end": 25.7,
+      "text": "Eileen"
+    },
+    {
+      "person": "Speaker A",
+      "start": 25.7,
+      "end": 25.95,
+      "text": "and"
+    },
+    {
+      "person": "Speaker D",
+      "start": 26.23,
+      "end": 26.54,
+      "text": "Okay"
+    },
+    {
+      "person": "Speaker D",
+      "start": 26.54,
+      "end": 26.67,
+      "text": "I'll"
+    },
+    {
+      "person": "Speaker D",
+      "start": 26.67,
+      "end": 26.83,
+      "text": "see"
+    },
+    {
+      "person": "Speaker D",
+      "start": 26.83,
+      "end": 26.97,
+      "text": "what"
+    },
+    {
+      "person": "Speaker D",
+      "start": 26.97,
+      "end": 27.01,
+      "text": "I"
+    },
+    {
+      "person": "Speaker D",
+      "start": 27.01,
+      "end": 27.2,
+      "text": "can"
+    },
+    {
+      "person": "Speaker D",
+      "start": 27.2,
+      "end": 28.52,
+      "text": "do"
+    },
+    {
+      "person": "Speaker A",
+      "start": 27.59,
+      "end": 27.81,
+      "text": "Whether"
+    },
+    {
+      "person": "Speaker A",
+      "start": 27.81,
+      "end": 28.72,
+      "text": "you"
+    },
+    {
+      "person": "Speaker D",
+      "start": 28.52,
+      "end": 28.67,
+      "text": "See"
+    },
+    {
+      "person": "Speaker D",
+      "start": 28.67,
+      "end": 28.79,
+      "text": "if"
+    },
+    {
+      "person": "Speaker A",
+      "start": 28.72,
+      "end": 29.08,
+      "text": "without"
+    },
+    {
+      "person": "Speaker D",
+      "start": 28.79,
+      "end": 28.84,
+      "text": "I"
+    },
+    {
+      "person": "Speaker D",
+      "start": 28.84,
+      "end": 28.89,
+      "text": "r"
+    },
+    {
+      "person": "Speaker A",
+      "start": 29.08,
+      "end": 29.33,
+      "text": "hanging"
+    },
+    {
+      "person": "Speaker A",
+      "start": 29.33,
+      "end": 29.86,
+      "text": "yourself"
+    },
+    {
+      "person": "Speaker D",
+      "start": 30.08,
+      "end": 30.22,
+      "text": "See"
+    },
+    {
+      "person": "Speaker D",
+      "start": 30.22,
+      "end": 30.39,
+      "text": "if"
+    },
+    {
+      "person": "Speaker D",
+      "start": 30.39,
+      "end": 30.45,
+      "text": "I"
+    },
+    {
+      "person": "Speaker D",
+      "start": 30.45,
+      "end": 30.87,
+      "text": "remember"
+    },
+    {
+      "person": "Speaker D",
+      "start": 30.87,
+      "end": 31.07,
+      "text": "how"
+    },
+    {
+      "person": "Speaker D",
+      "start": 31.07,
+      "end": 31.62,
+      "text": "to"
+    },
+    {
+      "person": "Speaker D",
+      "start": 31.62,
+      "end": 32.0,
+      "text": "draw"
+    },
+    {
+      "person": "Speaker D",
+      "start": 32.0,
+      "end": 32.08,
+      "text": "a"
+    },
+    {
+      "person": "Speaker D",
+      "start": 32.08,
+      "end": 32.31,
+      "text": "kitty"
+    },
+    {
+      "person": "Speaker D",
+      "start": 32.31,
+      "end": 32.6,
+      "text": "cat"
+    },
+    {
+      "person": "Speaker D",
+      "start": 32.6,
+      "end": 32.82,
+      "text": "or"
+    },
+    {
+      "person": "Speaker D",
+      "start": 32.82,
+      "end": 32.87,
+      "text": "a"
+    },
+    {
+      "person": "Speaker D",
+      "start": 32.87,
+      "end": 33.2,
+      "text": "rabbit"
+    },
+    {
+      "person": "Speaker D",
+      "start": 33.2,
+      "end": 33.28,
+      "text": "or"
+    },
+    {
+      "person": "Speaker D",
+      "start": 33.28,
+      "end": 35.51,
+      "text": "something"
+    },
+    {
+      "person": "Speaker A",
+      "start": 38.1,
+      "end": 38.26,
+      "text": "And"
+    },
+    {
+      "person": "Speaker A",
+      "start": 38.26,
+      "end": 38.64,
+      "text": "remember"
+    },
+    {
+      "person": "Speaker A",
+      "start": 38.64,
+      "end": 38.74,
+      "text": "you"
+    },
+    {
+      "person": "Speaker A",
+      "start": 38.74,
+      "end": 38.96,
+      "text": "have"
+    },
+    {
+      "person": "Speaker A",
+      "start": 38.96,
+      "end": 39.05,
+      "text": "to"
+    },
+    {
+      "person": "Speaker A",
+      "start": 39.05,
+      "end": 39.61,
+      "text": "press"
+    },
+    {
+      "person": "Speaker A",
+      "start": 39.61,
+      "end": 39.78,
+      "text": "so"
+    },
+    {
+      "person": "Speaker A",
+      "start": 39.78,
+      "end": 39.93,
+      "text": "it"
+    },
+    {
+      "person": "Speaker A",
+      "start": 39.93,
+      "end": 40.82,
+      "text": "works"
+    },
+    {
+      "person": "Speaker D",
+      "start": 40.06,
+      "end": 40.32,
+      "text": "So"
+    },
+    {
+      "person": "Speaker D",
+      "start": 40.32,
+      "end": 40.48,
+      "text": "that"
+    },
+    {
+      "person": "Speaker D",
+      "start": 40.48,
+      "end": 40.56,
+      "text": "it"
+    },
+    {
+      "person": "Speaker D",
+      "start": 40.56,
+      "end": 40.66,
+      "text": "will"
+    },
+    {
+      "person": "Speaker D",
+      "start": 40.66,
+      "end": 41.12,
+      "text": "record"
+    },
+    {
+      "person": "Speaker A",
+      "start": 40.82,
+      "end": 41.15,
+      "text": "Mm-hmm"
+    },
+    {
+      "person": "Speaker D",
+      "start": 41.12,
+      "end": 42.19,
+      "text": "okay"
+    },
+    {
+      "person": "Speaker D",
+      "start": 42.19,
+      "end": 43.42,
+      "text": "Um"
+    },
+    {
+      "person": "Speaker D",
+      "start": 43.42,
+      "end": 44.83,
+      "text": "uh"
+    },
+    {
+      "person": "Speaker D",
+      "start": 44.83,
+      "end": 45.63,
+      "text": "um"
+    },
+    {
+      "person": "Speaker D",
+      "start": 45.63,
+      "end": 46.96,
+      "text": "traditional"
+    },
+    {
+      "person": "Speaker D",
+      "start": 46.96,
+      "end": 47.25,
+      "text": "kitty"
+    },
+    {
+      "person": "Speaker D",
+      "start": 47.25,
+      "end": 47.75,
+      "text": "cat"
+    },
+    {
+      "person": "Speaker A",
+      "start": 58.92,
+      "end": 59.08,
+      "text": "Fat"
+    },
+    {
+      "person": "Speaker A",
+      "start": 59.08,
+      "end": 59.12,
+      "text": "a"
+    },
+    {
+      "person": "Speaker A",
+      "start": 59.12,
+      "end": 59.68,
+      "text": "fat"
+    },
+    {
+      "person": "Speaker A",
+      "start": 59.68,
+      "end": 60.65,
+      "text": "cat"
+    },
+    {
+      "person": "Speaker D",
+      "start": 61.19,
+      "end": 61.4,
+      "text": "I've"
+    },
+    {
+      "person": "Speaker D",
+      "start": 61.4,
+      "end": 61.51,
+      "text": "a"
+    },
+    {
+      "person": "Speaker D",
+      "start": 61.51,
+      "end": 61.85,
+      "text": "very"
+    },
+    {
+      "person": "Speaker D",
+      "start": 61.85,
+      "end": 62.17,
+      "text": "fat"
+    },
+    {
+      "person": "Speaker D",
+      "start": 62.17,
+      "end": 65.73,
+      "text": "cat"
+    },
+    {
+      "person": "Speaker D",
+      "start": 65.73,
+      "end": 65.93,
+      "text": "And"
+    },
+    {
+      "person": "Speaker D",
+      "start": 65.93,
+      "end": 66.03,
+      "text": "it"
+    },
+    {
+      "person": "Speaker D",
+      "start": 66.03,
+      "end": 66.36,
+      "text": "likes"
+    },
+    {
+      "person": "Speaker D",
+      "start": 66.36,
+      "end": 66.43,
+      "text": "to"
+    },
+    {
+      "person": "Speaker D",
+      "start": 66.43,
+      "end": 66.73,
+      "text": "sit"
+    },
+    {
+      "person": "Speaker D",
+      "start": 66.73,
+      "end": 66.93,
+      "text": "like"
+    },
+    {
+      "person": "Speaker D",
+      "start": 66.93,
+      "end": 68.12,
+      "text": "that"
+    },
+    {
+      "person": "Speaker A",
+      "start": 67.63,
+      "end": 68.04,
+      "text": "Okay"
+    },
+    {
+      "person": "Speaker D",
+      "start": 68.12,
+      "end": 68.45,
+      "text": "Okay"
+    },
+    {
+      "person": "Speaker A",
+      "start": 70.53,
+      "end": 70.95,
+      "text": "And"
+    },
+    {
+      "person": "Speaker A",
+      "start": 70.95,
+      "end": 71.38,
+      "text": "you're"
+    },
+    {
+      "person": "Speaker A",
+      "start": 71.38,
+      "end": 72.26,
+      "text": "Francine"
+    },
+    {
+      "person": "Speaker B",
+      "start": 72.23,
+      "end": 72.54,
+      "text": "Yes"
+    },
+    {
+      "person": "Speaker A",
+      "start": 72.26,
+      "end": 72.58,
+      "text": "right"
+    },
+    {
+      "person": "Speaker B",
+      "start": 72.54,
+      "end": 72.77,
+      "text": "I'm"
+    },
+    {
+      "person": "Speaker A",
+      "start": 72.58,
+      "end": 72.71,
+      "text": "Would"
+    },
+    {
+      "person": "Speaker A",
+      "start": 72.71,
+      "end": 72.83,
+      "text": "you"
+    },
+    {
+      "person": "Speaker B",
+      "start": 72.77,
+      "end": 74.16,
+      "text": "Francina"
+    },
+    {
+      "person": "Speaker A",
+      "start": 72.83,
+      "end": 73.07,
+      "text": "like"
+    },
+    {
+      "person": "Speaker A",
+      "start": 73.07,
+      "end": 73.43,
+      "text": "s"
+    },
+    {
+      "person": "Speaker A",
+      "start": 73.43,
+      "end": 73.62,
+      "text": "like"
+    },
+    {
+      "person": "Speaker A",
+      "start": 73.62,
+      "end": 73.84,
+      "text": "just"
+    },
+    {
+      "person": "Speaker A",
+      "start": 73.84,
+      "end": 73.95,
+      "text": "to"
+    },
+    {
+      "person": "Speaker A",
+      "start": 73.95,
+      "end": 74.44,
+      "text": "see"
+    },
+    {
+      "person": "Speaker B",
+      "start": 74.16,
+      "end": 74.74,
+      "text": "Yes"
+    },
+    {
+      "person": "Speaker A",
+      "start": 74.44,
+      "end": 75.3,
+      "text": "um"
+    },
+    {
+      "person": "Speaker B",
+      "start": 74.74,
+      "end": 75.08,
+      "text": "sure"
+    }
+  ],
+  "reference_tracks": {
+    "Speaker A": "ref_A.wav",
+    "Speaker B": "ref_B.wav",
+    "Speaker C": "ref_C.wav",
+    "Speaker D": "ref_D.wav"
+  }
+}

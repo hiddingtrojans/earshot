@@ -1,0 +1,1 @@
+--tap "Speaker A@0.33,0.31" --tap "Speaker B@0.65,0.36" --tap "Speaker C@0.29,0.89" --tap "Speaker D@0.79,0.79"
