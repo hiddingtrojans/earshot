@@ -1,0 +1,628 @@
+{
+  "run": "runs/ami_es2008c_355_array_8",
+  "separator": "AMI 8-mic meeting-room array MVDR (classical; channels [1, 2, 3, 4, 5, 6, 7, 8])",
+  "repeat_count": 3,
+  "repeats": [
+    {
+      "run": "runs/ami_es2008c_355_array_8",
+      "separator": "AMI 8-mic meeting-room array MVDR (classical; channels [1, 2, 3, 4, 5, 6, 7, 8])",
+      "oracle_mapping": {
+        "A": "Speaker B",
+        "B": "Speaker D"
+      },
+      "people": {
+        "Speaker A": {
+          "earshot": {
+            "words_truth": 0,
+            "words_captioned": 80,
+            "wer": 80.0,
+            "attribution": 0.0
+          },
+          "baseline": {
+            "words_truth": 0,
+            "words_captioned": 0,
+            "wer": 0.0,
+            "attribution": 0.0
+          },
+          "delay_sum": {
+            "words_truth": 0,
+            "words_captioned": 0,
+            "wer": 0.0,
+            "attribution": 0.0
+          },
+          "si_sdr_db": {
+            "isolated": -53.97,
+            "mixture": -49.86
+          }
+        },
+        "Speaker B": {
+          "earshot": {
+            "words_truth": 219,
+            "words_captioned": 0,
+            "wer": 1.0,
+            "attribution": 0.0,
+            "overlap_words": 11,
+            "overlap_recall": 0.0
+          },
+          "baseline": {
+            "words_truth": 219,
+            "words_captioned": 217,
+            "wer": 0.114,
+            "attribution": 0.935,
+            "overlap_words": 11,
+            "overlap_recall": 0.455
+          },
+          "delay_sum": {
+            "words_truth": 219,
+            "words_captioned": 223,
+            "wer": 0.091,
+            "attribution": 0.933,
+            "overlap_words": 11,
+            "overlap_recall": 0.909
+          },
+          "si_sdr_db": {
+            "isolated": -30.94,
+            "mixture": -15.5
+          }
+        },
+        "Speaker C": {
+          "earshot": {
+            "words_truth": 0,
+            "words_captioned": 226,
+            "wer": 226.0,
+            "attribution": 0.0
+          },
+          "baseline": {
+            "words_truth": 0,
+            "words_captioned": 0,
+            "wer": 0.0,
+            "attribution": 0.0
+          },
+          "delay_sum": {
+            "words_truth": 0,
+            "words_captioned": 0,
+            "wer": 0.0,
+            "attribution": 0.0
+          },
+          "si_sdr_db": {
+            "isolated": -15.52,
+            "mixture": -16.17
+          }
+        },
+        "Speaker D": {
+          "earshot": {
+            "words_truth": 34,
+            "words_captioned": 19,
+            "wer": 0.441,
+            "attribution": 1.0,
+            "overlap_words": 11,
+            "overlap_recall": 0.727
+          },
+          "baseline": {
+            "words_truth": 34,
+            "words_captioned": 30,
+            "wer": 0.206,
+            "attribution": 0.933,
+            "overlap_words": 11,
+            "overlap_recall": 0.636
+          },
+          "delay_sum": {
+            "words_truth": 34,
+            "words_captioned": 27,
+            "wer": 0.471,
+            "attribution": 0.778,
+            "overlap_words": 11,
+            "overlap_recall": 0.0
+          },
+          "si_sdr_db": {
+            "isolated": -6.72,
+            "mixture": -20.05
+          }
+        }
+      },
+      "delay_sum_oracle_mapping": {
+        "A": "Speaker B",
+        "B": "Speaker D"
+      },
+      "lite_mapping": {
+        "A": 2,
+        "B": 3
+      },
+      "envelope": {
+        "people": {
+          "Speaker A": [
+            0.1643,
+            0.221,
+            0.4274,
+            0.5037
+          ],
+          "Speaker B": [
+            0.1043,
+            0.0025,
+            0.2838,
+            0.5966
+          ],
+          "Speaker C": [
+            -0.0199,
+            0.7167,
+            0.5652,
+            -0.2693
+          ],
+          "Speaker D": [
+            0.1856,
+            -0.1148,
+            0.2937,
+            0.7374
+          ]
+        },
+        "mixture": [
+          0.109,
+          0.3477,
+          0.6232,
+          0.3356
+        ],
+        "mixture_correct_voice_rate": 0.25,
+        "gate": "Frames with mixture log energy above its 20th percentile",
+        "si_sdr_note": "Mixture–Speaker A headset SI-SDR is -49.86 dB for this run; far-field mixture SI-SDR is not meaningful here.",
+        "correct_voice_rate": 0.25
+      },
+      "summary": {
+        "earshot": {
+          "wer": 76.86,
+          "attribution": 0.25,
+          "overlap_recall": 0.363
+        },
+        "baseline": {
+          "wer": 0.08,
+          "attribution": 0.467,
+          "overlap_recall": 0.545
+        },
+        "delay_sum": {
+          "wer": 0.14,
+          "attribution": 0.428,
+          "overlap_recall": 0.455
+        },
+        "si_sdr_gain_db": -1.392,
+        "correct_voice_rate": 0.25,
+        "mixture_correct_voice_rate": 0.25
+      }
+    },
+    {
+      "run": "runs/ami_es2008c_355_array_8",
+      "separator": "AMI 8-mic meeting-room array MVDR (classical; channels [1, 2, 3, 4, 5, 6, 7, 8])",
+      "oracle_mapping": {
+        "A": "Speaker B",
+        "B": "Speaker D",
+        "0": "Speaker A"
+      },
+      "people": {
+        "Speaker A": {
+          "earshot": {
+            "words_truth": 0,
+            "words_captioned": 12,
+            "wer": 12.0,
+            "attribution": 0.0
+          },
+          "baseline": {
+            "words_truth": 0,
+            "words_captioned": 1,
+            "wer": 1.0,
+            "attribution": 0.0
+          },
+          "delay_sum": {
+            "words_truth": 0,
+            "words_captioned": 0,
+            "wer": 0.0,
+            "attribution": 0.0
+          },
+          "si_sdr_db": {
+            "isolated": -53.97,
+            "mixture": -49.86
+          }
+        },
+        "Speaker B": {
+          "earshot": {
+            "words_truth": 219,
+            "words_captioned": 0,
+            "wer": 1.0,
+            "attribution": 0.0,
+            "overlap_words": 11,
+            "overlap_recall": 0.0
+          },
+          "baseline": {
+            "words_truth": 219,
+            "words_captioned": 225,
+            "wer": 0.114,
+            "attribution": 0.916,
+            "overlap_words": 11,
+            "overlap_recall": 0.727
+          },
+          "delay_sum": {
+            "words_truth": 219,
+            "words_captioned": 226,
+            "wer": 0.105,
+            "attribution": 0.92,
+            "overlap_words": 11,
+            "overlap_recall": 0.909
+          },
+          "si_sdr_db": {
+            "isolated": -30.94,
+            "mixture": -15.5
+          }
+        },
+        "Speaker C": {
+          "earshot": {
+            "words_truth": 0,
+            "words_captioned": 224,
+            "wer": 224.0,
+            "attribution": 0.0
+          },
+          "baseline": {
+            "words_truth": 0,
+            "words_captioned": 0,
+            "wer": 0.0,
+            "attribution": 0.0
+          },
+          "delay_sum": {
+            "words_truth": 0,
+            "words_captioned": 0,
+            "wer": 0.0,
+            "attribution": 0.0
+          },
+          "si_sdr_db": {
+            "isolated": -15.52,
+            "mixture": -16.17
+          }
+        },
+        "Speaker D": {
+          "earshot": {
+            "words_truth": 34,
+            "words_captioned": 27,
+            "wer": 0.471,
+            "attribution": 0.704,
+            "overlap_words": 11,
+            "overlap_recall": 0.727
+          },
+          "baseline": {
+            "words_truth": 34,
+            "words_captioned": 26,
+            "wer": 0.382,
+            "attribution": 0.846,
+            "overlap_words": 11,
+            "overlap_recall": 0.182
+          },
+          "delay_sum": {
+            "words_truth": 34,
+            "words_captioned": 23,
+            "wer": 0.412,
+            "attribution": 0.87,
+            "overlap_words": 11,
+            "overlap_recall": 0.0
+          },
+          "si_sdr_db": {
+            "isolated": -6.72,
+            "mixture": -20.05
+          }
+        }
+      },
+      "delay_sum_oracle_mapping": {
+        "A": "Speaker B",
+        "B": "Speaker D"
+      },
+      "lite_mapping": {
+        "A": 2,
+        "B": 3
+      },
+      "envelope": {
+        "people": {
+          "Speaker A": [
+            0.1643,
+            0.221,
+            0.4274,
+            0.5037
+          ],
+          "Speaker B": [
+            0.1043,
+            0.0025,
+            0.2838,
+            0.5966
+          ],
+          "Speaker C": [
+            -0.0199,
+            0.7167,
+            0.5652,
+            -0.2693
+          ],
+          "Speaker D": [
+            0.1856,
+            -0.1148,
+            0.2937,
+            0.7374
+          ]
+        },
+        "mixture": [
+          0.109,
+          0.3477,
+          0.6232,
+          0.3356
+        ],
+        "mixture_correct_voice_rate": 0.25,
+        "gate": "Frames with mixture log energy above its 20th percentile",
+        "si_sdr_note": "Mixture–Speaker A headset SI-SDR is -49.86 dB for this run; far-field mixture SI-SDR is not meaningful here.",
+        "correct_voice_rate": 0.25
+      },
+      "summary": {
+        "earshot": {
+          "wer": 59.368,
+          "attribution": 0.176,
+          "overlap_recall": 0.363
+        },
+        "baseline": {
+          "wer": 0.374,
+          "attribution": 0.441,
+          "overlap_recall": 0.455
+        },
+        "delay_sum": {
+          "wer": 0.129,
+          "attribution": 0.448,
+          "overlap_recall": 0.455
+        },
+        "si_sdr_gain_db": -1.392,
+        "correct_voice_rate": 0.25,
+        "mixture_correct_voice_rate": 0.25
+      }
+    },
+    {
+      "run": "runs/ami_es2008c_355_array_8",
+      "separator": "AMI 8-mic meeting-room array MVDR (classical; channels [1, 2, 3, 4, 5, 6, 7, 8])",
+      "oracle_mapping": {
+        "A": "Speaker B",
+        "B": "Speaker D"
+      },
+      "people": {
+        "Speaker A": {
+          "earshot": {
+            "words_truth": 0,
+            "words_captioned": 37,
+            "wer": 37.0,
+            "attribution": 0.0
+          },
+          "baseline": {
+            "words_truth": 0,
+            "words_captioned": 0,
+            "wer": 0.0,
+            "attribution": 0.0
+          },
+          "delay_sum": {
+            "words_truth": 0,
+            "words_captioned": 0,
+            "wer": 0.0,
+            "attribution": 0.0
+          },
+          "si_sdr_db": {
+            "isolated": -53.97,
+            "mixture": -49.86
+          }
+        },
+        "Speaker B": {
+          "earshot": {
+            "words_truth": 219,
+            "words_captioned": 0,
+            "wer": 1.0,
+            "attribution": 0.0,
+            "overlap_words": 11,
+            "overlap_recall": 0.0
+          },
+          "baseline": {
+            "words_truth": 219,
+            "words_captioned": 229,
+            "wer": 0.187,
+            "attribution": 0.843,
+            "overlap_words": 11,
+            "overlap_recall": 0.182
+          },
+          "delay_sum": {
+            "words_truth": 219,
+            "words_captioned": 225,
+            "wer": 0.087,
+            "attribution": 0.929,
+            "overlap_words": 11,
+            "overlap_recall": 1.0
+          },
+          "si_sdr_db": {
+            "isolated": -30.94,
+            "mixture": -15.5
+          }
+        },
+        "Speaker C": {
+          "earshot": {
+            "words_truth": 0,
+            "words_captioned": 225,
+            "wer": 225.0,
+            "attribution": 0.0
+          },
+          "baseline": {
+            "words_truth": 0,
+            "words_captioned": 0,
+            "wer": 0.0,
+            "attribution": 0.0
+          },
+          "delay_sum": {
+            "words_truth": 0,
+            "words_captioned": 0,
+            "wer": 0.0,
+            "attribution": 0.0
+          },
+          "si_sdr_db": {
+            "isolated": -15.52,
+            "mixture": -16.17
+          }
+        },
+        "Speaker D": {
+          "earshot": {
+            "words_truth": 34,
+            "words_captioned": 21,
+            "wer": 0.441,
+            "attribution": 0.905,
+            "overlap_words": 11,
+            "overlap_recall": 0.818
+          },
+          "baseline": {
+            "words_truth": 34,
+            "words_captioned": 15,
+            "wer": 0.971,
+            "attribution": 0.133,
+            "overlap_words": 11,
+            "overlap_recall": 0.091
+          },
+          "delay_sum": {
+            "words_truth": 34,
+            "words_captioned": 24,
+            "wer": 0.412,
+            "attribution": 0.833,
+            "overlap_words": 11,
+            "overlap_recall": 0.0
+          },
+          "si_sdr_db": {
+            "isolated": -6.72,
+            "mixture": -20.05
+          }
+        }
+      },
+      "delay_sum_oracle_mapping": {
+        "A": "Speaker B",
+        "B": "Speaker D"
+      },
+      "lite_mapping": {
+        "A": 2,
+        "B": 3
+      },
+      "envelope": {
+        "people": {
+          "Speaker A": [
+            0.1643,
+            0.221,
+            0.4274,
+            0.5037
+          ],
+          "Speaker B": [
+            0.1043,
+            0.0025,
+            0.2838,
+            0.5966
+          ],
+          "Speaker C": [
+            -0.0199,
+            0.7167,
+            0.5652,
+            -0.2693
+          ],
+          "Speaker D": [
+            0.1856,
+            -0.1148,
+            0.2937,
+            0.7374
+          ]
+        },
+        "mixture": [
+          0.109,
+          0.3477,
+          0.6232,
+          0.3356
+        ],
+        "mixture_correct_voice_rate": 0.25,
+        "gate": "Frames with mixture log energy above its 20th percentile",
+        "si_sdr_note": "Mixture–Speaker A headset SI-SDR is -49.86 dB for this run; far-field mixture SI-SDR is not meaningful here.",
+        "correct_voice_rate": 0.25
+      },
+      "summary": {
+        "earshot": {
+          "wer": 65.86,
+          "attribution": 0.226,
+          "overlap_recall": 0.409
+        },
+        "baseline": {
+          "wer": 0.289,
+          "attribution": 0.244,
+          "overlap_recall": 0.137
+        },
+        "delay_sum": {
+          "wer": 0.125,
+          "attribution": 0.441,
+          "overlap_recall": 0.5
+        },
+        "si_sdr_gain_db": -1.392,
+        "correct_voice_rate": 0.25,
+        "mixture_correct_voice_rate": 0.25
+      }
+    }
+  ],
+  "summary": {
+    "earshot": {
+      "wer": {
+        "mean": 67.363,
+        "min": 59.368,
+        "max": 76.86
+      },
+      "attribution": {
+        "mean": 0.217,
+        "min": 0.176,
+        "max": 0.25
+      },
+      "overlap_recall": {
+        "mean": 0.378,
+        "min": 0.363,
+        "max": 0.409
+      }
+    },
+    "baseline": {
+      "wer": {
+        "mean": 0.248,
+        "min": 0.08,
+        "max": 0.374
+      },
+      "attribution": {
+        "mean": 0.384,
+        "min": 0.244,
+        "max": 0.467
+      },
+      "overlap_recall": {
+        "mean": 0.379,
+        "min": 0.137,
+        "max": 0.545
+      }
+    },
+    "delay_sum": {
+      "wer": {
+        "mean": 0.131,
+        "min": 0.125,
+        "max": 0.14
+      },
+      "attribution": {
+        "mean": 0.439,
+        "min": 0.428,
+        "max": 0.448
+      },
+      "overlap_recall": {
+        "mean": 0.47,
+        "min": 0.455,
+        "max": 0.5
+      }
+    },
+    "si_sdr_gain_db": {
+      "mean": -1.392,
+      "min": -1.392,
+      "max": -1.392
+    },
+    "correct_voice_rate": {
+      "mean": 0.25,
+      "min": 0.25,
+      "max": 0.25
+    },
+    "mixture_correct_voice_rate": {
+      "mean": 0.25,
+      "min": 0.25,
+      "max": 0.25
+    }
+  }
+}

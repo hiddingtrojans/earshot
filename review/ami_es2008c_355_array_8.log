@@ -1,0 +1,12 @@
+ANALYZE ami_es2008c_355_array_8: channels 1,2,3,4,5,6,7,8
+wrote runs/ami_es2008c_355_array_8/earshot.json
+view it: python -m earshot serve runs/ami_es2008c_355_array_8
+BENCH ami_es2008c_355_array_8: three repeats
+                               Earshot         Single stream             Delay sum
+Word error rate     67.363 [59.368, 76.860]       0.248 [0.080, 0.374]     0.131 [0.125, 0.140]
+Right person         0.217 [0.176, 0.250]       0.384 [0.244, 0.467]     0.439 [0.428, 0.448]
+Overlap words        0.378 [0.363, 0.409]       0.379 [0.137, 0.545]     0.470 [0.455, 0.500]
+Correct voice        0.250 [0.250, 0.250]
+Mixture correct voice     0.250 [0.250, 0.250]
+wrote runs/ami_es2008c_355_array_8/bench_array.json
+exit 0

@@ -34,3 +34,19 @@ Earliest eligible start: **355 s** (251 truth words, 22 overlapping words). Only
 ## Taps (set on `frame0.png` before any model call)
 
 The ES2008b taps were tried first because the seats are the same. On ES2008c's first frame, Speaker D's landed on the background and Speaker A's on hair, so all four were moved onto faces by eye: `Speaker A@0.22,0.33`, `Speaker B@0.81,0.37`, `Speaker C@0.33,0.77`, `Speaker D@0.75,0.80` (`bench/ami_ES2008c_355/taps.txt`). The builder's headset/motion sync check gives lag −0.08 s and −0.12 s for B and D; A and C do not speak in this window, so their correlations are near zero, as expected.
+
+## Result: FAIL
+
+Live run 19:03–19:25 CET (`review/ami_es2008c_355_array_8.log`), then the frozen probe cache-only (`EARSHOT_REPLAY=1`, `review/lite_heldout_probe.log`, `review/lite_input_probe.json`). The probe reproduced all three earlier windows exactly. New live calls: 1 SAM 3.1 (1,875 frames, ≈ $0.38 list price) and 24 Voice Transcribe calls of 75 s (≈ $0.09).
+
+Right-person, mean [min, max] over the same three repeats; the oracle is hand-matching on the same diarization.
+
+| ES2008c 355 s | Binding | Oracle | Taps to oracle |
+|---|---:|---:|---|
+| Raw single mic | 0.225 [0.000, 0.441] | 0.384 | 1 / 0 / 2 |
+| Delay-and-sum 8-mic | 0.284 [0.195, 0.448] | 0.439 | 1 / 0 / 1 |
+
+- Rule 1 **fails**: 0.284 is 0.155 below the oracle, against an allowed 0.05.
+- Rule 2 passes: at most one tap in all three repeats.
+
+The exploratory "binding equals hand-matching with no taps on array input" result does **not** generalize to this meeting. Array input still beats the raw mic (0.284 against 0.225), and one correction tap reaches the hand-matched mapping in every delay-and-sum repeat. Only two people speak in this window and right-person is averaged over all four tapped people, and the two silent people score 0, so the maximum possible mean is 0.50. That is why absolute values are low for every mode, the oracle included; the comparison uses the same metric throughout.
