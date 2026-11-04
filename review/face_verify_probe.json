@@ -1,0 +1,1117 @@
+{
+  "summary": {
+    "raw": {
+      "flagged": 19,
+      "resolved": 1,
+      "fixed": 0,
+      "broken": 0,
+      "wrong_before": 11,
+      "wrong_after": 11,
+      "answers": {
+        "unclear": 28,
+        "3": 6,
+        "2": 3,
+        "1": 1
+      }
+    },
+    "delay_sum": {
+      "flagged": 18,
+      "resolved": 1,
+      "fixed": 0,
+      "broken": 0,
+      "wrong_before": 2,
+      "wrong_after": 2,
+      "answers": {
+        "unclear": 29,
+        "2": 3,
+        "3": 2,
+        "1": 2
+      }
+    }
+  },
+  "right_person": {
+    "ES2008a 745 s": {
+      "raw": [
+        {
+          "binding": 0.918,
+          "verified": 0.918,
+          "oracle": 0.918
+        },
+        {
+          "binding": 0.921,
+          "verified": 0.921,
+          "oracle": 0.921
+        },
+        {
+          "binding": 0.919,
+          "verified": 0.919,
+          "oracle": 0.919
+        }
+      ],
+      "delay_sum": [
+        {
+          "binding": 0.917,
+          "verified": 0.917,
+          "oracle": 0.92
+        },
+        {
+          "binding": 0.925,
+          "verified": 0.925,
+          "oracle": 0.925
+        },
+        {
+          "binding": 0.898,
+          "verified": 0.898,
+          "oracle": 0.898
+        }
+      ]
+    },
+    "ES2008a 635 s": {
+      "raw": [
+        {
+          "binding": 0.474,
+          "verified": 0.474,
+          "oracle": 0.689
+        },
+        {
+          "binding": 0.473,
+          "verified": 0.473,
+          "oracle": 0.697
+        },
+        {
+          "binding": 0.693,
+          "verified": 0.693,
+          "oracle": 0.693
+        }
+      ],
+      "delay_sum": [
+        {
+          "binding": 0.671,
+          "verified": 0.671,
+          "oracle": 0.671
+        },
+        {
+          "binding": 0.687,
+          "verified": 0.687,
+          "oracle": 0.687
+        },
+        {
+          "binding": 0.712,
+          "verified": 0.712,
+          "oracle": 0.712
+        }
+      ]
+    },
+    "ES2008b 150 s": {
+      "raw": [
+        {
+          "binding": 0.362,
+          "verified": 0.362,
+          "oracle": 0.372
+        },
+        {
+          "binding": 0.207,
+          "verified": 0.207,
+          "oracle": 0.468
+        },
+        {
+          "binding": 0.475,
+          "verified": 0.475,
+          "oracle": 0.807
+        }
+      ],
+      "delay_sum": [
+        {
+          "binding": 0.488,
+          "verified": 0.488,
+          "oracle": 0.488
+        },
+        {
+          "binding": 0.498,
+          "verified": 0.498,
+          "oracle": 0.498
+        },
+        {
+          "binding": 0.549,
+          "verified": 0.549,
+          "oracle": 0.549
+        }
+      ]
+    },
+    "ES2008c 355 s (held out)": {
+      "raw": [
+        {
+          "binding": 0.233,
+          "verified": 0.233,
+          "oracle": 0.467
+        },
+        {
+          "binding": 0.441,
+          "verified": 0.441,
+          "oracle": 0.441
+        },
+        {
+          "binding": 0.0,
+          "verified": 0.0,
+          "oracle": 0.244
+        }
+      ],
+      "delay_sum": [
+        {
+          "binding": 0.195,
+          "verified": 0.195,
+          "oracle": 0.428
+        },
+        {
+          "binding": 0.448,
+          "verified": 0.448,
+          "oracle": 0.448
+        },
+        {
+          "binding": 0.208,
+          "verified": 0.208,
+          "oracle": 0.441
+        }
+      ]
+    }
+  },
+  "rows": [
+    {
+      "window": "ES2008a 745 s",
+      "source": "raw",
+      "repeat": 0,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "raw",
+      "repeat": 0,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear"
+      ],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "raw",
+      "repeat": 0,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "raw",
+      "repeat": 0,
+      "label": "D",
+      "status": "confirmed",
+      "answers": [
+        "3",
+        "3",
+        "unclear"
+      ],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "raw",
+      "repeat": 1,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "raw",
+      "repeat": 1,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear"
+      ],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "raw",
+      "repeat": 1,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "raw",
+      "repeat": 1,
+      "label": "D",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "raw",
+      "repeat": 2,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "raw",
+      "repeat": 2,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "2"
+      ],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "raw",
+      "repeat": 2,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "raw",
+      "repeat": 2,
+      "label": "D",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "B",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "C",
+      "status": "flagged",
+      "answers": [
+        "unclear"
+      ],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "D",
+      "status": "flagged",
+      "answers": [
+        "2",
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "B",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "C",
+      "status": "flagged",
+      "answers": [
+        "unclear"
+      ],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "D",
+      "status": "flagged",
+      "answers": [
+        "3",
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear"
+      ],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008a 745 s",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "D",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "2",
+        "unclear"
+      ],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "raw",
+      "repeat": 0,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "raw",
+      "repeat": 0,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "3",
+        "unclear"
+      ],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "raw",
+      "repeat": 0,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "raw",
+      "repeat": 1,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "raw",
+      "repeat": 1,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "raw",
+      "repeat": 1,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "raw",
+      "repeat": 2,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "raw",
+      "repeat": 2,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "raw",
+      "repeat": 2,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "0",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "B",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008a 635 s",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "raw",
+      "repeat": 0,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "raw",
+      "repeat": 0,
+      "label": "B",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "raw",
+      "repeat": 0,
+      "label": "C",
+      "status": "flagged",
+      "answers": [
+        "2"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "raw",
+      "repeat": 1,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "raw",
+      "repeat": 1,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "3",
+        "unclear"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "raw",
+      "repeat": 1,
+      "label": "C",
+      "status": "flagged",
+      "answers": [
+        "2",
+        "unclear",
+        "3"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "raw",
+      "repeat": 2,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "raw",
+      "repeat": 2,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "raw",
+      "repeat": 2,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "raw",
+      "repeat": 2,
+      "label": "D",
+      "status": "flagged",
+      "answers": [
+        "3",
+        "unclear"
+      ],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "C",
+      "status": "flagged",
+      "answers": [
+        "3",
+        "unclear"
+      ],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008b 150 s",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "C",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "raw",
+      "repeat": 0,
+      "label": "A",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "raw",
+      "repeat": 0,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "raw",
+      "repeat": 1,
+      "label": "0",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "raw",
+      "repeat": 1,
+      "label": "A",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "1"
+      ],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "raw",
+      "repeat": 1,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "raw",
+      "repeat": 2,
+      "label": "A",
+      "status": "confident",
+      "answers": [],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "raw",
+      "repeat": 2,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "A",
+      "status": "flagged",
+      "answers": [
+        "2",
+        "unclear"
+      ],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "A",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "A",
+      "status": "moved",
+      "answers": [
+        "1",
+        "unclear",
+        "1"
+      ],
+      "before": "Speaker C",
+      "after": "Speaker A",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "ES2008c 355 s (held out)",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    }
+  ],
+  "clips": 256
+}

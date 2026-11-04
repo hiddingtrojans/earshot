@@ -1,0 +1,964 @@
+[
+  {
+    "window": "ES2008a 745 s",
+    "source": "raw",
+    "repeat": 0,
+    "label": "B",
+    "start": 10.25,
+    "faces": [
+      "unclear",
+      "yes",
+      "unclear",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "raw",
+    "repeat": 0,
+    "label": "D",
+    "start": 49.65,
+    "faces": [
+      "unclear",
+      "no",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "raw",
+    "repeat": 0,
+    "label": "D",
+    "start": 60.05,
+    "faces": [
+      "unclear",
+      "unclear",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "raw",
+    "repeat": 0,
+    "label": "D",
+    "start": 40.53,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "raw",
+    "repeat": 1,
+    "label": "B",
+    "start": 10.09,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "raw",
+    "repeat": 1,
+    "label": "D",
+    "start": 49.57,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "raw",
+    "repeat": 1,
+    "label": "D",
+    "start": 60.01,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "raw",
+    "repeat": 1,
+    "label": "D",
+    "start": 40.29,
+    "faces": [
+      "no",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "raw",
+    "repeat": 2,
+    "label": "B",
+    "start": 10.37,
+    "faces": [
+      "unclear",
+      "yes",
+      "unclear",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "raw",
+    "repeat": 2,
+    "label": "D",
+    "start": 49.69,
+    "faces": [
+      "yes",
+      "unclear",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "raw",
+    "repeat": 2,
+    "label": "D",
+    "start": 60.01,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "raw",
+    "repeat": 2,
+    "label": "D",
+    "start": 40.33,
+    "faces": [
+      "no",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "C",
+    "start": 10.41,
+    "faces": [
+      "unclear",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "D",
+    "start": 49.13,
+    "faces": [
+      "unclear",
+      "yes",
+      "unclear",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "D",
+    "start": 59.97,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "D",
+    "start": 40.53,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "C",
+    "start": 10.53,
+    "faces": [
+      "unclear",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "D",
+    "start": 49.65,
+    "faces": [
+      "unclear",
+      "no",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "D",
+    "start": 59.89,
+    "faces": [
+      "unclear",
+      "unclear",
+      "unclear",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "D",
+    "start": 40.49,
+    "faces": [
+      "no",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "B",
+    "start": 10.33,
+    "faces": [
+      "no",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "D",
+    "start": 49.25,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "D",
+    "start": 59.13,
+    "faces": [
+      "unclear",
+      "yes",
+      "unclear",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 745 s",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "D",
+    "start": 40.37,
+    "faces": [
+      "no",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 635 s",
+    "source": "raw",
+    "repeat": 0,
+    "label": "B",
+    "start": 25.97,
+    "faces": [
+      "no",
+      "no",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 635 s",
+    "source": "raw",
+    "repeat": 0,
+    "label": "B",
+    "start": 46.97,
+    "faces": [
+      "yes",
+      "no",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 635 s",
+    "source": "raw",
+    "repeat": 1,
+    "label": "B",
+    "start": 26.21,
+    "faces": [
+      "unclear",
+      "yes",
+      "unclear",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008a 635 s",
+    "source": "raw",
+    "repeat": 1,
+    "label": "B",
+    "start": 46.61,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 635 s",
+    "source": "raw",
+    "repeat": 2,
+    "label": "B",
+    "start": 26.21,
+    "faces": [
+      "unclear",
+      "yes",
+      "unclear",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008a 635 s",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "B",
+    "start": 26.21,
+    "faces": [
+      "unclear",
+      "yes",
+      "unclear",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008a 635 s",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "B",
+    "start": 46.65,
+    "faces": [
+      "yes",
+      "yes",
+      "unclear",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008a 635 s",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "B",
+    "start": 26.17,
+    "faces": [
+      "unclear",
+      "unclear",
+      "yes",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "raw",
+    "repeat": 0,
+    "label": "C",
+    "start": 63.1,
+    "faces": [
+      "no",
+      "yes",
+      "unclear",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "raw",
+    "repeat": 1,
+    "label": "B",
+    "start": 24.45,
+    "faces": [
+      "no",
+      "unclear",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "raw",
+    "repeat": 1,
+    "label": "B",
+    "start": 62.94,
+    "faces": [
+      "no",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "raw",
+    "repeat": 1,
+    "label": "C",
+    "start": 59.73,
+    "faces": [
+      "no",
+      "yes",
+      "unclear",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "raw",
+    "repeat": 1,
+    "label": "C",
+    "start": 71.53,
+    "faces": [
+      "unclear",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "raw",
+    "repeat": 1,
+    "label": "C",
+    "start": 66.09,
+    "faces": [
+      "unclear",
+      "unclear",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "raw",
+    "repeat": 2,
+    "label": "B",
+    "start": 23.85,
+    "faces": [
+      "yes",
+      "unclear",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "raw",
+    "repeat": 2,
+    "label": "B",
+    "start": 63.05,
+    "faces": [
+      "no",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "raw",
+    "repeat": 2,
+    "label": "B",
+    "start": 57.5,
+    "faces": [
+      "yes",
+      "unclear",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "raw",
+    "repeat": 2,
+    "label": "D",
+    "start": 71.45,
+    "faces": [
+      "unclear",
+      "unclear",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "raw",
+    "repeat": 2,
+    "label": "D",
+    "start": 66.13,
+    "faces": [
+      "unclear",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "B",
+    "start": 60.01,
+    "faces": [
+      "unclear",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "B",
+    "start": 66.45,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "B",
+    "start": 60.01,
+    "faces": [
+      "unclear",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "B",
+    "start": 66.13,
+    "faces": [
+      "unclear",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "C",
+    "start": 71.41,
+    "faces": [
+      "unclear",
+      "unclear",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "C",
+    "start": 63.26,
+    "faces": [
+      "no",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "B",
+    "start": 60.05,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008b 150 s",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "B",
+    "start": 66.33,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "A",
+    "start": 40.53,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "A",
+    "start": 9.42,
+    "faces": [
+      "yes",
+      "yes",
+      "unclear",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "A",
+    "start": 66.69,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "B",
+    "start": 71.01,
+    "faces": [
+      "yes",
+      "unclear",
+      "yes",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "B",
+    "start": 62.53,
+    "faces": [
+      "no",
+      "unclear",
+      "yes",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "raw",
+    "repeat": 1,
+    "label": "A",
+    "start": 29.73,
+    "faces": [
+      "yes",
+      "yes",
+      "unclear",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "raw",
+    "repeat": 1,
+    "label": "A",
+    "start": 66.53,
+    "faces": [
+      "yes",
+      "no",
+      "unclear",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "raw",
+    "repeat": 1,
+    "label": "B",
+    "start": 70.53,
+    "faces": [
+      "yes",
+      "yes",
+      "no",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "raw",
+    "repeat": 1,
+    "label": "B",
+    "start": 62.57,
+    "faces": [
+      "no",
+      "yes",
+      "yes",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "raw",
+    "repeat": 2,
+    "label": "B",
+    "start": 66.37,
+    "faces": [
+      "unclear",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "A",
+    "start": 29.05,
+    "faces": [
+      "no",
+      "yes",
+      "unclear",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "A",
+    "start": 66.77,
+    "faces": [
+      "yes",
+      "unclear",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "B",
+    "start": 70.65,
+    "faces": [
+      "no",
+      "yes",
+      "no",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 0,
+    "label": "B",
+    "start": 62.49,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "A",
+    "start": 29.65,
+    "faces": [
+      "yes",
+      "yes",
+      "unclear",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "A",
+    "start": 66.69,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "B",
+    "start": 70.49,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 1,
+    "label": "B",
+    "start": 62.69,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "A",
+    "start": 24.38,
+    "faces": [
+      "yes",
+      "unclear",
+      "no",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "A",
+    "start": 55.65,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "A",
+    "start": 66.53,
+    "faces": [
+      "yes",
+      "no",
+      "unclear",
+      "no"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "B",
+    "start": 70.61,
+    "faces": [
+      "yes",
+      "unclear",
+      "no",
+      "yes"
+    ]
+  },
+  {
+    "window": "ES2008c 355 s (held out)",
+    "source": "delay_sum",
+    "repeat": 2,
+    "label": "B",
+    "start": 62.49,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "yes"
+    ]
+  }
+]

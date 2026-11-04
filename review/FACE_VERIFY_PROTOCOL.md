@@ -38,3 +38,16 @@ Smoke test only, on one known solo span of Speaker A in ES2008a (16.7 s, 2.5 s; 
 - **Per-face 8-frame strip image** (the same crop, 8 frames ≈ 0.3 s apart tiled 4×2, sent as one `input_image`): A `yes`, B `unclear`, C `unclear`, D `no`, which is a correct vote for A.
 
 The evaluation therefore uses the **strip image** instead of video. Everything else (flagged labels only, clip spans, enum answers, exactly-one-yes clip vote, 2-of-3 label rule, collision rule, both pass rules) is unchanged. No scored case has been run with either variant.
+
+## Part 1 result: FAIL
+
+Run 2026-11-04 20:03 CET (`python -m tools.face_verify_probe --live`; `review/face_verify_probe.json`, `review/face_verify_answers.json`, `review/face_verify_probe.log`). 296 per-face strip calls for 74 clips (≈ 830 input tokens each; roughly $0.35 at list price).
+
+| Input | Flagged | Resolved | Fixed | Broken |
+|---|---:|---:|---:|---:|
+| Raw single mic | 19 | 1 | 0 | 0 |
+| Delay-and-sum 8-mic | 18 | 1 | 0 | 0 |
+
+- Spark said `yes` to 156 of 296 face strips, usually for two or three faces in the same clip, so only 17 of 74 clips cast a vote.
+- When exactly one face was `yes`, it was the right person in **5 of 17** clips, no better than choosing at random among four people.
+- Delay-and-sum rules: 0 of 2 errors fixed (needed ≥ 1), 0 broken, 1 of 18 flags resolved (needed ≥ 9). FAIL. The 2-of-3 rule again kept the noise from breaking any binding.
