@@ -57,3 +57,7 @@ Exploratory 2d on the seen windows (`review/pair_verify_probe_not_is1009a_all.{j
 
 - Exploratory on ES2008a–d, reported either way.
 - **Deciding, IS1009a delay-and-sum:** same rule as 2d (mean right-person ≥ Lite + 0.05 on the same repeats, and not worse on any repeat). Raw reported.
+
+## 2d exploratory result (seen windows)
+
+`python -m tools.pair_verify_probe --live --all --only '!IS1009a'` (1,884 pair images). Across ES2008a–d: delay-and-sum 2 errors fixed, 0 broken (9 → 7 wrong labels); raw 1 fixed, 0 broken (21 → 20). Exactly the same changes as flag-only 2c: confident labels were confirmed (13) or stayed, never moved. Vote accuracy when cast: 41/54 delay-and-sum, 38/53 raw. Not a decision; IS1009a decides.
