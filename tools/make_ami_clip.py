@@ -1,4 +1,4 @@
-"""Build Earshot's public AMI ES2008a benchmark clip and word-level truth."""
+"""Build Earshot's public AMI benchmark clips and word-level truth."""
 
 from __future__ import annotations
 
@@ -61,6 +61,18 @@ def download(url: str, destination: Path) -> None:
             delay = 2 ** attempt
             print(f"Download failed ({error}); retrying in {delay}s", flush=True)
             time.sleep(delay)
+
+
+def meeting_people(archive: Path, meeting: str) -> tuple:
+    """(name, agent, headset, camera) per speaker, from the corpus metadata."""
+    with zipfile.ZipFile(archive) as annotations:
+        root = ET.fromstring(annotations.read("corpusResources/meetings.xml"))
+    for element in root.iter():
+        if element.tag.rsplit("}", 1)[-1] == "meeting" and element.get("observation") == meeting:
+            speakers = sorted((s.get("nxt_agent"), s.get("channel"), s.get("camera"))
+                              for s in element if s.tag.rsplit("}", 1)[-1] == "speaker")
+            return tuple((f"Speaker {agent}", agent, f"Headset-{channel}", camera) for agent, channel, camera in speakers)
+    raise ValueError(f"{meeting} not in meetings.xml")
 
 
 def truth_from_annotations(archive: Path) -> dict:
@@ -237,12 +249,18 @@ def make_array(output: Path, cache: Path) -> None:
     print(f"Wrote {frames.shape[0]} frames x 8 channels at 16 kHz to {destination}", flush=True)
 
 
+def use_metadata_people(archive: Path) -> None:
+    global PEOPLE
+    PEOPLE = meeting_people(archive, MEETING)
+
+
 def build(output: Path, cache: Path) -> None:
     from concurrent.futures import ThreadPoolExecutor
 
     output.mkdir(parents=True, exist_ok=True)
     archive = cache / "ami_public_manual_1.6.2.zip"
     download(ANNOTATIONS, archive)
+    use_metadata_people(archive)
     sources = [("video", camera) for _, _, _, camera in PEOPLE]
     sources += [("audio", headset) for _, _, headset, _ in PEOPLE]
     sources += [("audio", mixture) for mixture in ("Array1-01", "Mix-Headset")]
@@ -272,7 +290,7 @@ def main() -> None:
     global START, MEETING, MIRROR, TAPS
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--meeting", choices=["ES2008a", "ES2008b", "ES2008c", "ES2008d"], default=MEETING)
+    parser.add_argument("--meeting", choices=["ES2008a", "ES2008b", "ES2008c", "ES2008d", "IS1009a"], default=MEETING)
     parser.add_argument("--cache", type=Path, help="source cache (default: bench/.ami_cache/<meeting>)")
     parser.add_argument("--start", type=float, default=START, help="window start in seconds (default: 745)")
     parser.add_argument("--tap", action="append", help="Name@x,y on the verified first frame; repeatable")
