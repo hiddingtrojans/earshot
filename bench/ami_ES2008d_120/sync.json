@@ -1,0 +1,22 @@
+[
+  {
+    "person": "Speaker A",
+    "lag_seconds": -0.28,
+    "correlation": 0.0948
+  },
+  {
+    "person": "Speaker B",
+    "lag_seconds": 0.96,
+    "correlation": 0.0209
+  },
+  {
+    "person": "Speaker C",
+    "lag_seconds": 0.4,
+    "correlation": 0.5964
+  },
+  {
+    "person": "Speaker D",
+    "lag_seconds": 0.16,
+    "correlation": 0.1948
+  }
+]

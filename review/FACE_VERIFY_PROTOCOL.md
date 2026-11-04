@@ -51,3 +51,7 @@ Run 2026-11-04 20:03 CET (`python -m tools.face_verify_probe --live`; `review/fa
 - Spark said `yes` to 156 of 296 face strips, usually for two or three faces in the same clip, so only 17 of 74 clips cast a vote.
 - When exactly one face was `yes`, it was the right person in **5 of 17** clips, no better than choosing at random among four people.
 - Delay-and-sum rules: 0 of 2 errors fixed (needed ≥ 1), 0 broken, 1 of 18 flags resolved (needed ≥ 9). FAIL. The 2-of-3 rule again kept the noise from breaking any binding.
+
+## ES2008d taps (set 20:07 CET on `frame0.png`, before any model call on ES2008d)
+
+`Speaker A@0.22,0.33`, `Speaker B@0.79,0.37`, `Speaker C@0.31,0.81`, `Speaker D@0.75,0.86`. The builder's default taps put C and D on foreheads; all four moved onto the face centre after a visual check of the overlay.

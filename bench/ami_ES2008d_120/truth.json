@@ -1,0 +1,1510 @@
+{
+  "source": "AMI Meeting Corpus ES2008d, CC BY 4.0",
+  "window": [
+    120.0,
+    195.0
+  ],
+  "mixture": "Array1-01",
+  "people": {
+    "Speaker A": "like a little lightning in it The little lightning bolt in it very cute The v the",
+    "Speaker B": "we have our colours not are not fixed but this is the general shape Um it's you hold it sort of either like like this in your left hand or you switch it over and uh it's easily adaptable to either hand You can push the buttons with your thumb like a mobile phone or you can push them with your index finger of your other hand or even I mean there's a whole variety you can hold it like this and press it with your same index finger Uh we have the on off button at the tip very visible very big We have our up and down buttons which are also gonna be our channel selectors and we have our little menu button here If you push if you're just pushing these normally they're the menu buttons if uh the volume buttons rather If you press select once they become channel changing buttons If we press select three times the menu with the other features and pro possibly also with your T_V_ channel choices shows up and you have your five presets down here Um if people wanna grab hold of that see how it feels in your hand That's our number one prototype Um do you wanna present the potato or shall I present the Martian",
+    "Speaker C": "Okay um What We call that one the rhombus uh",
+    "Speaker D": "I could"
+  },
+  "words": [
+    {
+      "person": "Speaker B",
+      "start": 0.21,
+      "end": 0.29,
+      "text": "we"
+    },
+    {
+      "person": "Speaker B",
+      "start": 0.29,
+      "end": 0.56,
+      "text": "have"
+    },
+    {
+      "person": "Speaker B",
+      "start": 0.56,
+      "end": 1.15,
+      "text": "our"
+    },
+    {
+      "person": "Speaker B",
+      "start": 1.15,
+      "end": 1.6,
+      "text": "colours"
+    },
+    {
+      "person": "Speaker B",
+      "start": 1.6,
+      "end": 2.41,
+      "text": "not"
+    },
+    {
+      "person": "Speaker B",
+      "start": 2.41,
+      "end": 2.59,
+      "text": "are"
+    },
+    {
+      "person": "Speaker B",
+      "start": 2.59,
+      "end": 2.76,
+      "text": "not"
+    },
+    {
+      "person": "Speaker B",
+      "start": 2.76,
+      "end": 3.3,
+      "text": "fixed"
+    },
+    {
+      "person": "Speaker B",
+      "start": 3.3,
+      "end": 3.43,
+      "text": "but"
+    },
+    {
+      "person": "Speaker B",
+      "start": 3.43,
+      "end": 3.57,
+      "text": "this"
+    },
+    {
+      "person": "Speaker B",
+      "start": 3.57,
+      "end": 3.75,
+      "text": "is"
+    },
+    {
+      "person": "Speaker B",
+      "start": 3.75,
+      "end": 3.83,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 3.83,
+      "end": 4.18,
+      "text": "general"
+    },
+    {
+      "person": "Speaker B",
+      "start": 4.18,
+      "end": 5.2,
+      "text": "shape"
+    },
+    {
+      "person": "Speaker B",
+      "start": 5.2,
+      "end": 5.99,
+      "text": "Um"
+    },
+    {
+      "person": "Speaker B",
+      "start": 5.99,
+      "end": 6.42,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker B",
+      "start": 6.42,
+      "end": 6.65,
+      "text": "you"
+    },
+    {
+      "person": "Speaker B",
+      "start": 6.65,
+      "end": 6.87,
+      "text": "hold"
+    },
+    {
+      "person": "Speaker B",
+      "start": 6.87,
+      "end": 7.08,
+      "text": "it"
+    },
+    {
+      "person": "Speaker B",
+      "start": 7.08,
+      "end": 7.37,
+      "text": "sort"
+    },
+    {
+      "person": "Speaker B",
+      "start": 7.37,
+      "end": 8.18,
+      "text": "of"
+    },
+    {
+      "person": "Speaker B",
+      "start": 8.18,
+      "end": 8.44,
+      "text": "either"
+    },
+    {
+      "person": "Speaker B",
+      "start": 8.44,
+      "end": 9.01,
+      "text": "like"
+    },
+    {
+      "person": "Speaker B",
+      "start": 9.01,
+      "end": 9.22,
+      "text": "like"
+    },
+    {
+      "person": "Speaker B",
+      "start": 9.22,
+      "end": 9.61,
+      "text": "this"
+    },
+    {
+      "person": "Speaker B",
+      "start": 9.61,
+      "end": 9.72,
+      "text": "in"
+    },
+    {
+      "person": "Speaker B",
+      "start": 9.72,
+      "end": 9.85,
+      "text": "your"
+    },
+    {
+      "person": "Speaker B",
+      "start": 9.85,
+      "end": 10.08,
+      "text": "left"
+    },
+    {
+      "person": "Speaker B",
+      "start": 10.08,
+      "end": 10.32,
+      "text": "hand"
+    },
+    {
+      "person": "Speaker B",
+      "start": 10.32,
+      "end": 10.5,
+      "text": "or"
+    },
+    {
+      "person": "Speaker B",
+      "start": 10.5,
+      "end": 10.62,
+      "text": "you"
+    },
+    {
+      "person": "Speaker B",
+      "start": 10.62,
+      "end": 10.84,
+      "text": "switch"
+    },
+    {
+      "person": "Speaker B",
+      "start": 10.84,
+      "end": 10.96,
+      "text": "it"
+    },
+    {
+      "person": "Speaker B",
+      "start": 10.96,
+      "end": 11.13,
+      "text": "over"
+    },
+    {
+      "person": "Speaker B",
+      "start": 11.13,
+      "end": 11.55,
+      "text": "and"
+    },
+    {
+      "person": "Speaker B",
+      "start": 11.55,
+      "end": 12.15,
+      "text": "uh"
+    },
+    {
+      "person": "Speaker B",
+      "start": 12.15,
+      "end": 12.32,
+      "text": "it's"
+    },
+    {
+      "person": "Speaker B",
+      "start": 12.32,
+      "end": 12.64,
+      "text": "easily"
+    },
+    {
+      "person": "Speaker B",
+      "start": 12.64,
+      "end": 13.06,
+      "text": "adaptable"
+    },
+    {
+      "person": "Speaker B",
+      "start": 13.06,
+      "end": 13.2,
+      "text": "to"
+    },
+    {
+      "person": "Speaker B",
+      "start": 13.2,
+      "end": 13.41,
+      "text": "either"
+    },
+    {
+      "person": "Speaker B",
+      "start": 13.41,
+      "end": 14.14,
+      "text": "hand"
+    },
+    {
+      "person": "Speaker B",
+      "start": 14.14,
+      "end": 14.23,
+      "text": "You"
+    },
+    {
+      "person": "Speaker B",
+      "start": 14.23,
+      "end": 14.36,
+      "text": "can"
+    },
+    {
+      "person": "Speaker B",
+      "start": 14.36,
+      "end": 14.57,
+      "text": "push"
+    },
+    {
+      "person": "Speaker B",
+      "start": 14.57,
+      "end": 14.66,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 14.66,
+      "end": 14.93,
+      "text": "buttons"
+    },
+    {
+      "person": "Speaker B",
+      "start": 14.93,
+      "end": 15.07,
+      "text": "with"
+    },
+    {
+      "person": "Speaker B",
+      "start": 15.07,
+      "end": 15.21,
+      "text": "your"
+    },
+    {
+      "person": "Speaker B",
+      "start": 15.21,
+      "end": 15.46,
+      "text": "thumb"
+    },
+    {
+      "person": "Speaker B",
+      "start": 15.46,
+      "end": 15.65,
+      "text": "like"
+    },
+    {
+      "person": "Speaker B",
+      "start": 15.65,
+      "end": 15.71,
+      "text": "a"
+    },
+    {
+      "person": "Speaker B",
+      "start": 15.71,
+      "end": 16.08,
+      "text": "mobile"
+    },
+    {
+      "person": "Speaker B",
+      "start": 16.08,
+      "end": 16.49,
+      "text": "phone"
+    },
+    {
+      "person": "Speaker B",
+      "start": 16.49,
+      "end": 16.69,
+      "text": "or"
+    },
+    {
+      "person": "Speaker B",
+      "start": 16.69,
+      "end": 16.8,
+      "text": "you"
+    },
+    {
+      "person": "Speaker B",
+      "start": 16.8,
+      "end": 16.92,
+      "text": "can"
+    },
+    {
+      "person": "Speaker B",
+      "start": 16.92,
+      "end": 17.14,
+      "text": "push"
+    },
+    {
+      "person": "Speaker B",
+      "start": 17.14,
+      "end": 17.26,
+      "text": "them"
+    },
+    {
+      "person": "Speaker B",
+      "start": 17.26,
+      "end": 17.39,
+      "text": "with"
+    },
+    {
+      "person": "Speaker B",
+      "start": 17.39,
+      "end": 17.88,
+      "text": "your"
+    },
+    {
+      "person": "Speaker B",
+      "start": 18.35,
+      "end": 18.68,
+      "text": "index"
+    },
+    {
+      "person": "Speaker B",
+      "start": 18.68,
+      "end": 18.9,
+      "text": "finger"
+    },
+    {
+      "person": "Speaker B",
+      "start": 18.9,
+      "end": 18.98,
+      "text": "of"
+    },
+    {
+      "person": "Speaker B",
+      "start": 18.98,
+      "end": 19.08,
+      "text": "your"
+    },
+    {
+      "person": "Speaker B",
+      "start": 19.08,
+      "end": 19.27,
+      "text": "other"
+    },
+    {
+      "person": "Speaker B",
+      "start": 19.27,
+      "end": 19.89,
+      "text": "hand"
+    },
+    {
+      "person": "Speaker B",
+      "start": 19.89,
+      "end": 20.48,
+      "text": "or"
+    },
+    {
+      "person": "Speaker B",
+      "start": 20.48,
+      "end": 20.81,
+      "text": "even"
+    },
+    {
+      "person": "Speaker B",
+      "start": 20.81,
+      "end": 20.86,
+      "text": "I"
+    },
+    {
+      "person": "Speaker B",
+      "start": 20.86,
+      "end": 21.03,
+      "text": "mean"
+    },
+    {
+      "person": "Speaker B",
+      "start": 21.03,
+      "end": 21.21,
+      "text": "there's"
+    },
+    {
+      "person": "Speaker B",
+      "start": 21.21,
+      "end": 21.26,
+      "text": "a"
+    },
+    {
+      "person": "Speaker B",
+      "start": 21.26,
+      "end": 21.4,
+      "text": "whole"
+    },
+    {
+      "person": "Speaker B",
+      "start": 21.4,
+      "end": 21.85,
+      "text": "variety"
+    },
+    {
+      "person": "Speaker B",
+      "start": 21.85,
+      "end": 21.91,
+      "text": "you"
+    },
+    {
+      "person": "Speaker B",
+      "start": 21.91,
+      "end": 22.03,
+      "text": "can"
+    },
+    {
+      "person": "Speaker B",
+      "start": 22.03,
+      "end": 22.2,
+      "text": "hold"
+    },
+    {
+      "person": "Speaker B",
+      "start": 22.2,
+      "end": 22.27,
+      "text": "it"
+    },
+    {
+      "person": "Speaker B",
+      "start": 22.27,
+      "end": 22.47,
+      "text": "like"
+    },
+    {
+      "person": "Speaker B",
+      "start": 22.47,
+      "end": 22.66,
+      "text": "this"
+    },
+    {
+      "person": "Speaker B",
+      "start": 22.66,
+      "end": 22.77,
+      "text": "and"
+    },
+    {
+      "person": "Speaker B",
+      "start": 22.77,
+      "end": 22.95,
+      "text": "press"
+    },
+    {
+      "person": "Speaker B",
+      "start": 22.95,
+      "end": 23.01,
+      "text": "it"
+    },
+    {
+      "person": "Speaker B",
+      "start": 23.01,
+      "end": 23.12,
+      "text": "with"
+    },
+    {
+      "person": "Speaker B",
+      "start": 23.12,
+      "end": 23.29,
+      "text": "your"
+    },
+    {
+      "person": "Speaker B",
+      "start": 23.29,
+      "end": 23.51,
+      "text": "same"
+    },
+    {
+      "person": "Speaker B",
+      "start": 23.51,
+      "end": 23.83,
+      "text": "index"
+    },
+    {
+      "person": "Speaker B",
+      "start": 23.83,
+      "end": 24.21,
+      "text": "finger"
+    },
+    {
+      "person": "Speaker B",
+      "start": 24.89,
+      "end": 25.07,
+      "text": "Uh"
+    },
+    {
+      "person": "Speaker B",
+      "start": 25.07,
+      "end": 25.19,
+      "text": "we"
+    },
+    {
+      "person": "Speaker B",
+      "start": 25.19,
+      "end": 25.53,
+      "text": "have"
+    },
+    {
+      "person": "Speaker B",
+      "start": 25.53,
+      "end": 25.69,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 25.69,
+      "end": 25.86,
+      "text": "on"
+    },
+    {
+      "person": "Speaker B",
+      "start": 25.86,
+      "end": 26.1,
+      "text": "off"
+    },
+    {
+      "person": "Speaker B",
+      "start": 26.1,
+      "end": 26.61,
+      "text": "button"
+    },
+    {
+      "person": "Speaker B",
+      "start": 26.61,
+      "end": 26.74,
+      "text": "at"
+    },
+    {
+      "person": "Speaker B",
+      "start": 26.74,
+      "end": 26.84,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 26.84,
+      "end": 27.48,
+      "text": "tip"
+    },
+    {
+      "person": "Speaker B",
+      "start": 27.48,
+      "end": 27.75,
+      "text": "very"
+    },
+    {
+      "person": "Speaker B",
+      "start": 27.75,
+      "end": 28.45,
+      "text": "visible"
+    },
+    {
+      "person": "Speaker B",
+      "start": 28.45,
+      "end": 28.65,
+      "text": "very"
+    },
+    {
+      "person": "Speaker B",
+      "start": 28.65,
+      "end": 29.06,
+      "text": "big"
+    },
+    {
+      "person": "Speaker B",
+      "start": 29.56,
+      "end": 29.66,
+      "text": "We"
+    },
+    {
+      "person": "Speaker B",
+      "start": 29.66,
+      "end": 30.03,
+      "text": "have"
+    },
+    {
+      "person": "Speaker B",
+      "start": 30.03,
+      "end": 31.2,
+      "text": "our"
+    },
+    {
+      "person": "Speaker B",
+      "start": 31.2,
+      "end": 31.39,
+      "text": "up"
+    },
+    {
+      "person": "Speaker B",
+      "start": 31.39,
+      "end": 31.57,
+      "text": "and"
+    },
+    {
+      "person": "Speaker B",
+      "start": 31.57,
+      "end": 31.82,
+      "text": "down"
+    },
+    {
+      "person": "Speaker B",
+      "start": 31.82,
+      "end": 32.27,
+      "text": "buttons"
+    },
+    {
+      "person": "Speaker B",
+      "start": 32.27,
+      "end": 32.46,
+      "text": "which"
+    },
+    {
+      "person": "Speaker B",
+      "start": 32.46,
+      "end": 32.61,
+      "text": "are"
+    },
+    {
+      "person": "Speaker B",
+      "start": 32.61,
+      "end": 32.89,
+      "text": "also"
+    },
+    {
+      "person": "Speaker B",
+      "start": 32.89,
+      "end": 33.09,
+      "text": "gonna"
+    },
+    {
+      "person": "Speaker B",
+      "start": 33.09,
+      "end": 33.18,
+      "text": "be"
+    },
+    {
+      "person": "Speaker B",
+      "start": 33.18,
+      "end": 33.31,
+      "text": "our"
+    },
+    {
+      "person": "Speaker B",
+      "start": 33.31,
+      "end": 33.66,
+      "text": "channel"
+    },
+    {
+      "person": "Speaker B",
+      "start": 33.66,
+      "end": 34.29,
+      "text": "selectors"
+    },
+    {
+      "person": "Speaker B",
+      "start": 34.29,
+      "end": 34.45,
+      "text": "and"
+    },
+    {
+      "person": "Speaker B",
+      "start": 34.45,
+      "end": 34.53,
+      "text": "we"
+    },
+    {
+      "person": "Speaker B",
+      "start": 34.53,
+      "end": 34.69,
+      "text": "have"
+    },
+    {
+      "person": "Speaker B",
+      "start": 34.69,
+      "end": 34.8,
+      "text": "our"
+    },
+    {
+      "person": "Speaker B",
+      "start": 34.8,
+      "end": 35.03,
+      "text": "little"
+    },
+    {
+      "person": "Speaker B",
+      "start": 35.03,
+      "end": 35.31,
+      "text": "menu"
+    },
+    {
+      "person": "Speaker B",
+      "start": 35.31,
+      "end": 35.62,
+      "text": "button"
+    },
+    {
+      "person": "Speaker B",
+      "start": 35.62,
+      "end": 36.47,
+      "text": "here"
+    },
+    {
+      "person": "Speaker B",
+      "start": 36.47,
+      "end": 36.62,
+      "text": "If"
+    },
+    {
+      "person": "Speaker B",
+      "start": 36.62,
+      "end": 36.71,
+      "text": "you"
+    },
+    {
+      "person": "Speaker B",
+      "start": 36.71,
+      "end": 38.07,
+      "text": "push"
+    },
+    {
+      "person": "Speaker B",
+      "start": 38.07,
+      "end": 38.18,
+      "text": "if"
+    },
+    {
+      "person": "Speaker B",
+      "start": 38.18,
+      "end": 38.29,
+      "text": "you're"
+    },
+    {
+      "person": "Speaker B",
+      "start": 38.29,
+      "end": 38.43,
+      "text": "just"
+    },
+    {
+      "person": "Speaker B",
+      "start": 38.43,
+      "end": 38.69,
+      "text": "pushing"
+    },
+    {
+      "person": "Speaker B",
+      "start": 38.69,
+      "end": 38.88,
+      "text": "these"
+    },
+    {
+      "person": "Speaker B",
+      "start": 38.88,
+      "end": 39.25,
+      "text": "normally"
+    },
+    {
+      "person": "Speaker B",
+      "start": 39.25,
+      "end": 39.41,
+      "text": "they're"
+    },
+    {
+      "person": "Speaker B",
+      "start": 39.41,
+      "end": 39.51,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 39.51,
+      "end": 39.72,
+      "text": "menu"
+    },
+    {
+      "person": "Speaker B",
+      "start": 39.72,
+      "end": 40.15,
+      "text": "buttons"
+    },
+    {
+      "person": "Speaker B",
+      "start": 40.15,
+      "end": 40.75,
+      "text": "if"
+    },
+    {
+      "person": "Speaker B",
+      "start": 40.75,
+      "end": 41.01,
+      "text": "uh"
+    },
+    {
+      "person": "Speaker B",
+      "start": 41.01,
+      "end": 41.64,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 41.64,
+      "end": 42.02,
+      "text": "volume"
+    },
+    {
+      "person": "Speaker B",
+      "start": 42.02,
+      "end": 42.33,
+      "text": "buttons"
+    },
+    {
+      "person": "Speaker B",
+      "start": 42.33,
+      "end": 42.61,
+      "text": "rather"
+    },
+    {
+      "person": "Speaker B",
+      "start": 42.61,
+      "end": 42.75,
+      "text": "If"
+    },
+    {
+      "person": "Speaker B",
+      "start": 42.75,
+      "end": 42.83,
+      "text": "you"
+    },
+    {
+      "person": "Speaker B",
+      "start": 42.83,
+      "end": 43.07,
+      "text": "press"
+    },
+    {
+      "person": "Speaker B",
+      "start": 43.07,
+      "end": 43.5,
+      "text": "select"
+    },
+    {
+      "person": "Speaker B",
+      "start": 43.5,
+      "end": 43.84,
+      "text": "once"
+    },
+    {
+      "person": "Speaker B",
+      "start": 43.84,
+      "end": 43.95,
+      "text": "they"
+    },
+    {
+      "person": "Speaker B",
+      "start": 43.95,
+      "end": 44.27,
+      "text": "become"
+    },
+    {
+      "person": "Speaker B",
+      "start": 44.27,
+      "end": 44.64,
+      "text": "channel"
+    },
+    {
+      "person": "Speaker B",
+      "start": 44.64,
+      "end": 45.01,
+      "text": "changing"
+    },
+    {
+      "person": "Speaker B",
+      "start": 45.01,
+      "end": 45.9,
+      "text": "buttons"
+    },
+    {
+      "person": "Speaker B",
+      "start": 45.9,
+      "end": 46.09,
+      "text": "If"
+    },
+    {
+      "person": "Speaker B",
+      "start": 46.09,
+      "end": 46.16,
+      "text": "we"
+    },
+    {
+      "person": "Speaker B",
+      "start": 46.16,
+      "end": 46.57,
+      "text": "press"
+    },
+    {
+      "person": "Speaker B",
+      "start": 46.57,
+      "end": 47.12,
+      "text": "select"
+    },
+    {
+      "person": "Speaker B",
+      "start": 47.12,
+      "end": 47.31,
+      "text": "three"
+    },
+    {
+      "person": "Speaker B",
+      "start": 47.31,
+      "end": 48.3,
+      "text": "times"
+    },
+    {
+      "person": "Speaker B",
+      "start": 48.3,
+      "end": 48.63,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 48.63,
+      "end": 49.35,
+      "text": "menu"
+    },
+    {
+      "person": "Speaker B",
+      "start": 49.35,
+      "end": 49.52,
+      "text": "with"
+    },
+    {
+      "person": "Speaker B",
+      "start": 49.52,
+      "end": 49.63,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 49.63,
+      "end": 49.89,
+      "text": "other"
+    },
+    {
+      "person": "Speaker B",
+      "start": 49.89,
+      "end": 50.9,
+      "text": "features"
+    },
+    {
+      "person": "Speaker B",
+      "start": 50.9,
+      "end": 51.14,
+      "text": "and"
+    },
+    {
+      "person": "Speaker B",
+      "start": 51.14,
+      "end": 51.46,
+      "text": "pro"
+    },
+    {
+      "person": "Speaker B",
+      "start": 51.46,
+      "end": 51.98,
+      "text": "possibly"
+    },
+    {
+      "person": "Speaker B",
+      "start": 51.98,
+      "end": 52.38,
+      "text": "also"
+    },
+    {
+      "person": "Speaker B",
+      "start": 52.38,
+      "end": 52.56,
+      "text": "with"
+    },
+    {
+      "person": "Speaker B",
+      "start": 52.56,
+      "end": 53.31,
+      "text": "your"
+    },
+    {
+      "person": "Speaker B",
+      "start": 53.31,
+      "end": 53.61,
+      "text": "T_V_"
+    },
+    {
+      "person": "Speaker B",
+      "start": 53.61,
+      "end": 53.94,
+      "text": "channel"
+    },
+    {
+      "person": "Speaker B",
+      "start": 53.94,
+      "end": 54.55,
+      "text": "choices"
+    },
+    {
+      "person": "Speaker B",
+      "start": 54.55,
+      "end": 54.83,
+      "text": "shows"
+    },
+    {
+      "person": "Speaker B",
+      "start": 54.83,
+      "end": 55.12,
+      "text": "up"
+    },
+    {
+      "person": "Speaker B",
+      "start": 55.12,
+      "end": 55.26,
+      "text": "and"
+    },
+    {
+      "person": "Speaker B",
+      "start": 55.26,
+      "end": 55.35,
+      "text": "you"
+    },
+    {
+      "person": "Speaker B",
+      "start": 55.35,
+      "end": 55.51,
+      "text": "have"
+    },
+    {
+      "person": "Speaker B",
+      "start": 55.51,
+      "end": 55.63,
+      "text": "your"
+    },
+    {
+      "person": "Speaker B",
+      "start": 55.63,
+      "end": 56.12,
+      "text": "five"
+    },
+    {
+      "person": "Speaker B",
+      "start": 56.12,
+      "end": 56.63,
+      "text": "presets"
+    },
+    {
+      "person": "Speaker B",
+      "start": 56.63,
+      "end": 56.87,
+      "text": "down"
+    },
+    {
+      "person": "Speaker B",
+      "start": 56.87,
+      "end": 57.17,
+      "text": "here"
+    },
+    {
+      "person": "Speaker B",
+      "start": 58.26,
+      "end": 58.39,
+      "text": "Um"
+    },
+    {
+      "person": "Speaker B",
+      "start": 58.39,
+      "end": 58.49,
+      "text": "if"
+    },
+    {
+      "person": "Speaker B",
+      "start": 58.49,
+      "end": 58.74,
+      "text": "people"
+    },
+    {
+      "person": "Speaker B",
+      "start": 58.74,
+      "end": 59.52,
+      "text": "wanna"
+    },
+    {
+      "person": "Speaker B",
+      "start": 59.52,
+      "end": 59.72,
+      "text": "grab"
+    },
+    {
+      "person": "Speaker B",
+      "start": 59.72,
+      "end": 59.95,
+      "text": "hold"
+    },
+    {
+      "person": "Speaker B",
+      "start": 59.95,
+      "end": 60.07,
+      "text": "of"
+    },
+    {
+      "person": "Speaker B",
+      "start": 60.07,
+      "end": 60.34,
+      "text": "that"
+    },
+    {
+      "person": "Speaker B",
+      "start": 60.34,
+      "end": 60.59,
+      "text": "see"
+    },
+    {
+      "person": "Speaker B",
+      "start": 60.59,
+      "end": 60.71,
+      "text": "how"
+    },
+    {
+      "person": "Speaker B",
+      "start": 60.71,
+      "end": 60.82,
+      "text": "it"
+    },
+    {
+      "person": "Speaker B",
+      "start": 60.82,
+      "end": 61.16,
+      "text": "feels"
+    },
+    {
+      "person": "Speaker B",
+      "start": 61.16,
+      "end": 61.25,
+      "text": "in"
+    },
+    {
+      "person": "Speaker B",
+      "start": 61.25,
+      "end": 61.38,
+      "text": "your"
+    },
+    {
+      "person": "Speaker B",
+      "start": 61.38,
+      "end": 61.62,
+      "text": "hand"
+    },
+    {
+      "person": "Speaker B",
+      "start": 62.82,
+      "end": 63.33,
+      "text": "That's"
+    },
+    {
+      "person": "Speaker B",
+      "start": 63.33,
+      "end": 63.64,
+      "text": "our"
+    },
+    {
+      "person": "Speaker B",
+      "start": 63.64,
+      "end": 63.93,
+      "text": "number"
+    },
+    {
+      "person": "Speaker B",
+      "start": 63.93,
+      "end": 64.14,
+      "text": "one"
+    },
+    {
+      "person": "Speaker B",
+      "start": 64.14,
+      "end": 65.61,
+      "text": "prototype"
+    },
+    {
+      "person": "Speaker B",
+      "start": 65.61,
+      "end": 66.71,
+      "text": "Um"
+    },
+    {
+      "person": "Speaker B",
+      "start": 66.71,
+      "end": 66.8,
+      "text": "do"
+    },
+    {
+      "person": "Speaker B",
+      "start": 66.8,
+      "end": 66.88,
+      "text": "you"
+    },
+    {
+      "person": "Speaker B",
+      "start": 66.88,
+      "end": 67.49,
+      "text": "wanna"
+    },
+    {
+      "person": "Speaker B",
+      "start": 67.49,
+      "end": 67.83,
+      "text": "present"
+    },
+    {
+      "person": "Speaker B",
+      "start": 67.83,
+      "end": 67.89,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 67.89,
+      "end": 68.26,
+      "text": "potato"
+    },
+    {
+      "person": "Speaker A",
+      "start": 67.95,
+      "end": 68.12,
+      "text": "like"
+    },
+    {
+      "person": "Speaker A",
+      "start": 68.12,
+      "end": 68.17,
+      "text": "a"
+    },
+    {
+      "person": "Speaker A",
+      "start": 68.17,
+      "end": 68.39,
+      "text": "little"
+    },
+    {
+      "person": "Speaker B",
+      "start": 68.26,
+      "end": 68.41,
+      "text": "or"
+    },
+    {
+      "person": "Speaker A",
+      "start": 68.39,
+      "end": 68.74,
+      "text": "lightning"
+    },
+    {
+      "person": "Speaker B",
+      "start": 68.41,
+      "end": 68.54,
+      "text": "shall"
+    },
+    {
+      "person": "Speaker B",
+      "start": 68.54,
+      "end": 68.6,
+      "text": "I"
+    },
+    {
+      "person": "Speaker C",
+      "start": 68.54,
+      "end": 69.71,
+      "text": "Okay"
+    },
+    {
+      "person": "Speaker B",
+      "start": 68.6,
+      "end": 68.89,
+      "text": "present"
+    },
+    {
+      "person": "Speaker A",
+      "start": 68.74,
+      "end": 68.84,
+      "text": "in"
+    },
+    {
+      "person": "Speaker A",
+      "start": 68.84,
+      "end": 69.04,
+      "text": "it"
+    },
+    {
+      "person": "Speaker B",
+      "start": 68.89,
+      "end": 68.97,
+      "text": "the"
+    },
+    {
+      "person": "Speaker B",
+      "start": 68.97,
+      "end": 69.34,
+      "text": "Martian"
+    },
+    {
+      "person": "Speaker C",
+      "start": 69.71,
+      "end": 70.15,
+      "text": "um"
+    },
+    {
+      "person": "Speaker A",
+      "start": 69.89,
+      "end": 70.0,
+      "text": "The"
+    },
+    {
+      "person": "Speaker A",
+      "start": 70.0,
+      "end": 70.22,
+      "text": "little"
+    },
+    {
+      "person": "Speaker A",
+      "start": 70.22,
+      "end": 70.56,
+      "text": "lightning"
+    },
+    {
+      "person": "Speaker A",
+      "start": 70.56,
+      "end": 70.82,
+      "text": "bolt"
+    },
+    {
+      "person": "Speaker A",
+      "start": 70.82,
+      "end": 70.93,
+      "text": "in"
+    },
+    {
+      "person": "Speaker A",
+      "start": 70.93,
+      "end": 71.12,
+      "text": "it"
+    },
+    {
+      "person": "Speaker C",
+      "start": 71.06,
+      "end": 71.25,
+      "text": "What"
+    },
+    {
+      "person": "Speaker A",
+      "start": 71.12,
+      "end": 71.4,
+      "text": "very"
+    },
+    {
+      "person": "Speaker A",
+      "start": 71.4,
+      "end": 71.86,
+      "text": "cute"
+    },
+    {
+      "person": "Speaker C",
+      "start": 72.47,
+      "end": 72.6,
+      "text": "We"
+    },
+    {
+      "person": "Speaker C",
+      "start": 72.6,
+      "end": 72.8,
+      "text": "call"
+    },
+    {
+      "person": "Speaker C",
+      "start": 72.8,
+      "end": 72.98,
+      "text": "that"
+    },
+    {
+      "person": "Speaker C",
+      "start": 72.98,
+      "end": 73.35,
+      "text": "one"
+    },
+    {
+      "person": "Speaker D",
+      "start": 73.02,
+      "end": 73.12,
+      "text": "I"
+    },
+    {
+      "person": "Speaker D",
+      "start": 73.12,
+      "end": 73.41,
+      "text": "could"
+    },
+    {
+      "person": "Speaker C",
+      "start": 73.35,
+      "end": 73.46,
+      "text": "the"
+    },
+    {
+      "person": "Speaker C",
+      "start": 73.46,
+      "end": 74.1,
+      "text": "rhombus"
+    },
+    {
+      "person": "Speaker C",
+      "start": 74.1,
+      "end": 75.26,
+      "text": "uh"
+    },
+    {
+      "person": "Speaker A",
+      "start": 74.28,
+      "end": 74.38,
+      "text": "The"
+    },
+    {
+      "person": "Speaker A",
+      "start": 74.38,
+      "end": 74.62,
+      "text": "v"
+    },
+    {
+      "person": "Speaker A",
+      "start": 74.62,
+      "end": 75.24,
+      "text": "the"
+    }
+  ],
+  "reference_tracks": {
+    "Speaker A": "ref_A.wav",
+    "Speaker B": "ref_B.wav",
+    "Speaker C": "ref_C.wav",
+    "Speaker D": "ref_D.wav"
+  }
+}
