@@ -13,7 +13,7 @@ Earshot takes a recorded video of the table. You tap each face once, and:
 5. **"What did I miss?" runs locally on Muse Glimmer**, so the conversation text stays on this computer. Every summary sentence cites the captions it came from and must pass deterministic citation, name and number checks; otherwise the cited captions are shown word for word;
 6. **Spanish bubbles** (Muse Spark), positioned and coloured WebVTT, and speaker-labelled SRT.
 
-**Headline result (public AMI meeting, far-field room mic, 3 repeats):** automatic binding chose **exactly the hand-matched voice-to-face mapping in 3 of 3 runs**, with **0 correction taps**, so **0.919** of caption words landed under the right person, the same as matching by hand. On a second, harder window it scored 0.547 against 0.693 for hand-matching; one flagged tap fixed it in 2 of 3 runs, and the third already matched. **On an independent meeting (ES2008b), it failed a pass rule written before the run:** 0.348 against 0.549 by hand, 2 taps every time, and one wrong binding was not flagged. Treat binding as a strong first guess that you check, not a guarantee. Full numbers, including what didn't work, are in [Results](#results).
+**Headline result (public AMI meeting, far-field room mic, 3 repeats):** automatic binding chose **exactly the hand-matched voice-to-face mapping in 3 of 3 runs**, with **0 correction taps**, so **0.919** of caption words landed under the right person, the same as matching by hand. On a second, harder window it scored 0.547 against 0.693 for hand-matching; one flagged tap fixed it in 2 of 3 runs, and the third already matched. **On an independent meeting (ES2008b), it failed a pass rule written before the run:** 0.348 against 0.549 by hand, 2 taps every time, and one wrong binding was not flagged. Treat binding as a strong first guess that you check, not a guarantee. The failure traced to poor diarization of the single far-field mic: **with an 8-mic array recording diarized through classical delay-and-sum, binding chose exactly the hand-matched mapping in 9 of 9 repeats across all three windows, with 0 taps** (exploratory, on windows seen before). Full numbers, including what didn't work, are in [Results](#results).
 
 > Built during the Meta Global AI Developer Hackathon (26 Oct – 4 Nov 2026). Everything in this repository was written during the event. Meta's cookbook recipe `07_sam/03_headlocked_speech_bubble_captions` already shows speech-bubble captions from diarization plus SAM 3.1, with voices matched to people **by hand**. Earshot replaces that manual step with automatic, measured voice-to-face binding, and adds threads, cited on-device catch-ups, translation and subtitle export. Earshot reuses no code from that recipe; it follows the cookbook's API request formats. We also tried to separate **overlapping** speech with SAM Audio and with a microphone array; neither passed our own quality checks, so neither is the default demo (see [What didn't work](#what-didnt-work-overlapping-speech-separation)).
 
@@ -160,7 +160,17 @@ Automatic binding does not separate audio, so it cannot recover words the single
 | Matched by hand (oracle) | 0.781 [0.629, 0.911] | 0.549 [0.372, 0.807] | 0.131 [0.065, 0.167] | — |
 | Earshot automatic binding | 0.839 [0.761, 0.893] | 0.348 [0.207, 0.475] | 0.096 [0.040, 0.192] | 2 / 2 / 2 |
 
-Diarization was weak here even for the oracle (WER 0.78, and only three speaker labels for four people in two repeats). Binding needed two taps in every repeat, and in one repeat a confidently wrong binding (0.256, above the 0.15 flag) was not flagged. The confidence flag is a hint, not a guarantee. The 30–60% mouth band was fixed by review before these runs; the 60–90% band won on 635 s and scored 0.537 on 745 s.
+Diarization was weak here even for the oracle (WER 0.78, and only three speaker labels for four people in two repeats). Binding needed two taps in every repeat, and in one repeat a confidently wrong binding (0.256, above the 0.15 flag) was not flagged. The confidence flag is a hint, not a guarantee.
+
+**Follow-up: cleaner input fixes binding (exploratory PASS).** Same code and thresholds, but diarizing the classical GCC-PHAT delay-and-sum signal from the AMI 8-mic array instead of one far-field mic. Pass rule frozen first in `review/LITE_INPUT_PROTOCOL.md`; all responses from the cache; `tools/lite_input_probe.py` reproduces the raw-mix rows above exactly.
+
+| Right person (same 3 repeats) | Raw mix: binding | Delay-and-sum: binding | Delay-and-sum: matched by hand | Taps (delay-and-sum) |
+|---|---:|---:|---:|---|
+| ES2008a 745 s | 0.919 | 0.913 | 0.914 | 0 / 0 / 0 |
+| ES2008a 635 s | 0.547 | **0.690** | 0.690 | 0 / 0 / 0 |
+| ES2008b 150 s | 0.348 | **0.512** | 0.512 | 0 / 0 / 0 |
+
+Binding equalled hand-matching in 9 of 9 repeats. It cannot exceed transcription quality, though: on ES2008b even hand-matching reaches only about 0.51. This needs a synchronized multi-mic recording, and every window had been seen before, so it is not a held-out result. The included demos still use the raw-mix binding. The 30–60% mouth band was fixed by review before these runs; the 60–90% band won on 635 s and scored 0.537 on 745 s.
 
 ## What didn't work: overlapping-speech separation
 
