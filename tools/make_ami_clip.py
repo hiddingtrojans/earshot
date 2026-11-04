@@ -272,7 +272,7 @@ def main() -> None:
     global START, MEETING, MIRROR, TAPS
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--meeting", choices=["ES2008a", "ES2008b", "ES2008c"], default=MEETING)
+    parser.add_argument("--meeting", choices=["ES2008a", "ES2008b", "ES2008c", "ES2008d"], default=MEETING)
     parser.add_argument("--cache", type=Path, help="source cache (default: bench/.ami_cache/<meeting>)")
     parser.add_argument("--start", type=float, default=START, help="window start in seconds (default: 745)")
     parser.add_argument("--tap", action="append", help="Name@x,y on the verified first frame; repeatable")

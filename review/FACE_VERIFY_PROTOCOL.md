@@ -25,3 +25,7 @@ PASS only if, on delay-and-sum input: at least 1 of the 2 wrong bindings is fixe
 - **2b, per-face verifier:** on delay-and-sum input, no correct binding broken and at least half of the flagged labels resolved. If nothing is flagged, 2b is not evaluable.
 
 Every result, pass or fail, goes in the README.
+
+## ES2008d window selected (annotations only, before any media download)
+
+Earliest eligible start: **120 s** (248 truth words, 28 overlapping words, all four speakers active).
