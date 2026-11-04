@@ -1,19 +1,21 @@
 # Earshot
 
-**Every voice at the table, captioned under the right face.**
+**Tap each face. Every voice gets its own captions, under the right face.**
 
-Deaf and hard-of-hearing people have a name for being left out of group conversations: *dinner table syndrome*. One of its main causes is people talking over each other. Single-stream captions turn a table into one stream of text: overlapping speech merges or disappears, and you can't tell who said what.
+Deaf and hard-of-hearing people have a name for being left out of group conversations: *dinner table syndrome*. Single-stream captions turn a table into one stream of text, and you can't tell who said what.
 
-Earshot takes a recorded video of the table and:
+Earshot takes a recorded video of the table. You tap each face once, and:
 
-1. **tracks each person you tap** with SAM 3.1;
-2. evaluates voice isolation with SAM Audio and with a classical microphone-array beamformer. SAM Audio failed its quality gate; the **experimental Parallel array demo** also failed its ES2008a overlap-recall gate and is labelled accordingly;
-3. **captions each voice separately** with Muse Voice Transcribe, or assigns diarized turns to faces with the deterministic Earshot-Lite fallback, and shows face-anchored bubbles;
-4. **splits side conversations into threads** and answers **"What did I miss?"** with local Muse Glimmer or hosted Muse Spark. Summaries cite captions and pass deterministic checks, or fall back to verbatim captions;
-5. proposes **questions and commitments** with citations, then checks them with local Glimmer. Unsupported owners, dates, numbers, and citations are rejected. It never sends messages, creates tasks, or books events automatically;
-6. offers **cached Spanish bubbles**, positioned/coloured WebVTT, labelled SRT, and per-person audio downloads when isolated stems exist.
+1. **SAM 3.1 tracks each person** you tapped through the video;
+2. **each voice binds to its face automatically.** Muse Voice Transcribe diarizes the audio; Earshot correlates each anonymous voice with mouth movement inside each SAM 3.1 mask and assigns voices to faces. There is no manual matching, and bindings with low confidence are flagged for a one-tap correction;
+3. **speech bubbles appear above whoever is talking**, with "Both talking" when turns overlap;
+4. **Muse Spark splits side conversations into threads**;
+5. **"What did I miss?" runs locally on Muse Glimmer**, so the conversation text stays on this computer. Every summary sentence cites the captions it came from and must pass deterministic citation, name and number checks; otherwise the cited captions are shown word for word;
+6. **Spanish bubbles** (Muse Spark), positioned and coloured WebVTT, and speaker-labelled SRT.
 
-> Built during the Meta Global AI Developer Hackathon (26 Oct – 4 Nov 2026). Everything in this repository was written during the event. Meta's cookbook recipe `07_sam/03_headlocked_speech_bubble_captions` already shows speech-bubble captions from diarization plus SAM 3.1, with voices matched to people by hand. Earshot addresses the case that recipe can't handle: separating **overlapping** speech, and binding each voice to a face with **no manual matching**. Earshot reuses no code from that recipe; it follows the cookbook's API request formats. The default demo uses Lite; the separate Parallel demo is an explicitly labelled experiment, not a separation-success claim.
+**Headline result (public AMI meeting, far-field room mic, 3 repeats):** automatic binding chose **exactly the hand-matched voice-to-face mapping in 3 of 3 runs**, with **0 correction taps**, so **0.919** of caption words landed under the right person, the same as matching by hand. On a second, harder window it scored 0.547 against 0.693 for hand-matching; one flagged tap fixed it in 2 of 3 runs, and the third already matched. **On an independent meeting (ES2008b), it failed a pass rule written before the run:** 0.348 against 0.549 by hand, 2 taps every time, and one wrong binding was not flagged. Treat binding as a strong first guess that you check, not a guarantee. Full numbers, including what didn't work, are in [Results](#results).
+
+> Built during the Meta Global AI Developer Hackathon (26 Oct – 4 Nov 2026). Everything in this repository was written during the event. Meta's cookbook recipe `07_sam/03_headlocked_speech_bubble_captions` already shows speech-bubble captions from diarization plus SAM 3.1, with voices matched to people **by hand**. Earshot replaces that manual step with automatic, measured voice-to-face binding, and adds threads, cited on-device catch-ups, translation and subtitle export. Earshot reuses no code from that recipe; it follows the cookbook's API request formats. We also tried to separate **overlapping** speech with SAM Audio and with a microphone array; neither passed our own quality checks, so neither is the default demo (see [What didn't work](#what-didnt-work-overlapping-speech-separation)).
 
 ![Earshot replay on the public AMI meeting, showing a Spanish bubble and conversation threads](assets/earshot-demo.png)
 
@@ -136,13 +138,38 @@ The baseline is the same table as one diarized stream (what single-stream captio
 
 ## Results
 
-Real AMI ES2008a far-field clip, mean [min, max] over 3 Voice transcription repeats. The single-stream baseline uses one-to-one maximum word-overlap oracle assignment, excluding unmatched speakers; it is generous and not a runtime face-to-voice matcher. The primary SAM Audio comparison uses its own three repeats; Lite and Spark AV use their previously reported cached repeats.
+Real AMI ES2008a far-field clip, mean [min, max] over 3 Voice transcription repeats. The single-stream baseline uses one-to-one maximum word-overlap oracle assignment, excluding unmatched speakers: it is the best a person could do by matching voices to faces by hand, and it is not a runtime matcher.
+
+### Automatic voice-to-face binding (the default demo)
+
+Both rows of each window are scored on the **same** three transcription repeats.
+
+| Window and mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | Correction taps to reach the oracle mapping |
+|---|---:|---:|---:|---|
+| 745 s, single stream matched by hand (oracle) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
+| **745 s, Earshot automatic binding** | 0.231 [0.221, 0.237] | **0.919** [0.918, 0.921] | 0.495 [0.444, 0.540] | **0 / 0 / 0** |
+| 635 s (development), matched by hand (oracle) | 0.384 [0.377, 0.395] | 0.693 [0.689, 0.697] | 0.486 [0.424, 0.524] | — |
+| 635 s (development), Earshot automatic binding | 2.571 [0.395, 3.719] | 0.547 [0.473, 0.693] | 0.553 [0.424, 0.624] | 1 / 1 / 0 |
+
+Automatic binding does not separate audio, so it cannot recover words the single-stream transcription dropped. What it removes is the manual matching step. On 745 s it chose exactly the hand-matched mapping in all three repeats, so the two rows are identical. On the harder 635 s window, uncorrected right-person is 0.547 against 0.693 by hand; the low-confidence flag (threshold fixed at 0.15) reaches the oracle mapping with one tap in two repeats, and the third repeat already matched. The separate SAM Audio repeats on 745 s gave a hand-matched single stream of 0.913 right-person and 0.480 overlap-word recall.
+
+**Independent meeting, ES2008b 150 s: FAIL.** Pass rule and result in `review/LITE_ES2008B_PROTOCOL.md`, frozen before the run; all model responses came from the cache.
+
+| ES2008b 150 s (same 3 repeats) | WER ↓ | Right person ↑ | Overlap-word recall ↑ | Correction taps to reach the oracle mapping |
+|---|---:|---:|---:|---|
+| Matched by hand (oracle) | 0.781 [0.629, 0.911] | 0.549 [0.372, 0.807] | 0.131 [0.065, 0.167] | — |
+| Earshot automatic binding | 0.839 [0.761, 0.893] | 0.348 [0.207, 0.475] | 0.096 [0.040, 0.192] | 2 / 2 / 2 |
+
+Diarization was weak here even for the oracle (WER 0.78, and only three speaker labels for four people in two repeats). Binding needed two taps in every repeat, and in one repeat a confidently wrong binding (0.256, above the 0.15 flag) was not flagged. The confidence flag is a hint, not a guarantee. The 30–60% mouth band was fixed by review before these runs; the 60–90% band won on 635 s and scored 0.537 on 745 s.
+
+## What didn't work: overlapping-speech separation
+
+Recovering words spoken *over* someone else needs a separate audio track per person. We tested two ways to get one, each against a quality gate frozen before the run: right-person ≥ 0.80 and overlap-word recall ≥ baseline + 0.10. Neither passed, so neither is the default demo.
+
+### SAM Audio (local), prompted with each person's SAM 3.1 mask
 
 | Mode | WER ↓ | Right person ↑ | Overlap-word recall ↑ | Correct voice ↑ |
 |---|---:|---:|---:|---:|
-| Single stream (oracle; primary SAM repeats) | 0.239 [0.231, 0.246] | 0.913 [0.906, 0.918] | 0.480 [0.463, 0.513] | — |
-| Earshot-Lite (745 s mouth-band correlation) | 0.231 [0.221, 0.237] | 0.919 [0.918, 0.921] | 0.495 [0.444, 0.540] | — |
-| Lite development check (635 s) | 2.571 [0.395, 3.719] | 0.547 [0.473, 0.693] | 0.553 [0.424, 0.624] | — |
 | SAM Audio `keep` (745 s) | 0.967 [0.749, 1.227] | 0.386 [0.301, 0.546] | 0.098 [0.037, 0.141] | 0.500 |
 | SAM Audio `keep` (635 s held-out) | 2.731 [1.097, 3.825] | 0.382 [0.296, 0.537] | 0.185 [0.158, 0.230] | 0.250 |
 | SAM Audio legacy `remove` (745 s) | 0.916 [0.896, 0.935] | 0.464 [0.385, 0.555] | 0.117 [0.097, 0.146] | 0.250 |
@@ -150,9 +177,9 @@ Real AMI ES2008a far-field clip, mean [min, max] over 3 Voice transcription repe
 
 The mixture's correct-voice rate is **0.250** on the primary 745 s window. The full `keep` envelope matrix and the 0–10 s mask A/B matrices are in `bench/RESULTS.md`; neither mask mode was diagonal-dominant, so `keep` is the semantic default rather than an A/B winner. SI-SDR remains in the bench JSON with the far-field caveat; `keep` gain is -0.008 dB and legacy `remove` gain is -2.415 dB.
 
-Lite does not separate audio, but its reviewed mouth-band activity correlation matches the generous oracle baseline on its three 745 s repeats. The 60–90% lower-mask band won on 635 s and scored 0.537 on 745 s; the reviewer-fixed 30–60% mouth band scores 0.919 on 745 s and 0.547 on 635 s. With the correction threshold fixed at 0.15, reaching the oracle mapping needed **0 / 0 / 0 taps on 745 s** and **1 / 1 / 0 taps on 635 s**.
+SAM Audio removed background noise from speech (+16.9 dB) but did not separate one speaker from another under any face or time-span prompt, on far-field or clean-mic audio. Spark AV (an audiovisual Muse Spark overlap-transcription mode) is a separate negative experiment, not a viewer mode.
 
-### Classical microphone-array results
+### Classical eight-mic array (experimental Parallel demo)
 
 Mean [min, max] over three real Voice repeats, using the **AMI 8-mic meeting-room array**. The threshold is the better of raw `Array1-01` and GCC-PHAT delay-and-sum overlap recall +0.10. These are runtime Lite-guided results, not oracle-mapped product claims.
 

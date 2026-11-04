@@ -1,0 +1,435 @@
+{
+  "run": "runs/ami_es2008b_150_lite",
+  "separator": "none (Earshot-Lite: mouth-motion attribution)",
+  "repeat_count": 3,
+  "repeats": [
+    {
+      "run": "runs/ami_es2008b_150_lite",
+      "separator": "none (Earshot-Lite: mouth-motion attribution)",
+      "oracle_mapping": {
+        "A": "Speaker C",
+        "B": "Speaker B",
+        "C": "Speaker A"
+      },
+      "people": {
+        "Speaker A": {
+          "earshot": {
+            "words_truth": 32,
+            "words_captioned": 26,
+            "wer": 0.75,
+            "attribution": 0.423,
+            "overlap_words": 10,
+            "overlap_recall": 0.0
+          },
+          "baseline": {
+            "words_truth": 32,
+            "words_captioned": 3,
+            "wer": 0.969,
+            "attribution": 0.333,
+            "overlap_words": 10,
+            "overlap_recall": 0.0
+          }
+        },
+        "Speaker B": {
+          "earshot": {
+            "words_truth": 17,
+            "words_captioned": 0,
+            "wer": 1.0,
+            "attribution": 0.0,
+            "overlap_words": 9,
+            "overlap_recall": 0.0
+          },
+          "baseline": {
+            "words_truth": 17,
+            "words_captioned": 26,
+            "wer": 0.941,
+            "attribution": 0.462,
+            "overlap_words": 9,
+            "overlap_recall": 0.556
+          }
+        },
+        "Speaker C": {
+          "earshot": {
+            "words_truth": 34,
+            "words_captioned": 13,
+            "wer": 0.735,
+            "attribution": 0.692,
+            "overlap_words": 11,
+            "overlap_recall": 0.091
+          },
+          "baseline": {
+            "words_truth": 34,
+            "words_captioned": 13,
+            "wer": 0.735,
+            "attribution": 0.692,
+            "overlap_words": 11,
+            "overlap_recall": 0.091
+          }
+        },
+        "Speaker D": {
+          "earshot": {
+            "words_truth": 28,
+            "words_captioned": 3,
+            "wer": 0.964,
+            "attribution": 0.333,
+            "overlap_words": 15,
+            "overlap_recall": 0.067
+          },
+          "baseline": {
+            "words_truth": 28,
+            "words_captioned": 0,
+            "wer": 1.0,
+            "attribution": 0.0,
+            "overlap_words": 15,
+            "overlap_recall": 0.0
+          }
+        }
+      },
+      "lite_mapping": {
+        "A": 2,
+        "B": 0,
+        "C": 3
+      },
+      "envelope": {
+        "people": {},
+        "mixture": [
+          0.2228,
+          0.1071,
+          0.5274,
+          0.2922
+        ],
+        "mixture_correct_voice_rate": 0.25,
+        "gate": "Frames with mixture log energy above its 20th percentile",
+        "si_sdr_note": "Far-field mixture/headset SI-SDR is not meaningful here.",
+        "correct_voice_rate": 0.0
+      },
+      "summary": {
+        "earshot": {
+          "wer": 0.862,
+          "attribution": 0.362,
+          "overlap_recall": 0.04
+        },
+        "baseline": {
+          "wer": 0.911,
+          "attribution": 0.372,
+          "overlap_recall": 0.162
+        },
+        "correct_voice_rate": 0.0,
+        "mixture_correct_voice_rate": 0.25
+      },
+      "confidence": {
+        "A": 0.24860762900770092,
+        "B": 0.2563109723256449,
+        "C": 0.025731987258539313
+      },
+      "taps_to_oracle": {
+        "taps": 2,
+        "low_confidence": [
+          "C"
+        ]
+      }
+    },
+    {
+      "run": "runs/ami_es2008b_150_lite",
+      "separator": "none (Earshot-Lite: mouth-motion attribution)",
+      "oracle_mapping": {
+        "A": "Speaker C",
+        "B": "Speaker D",
+        "C": "Speaker A"
+      },
+      "people": {
+        "Speaker A": {
+          "earshot": {
+            "words_truth": 32,
+            "words_captioned": 8,
+            "wer": 0.969,
+            "attribution": 0.125,
+            "overlap_words": 10,
+            "overlap_recall": 0.0
+          },
+          "baseline": {
+            "words_truth": 32,
+            "words_captioned": 24,
+            "wer": 0.75,
+            "attribution": 0.542,
+            "overlap_words": 10,
+            "overlap_recall": 0.1
+          }
+        },
+        "Speaker B": {
+          "earshot": {
+            "words_truth": 17,
+            "words_captioned": 0,
+            "wer": 1.0,
+            "attribution": 0.0,
+            "overlap_words": 9,
+            "overlap_recall": 0.0
+          },
+          "baseline": {
+            "words_truth": 17,
+            "words_captioned": 0,
+            "wer": 1.0,
+            "attribution": 0.0,
+            "overlap_words": 9,
+            "overlap_recall": 0.0
+          }
+        },
+        "Speaker C": {
+          "earshot": {
+            "words_truth": 34,
+            "words_captioned": 19,
+            "wer": 0.676,
+            "attribution": 0.579,
+            "overlap_words": 11,
+            "overlap_recall": 0.091
+          },
+          "baseline": {
+            "words_truth": 34,
+            "words_captioned": 19,
+            "wer": 0.676,
+            "attribution": 0.579,
+            "overlap_words": 11,
+            "overlap_recall": 0.091
+          }
+        },
+        "Speaker D": {
+          "earshot": {
+            "words_truth": 28,
+            "words_captioned": 24,
+            "wer": 0.929,
+            "attribution": 0.125,
+            "overlap_words": 15,
+            "overlap_recall": 0.133
+          },
+          "baseline": {
+            "words_truth": 28,
+            "words_captioned": 8,
+            "wer": 0.786,
+            "attribution": 0.75,
+            "overlap_words": 15,
+            "overlap_recall": 0.067
+          }
+        }
+      },
+      "lite_mapping": {
+        "A": 2,
+        "B": 0,
+        "C": 3
+      },
+      "envelope": {
+        "people": {},
+        "mixture": [
+          0.2228,
+          0.1071,
+          0.5274,
+          0.2922
+        ],
+        "mixture_correct_voice_rate": 0.25,
+        "gate": "Frames with mixture log energy above its 20th percentile",
+        "si_sdr_note": "Far-field mixture/headset SI-SDR is not meaningful here.",
+        "correct_voice_rate": 0.0
+      },
+      "summary": {
+        "earshot": {
+          "wer": 0.893,
+          "attribution": 0.207,
+          "overlap_recall": 0.056
+        },
+        "baseline": {
+          "wer": 0.803,
+          "attribution": 0.468,
+          "overlap_recall": 0.065
+        },
+        "correct_voice_rate": 0.0,
+        "mixture_correct_voice_rate": 0.25
+      },
+      "confidence": {
+        "A": 0.23193782952342007,
+        "B": 0.055950976567703745,
+        "C": 0.1334303540620651
+      },
+      "taps_to_oracle": {
+        "taps": 2,
+        "low_confidence": [
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "run": "runs/ami_es2008b_150_lite",
+      "separator": "none (Earshot-Lite: mouth-motion attribution)",
+      "oracle_mapping": {
+        "A": "Speaker C",
+        "B": "Speaker D",
+        "C": "Speaker A",
+        "D": "Speaker B"
+      },
+      "people": {
+        "Speaker A": {
+          "earshot": {
+            "words_truth": 32,
+            "words_captioned": 10,
+            "wer": 0.969,
+            "attribution": 0.2,
+            "overlap_words": 10,
+            "overlap_recall": 0.1
+          },
+          "baseline": {
+            "words_truth": 32,
+            "words_captioned": 11,
+            "wer": 0.656,
+            "attribution": 1.0,
+            "overlap_words": 10,
+            "overlap_recall": 0.0
+          }
+        },
+        "Speaker B": {
+          "earshot": {
+            "words_truth": 17,
+            "words_captioned": 13,
+            "wer": 0.353,
+            "attribution": 0.846,
+            "overlap_words": 9,
+            "overlap_recall": 0.444
+          },
+          "baseline": {
+            "words_truth": 17,
+            "words_captioned": 13,
+            "wer": 0.353,
+            "attribution": 0.846,
+            "overlap_words": 9,
+            "overlap_recall": 0.444
+          }
+        },
+        "Speaker C": {
+          "earshot": {
+            "words_truth": 34,
+            "words_captioned": 12,
+            "wer": 0.794,
+            "attribution": 0.583,
+            "overlap_words": 11,
+            "overlap_recall": 0.091
+          },
+          "baseline": {
+            "words_truth": 34,
+            "words_captioned": 12,
+            "wer": 0.794,
+            "attribution": 0.583,
+            "overlap_words": 11,
+            "overlap_recall": 0.091
+          }
+        },
+        "Speaker D": {
+          "earshot": {
+            "words_truth": 28,
+            "words_captioned": 11,
+            "wer": 0.929,
+            "attribution": 0.273,
+            "overlap_words": 15,
+            "overlap_recall": 0.133
+          },
+          "baseline": {
+            "words_truth": 28,
+            "words_captioned": 10,
+            "wer": 0.714,
+            "attribution": 0.8,
+            "overlap_words": 15,
+            "overlap_recall": 0.133
+          }
+        }
+      },
+      "lite_mapping": {
+        "A": 2,
+        "B": 0,
+        "C": 3,
+        "D": 1
+      },
+      "envelope": {
+        "people": {},
+        "mixture": [
+          0.2228,
+          0.1071,
+          0.5274,
+          0.2922
+        ],
+        "mixture_correct_voice_rate": 0.25,
+        "gate": "Frames with mixture log energy above its 20th percentile",
+        "si_sdr_note": "Far-field mixture/headset SI-SDR is not meaningful here.",
+        "correct_voice_rate": 0.0
+      },
+      "summary": {
+        "earshot": {
+          "wer": 0.761,
+          "attribution": 0.475,
+          "overlap_recall": 0.192
+        },
+        "baseline": {
+          "wer": 0.629,
+          "attribution": 0.807,
+          "overlap_recall": 0.167
+        },
+        "correct_voice_rate": 0.0,
+        "mixture_correct_voice_rate": 0.25
+      },
+      "confidence": {
+        "A": 0.3549350965887745,
+        "B": 0.14929899918503664,
+        "C": 0.269273480757102,
+        "D": 0.11832873241483208
+      },
+      "taps_to_oracle": {
+        "taps": 2,
+        "low_confidence": [
+          "B"
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "earshot": {
+      "wer": {
+        "mean": 0.839,
+        "min": 0.761,
+        "max": 0.893
+      },
+      "attribution": {
+        "mean": 0.348,
+        "min": 0.207,
+        "max": 0.475
+      },
+      "overlap_recall": {
+        "mean": 0.096,
+        "min": 0.04,
+        "max": 0.192
+      }
+    },
+    "baseline": {
+      "wer": {
+        "mean": 0.781,
+        "min": 0.629,
+        "max": 0.911
+      },
+      "attribution": {
+        "mean": 0.549,
+        "min": 0.372,
+        "max": 0.807
+      },
+      "overlap_recall": {
+        "mean": 0.131,
+        "min": 0.065,
+        "max": 0.167
+      }
+    },
+    "correct_voice_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "mixture_correct_voice_rate": {
+      "mean": 0.25,
+      "min": 0.25,
+      "max": 0.25
+    }
+  }
+}

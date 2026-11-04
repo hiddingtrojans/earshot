@@ -1,0 +1,7 @@
+                               Earshot         Single stream
+Word error rate      0.839 [0.761, 0.893]       0.781 [0.629, 0.911]
+Right person         0.348 [0.207, 0.475]       0.549 [0.372, 0.807]
+Overlap words        0.096 [0.040, 0.192]       0.131 [0.065, 0.167]
+Correct voice        0.000 [0.000, 0.000]
+Mixture correct voice     0.250 [0.250, 0.250]
+wrote runs/ami_es2008b_150_lite/bench_repeat3.json
