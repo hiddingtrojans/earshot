@@ -92,3 +92,7 @@ Earshot-Lite binding is far below the oracle on this window (delay-and-sum 0.197
 | 2c pairwise | 6 | 1 | 1 | 0 | **FAIL** (needed ≥ 3 resolved) |
 
 The pairwise clip votes that were cast were right 6 of 6 on delay-and-sum input (3 of 5 on raw), which motivated 2d (`review/IS1009A_PROTOCOL.md`).
+
+## 2a result on ES2008d: FAIL
+
+`EARSHOT_REPLAY=1 python -m tools.lite_input_probe` (`review/lite_heldout_probe_2.log`; all earlier rows reproduced exactly). Delay-and-sum binding 0.197 vs oracle 0.616 (needed ≥ 0.566); taps to oracle 3, 1, 3 (needed ≤ 1 in 2 of 3). Raw: 0.089 vs 0.664, taps 3, 3, 4.

@@ -37,3 +37,14 @@ Motivation: on ES2008d delay-and-sum the pairwise clip votes were right 6 of 6 (
 
 - Exploratory on the seen windows (ES2008a–d), delay-and-sum and raw, reported either way.
 - **Deciding, IS1009a delay-and-sum:** PASS only if mean right-person after 2d ≥ Earshot-Lite mean + 0.05 on the same three repeats, **and** 2d is not worse than Lite on any repeat. Raw reported.
+
+## 2a result: PASS
+
+Bench `python tools/run_array_benches.py --meeting IS1009a --window 250 --subsets 8` (`review/ami_is1009a_250_array_8.log`), then the cache-only probe (`review/lite_heldout_probe_2.log`; earlier rows reproduced exactly).
+
+| Input | Binding | Oracle | Taps to oracle |
+|---|---:|---:|---|
+| Delay-and-sum 8-mic | 0.424 | 0.424 | 0, 1, 0 |
+| Raw single mic | 0.674 | 0.683 | 1, 0, 0 |
+
+Delay-and-sum binding ≥ oracle − 0.05 and ≤ 1 tap in 3 of 3 repeats: **PASS**. On a new cast, room, cameras and array, automatic binding matches the oracle mapping on the same diarization; one tap at most. The ceiling here is diarization (oracle 0.42 on delay-and-sum vs 0.68 on raw), not binding.

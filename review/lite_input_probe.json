@@ -182,5 +182,97 @@
         2
       ]
     }
+  },
+  "ES2008d 120 s (held out)": {
+    "raw": {
+      "binding": {
+        "mean": 0.089,
+        "min": 0.043,
+        "max": 0.15
+      },
+      "oracle": {
+        "mean": 0.664,
+        "min": 0.64,
+        "max": 0.691
+      },
+      "taps": [
+        3,
+        3,
+        4
+      ],
+      "labels": [
+        3,
+        3,
+        4
+      ]
+    },
+    "delay_sum": {
+      "binding": {
+        "mean": 0.197,
+        "min": 0.043,
+        "max": 0.428
+      },
+      "oracle": {
+        "mean": 0.616,
+        "min": 0.494,
+        "max": 0.689
+      },
+      "taps": [
+        3,
+        1,
+        3
+      ],
+      "labels": [
+        3,
+        3,
+        3
+      ]
+    }
+  },
+  "IS1009a 250 s (held out, new cast)": {
+    "raw": {
+      "binding": {
+        "mean": 0.674,
+        "min": 0.663,
+        "max": 0.685
+      },
+      "oracle": {
+        "mean": 0.683,
+        "min": 0.676,
+        "max": 0.687
+      },
+      "taps": [
+        1,
+        0,
+        0
+      ],
+      "labels": [
+        5,
+        4,
+        4
+      ]
+    },
+    "delay_sum": {
+      "binding": {
+        "mean": 0.424,
+        "min": 0.412,
+        "max": 0.433
+      },
+      "oracle": {
+        "mean": 0.424,
+        "min": 0.413,
+        "max": 0.433
+      },
+      "taps": [
+        0,
+        1,
+        0
+      ],
+      "labels": [
+        2,
+        3,
+        2
+      ]
+    }
   }
 }
