@@ -89,7 +89,9 @@ def clip_vote(face_answers: list[str]) -> str:
 
 
 def main() -> None:
-    cases, jobs = build_cases("--live" in sys.argv)
+    only = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else ""
+    suffix = "_" + only.split()[0].lower() if only else ""
+    cases, jobs = build_cases("--live" in sys.argv, only)
     crops = {}
     for case, label, calls, video, start, seconds, taps, size in jobs:
         for person, tap in enumerate(taps):
@@ -105,8 +107,8 @@ def main() -> None:
         case["answers"].setdefault(label, []).append(clip_vote(per_face))
         face_log.append({"window": case["window"], "source": case["source"], "repeat": case["repeat"],
                          "label": label, "start": round(start, 2), "faces": per_face})
-    report(cases, len(crops), Path("review/face_verify_probe.json"))
-    Path("review/face_verify_answers.json").write_text(json.dumps(face_log, indent=2) + "\n")
+    report(cases, len(crops), Path(f"review/face_verify_probe{suffix}.json"))
+    Path(f"review/face_verify_answers{suffix}.json").write_text(json.dumps(face_log, indent=2) + "\n")
 
 
 if __name__ == "__main__":

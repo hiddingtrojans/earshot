@@ -55,3 +55,14 @@ Run 2026-11-04 20:03 CET (`python -m tools.face_verify_probe --live`; `review/fa
 ## ES2008d taps (set 20:07 CET on `frame0.png`, before any model call on ES2008d)
 
 `Speaker A@0.22,0.33`, `Speaker B@0.79,0.37`, `Speaker C@0.31,0.81`, `Speaker D@0.75,0.86`. The builder's default taps put C and D on foreheads; all four moved onto the face centre after a visual check of the overlay.
+
+## 2c: pairwise verifier (pre-registered 20:15 CET, before any pairwise call)
+
+Part 1 failed because Spark said `yes` to two or three faces per clip; the grid probe failed on a fixed position bias. `tools/pair_verify_probe.py` forces a choice and cancels position:
+
+- Same flagged labels, clip spans and 8-frame face strips as Part 1.
+- For each clip, every ordered pair of faces (12 for four people): the two strips side by side, `muse-spark-1.3`, low reasoning, enum `"left"` / `"right"` / `"unclear"`.
+- A pair is decided only if **both orders** name the same face. A clip votes for a face only if it wins **all** of its pairs. Label rule (2 of 3 clips) and collision rule unchanged.
+- **Exploratory, on the four seen windows**: same pass rule as Part 1 (delay-and-sum: ≥ 1 of 2 errors fixed, none broken, ≥ half of flags resolved). Reported either way.
+- **Deciding, ES2008d only**: same as 2b (delay-and-sum: no correct binding broken, ≥ half of flags resolved). Run once, regardless of the exploratory result.
+- Tooling change committed with this section: `--only <window prefix>` restricts the verifiers to one window and writes `review/*_<meeting>.json`, so ES2008d results stay separate and the Part 1 files are not overwritten.

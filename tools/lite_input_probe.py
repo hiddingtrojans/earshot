@@ -23,6 +23,7 @@ WINDOWS = {
     "ES2008a 635 s": ("runs/ami_array_8_635", "bench/ami_ES2008a_635"),
     "ES2008b 150 s": ("runs/ami_es2008b_150_array_8", "bench/ami_ES2008b_150"),
     "ES2008c 355 s (held out)": ("runs/ami_es2008c_355_array_8", "bench/ami_ES2008c_355"),
+    "ES2008d 120 s (held out)": ("runs/ami_es2008d_120_array_8", "bench/ami_ES2008d_120"),
 }
 REPEATS = 3
 

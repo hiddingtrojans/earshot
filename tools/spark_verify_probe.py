@@ -128,10 +128,12 @@ def verify(mapping: dict, confidence: dict, answers: dict[str, list[str]], peopl
     return verified, status
 
 
-def build_cases(live: bool) -> tuple[list[dict], list[tuple]]:
+def build_cases(live: bool, only: str = "") -> tuple[list[dict], list[tuple]]:
     """Bind every window/source/repeat; return cases and (case, label, calls, video, start, seconds, taps, size) jobs."""
     jobs, cases = [], []
     for window, (run_dir, truth_dir) in WINDOWS.items():
+        if only and not window.startswith(only):
+            continue
         run, truth_dir = Path(run_dir), Path(truth_dir)
         doc = json.loads((run / "earshot.json").read_text())
         truth = json.loads((truth_dir / "truth.json").read_text())
