@@ -95,13 +95,13 @@ def ask_spark(calls: CallLog, clip: Path) -> str:
     return result.get("speaker", "unclear")
 
 
-def clip_spans(turns, label: str) -> list[tuple[float, float]]:
+def clip_spans(turns, label: str, min_turn: float = MIN_TURN, count: int = CLIPS_PER_LABEL) -> list[tuple[float, float]]:
     others = [t for t in turns if t.speaker != label]
-    solo = [t for t in turns if t.speaker == label and t.end - t.start >= MIN_TURN
+    solo = [t for t in turns if t.speaker == label and t.end - t.start >= min_turn
             and not any(o.start < t.end and o.end > t.start for o in others)]
     solo.sort(key=lambda t: t.end - t.start, reverse=True)
     spans = []
-    for t in solo[:CLIPS_PER_LABEL]:
+    for t in solo[:count]:
         length = min(CLIP_SECONDS, t.end - t.start)
         middle = (t.start + t.end) / 2
         spans.append((middle - length / 2, length))
@@ -109,14 +109,17 @@ def clip_spans(turns, label: str) -> list[tuple[float, float]]:
 
 
 def verify(mapping: dict, confidence: dict, answers: dict[str, list[str]], people: int,
-           all_labels: bool = False) -> tuple[dict, dict]:
+           all_labels: bool = False, margin: bool = False) -> tuple[dict, dict]:
     verified, status = dict(mapping), {}
     for label in mapping:
         if confidence[label] >= CONFIDENCE_THRESHOLD and not all_labels:
             status[label] = "confident"
             continue
         votes = Counter(a for a in answers.get(label, []) if a != "unclear")
-        winner = next((int(a) - 1 for a, n in votes.most_common(1) if n >= AGREE), None)
+        ranked = votes.most_common(2)
+        winner = next((int(a) - 1 for a, n in ranked[:1] if n >= AGREE), None)
+        if margin and len(ranked) == 2 and ranked[0][1] == ranked[1][1]:
+            winner = None
         if winner is None or not 0 <= winner < people:
             status[label] = "flagged"
             continue
@@ -129,7 +132,8 @@ def verify(mapping: dict, confidence: dict, answers: dict[str, list[str]], peopl
     return verified, status
 
 
-def build_cases(live: bool, only: str = "", all_labels: bool = False) -> tuple[list[dict], list[tuple]]:
+def build_cases(live: bool, only: str = "", all_labels: bool = False,
+                wide: bool = False) -> tuple[list[dict], list[tuple]]:
     """Bind every window/source/repeat; return cases and (case, label, calls, video, start, seconds, taps, size) jobs."""
     jobs, cases = [], []
     for window, (run_dir, truth_dir) in WINDOWS.items():
@@ -156,11 +160,11 @@ def build_cases(live: bool, only: str = "", all_labels: bool = False) -> tuple[l
                 mapping, confidence = attribute_with_confidence(turns, motion, doc["info"]["fps"])
                 case = {"window": window, "source": source, "repeat": i, "doc": doc, "run": run, "truth": truth,
                         "truth_dir": truth_dir, "turns": turns, "mapping": mapping, "confidence": confidence,
-                        "answers": {}, "all": all_labels}
+                        "answers": {}, "all": all_labels, "wide": wide}
                 for label in mapping:
                     if confidence[label] >= CONFIDENCE_THRESHOLD and not all_labels:
                         continue
-                    for start, seconds in clip_spans(turns, label):
+                    for start, seconds in (clip_spans(turns, label, 1.0, 5) if wide else clip_spans(turns, label)):
                         jobs.append((case, label, verify_calls, run / doc["video"], start, seconds, taps, size))
                 cases.append(case)
 
@@ -171,7 +175,8 @@ def report(cases: list[dict], clips: int, out_path: Path) -> None:
     rows, by_window = [], {}
     for case in cases:
         names = [p["name"] for p in case["doc"]["people"]]
-        verified, status = verify(case["mapping"], case["confidence"], case["answers"], len(names), case.get("all", False))
+        verified, status = verify(case["mapping"], case["confidence"], case["answers"], len(names), case.get("all", False),
+                                  case.get("wide", False))
         oracle = oracle_speaker_mapping([{"speaker": t.speaker, "start": t.start, "end": t.end, "text": t.text}
                                          for t in case["turns"]], case["truth"]["people"])
         before = score_mapping(case["doc"], case["run"], case["truth"], case["truth_dir"], case["turns"],

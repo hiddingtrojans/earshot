@@ -87,8 +87,9 @@ def main() -> None:
     only = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else ""
     suffix = "_" + only.split()[0].lower().replace("!", "not_") if only else ""
     all_labels = "--all" in sys.argv
-    suffix += "_all" if all_labels else ""
-    cases, jobs = build_cases("--live" in sys.argv, only, all_labels)
+    wide = "--wide" in sys.argv
+    suffix += ("_all" if all_labels else "") + ("_wide" if wide else "")
+    cases, jobs = build_cases("--live" in sys.argv, only, all_labels or wide, wide)
     images = {}
     for case, label, calls, video, start, seconds, taps, size in jobs:
         folder = case["run"] / "calls" / "face_clips"
