@@ -1,7 +1,8 @@
-"""Muse Spark judges one face at a time whether that person is talking (review/FACE_VERIFY_PROTOCOL.md)."""
+"""Muse Spark judges one face at a time, from an 8-frame strip, whether that person is talking (review/FACE_VERIFY_PROTOCOL.md)."""
 
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 import subprocess
@@ -11,7 +12,6 @@ from pathlib import Path
 
 from earshot.calls import BASE_URL, CallLog, api_key
 from earshot.spark import SPARK_MODEL
-from earshot.tracking import _upload
 
 from tools.spark_verify_probe import build_cases, report
 
@@ -22,11 +22,11 @@ SCHEMA = {
     "required": ["talking"], "additionalProperties": False,
 }
 INSTRUCTIONS = (
-    "This muted video clip shows one person's face. Watch their lips and jaw. "
-    'Answer "yes" if this person is talking for most of the clip, "no" if they are not talking, '
-    'or "unclear" if you cannot tell. Do not guess.'
+    "The image shows 8 consecutive frames of one person's face, about 0.3 s apart, left to right then top to bottom. "
+    'Compare the lips and jaw across frames. Answer "yes" if this person is talking (mouth shape changes as in speech), '
+    '"no" if the mouth stays still, or "unclear" if you cannot tell. Do not guess.'
 )
-USER = "Is this person talking in this muted clip?"
+USER = "Is this person talking?"
 
 
 def face_clip(video: Path, start: float, seconds: float, tap: tuple[float, float],
@@ -46,18 +46,28 @@ def face_clip(video: Path, start: float, seconds: float, tap: tuple[float, float
     return out
 
 
-def ask_face(calls: CallLog, clip: Path) -> str:
-    digest = hashlib.sha256(clip.read_bytes()).hexdigest()
+def frame_strip(clip: Path) -> Path:
+    """Eight frames of the clip, tiled 4x2 into one image."""
+    strip = clip.with_suffix(".jpg")
+    if not strip.exists():
+        subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", str(clip),
+                        "-vf", "fps=3.2,scale=iw/2:ih/2,tile=4x2", "-frames:v", "1", str(strip)], check=True)
+    return strip
+
+
+def ask_face(calls: CallLog, strip: Path) -> str:
+    data = strip.read_bytes()
+    digest = hashlib.sha256(data).hexdigest()
 
     def call():
         from openai import OpenAI
 
-        file_id = _upload(clip)
+        image = "data:image/jpeg;base64," + base64.b64encode(data).decode()
         with OpenAI(base_url=BASE_URL, api_key=api_key()) as api:
             resp = api.responses.create(
                 model=SPARK_MODEL, instructions=INSTRUCTIONS,
                 input=[{"type": "message", "role": "user", "content": [
-                    {"type": "input_text", "text": USER}, {"type": "input_video", "file_id": file_id}]}],
+                    {"type": "input_text", "text": USER}, {"type": "input_image", "image_url": image}]}],
                 text={"format": {"type": "json_schema", "name": "face_talking", "schema": SCHEMA, "strict": True}},
                 reasoning={"effort": "low"}, max_output_tokens=4000,
             )
@@ -85,7 +95,7 @@ def main() -> None:
         for person, tap in enumerate(taps):
             clip = case["run"] / "calls" / "face_clips" / f"{start:.2f}_{seconds:.2f}_p{person}.mp4"
             if clip not in crops:
-                crops[clip] = (calls, face_clip(video, start, seconds, tap, size, clip))
+                crops[clip] = (calls, frame_strip(face_clip(video, start, seconds, tap, size, clip)))
     with ThreadPoolExecutor(max_workers=8) as pool:
         answers = dict(zip(crops, pool.map(lambda item: ask_face(*item), crops.values())))
     face_log = []
