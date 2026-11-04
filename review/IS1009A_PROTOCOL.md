@@ -48,3 +48,12 @@ Bench `python tools/run_array_benches.py --meeting IS1009a --window 250 --subset
 | Raw single mic | 0.674 | 0.683 | 1, 0, 0 |
 
 Delay-and-sum binding ≥ oracle − 0.05 and ≤ 1 tap in 3 of 3 repeats: **PASS**. On a new cast, room, cameras and array, automatic binding matches the oracle mapping on the same diarization; one tap at most. The ceiling here is diarization (oracle 0.42 on delay-and-sum vs 0.68 on raw), not binding.
+
+## 2e: more clips per label (pre-registered ≈21:25 CET, while the IS1009a verifier runs were in progress and before any of their output was read)
+
+Exploratory 2d on the seen windows (`review/pair_verify_probe_not_is1009a_all.{json,log}`): cast pairwise clip votes were right 41 of 54 on delay-and-sum and 38 of 53 on raw, yet 2d changed nothing beyond 2c, because most labels have only one solo turn ≥ 1.5 s and never reach 2 agreeing clips.
+
+2e = 2d with: solo turns ≥ **1.0 s** (was 1.5), up to **5** clips per label (was 3), clips still ≤ 2.5 s from each turn's middle. A label moves to a face only if that face has **≥ 2 votes and strictly more than any other face**; otherwise the Earshot-Lite binding stays. Collision rule unchanged.
+
+- Exploratory on ES2008a–d, reported either way.
+- **Deciding, IS1009a delay-and-sum:** same rule as 2d (mean right-person ≥ Lite + 0.05 on the same repeats, and not worse on any repeat). Raw reported.
