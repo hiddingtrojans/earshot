@@ -26,3 +26,18 @@ Exploratory PASS only if all hold:
 3. At least half of all flagged labels end up confirmed, i.e. no longer need a human.
 
 Otherwise FAIL, reported in the README.
+
+## Result: FAIL
+
+Run 2026-11-04 19:37 CET (`python -m tools.spark_verify_probe --live`; output `review/spark_verify_probe.json`, `review/spark_verify_probe.log`). 64 unique muted clips, one `muse-spark-1.3` call each (≈ 633 input tokens per call; roughly $0.10 in total at list price). A smoke clip from a known solo span of Speaker A was answered correctly ("1") before the run.
+
+| Input | Flagged labels | Confirmed or moved | Fixed | Broken |
+|---|---:|---:|---:|---:|
+| Raw single mic | 19 | 0 | 0 | 0 |
+| Delay-and-sum 8-mic | 18 | 0 | 0 | 0 |
+
+- Spark answered `"unclear"` to 65 of 74 clip questions. Its 9 other answers were **all "3"**, regardless of who was talking, and 7 of the 9 were wrong: a positional bias, not lip-reading.
+- No label reached 2-of-3 agreement, so the verifier changed nothing. All three rules fail (0 fixed; 0 of 37 flags resolved).
+- The agreement rule worked as a safety net: the biased answers never changed a binding.
+
+Flags stay for a human tap. Not retried with a different prompt on the same data.

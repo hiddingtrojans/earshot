@@ -28,8 +28,13 @@ REPEATS = 3
 
 
 def bind_and_score(doc: dict, run: Path, truth: dict, truth_dir: Path, baseline: list[Turn], motion) -> dict:
-    names = [person["name"] for person in doc["people"]]
     mapping, confidence = attribute_with_confidence(baseline, motion, doc["info"]["fps"])
+    return score_mapping(doc, run, truth, truth_dir, baseline, mapping, confidence)
+
+
+def score_mapping(doc: dict, run: Path, truth: dict, truth_dir: Path, baseline: list[Turn],
+                  mapping: dict, confidence: dict) -> dict:
+    names = [person["name"] for person in doc["people"]]
     turns = [[Turn(str(person), t.start, t.end, t.text) for t in baseline if mapping.get(t.speaker) == person]
              for person in range(len(names))]
     activity = [[(t.start, t.end) for t in person_turns] for person_turns in turns]
