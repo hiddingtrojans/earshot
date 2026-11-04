@@ -128,8 +128,8 @@ def verify(mapping: dict, confidence: dict, answers: dict[str, list[str]], peopl
     return verified, status
 
 
-def main() -> None:
-    live = "--live" in sys.argv
+def build_cases(live: bool) -> tuple[list[dict], list[tuple]]:
+    """Bind every window/source/repeat; return cases and (case, label, calls, video, start, seconds, taps, size) jobs."""
     jobs, cases = [], []
     for window, (run_dir, truth_dir) in WINDOWS.items():
         run, truth_dir = Path(run_dir), Path(truth_dir)
@@ -158,20 +158,14 @@ def main() -> None:
                     if confidence[label] >= CONFIDENCE_THRESHOLD:
                         continue
                     for start, seconds in clip_spans(turns, label):
-                        clip = run / "calls" / "verify_clips" / f"{start:.2f}_{seconds:.2f}.mp4"
-                        jobs.append((case, label, verify_calls, run / doc["video"], start, seconds, taps, size, clip))
+                        jobs.append((case, label, verify_calls, run / doc["video"], start, seconds, taps, size))
                 cases.append(case)
 
-    unique = {}
-    for _, _, calls, video, start, seconds, taps, size, clip in jobs:
-        if clip not in unique:
-            unique[clip] = (calls, numbered_clip(video, start, seconds, taps, size, clip))
-    with ThreadPoolExecutor(max_workers=8) as pool:
-        answers = dict(zip(unique, pool.map(lambda item: ask_spark(*item), unique.values())))
-    for case, label, *_, clip in jobs:
-        case["answers"].setdefault(label, []).append(answers[clip])
+    return cases, jobs
 
-    rows, report = [], {}
+
+def report(cases: list[dict], clips: int, out_path: Path) -> None:
+    rows, by_window = [], {}
     for case in cases:
         names = [p["name"] for p in case["doc"]["people"]]
         verified, status = verify(case["mapping"], case["confidence"], case["answers"], len(names))
@@ -188,7 +182,7 @@ def main() -> None:
                          "label": label, "status": status[label], "answers": case["answers"].get(label, []),
                          "before": names[case["mapping"][label]], "after": names[verified[label]],
                          "oracle": oracle[label]})
-        report.setdefault(case["window"], {}).setdefault(case["source"], []).append(
+        by_window.setdefault(case["window"], {}).setdefault(case["source"], []).append(
             {"binding": before["binding"], "verified": after["binding"], "oracle": before["oracle"]})
     summary = {}
     for source in ("raw", "delay_sum"):
@@ -203,13 +197,29 @@ def main() -> None:
             "wrong_after": sum(r["after"] != r["oracle"] for r in subset),
             "answers": dict(Counter(a for r in flagged for a in r["answers"])),
         }
-    out = {"summary": summary, "right_person": report, "rows": rows, "clips": len(unique)}
-    Path("review/spark_verify_probe.json").write_text(json.dumps(out, indent=2) + "\n")
+    out = {"summary": summary, "right_person": by_window, "rows": rows, "clips": clips}
+    out_path.write_text(json.dumps(out, indent=2) + "\n")
     print(json.dumps(summary, indent=2))
-    for window, sources in report.items():
+    for window, sources in by_window.items():
         for source, reps in sources.items():
             mean = lambda key: round(sum(r[key] for r in reps) / len(reps), 3)
             print(f"{window:28} {source:9} binding {mean('binding')} verified {mean('verified')} oracle {mean('oracle')}")
+
+
+
+def main() -> None:
+    cases, jobs = build_cases("--live" in sys.argv)
+    unique = {}
+    for case, label, calls, video, start, seconds, taps, size in jobs:
+        clip = case["run"] / "calls" / "verify_clips" / f"{start:.2f}_{seconds:.2f}.mp4"
+        if clip not in unique:
+            unique[clip] = (calls, numbered_clip(video, start, seconds, taps, size, clip))
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        answers = dict(zip(unique, pool.map(lambda item: ask_spark(*item), unique.values())))
+    for case, label, calls, video, start, seconds, taps, size in jobs:
+        clip = case["run"] / "calls" / "verify_clips" / f"{start:.2f}_{seconds:.2f}.mp4"
+        case["answers"].setdefault(label, []).append(answers[clip])
+    report(cases, len(unique), Path("review/spark_verify_probe.json"))
 
 
 if __name__ == "__main__":

@@ -29,3 +29,12 @@ Every result, pass or fail, goes in the README.
 ## ES2008d window selected (annotations only, before any media download)
 
 Earliest eligible start: **120 s** (248 truth words, 28 overlapping words, all four speakers active).
+
+## Amendment before the evaluation run (≈19:58 CET)
+
+Smoke test only, on one known solo span of Speaker A in ES2008a (16.7 s, 2.5 s; not part of any scored case):
+
+- **Per-face muted video** (the design above): A `unclear`, B `unclear`, C `unclear`, D `no`. Spark apparently samples too few frames from a 2.5 s clip to see lip motion.
+- **Per-face 8-frame strip image** (the same crop, 8 frames ≈ 0.3 s apart tiled 4×2, sent as one `input_image`): A `yes`, B `unclear`, C `unclear`, D `no`, which is a correct vote for A.
+
+The evaluation therefore uses the **strip image** instead of video. Everything else (flagged labels only, clip spans, enum answers, exactly-one-yes clip vote, 2-of-3 label rule, collision rule, both pass rules) is unchanged. No scored case has been run with either variant.
