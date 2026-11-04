@@ -66,3 +66,16 @@ Part 1 failed because Spark said `yes` to two or three faces per clip; the grid 
 - **Exploratory, on the four seen windows**: same pass rule as Part 1 (delay-and-sum: ≥ 1 of 2 errors fixed, none broken, ≥ half of flags resolved). Reported either way.
 - **Deciding, ES2008d only**: same as 2b (delay-and-sum: no correct binding broken, ≥ half of flags resolved). Run once, regardless of the exploratory result.
 - Tooling change committed with this section: `--only <window prefix>` restricts the verifiers to one window and writes `review/*_<meeting>.json`, so ES2008d results stay separate and the Part 1 files are not overwritten.
+
+## 2c exploratory result (seen windows): FAIL
+
+Run 2026-11-04 ≈20:30 CET (`python -m tools.pair_verify_probe --live --only '!ES2008d'`; `review/pair_verify_probe_not_es2008d.{json,log}`, `review/pair_verify_answers_not_es2008d.json`). 768 pair images for 64 clips (12 ordered pairs each), one `muse-spark-1.3` call each. A smoke test on the solo-A span voted A before the run. The only code change after the 2c commit was an exclusion filter (`--only '!ES2008d'`), because the ES2008d run did not exist yet.
+
+| Input | Flagged | Resolved | Fixed | Broken |
+|---|---:|---:|---:|---:|
+| Raw single mic | 19 | 3 | 1 | 0 |
+| Delay-and-sum 8-mic | 18 | 1 | 1 | 0 |
+
+- Both orders agreed on 260 of 384 face pairs; a left/right bias remains (362 `left` vs 325 `right`).
+- A clip voted in 34 of 74 cases and was right **19 of 34** (56%, chance 25%). Part 1 managed 5 of 17. Better than chance, still too unreliable for 2 of 3 clips to agree.
+- Delay-and-sum: 1 of 2 errors fixed (rule met), 0 broken (met), 1 of 18 flags resolved (needed ≥ 9). **FAIL.** No binding was broken on either input.
