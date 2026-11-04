@@ -1,6 +1,6 @@
 # Automatic binding on an independent meeting (ES2008b 150 s)
 
-Written 2026-11-04 ~18:50 CET, before running Lite on this window or scoring it.
+Written 2026-11-04 shortly before 18:41 CET, before running Lite on this window or scoring it. The protocol and its result were committed together, so the order is stated here, not proven by git history.
 
 ## Question
 
@@ -27,7 +27,7 @@ Otherwise the result is a FAIL and is reported as such in the README. Three labe
 
 ## Result: FAIL
 
-Run 2026-11-04 ~19:05 CET. Every model response came from the cache (`EARSHOT_REPLAY=1`); no new calls. Raw output: `review/lite_es2008b_150_bench.log`, `review/lite_es2008b_150_bench.json`.
+Run 2026-11-04 18:41 CET. Every model response came from the cache (`EARSHOT_REPLAY=1`); no new calls. Raw output: `review/lite_es2008b_150_bench.log`, `review/lite_es2008b_150_bench.json`.
 
 | Mode (same 3 repeats) | WER ↓ | Right person ↑ | Overlap-word recall ↑ |
 |---|---:|---:|---:|

@@ -1,6 +1,6 @@
 # Does cleaner input audio fix automatic binding?
 
-Written 2026-11-04 ~19:20 CET, before running the comparison.
+Written 2026-11-04 shortly before 18:45 CET, before running the comparison. The protocol and its result were committed together, so the order is stated here, not proven by git history.
 
 ## Hypothesis
 
@@ -26,7 +26,7 @@ Otherwise: FAIL, reported in the README.
 
 ## Result: PASS (exploratory)
 
-Run 2026-11-04 ~19:25 CET with `EARSHOT_REPLAY=1`; no new model calls. Output: `review/lite_input_probe.json`, `review/lite_input_probe.log`. Consistency check: the raw-mix rows reproduce the earlier bench results exactly (0.919; 0.547/0.693; 0.348/0.549).
+Run 2026-11-04 18:45 CET with `EARSHOT_REPLAY=1`; no new model calls. Output: `review/lite_input_probe.json`, `review/lite_input_probe.log`. Consistency check: the raw-mix rows reproduce the earlier bench results exactly (0.919; 0.547/0.693; 0.348/0.549).
 
 Right-person, mean [min, max] over the same three repeats; the oracle is hand-matching on the same diarization.
 
