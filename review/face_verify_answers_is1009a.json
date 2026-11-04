@@ -1,0 +1,67 @@
+[
+  {
+    "window": "IS1009a 250 s (held out, new cast)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "C",
+    "start": 63.33,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "IS1009a 250 s (held out, new cast)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "C",
+    "start": 68.22,
+    "faces": [
+      "yes",
+      "unclear",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "IS1009a 250 s (held out, new cast)",
+    "source": "raw",
+    "repeat": 2,
+    "label": "B",
+    "start": 31.85,
+    "faces": [
+      "yes",
+      "yes",
+      "yes",
+      "unclear"
+    ]
+  },
+  {
+    "window": "IS1009a 250 s (held out, new cast)",
+    "source": "raw",
+    "repeat": 2,
+    "label": "B",
+    "start": 61.89,
+    "faces": [
+      "yes",
+      "yes",
+      "unclear",
+      "unclear"
+    ]
+  },
+  {
+    "window": "IS1009a 250 s (held out, new cast)",
+    "source": "raw",
+    "repeat": 2,
+    "label": "B",
+    "start": 3.05,
+    "faces": [
+      "no",
+      "no",
+      "yes",
+      "yes"
+    ]
+  }
+]

@@ -61,3 +61,25 @@ Exploratory 2d on the seen windows (`review/pair_verify_probe_not_is1009a_all.{j
 ## 2d exploratory result (seen windows)
 
 `python -m tools.pair_verify_probe --live --all --only '!IS1009a'` (1,884 pair images). Across ES2008a–d: delay-and-sum 2 errors fixed, 0 broken (9 → 7 wrong labels); raw 1 fixed, 0 broken (21 → 20). Exactly the same changes as flag-only 2c: confident labels were confirmed (13) or stayed, never moved. Vote accuracy when cast: 41/54 delay-and-sum, 38/53 raw. Not a decision; IS1009a decides.
+
+## 2b, 2c, 2d results on IS1009a: FAIL
+
+`--live --only IS1009a` for `face_verify_probe`, `pair_verify_probe`, and `pair_verify_probe --all` (`review/{face,pair}_verify_probe_is1009a*.{json,log}`).
+
+| Rule (delay-and-sum) | Flagged | Resolved | Fixed | Broken | Right-person before → after | Result |
+|---|---:|---:|---:|---:|---|---|
+| 2b per-face | 1 | 0 | 0 | 0 | 0.424 → 0.424 | **FAIL** (all answers `unclear`) |
+| 2c pairwise | 1 | 0 | 0 | 0 | 0.424 → 0.424 | **FAIL** |
+| 2d pairwise, all labels | 7 | 3 confirmed | 0 | 0 | 0.424 → 0.424 | **FAIL** (needed + 0.05) |
+
+- 2d votes on this new cast were right 6 of 11 on delay-and-sum and 5 of 8 on raw, below the 76% seen on ES2008.
+- **Design flaw, stated plainly:** Earshot-Lite already equals the oracle here (0.424 vs 0.424), so the "+ 0.05" rule for 2d and 2e could not be met by any verifier on this window. I wrote that rule without checking headroom.
+- **2e not run on IS1009a.** Its outcome is fixed by the same arithmetic (largest possible gain 0.001 < 0.05). Recorded as FAIL, not evaluable.
+
+## 2e exploratory result (seen windows)
+
+`pair_verify_probe --live --wide --only '!IS1009a'` (`review/pair_verify_probe_not_is1009a_wide.json`, log `review/pair_verify_probe_not_is1009a_all_wide.log`; 1,992 pair images). Resolved labels rose from 3 to 8 per input, but all extra resolutions were confirmations: delay-and-sum 2 fixed, 0 broken (9 → 7 wrong), raw 1 fixed, 0 broken. Identical bindings to 2c/2d. Votes right 41/56 on both inputs.
+
+## What the verifier series shows
+
+Five Spark verifier designs (grid, per-face video, per-face strip, pairwise, pairwise on all labels / more clips) never broke a correct binding across 6 windows × 2 inputs × 3 repeats, and fixed at most 2 of 9 delay-and-sum errors. Pairwise votes are well above chance (≈ 55–76%) but solo speech is too scarce in real meetings for two agreeing votes. Wrong bindings stay a one-tap human fix.

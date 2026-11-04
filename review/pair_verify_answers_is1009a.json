@@ -1,0 +1,107 @@
+[
+  {
+    "window": "IS1009a 250 s (held out, new cast)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "C",
+    "start": 63.33,
+    "pairs": {
+      "01": "unclear",
+      "02": "left",
+      "03": "left",
+      "10": "left",
+      "12": "left",
+      "13": "left",
+      "20": "right",
+      "21": "right",
+      "23": "left",
+      "30": "right",
+      "31": "unclear",
+      "32": "unclear"
+    }
+  },
+  {
+    "window": "IS1009a 250 s (held out, new cast)",
+    "source": "raw",
+    "repeat": 0,
+    "label": "C",
+    "start": 68.22,
+    "pairs": {
+      "01": "left",
+      "02": "left",
+      "03": "left",
+      "10": "right",
+      "12": "left",
+      "13": "unclear",
+      "20": "right",
+      "21": "right",
+      "23": "unclear",
+      "30": "right",
+      "31": "unclear",
+      "32": "right"
+    }
+  },
+  {
+    "window": "IS1009a 250 s (held out, new cast)",
+    "source": "raw",
+    "repeat": 2,
+    "label": "B",
+    "start": 31.85,
+    "pairs": {
+      "01": "left",
+      "02": "left",
+      "03": "unclear",
+      "10": "right",
+      "12": "right",
+      "13": "unclear",
+      "20": "left",
+      "21": "left",
+      "23": "left",
+      "30": "unclear",
+      "31": "left",
+      "32": "right"
+    }
+  },
+  {
+    "window": "IS1009a 250 s (held out, new cast)",
+    "source": "raw",
+    "repeat": 2,
+    "label": "B",
+    "start": 61.89,
+    "pairs": {
+      "01": "right",
+      "02": "right",
+      "03": "unclear",
+      "10": "right",
+      "12": "left",
+      "13": "left",
+      "20": "left",
+      "21": "right",
+      "23": "left",
+      "30": "right",
+      "31": "right",
+      "32": "right"
+    }
+  },
+  {
+    "window": "IS1009a 250 s (held out, new cast)",
+    "source": "raw",
+    "repeat": 2,
+    "label": "B",
+    "start": 3.05,
+    "pairs": {
+      "01": "left",
+      "02": "right",
+      "03": "left",
+      "10": "right",
+      "12": "right",
+      "13": "right",
+      "20": "left",
+      "21": "left",
+      "23": "left",
+      "30": "left",
+      "31": "left",
+      "32": "right"
+    }
+  }
+]

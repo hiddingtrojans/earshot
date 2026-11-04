@@ -1,0 +1,330 @@
+{
+  "summary": {
+    "raw": {
+      "flagged": 12,
+      "resolved": 1,
+      "fixed": 0,
+      "broken": 0,
+      "wrong_before": 1,
+      "wrong_after": 1,
+      "answers": {
+        "1": 6,
+        "unclear": 11,
+        "3": 2
+      }
+    },
+    "delay_sum": {
+      "flagged": 7,
+      "resolved": 3,
+      "fixed": 0,
+      "broken": 0,
+      "wrong_before": 1,
+      "wrong_after": 1,
+      "answers": {
+        "1": 8,
+        "unclear": 7,
+        "3": 3
+      }
+    }
+  },
+  "right_person": {
+    "IS1009a 250 s (held out, new cast)": {
+      "raw": [
+        {
+          "binding": 0.663,
+          "verified": 0.663,
+          "oracle": 0.687
+        },
+        {
+          "binding": 0.675,
+          "verified": 0.675,
+          "oracle": 0.676
+        },
+        {
+          "binding": 0.685,
+          "verified": 0.685,
+          "oracle": 0.685
+        }
+      ],
+      "delay_sum": [
+        {
+          "binding": 0.433,
+          "verified": 0.433,
+          "oracle": 0.433
+        },
+        {
+          "binding": 0.427,
+          "verified": 0.427,
+          "oracle": 0.427
+        },
+        {
+          "binding": 0.412,
+          "verified": 0.412,
+          "oracle": 0.413
+        }
+      ]
+    }
+  },
+  "rows": [
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "raw",
+      "repeat": 0,
+      "label": "A",
+      "status": "confirmed",
+      "answers": [
+        "1",
+        "1",
+        "1"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "raw",
+      "repeat": 0,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "3"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "raw",
+      "repeat": 0,
+      "label": "D",
+      "status": "flagged",
+      "answers": [],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "raw",
+      "repeat": 0,
+      "label": "C",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "1"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "raw",
+      "repeat": 1,
+      "label": "0",
+      "status": "flagged",
+      "answers": [],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "raw",
+      "repeat": 1,
+      "label": "A",
+      "status": "flagged",
+      "answers": [
+        "1",
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "raw",
+      "repeat": 1,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear",
+        "unclear"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "raw",
+      "repeat": 1,
+      "label": "C",
+      "status": "flagged",
+      "answers": [],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "raw",
+      "repeat": 2,
+      "label": "0",
+      "status": "flagged",
+      "answers": [],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker C"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "raw",
+      "repeat": 2,
+      "label": "A",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "1",
+        "unclear"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "raw",
+      "repeat": 2,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear",
+        "3"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "raw",
+      "repeat": 2,
+      "label": "C",
+      "status": "flagged",
+      "answers": [],
+      "before": "Speaker B",
+      "after": "Speaker B",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "A",
+      "status": "confirmed",
+      "answers": [
+        "1",
+        "unclear",
+        "1"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "delay_sum",
+      "repeat": 0,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "unclear",
+        "unclear",
+        "1"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "0",
+      "status": "flagged",
+      "answers": [],
+      "before": "Speaker C",
+      "after": "Speaker C",
+      "oracle": "Speaker B"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "A",
+      "status": "confirmed",
+      "answers": [
+        "1",
+        "unclear",
+        "1"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "delay_sum",
+      "repeat": 1,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "3",
+        "unclear",
+        "3"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "A",
+      "status": "confirmed",
+      "answers": [
+        "1",
+        "unclear",
+        "1"
+      ],
+      "before": "Speaker A",
+      "after": "Speaker A",
+      "oracle": "Speaker A"
+    },
+    {
+      "window": "IS1009a 250 s (held out, new cast)",
+      "source": "delay_sum",
+      "repeat": 2,
+      "label": "B",
+      "status": "flagged",
+      "answers": [
+        "3",
+        "unclear",
+        "1"
+      ],
+      "before": "Speaker D",
+      "after": "Speaker D",
+      "oracle": "Speaker D"
+    }
+  ],
+  "clips": 408
+}

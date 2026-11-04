@@ -1,0 +1,42 @@
+{
+  "raw": {
+    "flagged": 48,
+    "resolved": 8,
+    "fixed": 1,
+    "broken": 0,
+    "wrong_before": 21,
+    "wrong_after": 20,
+    "answers": {
+      "4": 8,
+      "unclear": 42,
+      "2": 16,
+      "1": 15,
+      "3": 17
+    }
+  },
+  "delay_sum": {
+    "flagged": 46,
+    "resolved": 8,
+    "fixed": 2,
+    "broken": 0,
+    "wrong_before": 9,
+    "wrong_after": 7,
+    "answers": {
+      "4": 6,
+      "unclear": 41,
+      "1": 18,
+      "2": 15,
+      "3": 17
+    }
+  }
+}
+ES2008a 745 s                raw       binding 0.919 verified 0.919 oracle 0.919
+ES2008a 745 s                delay_sum binding 0.913 verified 0.913 oracle 0.914
+ES2008a 635 s                raw       binding 0.547 verified 0.547 oracle 0.693
+ES2008a 635 s                delay_sum binding 0.69 verified 0.69 oracle 0.69
+ES2008b 150 s                raw       binding 0.348 verified 0.348 oracle 0.549
+ES2008b 150 s                delay_sum binding 0.512 verified 0.512 oracle 0.512
+ES2008c 355 s (held out)     raw       binding 0.225 verified 0.303 oracle 0.384
+ES2008c 355 s (held out)     delay_sum binding 0.284 verified 0.361 oracle 0.439
+ES2008d 120 s (held out)     raw       binding 0.089 verified 0.089 oracle 0.664
+ES2008d 120 s (held out)     delay_sum binding 0.197 verified 0.274 oracle 0.616
